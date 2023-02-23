@@ -1,15 +1,18 @@
 /* 
-                   --------------------
-          data_in ¦>                  >¦ data_out
-    data_in_valid ¦>     pipeline     >¦ data_out_valid
-    data_in_ready ¦<                  <¦ data_out_ready
-                   --------------------  
+                    clk_i               arst_n
+                   ---V--------------------V---
+                  ¦                            ¦
+          data_in >                            > data_out
+    data_in_valid >          pipeline          > data_out_valid
+    data_in_ready <                            < data_out_ready
+                  ¦                            ¦
+                   ----------------------------
 */
 
 module pipeline #(
   parameter WIDTH = 8
 ) (
-  input  logic             m_clk,
+  input  logic             clk_i,
   input  logic             arst_n,
 
   input  logic [WIDTH-1:0] data_in,
@@ -33,7 +36,7 @@ module pipeline #(
   assign input_handshake  = data_in_valid & data_in_ready;
   assign output_handshake = data_out_valid & data_out_ready;
 
-  always_ff @( posedge m_clk ) begin : main_block
+  always_ff @( posedge clk_i ) begin : main_block
     if (arst_n) begin
 
       if (input_handshake) begin
