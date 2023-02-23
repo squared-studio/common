@@ -37,7 +37,8 @@ module pipeline #(
   assign output_handshake = data_out_valid & data_out_ready;
 
   always_ff @( posedge clk_i ) begin : main_block
-    if (arst_n) begin
+    
+    if (arst_n) begin // NOT RESET
 
       if (input_handshake) begin
         mem <= data_in;
@@ -50,11 +51,12 @@ module pipeline #(
         default : is_full <= is_full;
       endcase
 
-    end
+    end  // NOT RESET
 
-    else begin
+    else begin  // APPLY RESET
       is_full <= '0;
-    end
+    end // APPLY RESET
+    
   end
 
 endmodule
