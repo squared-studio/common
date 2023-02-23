@@ -1,15 +1,15 @@
 /* 
-                    clk_i               arst_n
-                   ---↓--------------------↓---
-                  ¦                            ¦
-          data_in →                            → data_out
-    data_in_valid →          pipeline          → data_out_valid
-    data_in_ready ←                            ← data_out_ready
-                  ¦                            ¦
-                   ----------------------------
+                    clk_i                     arst_n
+                   ---↓-------------------------↓---
+                  ¦                                 ¦
+          data_in →                                 → data_out
+    data_in_valid →          pipeline_core          → data_out_valid
+    data_in_ready ←                                 ← data_out_ready
+                  ¦                                 ¦
+                   ---------------------------------
 */
 
-module pipeline #(
+module pipeline_core #(
   parameter WIDTH = 8
 ) (
   input  logic             clk_i,
