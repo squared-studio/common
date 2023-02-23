@@ -1,10 +1,10 @@
 /* 
                     clk_i               arst_n
-                   ---V--------------------V---
+                   ---↓--------------------↓---
                   ¦                            ¦
-          data_in >                            > data_out
-    data_in_valid >          pipeline          > data_out_valid
-    data_in_ready <                            < data_out_ready
+          data_in →                            → data_out
+    data_in_valid →          pipeline          → data_out_valid
+    data_in_ready ←                            ← data_out_ready
                   ¦                            ¦
                    ----------------------------
 */
@@ -37,8 +37,7 @@ module pipeline #(
   assign output_handshake = data_out_valid & data_out_ready;
 
   always_ff @( posedge clk_i ) begin : main_block
-    
-    if (arst_n) begin // NOT RESET
+    if (arst_n) begin
 
       if (input_handshake) begin
         mem <= data_in;
@@ -51,12 +50,11 @@ module pipeline #(
         default : is_full <= is_full;
       endcase
 
-    end  // NOT RESET
+    end
 
-    else begin  // APPLY RESET
+    else begin
       is_full <= '0;
-    end // APPLY RESET
-    
+    end
   end
 
 endmodule
