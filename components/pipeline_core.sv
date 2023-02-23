@@ -1,12 +1,12 @@
 /* 
-                    clk_i                     arst_n
-                   ---↓-------------------------↓---
-                  ¦                                 ¦
-          data_in →                                 → data_out
-    data_in_valid →          pipeline_core          → data_out_valid
-    data_in_ready ←                                 ← data_out_ready
-                  ¦                                 ¦
-                   ---------------------------------
+                  clk_i                     arst_n
+                 ---↓-------------------------↓---
+                ¦                                 ¦
+[WIDTH] data_in →                                 → [WIDTH] data_out
+  data_in_valid →          pipeline_core          → data_out_valid
+  data_in_ready ←          single_stage           ← data_out_ready
+                ¦                                 ¦
+                 ---------------------------------
 */
 
 module pipeline_core #(
