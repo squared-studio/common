@@ -9,6 +9,9 @@
                  ---------------------------------
 */
 
+`ifndef PIPELINE_CORE_
+`define PIPELINE_CORE_
+
 module pipeline_core #(
   parameter WIDTH = 8
 ) (
@@ -36,7 +39,7 @@ module pipeline_core #(
   assign input_handshake  = data_in_valid & data_in_ready;
   assign output_handshake = data_out_valid & data_out_ready;
 
-  always_ff @( posedge clk_i ) begin : main_block
+  always_ff @( posedge clk_i or negedge arst_n) begin : main_block
 
     if (arst_n) begin // NOT RESET
 
@@ -60,3 +63,5 @@ module pipeline_core #(
   end
 
 endmodule
+
+`endif
