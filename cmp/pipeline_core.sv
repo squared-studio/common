@@ -9,9 +9,6 @@
                  ---------------------------------
 */
 
-`ifndef PIPELINE_CORE_
-`define PIPELINE_CORE_
-
 module pipeline_core #(
   parameter WIDTH = 8
 ) (
@@ -63,5 +60,3 @@ module pipeline_core #(
   end
 
 endmodule
-
-`endif

@@ -1,5 +1,3 @@
-`include "cmp/pipeline.sv"
-
 module tb_pipeline;
   initial begin
     $dumpfile("raw.vcd");

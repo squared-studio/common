@@ -9,13 +9,6 @@
                  ----------------------------------------------
 */
 
-`ifndef PIPELINE_
-`define PIPELINE_
-
-`ifndef PIPELINE_CORE_
-`include "cmp/pipeline_core.sv"
-`endif
-
 module pipeline #(
   parameter WIDTH      = 8,
   parameter NUM_STAGES = 1
@@ -107,5 +100,3 @@ module pipeline #(
   endgenerate
 
 endmodule
-
-`endif
