@@ -1,2 +1,4 @@
+prj
 *test*.sv
 *.vcd
+*.vvp
