@@ -1,5 +1,5 @@
 /* 
-                       clk_i                     arst_n
+                       clk_i                    arst_n
                       ---↓-------------------------↓---
                      ¦                                 ¦
 [DATA_WIDTH] data_in →                                 → [DATA_WIDTH] data_out
