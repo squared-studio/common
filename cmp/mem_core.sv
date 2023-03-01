@@ -1,11 +1,11 @@
 /* 
-              clk_i       we_n
-             ---↓----------↓---
-            ¦                  ¦
-       addr →     mem_core     ¦
-  [8] wdata →                  → [8] rdata
-            ¦                  ¦
-             ------------------
+                       clk_i       we_n
+                      ---↓----------↓---
+                     ¦                  ¦
+                addr →     mem_core     ¦
+  [CELL_WIDTH] wdata →                  → [CELL_WIDTG] rdata
+                     ¦                  ¦
+                      ------------------
 */
 
 module mem_core #(
