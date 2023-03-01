@@ -15,3 +15,4 @@ wave:
 
 clean:
 	@del $(CLEAN_TARGETS)
+	@cls
