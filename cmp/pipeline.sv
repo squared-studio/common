@@ -13,16 +13,16 @@ module pipeline #(
   parameter DATA_WIDTH = 8,
   parameter NUM_STAGES = 1
 ) (
-  input  logic             clk_i,
-  input  logic             arst_n,
+  input  logic                  clk_i,
+  input  logic                  arst_n,
 
   input  logic [DATA_WIDTH-1:0] data_in,
-  input  logic             data_in_valid,
-  output logic             data_in_ready,
+  input  logic                  data_in_valid,
+  output logic                  data_in_ready,
 
   output logic [DATA_WIDTH-1:0] data_out,
-  output logic             data_out_valid,
-  input  logic             data_out_ready
+  output logic                  data_out_valid,
+  input  logic                  data_out_ready
 );
 
   generate
@@ -50,9 +50,9 @@ module pipeline #(
     
     else begin
 
-      logic [DATA_WIDTH-1:0] data_ [NUM_STAGES-1];
-      logic                 valid_ [NUM_STAGES-1];
-      logic                 ready_ [NUM_STAGES-1];
+      logic [DATA_WIDTH-1:0] data_  [NUM_STAGES-1];
+      logic                  valid_ [NUM_STAGES-1];
+      logic                  ready_ [NUM_STAGES-1];
 
       pipeline_core #(
         .DATA_WIDTH (DATA_WIDTH)
