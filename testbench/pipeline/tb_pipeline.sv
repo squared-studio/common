@@ -83,7 +83,7 @@ module tb_pipeline;
     apply_reset();
     start_clock();
 
-    repeat(20) begin
+    repeat(50) begin
       @ (posedge clk_i);
       data_in <= $random();
       data_in_valid  <= !($urandom_range(0,1));

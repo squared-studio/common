@@ -2,3 +2,4 @@ prj
 *test*.sv
 *.vcd
 *.vvp
+*.out
