@@ -24,8 +24,8 @@ module tb_mem_bank;
   logic [DATA_WIDTH-1:0] rdata;
 
   mem_bank #(
-    .ADDR_WIDTH ( 14 ),
-    .DATA_SIZE  ( 2 )
+    .ADDR_WIDTH ( ADDR_WIDTH ),
+    .DATA_SIZE  ( DATA_SIZE  )
   ) u_mem_bank (
     .clk_i ( clk_i ),
     .addr  ( addr  ),
