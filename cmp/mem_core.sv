@@ -14,7 +14,7 @@ module mem_core #(
 ) (
   input  logic                  clk_i,
   input  logic [ADDR_WIDTH-1:0] addr,
-  input  logic                  we_n,
+  input  logic                  we,
   input  logic [7:0]            wdata,
   output logic [7:0]            rdata
 );
@@ -24,7 +24,7 @@ module mem_core #(
   assign rdata = mem [addr];
 
   always_ff @( posedge clk_i ) begin 
-    if (~we_n) begin
+    if (we) begin
       mem[addr] <= wdata;
     end
   end

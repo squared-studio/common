@@ -28,7 +28,7 @@ module mem_bank #(
       ) u_mem_core (
         .clk_i ( clk_i                        ),
         .addr  ( addr[ADDR_WIDTH-1:DATA_SIZE] ),
-        .we_n  ( wstrb[i]                     ),
+        .we    ( wstrb[i]                     ),
         .wdata ( wdata[(8*(i+1)-1):(8*i)]     ),
         .rdata ( rdata[(8*(i+1)-1):(8*i)]     )
       );    
