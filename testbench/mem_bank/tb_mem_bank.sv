@@ -8,18 +8,30 @@ module tb_mem_bank;
     $display("%c[7;38m################################## TEST ENDED ##################################%c[0m", 27, 27);
   end
 
+  localparam ADDR_WIDTH = 12;
+  localparam DATA_SIZE  = 2;
+  localparam DATA_BYTES = 2**DATA_SIZE;
+  localparam DATA_WIDTH = 8*DATA_BYTES;
 
   int pass;
   int fail;
   int cnt;
 
-  logic                  clk_i         ; 
+  logic                  clk_i;
+  logic [ADDR_WIDTH-1:0] addr ;
+  logic [DATA_WIDTH-1:0] wdata;
+  logic [DATA_BYTES-1:0] wstrb;
+  logic [DATA_WIDTH-1:0] rdata;
 
   mem_bank #(
     .ADDR_WIDTH ( 14 ),
     .DATA_SIZE  ( 2 )
   ) u_mem_bank (
-    .clk_i          ( clk_i          )
+    .clk_i ( clk_i ),
+    .addr  ( addr  ),
+    .wdata ( wdata ),
+    .wstrb ( wstrb ),
+    .rdata ( rdata )
   );
 
   task start_clock ();
@@ -35,7 +47,17 @@ module tb_mem_bank;
   initial begin
     start_clock();
 
-    repeat(2) @ (posedge clk_i);
+    for (int i = 0; i < 10; i++) begin
+      @ (posedge clk_i);
+      addr  <= i;
+      wdata <= i;
+      wstrb <= '1;
+    end
+
+    @ (posedge clk_i);
+    wstrb <= '0;
+
+    repeat(5) @ (posedge clk_i);
 
     $finish();
   end

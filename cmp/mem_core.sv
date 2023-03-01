@@ -9,7 +9,8 @@
 */
 
 module mem_core #(
-  parameter ADDR_WIDTH = 8
+  parameter  ADDR_WIDTH = 8,
+  localparam DEPTH      = (2**ADDR_WIDTH)
 ) (
   input  logic                  clk_i,
   input  logic [ADDR_WIDTH-1:0] addr,
@@ -18,7 +19,7 @@ module mem_core #(
   output logic [7:0]            rdata
 );
 
-  logic [7:0] mem [2**ADDR_WIDTH];
+  logic [DEPTH-1:0][7:0] mem;
   
   assign rdata = mem [addr];
 
