@@ -11,7 +11,7 @@
 
 module siso #(
   parameter DATA_WIDTH = 8,
-  parameter NUM_STAGES = 5
+  parameter DEPTH      = 5
 ) (
   input  logic                  clk_i,
   input  logic                  arst_n,
@@ -27,21 +27,21 @@ module siso #(
 
   assign data_out_valid = data_in_valid;
   assign data_in_ready = data_out_ready;
-  assign data_out = mem [NUM_STAGES-1];
+  assign data_out = mem [DEPTH-1];
 
-  logic [DATA_WIDTH-1:0] mem [NUM_STAGES];
+  logic [DATA_WIDTH-1:0] mem [DEPTH];
 
   always_ff @( posedge clk_i or negedge arst_n ) begin : main
-    if (arst_n) begin
+    if (arst_n) begin : not_reset
       if (data_in_valid & data_out_ready) begin
         mem [0] <= data_in;
-        for (int i = 1; i < NUM_STAGES; i++) begin
+        for (int i = 1; i < DEPTH; i++) begin
           mem [i] <= mem [i-1];
         end
       end
     end
-    else begin
-      for (int i = 0; i < NUM_STAGES; i++) begin
+    else begin : do_reset
+      for (int i = 0; i < DEPTH; i++) begin
         mem [i] <= '0;
       end
     end

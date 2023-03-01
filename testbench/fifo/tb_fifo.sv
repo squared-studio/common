@@ -1,4 +1,4 @@
-module tb_siso;
+module tb_fifo;
   initial begin
     $dumpfile("raw.vcd");
     $dumpvars;
@@ -24,10 +24,10 @@ module tb_siso;
   logic                  data_out_valid; 
   logic                  data_out_ready; 
 
-  siso #(
+  fifo #(
     .DATA_WIDTH ( DATA_WIDTH ),
     .DEPTH      ( DEPTH      )
-  ) u_siso (
+  ) u_fifo (
     .clk_i          ( clk_i          ),
     .arst_n         ( arst_n         ),
     .data_in        ( data_in        ),
@@ -52,7 +52,6 @@ module tb_siso;
 
   task apply_reset ();
     data_queue.delete();
-    repeat (DEPTH) data_queue.push_back('0);
     pass = 0;
     fail = 0;
     cnt  = 0;
