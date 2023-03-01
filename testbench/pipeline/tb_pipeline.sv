@@ -8,20 +8,24 @@ module tb_pipeline;
     $display("%c[7;38m################################## TEST ENDED ##################################%c[0m", 27, 27);
   end
 
-  localparam WIDTH      = 8;
+  localparam DATA_WIDTH = 8;
   localparam NUM_STAGES = 8;
 
-  logic             clk_i         ; 
-  logic             arst_n        ; 
-  logic [WIDTH-1:0] data_in       ; 
-  logic             data_in_valid ; 
-  logic             data_in_ready ; 
-  logic [WIDTH-1:0] data_out      ; 
-  logic             data_out_valid; 
-  logic             data_out_ready; 
+  int pass;
+  int fail;
+  int cnt;
+
+  logic                  clk_i         ; 
+  logic                  arst_n        ; 
+  logic [DATA_WIDTH-1:0] data_in       ; 
+  logic                  data_in_valid ; 
+  logic                  data_in_ready ; 
+  logic [DATA_WIDTH-1:0] data_out      ; 
+  logic                  data_out_valid; 
+  logic                  data_out_ready; 
 
   pipeline #(
-    .WIDTH      ( WIDTH      ),
+    .DATA_WIDTH ( DATA_WIDTH ),
     .NUM_STAGES ( NUM_STAGES )
   ) u_pipeline (
     .clk_i          ( clk_i          ),
@@ -35,17 +39,65 @@ module tb_pipeline;
   );
 
   task start_clock ();
-    clk_i = 1; #5;
-    clk_i = 0; #5;
+    fork
+      forever begin
+        clk_i = 1; #5;
+        clk_i = 0; #5;
+      end
+    join_none
+    repeat (2) @ (posedge clk_i);
   endtask
+
+  logic [DATA_WIDTH-1:0] data_queue [$];
 
   task apply_reset ();
-    clk_i = 1; #5;
-    clk_i = 0; #5;
+    data_queue.delete();
+    pass = 0;
+    fail = 0;
+    cnt  = 0;
+    clk_i = 1;
+    data_in = 0;
+    data_in_valid = 0;
+    data_out_ready = 0;
+    arst_n = 0; #5;
+    arst_n = 1; #5;
   endtask
 
+  always @(posedge clk_i) begin
+    if (data_in_valid && data_in_ready) begin
+      cnt++;
+      data_queue.push_back(data_in);
+    end
+    if (data_out_valid && data_out_ready) begin
+      cnt--;
+      if (data_queue.pop_front() == data_out) begin
+        pass++;
+      end
+      else begin
+        fail++;
+      end
+    end
+  end
+
   initial begin
-    $display("Hi");
+    apply_reset();
+    start_clock();
+
+    repeat(20) begin
+      @ (posedge clk_i);
+      data_in <= $random();
+      data_in_valid  <= !($urandom_range(0,1));
+      data_out_ready <= !($urandom_range(0,5));
+    end
+
+    @ (posedge clk_i);
+    data_in_valid  <= '0;
+    data_out_ready <= '1;
+    
+    while (cnt > 0) @ (posedge clk_i);
+
+    repeat(2) @ (posedge clk_i);
+
     $finish();
   end
 endmodule

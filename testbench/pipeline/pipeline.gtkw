@@ -1,0 +1,52 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Wed Mar 01 03:55:39 2023
+[*]
+[dumpfile] "C:\Users\foeza\Documents\SystemVerilog\works\testbench\pipeline\raw.vcd"
+[savefile] "C:\Users\foeza\Documents\SystemVerilog\works\testbench\pipeline\pipeline.gtkw"
+[timestart] 0
+[size] 1920 1009
+[pos] -191 -191
+*-6.620081 84 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] tb_pipeline.
+[treeopen] tb_pipeline.u_pipeline.
+[treeopen] tb_pipeline.u_pipeline.genblk1.
+[treeopen] tb_pipeline.u_pipeline.genblk1.genblk1[0].
+[treeopen] tb_pipeline.u_pipeline.genblk1.genblk1[1].
+[treeopen] tb_pipeline.u_pipeline.genblk1.genblk1[2].
+[treeopen] tb_pipeline.u_pipeline.genblk1.genblk1[3].
+[treeopen] tb_pipeline.u_pipeline.genblk1.genblk1[4].
+[treeopen] tb_pipeline.u_pipeline.genblk1.genblk1[5].
+[sst_width] 265
+[signals_width] 263
+[sst_expanded] 1
+[sst_vpaned_height] 577
+@420
+tb_pipeline.pass
+tb_pipeline.fail
+tb_pipeline.cnt
+@28
+tb_pipeline.arst_n
+tb_pipeline.clk_i
+@22
+tb_pipeline.data_in[7:0]
+@28
+tb_pipeline.data_in_valid
+tb_pipeline.data_in_ready
+@22
+tb_pipeline.data_out[7:0]
+@28
+tb_pipeline.data_out_valid
+tb_pipeline.data_out_ready
+tb_pipeline.u_pipeline.genblk1.u_pipeline_core_first.data_out_valid
+tb_pipeline.u_pipeline.genblk1.genblk1[0].u_pipeline_core_middle.data_out_valid
+tb_pipeline.u_pipeline.genblk1.genblk1[1].u_pipeline_core_middle.data_out_valid
+tb_pipeline.u_pipeline.genblk1.genblk1[2].u_pipeline_core_middle.data_out_valid
+tb_pipeline.u_pipeline.genblk1.genblk1[3].u_pipeline_core_middle.data_out_valid
+tb_pipeline.u_pipeline.genblk1.genblk1[4].u_pipeline_core_middle.data_out_valid
+@29
+tb_pipeline.u_pipeline.genblk1.genblk1[5].u_pipeline_core_middle.data_out_valid
+@28
+tb_pipeline.u_pipeline.genblk1.u_pipeline_core_last.data_out_valid
+[pattern_trace] 1
+[pattern_trace] 0

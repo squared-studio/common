@@ -1,31 +1,31 @@
 /* 
-                  clk_i                     arst_n
-                 ---↓-------------------------↓---
-                ¦                                 ¦
-[WIDTH] data_in →                                 → [WIDTH] data_out
-  data_in_valid →          pipeline_core          → data_out_valid
-  data_in_ready ←                                 ← data_out_ready
-                ¦                                 ¦
-                 ---------------------------------
+                       clk_i                     arst_n
+                      ---↓-------------------------↓---
+                     ¦                                 ¦
+[DATA_WIDTH] data_in →                                 → [DATA_WIDTH] data_out
+       data_in_valid →          pipeline_core          → data_out_valid
+       data_in_ready ←                                 ← data_out_ready
+                     ¦                                 ¦
+                      ---------------------------------
 */
 
 module pipeline_core #(
-  parameter WIDTH = 8
+  parameter DATA_WIDTH = 8
 ) (
   input  logic             clk_i,
   input  logic             arst_n,
 
-  input  logic [WIDTH-1:0] data_in,
+  input  logic [DATA_WIDTH-1:0] data_in,
   input  logic             data_in_valid,
   output logic             data_in_ready,
 
-  output logic [WIDTH-1:0] data_out,
+  output logic [DATA_WIDTH-1:0] data_out,
   output logic             data_out_valid,
   input  logic             data_out_ready
 );
 
-  logic             is_full;
-  logic [WIDTH-1:0] mem;
+  logic                  is_full;
+  logic [DATA_WIDTH-1:0] mem;
 
   logic input_handshake;
   logic output_handshake;
