@@ -8,7 +8,6 @@ module tb_mem_bank;
     $display("%c[7;38m################################## TEST ENDED ##################################%c[0m", 27, 27);
   end
 
-  localparam CELL_WIDTH = 8;
   localparam ADDR_WIDTH = 12;
   localparam DATA_SIZE  = 2;
   localparam DATA_BYTES = 2**DATA_SIZE;
@@ -25,11 +24,11 @@ module tb_mem_bank;
   logic [DATA_WIDTH-1:0] rdata;
 
   mem_bank #(
-    .CELL_WIDTH ( CELL_WIDTH ),
     .ADDR_WIDTH ( ADDR_WIDTH ),
     .DATA_SIZE  ( DATA_SIZE  )
   ) u_mem_bank (
     .clk_i ( clk_i ),
+    .cs    ( '1    ),
     .addr  ( addr  ),
     .wdata ( wdata ),
     .wstrb ( wstrb ),

@@ -14,18 +14,23 @@ module mem_core #(
   localparam DEPTH      = (2**ADDR_WIDTH)
 ) (
   input  logic                  clk_i,
-  input  logic [ADDR_WIDTH-1:0] addr,
+  input  logic                  cs,
   input  logic                  we,
+  input  logic [ADDR_WIDTH-1:0] addr,
   input  logic [CELL_WIDTH-1:0] wdata,
   output logic [CELL_WIDTH-1:0] rdata
 );
 
   logic [DEPTH-1:0][CELL_WIDTH-1:0] mem;
+
+  logic do_write;
   
-  assign rdata = mem [addr];
+  assign rdata = cs ? mem [addr] : 'z;
+
+  assign do_write = cs & we;
 
   always_ff @( posedge clk_i ) begin 
-    if (we) begin
+    if (do_write) begin
       mem[addr] <= wdata;
     end
   end
