@@ -14,5 +14,5 @@ wave:
 	@gtkwave $(TOP_MODULE).gtkw
 
 clean:
-	@del $(CLEAN_TARGETS)
-	@cls
+	@rm -rf $(CLEAN_TARGETS)
+	@clear
