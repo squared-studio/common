@@ -9,6 +9,7 @@
 */
 
 module mem_bank #(
+  parameter CELL_WIDTH = 8,
   parameter ADDR_WIDTH = 8,
   parameter DATA_SIZE  = 2,
   localparam DATA_BYTES = (2**DATA_SIZE),
@@ -24,7 +25,8 @@ module mem_bank #(
   generate
     for (genvar i = 0; i < DATA_BYTES; i++) begin
       mem_core #(
-        .ADDR_WIDTH (ADDR_WIDTH - DATA_SIZE) 
+        .CELL_WIDTH ( CELL_WIDTH             ),
+        .ADDR_WIDTH ( ADDR_WIDTH - DATA_SIZE )
       ) u_mem_core (
         .clk_i ( clk_i                        ),
         .addr  ( addr[ADDR_WIDTH-1:DATA_SIZE] ),
