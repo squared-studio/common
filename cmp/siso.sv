@@ -32,17 +32,17 @@ module siso #(
   logic [DATA_WIDTH-1:0] mem [DEPTH];
 
   always_ff @( posedge clk_i or negedge arst_n ) begin : main
-    if (arst_n) begin : not_reset
+    if (~arst_n) begin : do_reset
+      for (int i = 0; i < DEPTH; i++) begin
+        mem [i] <= '0;
+      end
+    end
+    else begin : not_reset
       if (data_in_valid & data_out_ready) begin
         mem [0] <= data_in;
         for (int i = 1; i < DEPTH; i++) begin
           mem [i] <= mem [i-1];
         end
-      end
-    end
-    else begin : do_reset
-      for (int i = 0; i < DEPTH; i++) begin
-        mem [i] <= '0;
       end
     end
   end

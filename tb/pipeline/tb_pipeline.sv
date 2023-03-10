@@ -98,6 +98,8 @@ module tb_pipeline;
 
     repeat(2) @ (posedge clk_i);
 
+    $display("%0d/%0d PASSED", pass, pass+fail);
+
     $finish();
   end
 endmodule

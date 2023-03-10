@@ -48,7 +48,12 @@ module fifo #(
   assign data_out = mem [rd_ptr];
 
   always_ff @( posedge clk_i or negedge arst_n ) begin : main
-    if (arst_n) begin : not_reset
+    if (~arst_n) begin : not_reset
+      dt_cnt <= '0;
+      wr_ptr <= '0;
+      rd_ptr <= '0;
+    end
+    else begin : do_reset
       case ({data_out_hs,data_in_hs})
         2'b11  : begin dt_cnt <= dt_cnt;   rd_ptr <= rd_ptr_next; wr_ptr <= wr_ptr_next; end
         2'b10  : begin dt_cnt <= dt_cnt-1; rd_ptr <= rd_ptr_next; wr_ptr <= wr_ptr;      end
@@ -56,11 +61,6 @@ module fifo #(
         default: begin dt_cnt <= dt_cnt;   rd_ptr <= rd_ptr;      wr_ptr <= wr_ptr;      end
       endcase
       if (data_in_hs) mem [wr_ptr] <= data_in;
-    end
-    else begin : do_reset
-      dt_cnt <= '0;
-      wr_ptr <= '0;
-      rd_ptr <= '0;
     end
   end
 

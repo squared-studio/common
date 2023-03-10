@@ -37,7 +37,10 @@ module pipeline_core #(
   assign output_handshake = data_out_valid & data_out_ready;
 
   always_ff @( posedge clk_i or negedge arst_n) begin : main_block
-    if (arst_n) begin : not_reset
+    if (~arst_n) begin : do_reset
+      is_full <= '0;
+    end
+    else begin : not_reset
       if (input_handshake) begin
         mem <= data_in;
       end
@@ -47,9 +50,6 @@ module pipeline_core #(
         2'b11   : is_full <= '1;
         default : is_full <= is_full;
       endcase
-    end
-    else begin : do_reset
-      is_full <= '0;
     end
   end
 

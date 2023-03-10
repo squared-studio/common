@@ -99,6 +99,8 @@ module tb_siso;
 
     repeat(2) @ (posedge clk_i);
 
+    $display("%0d/%0d PASSED", pass, pass+fail);
+
     $finish();
   end
 endmodule
