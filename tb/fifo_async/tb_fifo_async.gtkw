@@ -1,0 +1,39 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Tue Mar 14 19:26:25 2023
+[*]
+[dumpfile] "C:\Users\foeza\Documents\SystemVerilog\works\tb\fifo_async\raw.vcd"
+[dumpfile_mtime] "Tue Mar 14 19:24:16 2023"
+[dumpfile_size] 50283
+[savefile] "C:\Users\foeza\Documents\SystemVerilog\works\tb\fifo_async\tb_fifo_async.gtkw"
+[timestart] 0
+[size] 1920 1009
+[pos] -9 -9
+*-6.552325 143 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] tb_fifo_async.
+[sst_width] 265
+[signals_width] 263
+[sst_expanded] 1
+[sst_vpaned_height] 577
+@28
+[color] 3
+tb_fifo_async.arst_n
+[color] 3
+tb_fifo_async.u_fifo_async.clk_i
+@22
+tb_fifo_async.u_fifo_async.data_in[7:0]
+@28
+tb_fifo_async.u_fifo_async.data_in_valid
+tb_fifo_async.u_fifo_async.data_in_ready
+[color] 3
+tb_fifo_async.u_fifo_async.clk_o
+@22
+tb_fifo_async.u_fifo_async.data_out[7:0]
+@28
+tb_fifo_async.u_fifo_async.data_out_valid
+tb_fifo_async.u_fifo_async.data_out_ready
+@420
+tb_fifo_async.pass
+tb_fifo_async.fail
+[pattern_trace] 1
+[pattern_trace] 0
