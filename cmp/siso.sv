@@ -24,12 +24,13 @@ module siso #(
   output logic                  data_out_valid,
   input  logic                  data_out_ready
 );
+  
+  logic [DATA_WIDTH-1:0] mem [DEPTH];
 
   assign data_out_valid = data_in_valid;
   assign data_in_ready = data_out_ready;
   assign data_out = mem [DEPTH-1];
 
-  logic [DATA_WIDTH-1:0] mem [DEPTH];
 
   always_ff @( posedge clk_i or negedge arst_n ) begin : main
     if (~arst_n) begin : do_reset

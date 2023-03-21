@@ -12,5 +12,5 @@ module xbar #(
       outputs [i] = inputs[input_select];
     end
   end
-    
+
 endmodule //xbar
