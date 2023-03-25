@@ -1,5 +1,10 @@
 prj
 *test*.sv
-*.vcd
 *.vvp
 *.out
+*.vcd
+*.log
+*.wdb
+*.jou
+*.pb
+xsim.dir
