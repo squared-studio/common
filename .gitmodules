@@ -1,0 +1,15 @@
+[submodule "pulp_platform/axi"]
+	path = pulp_platform/axi
+	url = https://github.com/pulp-platform/axi.git
+[submodule "pulp_platform/common_cells"]
+	path = pulp_platform/common_cells
+	url = https://github.com/pulp-platform/common_cells.git
+[submodule "pulp_platform/iDMA"]
+	path = pulp_platform/iDMA
+	url = https://github.com/pulp-platform/iDMA.git
+[submodule "pulp_platform/apb"]
+	path = pulp_platform/apb
+	url = https://github.com/pulp-platform/apb.git
+[submodule "pulp_platform/axi_mem_if"]
+	path = pulp_platform/axi_mem_if
+	url = https://github.com/pulp-platform/axi_mem_if.git
