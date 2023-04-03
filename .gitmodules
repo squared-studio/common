@@ -13,3 +13,6 @@
 [submodule "pulp_platform/axi_mem_if"]
 	path = pulp_platform/axi_mem_if
 	url = https://github.com/pulp-platform/axi_mem_if.git
+[submodule "aws/aws-fpga"]
+	path = aws/aws-fpga
+	url = https://github.com/aws/aws-fpga.git
