@@ -18,7 +18,7 @@ module siso #(
   output logic [SERIAL_WIDTH-1:0] data_out
 );
   
-  logic [SERIAL_WIDTH-1:0] mem [DEPTH];
+  logic [DEPTH-1:0][SERIAL_WIDTH-1:0] mem;
 
   assign data_out = mem [DEPTH-1];
 

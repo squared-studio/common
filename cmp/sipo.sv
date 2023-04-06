@@ -1,10 +1,8 @@
 /* 
-                         clk_i                                 arst_n
-                        ---↓--------------------------------------↓---
+                         clk_i             arst_n               en
+                        ---↓------------------↓------------------↓---
                        ¦                                              ¦
-[SERIAL_WIDTH] data_in →                                              → [PARALLEL_WIDTH] data_out
-         data_in_valid →                     sipo                     → data_out_valid
-         data_in_ready ←                                              ← data_out_ready
+[SERIAL_WIDTH] data_in →                     sipo                     → [PARALLEL_WIDTH] data_out
                        ¦                                              ¦
                         ----------------------------------------------
 */
@@ -17,22 +15,14 @@ module sipo #(
 ) (
   input  logic                      clk_i,
   input  logic                      arst_n,
-
+  input  logic                      en,
   input  logic [SERIAL_WIDTH-1:0]   data_in,
-  input  logic                      data_in_valid,
-  output logic                      data_in_ready,
-
-  output logic [PARALLEL_WIDTH-1:0] data_out,
-  output logic                      data_out_valid,
-  input  logic                      data_out_ready
+  output logic [PARALLEL_WIDTH-1:0] data_out
 );
   
-  logic [SERIAL_WIDTH-1:0] mem [DEPTH];
+  logic [DEPTH-1:0][SERIAL_WIDTH-1:0] mem;
 
-  assign data_out_valid = data_in_valid;
-  assign data_in_ready = data_out_ready;
-  assign data_out = mem [DEPTH-1];
-
+  assign data_out = mem;
 
   always_ff @( posedge clk_i or negedge arst_n ) begin : main
     if (~arst_n) begin : do_reset
@@ -41,10 +31,18 @@ module sipo #(
       end
     end
     else begin : not_reset
-      if (data_in_valid & data_out_ready) begin
-        mem [0] <= data_in;
-        for (int i = 1; i < DEPTH; i++) begin
-          mem [i] <= mem [i-1];
+      if (en) begin
+        if (LEFT_SHIFT) begin
+          mem [0] <= data_in;
+          for (int i = 1; i < DEPTH; i++) begin
+            mem [i] <= mem [i-1];
+          end
+        end
+        else begin
+          mem [DEPTH-1] <= data_in;
+          for (int i = 1; i < DEPTH; i++) begin
+            mem [i-1] <= mem [i];
+          end
         end
       end
     end
