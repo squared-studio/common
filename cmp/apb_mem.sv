@@ -61,7 +61,7 @@ module apb_mem #(
                             state <= IDLE;
                             ready <= '0;
                         end
-                        else if (~penable) begin 
+                        else if (~penable) begin
                             state <= SETUP;
                             ready <= '0;
                         end

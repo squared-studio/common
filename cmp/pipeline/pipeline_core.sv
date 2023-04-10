@@ -10,47 +10,47 @@
 */
 
 module pipeline_core #(
-  parameter DATA_WIDTH = 8
+    parameter DATA_WIDTH = 8
 ) (
-  input  logic                  clk_i,
-  input  logic                  arst_n,
+    input  logic                  clk_i,
+    input  logic                  arst_n,
 
-  input  logic [DATA_WIDTH-1:0] data_in,
-  input  logic                  data_in_valid,
-  output logic                  data_in_ready,
+    input  logic [DATA_WIDTH-1:0] data_in,
+    input  logic                  data_in_valid,
+    output logic                  data_in_ready,
 
-  output logic [DATA_WIDTH-1:0] data_out,
-  output logic                  data_out_valid,
-  input  logic                  data_out_ready
+    output logic [DATA_WIDTH-1:0] data_out,
+    output logic                  data_out_valid,
+    input  logic                  data_out_ready
 );
 
-  logic                  is_full;
-  logic [DATA_WIDTH-1:0] mem;
+    logic                  is_full;
+    logic [DATA_WIDTH-1:0] mem;
 
-  logic input_handshake;
-  logic output_handshake;
+    logic input_handshake;
+    logic output_handshake;
 
-  assign data_in_ready    = (is_full) ? data_out_ready : '1;
-  assign data_out         = mem;
-  assign data_out_valid   = is_full;
-  assign input_handshake  = data_in_valid & data_in_ready;
-  assign output_handshake = data_out_valid & data_out_ready;
+    assign data_in_ready    = (is_full) ? data_out_ready : '1;
+    assign data_out         = mem;
+    assign data_out_valid   = is_full;
+    assign input_handshake  = data_in_valid & data_in_ready;
+    assign output_handshake = data_out_valid & data_out_ready;
 
-  always_ff @( posedge clk_i or negedge arst_n) begin : main_block
-    if (~arst_n) begin : do_reset
-      is_full <= '0;
+    always_ff @( posedge clk_i or negedge arst_n) begin : main_block
+        if (~arst_n) begin : do_reset
+            is_full <= '0;
+        end
+        else begin : not_reset
+            if (input_handshake) begin
+                mem <= data_in;
+            end
+            case ({input_handshake, output_handshake})
+                2'b01   : is_full <= '0;
+                2'b10   : is_full <= '1;
+                2'b11   : is_full <= '1;
+                default : is_full <= is_full;
+            endcase
+        end
     end
-    else begin : not_reset
-      if (input_handshake) begin
-        mem <= data_in;
-      end
-      case ({input_handshake, output_handshake})
-        2'b01   : is_full <= '0;
-        2'b10   : is_full <= '1;
-        2'b11   : is_full <= '1;
-        default : is_full <= is_full;
-      endcase
-    end
-  end
 
 endmodule
