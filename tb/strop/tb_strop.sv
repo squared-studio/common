@@ -1,5 +1,4 @@
 `include "../../pkg/string_ops_pkg.sv"
-`default_nettype none
 
 module tb_strop;
     initial begin
