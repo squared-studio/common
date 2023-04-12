@@ -36,8 +36,8 @@ module fifo #(
     logic data_in_hs;
     logic data_out_hs;
 
-    assign data_in_ready  = (dt_cnt < DEPTH);
-    assign data_out_valid = (dt_cnt > 0    );
+    assign data_in_ready  = (dt_cnt != DEPTH);
+    assign data_out_valid = (dt_cnt != 0    );
 
     assign data_in_hs  = data_in_valid  & data_in_ready;
     assign data_out_hs = data_out_valid & data_out_ready;
