@@ -1,18 +1,21 @@
-[submodule "pulp_platform/axi"]
-	path = pulp_platform/axi
+[submodule "sub/pulp_platform/axi"]
+	path = sub/pulp_platform/axi
 	url = https://github.com/pulp-platform/axi.git
-[submodule "pulp_platform/common_cells"]
-	path = pulp_platform/common_cells
+[submodule "sub/pulp_platform/common_cells"]
+	path = sub/pulp_platform/common_cells
 	url = https://github.com/pulp-platform/common_cells.git
-[submodule "pulp_platform/iDMA"]
-	path = pulp_platform/iDMA
+[submodule "sub/pulp_platform/iDMA"]
+	path = sub/pulp_platform/iDMA
 	url = https://github.com/pulp-platform/iDMA.git
-[submodule "pulp_platform/apb"]
-	path = pulp_platform/apb
+[submodule "sub/pulp_platform/apb"]
+	path = sub/pulp_platform/apb
 	url = https://github.com/pulp-platform/apb.git
-[submodule "pulp_platform/axi_mem_if"]
-	path = pulp_platform/axi_mem_if
+[submodule "sub/pulp_platform/axi_mem_if"]
+	path = sub/pulp_platform/axi_mem_if
 	url = https://github.com/pulp-platform/axi_mem_if.git
-[submodule "axi_vreader_vwriter"]
-	path = axi_vreader_vwriter
+[submodule "sub/xcelerium/axi_vreader_vwriter"]
+	path = sub/xcelerium/axi_vreader_vwriter
 	url = https://github.com/xcelerium/axi_vreader_vwriter.git
+[submodule "sub/xcelerium/scalar-unit"]
+	path = sub/xcelerium/scalar-unit
+	url = https://github.com/xcelerium/scalar-unit
