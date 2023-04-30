@@ -1,21 +1,21 @@
-[submodule "sub/pulp_platform/axi"]
-	path = sub/pulp_platform/axi
-	url = https://github.com/pulp-platform/axi.git
-[submodule "sub/pulp_platform/common_cells"]
-	path = sub/pulp_platform/common_cells
-	url = https://github.com/pulp-platform/common_cells.git
-[submodule "sub/pulp_platform/iDMA"]
-	path = sub/pulp_platform/iDMA
-	url = https://github.com/pulp-platform/iDMA.git
-[submodule "sub/pulp_platform/apb"]
-	path = sub/pulp_platform/apb
-	url = https://github.com/pulp-platform/apb.git
-[submodule "sub/pulp_platform/axi_mem_if"]
-	path = sub/pulp_platform/axi_mem_if
-	url = https://github.com/pulp-platform/axi_mem_if.git
 [submodule "sub/xcelerium/axi_vreader_vwriter"]
 	path = sub/xcelerium/axi_vreader_vwriter
 	url = https://github.com/xcelerium/axi_vreader_vwriter.git
 [submodule "sub/xcelerium/scalar-unit"]
 	path = sub/xcelerium/scalar-unit
-	url = https://github.com/xcelerium/scalar-unit
+	url = https://github.com/xcelerium/scalar-unit.git
+[submodule "sub/pulp-platform/axi"]
+	path = sub/pulp-platform/axi
+	url = https://github.com/pulp-platform/axi.git
+[submodule "sub/pulp-platform/common_cells"]
+	path = sub/pulp-platform/common_cells
+	url = https://github.com/pulp-platform/common_cells.git
+[submodule "sub/pulp-platform/iDMA"]
+	path = sub/pulp-platform/iDMA
+	url = https://github.com/pulp-platform/iDMA.git
+[submodule "sub/pulp-platform/apb"]
+	path = sub/pulp-platform/apb
+	url = https://github.com/pulp-platform/apb.git
+[submodule "sub/pulp-platform/axi_mem_if"]
+	path = sub/pulp-platform/axi_mem_if
+	url = https://github.com/pulp-platform/axi_mem_if.git
