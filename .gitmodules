@@ -13,3 +13,6 @@
 [submodule "pulp_platform/axi_mem_if"]
 	path = pulp_platform/axi_mem_if
 	url = https://github.com/pulp-platform/axi_mem_if.git
+[submodule "axi_vreader_vwriter"]
+	path = axi_vreader_vwriter
+	url = https://github.com/xcelerium/axi_vreader_vwriter.git
