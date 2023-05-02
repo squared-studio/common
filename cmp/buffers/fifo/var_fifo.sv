@@ -77,8 +77,8 @@ module var_fifo #(
 
     assign elem_available_next = elem_available + num_data_ins - num_data_outs;
     
-    assign wr_ptr_next = ((wr_ptr+data_in_num_lanes)<NUM_ELEM) ? (wr_ptr+data_in_num_lanes) : ((wr_ptr+data_in_num_lanes)-NUM_ELEM);
-    assign rd_ptr_next = ((rd_ptr+data_out_num_lanes)<NUM_ELEM) ? (rd_ptr+data_out_num_lanes) : ((rd_ptr+data_out_num_lanes)-NUM_ELEM);
+    assign wr_ptr_next = ((wr_ptr+data_in_num_lanes)<FIFO_DEPTH) ? (wr_ptr+data_in_num_lanes) : ((wr_ptr+data_in_num_lanes)-FIFO_DEPTH);
+    assign rd_ptr_next = ((rd_ptr+data_out_num_lanes)<FIFO_DEPTH) ? (rd_ptr+data_out_num_lanes) : ((rd_ptr+data_out_num_lanes)-FIFO_DEPTH);
 
     generate
         for (genvar i = 0; i < NUM_ELEM; i++) begin
@@ -86,9 +86,15 @@ module var_fifo #(
         end
     endgenerate
     
-    generate // TODO : CHECK
+    generate // TODO : CHECK 
         for (genvar i = 0; i < NUM_ELEM; i++) begin
             assign data_out_xbar_select [i] = (i < data_out_start_lane) ? ((i+NUM_ELEM) - data_out_start_lane) : (i - data_out_start_lane);
+        end
+    endgenerate
+
+    generate
+        for (genvar i = 0; i < NUM_ELEM; i++) begin
+            assign data_out_x [i] = mem[((rd_ptr+i)<FIFO_DEPTH) ? (rd_ptr+i) : ((rd_ptr+i)-FIFO_DEPTH)];
         end
     endgenerate
 

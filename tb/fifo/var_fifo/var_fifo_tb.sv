@@ -1,13 +1,6 @@
 module var_fifo_tb;
 
-    initial begin
-        $dumpfile("raw.vcd");
-        $dumpvars;
-        $display("%c[7;38m################################# TEST STARTED #################################%c[0m", 27, 27);
-    end
-    final begin
-        $display("%c[7;38m################################## TEST ENDED ##################################%c[0m", 27, 27);
-    end
+    `include "tb_essentials.sv"
 
     // Parameters
     localparam  ELEM_WIDTH = 4;
@@ -88,32 +81,67 @@ module var_fifo_tb;
         apply_reset();
         start_clock();
         repeat (5) @ (posedge clk_i);
-        //for (int i = 0; i < NUM_ELEM; i++) begin
-        //    for (int j = 0; j < (NUM_ELEM+1); j++) begin
-        //        data_in_start_lane = i;
-        //        data_in_num_lanes  = j;
-        //        @ (posedge clk_i);        
-        //    end
-        //end
+
+        for (int i = 0; i < NUM_ELEM; i++) begin
+            for (int j = 0; j < (NUM_ELEM+1); j++) begin
+                data_in_start_lane = i;
+                data_in_num_lanes  = j;
+                @ (posedge clk_i);        
+            end
+        end
+
+        repeat (20) @ (posedge clk_i);
 
         data_in <= 'hdcba;
-        data_in_start_lane = 1;
-        data_in_num_lanes  = 2;
+        data_in_start_lane <= 1;
+        data_in_num_lanes  <= 2;
         data_in_valid <= '1;
         @ (posedge clk_i);
         data_in <= 'h89fe;
-        data_in_start_lane = 1;
-        data_in_num_lanes  = 3;
+        data_in_start_lane <= 1;
+        data_in_num_lanes  <= 3;
         data_in_valid <= '1;
         @ (posedge clk_i);
         data_in <= 'h4567;
-        data_in_start_lane = 0;
-        data_in_num_lanes  = 3;
+        data_in_start_lane <= 0;
+        data_in_num_lanes  <= 3;
         data_in_valid <= '1;
         @ (posedge clk_i);
         data_in_valid <= '0;
 
-        repeat (5) @ (posedge clk_i);
+        repeat (20) @ (posedge clk_i);
+
+        for (int i = 0; i < NUM_ELEM; i++) begin
+            for (int j = 0; j < (NUM_ELEM+1); j++) begin
+                data_out_start_lane = i;
+                data_out_num_lanes  = j;
+                @ (posedge clk_i);        
+            end
+        end
+
+        repeat (20) @ (posedge clk_i);
+
+        @ (posedge clk_i);
+        data_out_start_lane <= 0;
+        data_out_num_lanes  <= 0;
+        data_out_ready <= '1;
+        @ (posedge clk_i);
+        data_out_start_lane <= 0;
+        data_out_num_lanes  <= 1;
+        data_out_ready <= '1;
+        @ (posedge clk_i);
+        data_out_start_lane <= 2;
+        data_out_num_lanes  <= 2;
+        data_out_ready <= '1;
+        @ (posedge clk_i);
+        data_out_start_lane <= 0;
+        data_out_num_lanes  <= 4;
+        data_out_ready <= '1;
+        @ (posedge clk_i);
+        data_out_ready <= '0;
+
+        repeat (20) @ (posedge clk_i);
+
         $finish;
     end
 
