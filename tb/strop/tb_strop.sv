@@ -1,4 +1,4 @@
-`include "../../pkg/string_ops_pkg.sv"
+`include "string_ops_pkg.sv"
 
 module tb_strop;
     initial begin

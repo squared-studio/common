@@ -32,6 +32,12 @@ module tb_model;
     initial begin
         apply_reset();
         start_clock();
+        
+        if (1) $write("%c[1;32m[PASS]%c[0m", 27, 27); else $write("%c[1;31m[FAIL]%c[0m", 27, 27);
+        $display("this is a PASS");
+        if (0) $write("%c[1;32m[PASS]%c[0m", 27, 27); else $write("%c[1;31m[FAIL]%c[0m", 27, 27);
+        $display("and this is a FAIL");    
+
         $finish;
     end
 

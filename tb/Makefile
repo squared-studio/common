@@ -1,16 +1,18 @@
 TOP_DIR = $(shell find -name "$(TOP).sv" | sed "s/$(TOP).sv//g")
 
-DES_LIB_CMP += $(shell find $(PWD)/../cmp/ -name "*.sv")
-TBF_LIB_CMP += $(shell find $(PWD)/$(TOP_DIR) -name "*.sv")
+DES_LIB_CMP += $(shell find $(realpath ../cmp/) -name "*.sv")
+TBF_LIB_CMP += $(shell find $(realpath ./)/$(TOP_DIR) -name "*.sv")
 
-CLEAN_TARGETS += $(shell find $(PWD)/ -name "*.out")
-CLEAN_TARGETS += $(shell find $(PWD)/ -name "*.vcd")
-CLEAN_TARGETS += $(shell find $(PWD)/ -name "*.log")
-CLEAN_TARGETS += $(shell find $(PWD)/ -name "*.wdb")
-CLEAN_TARGETS += $(shell find $(PWD)/ -name "*.jou")
-CLEAN_TARGETS += $(shell find $(PWD)/ -name "*.pb")
-CLEAN_TARGETS += $(shell find $(PWD)/ -name ".Xil")
-CLEAN_TARGETS += $(shell find $(PWD)/ -name "xsim.dir")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.out")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.vcd")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.log")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.wdb")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.jou")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.pb")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name ".Xil")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "xsim.dir")
+
+INC_DIR = $(shell realpath ../include)
 
 .PHONY: run
 run:
@@ -21,7 +23,7 @@ run:
 
 .PHONY: iverilog
 iverilog: clean
-	@cd $(TOP_DIR); iverilog -g2012 -o $(TOP).out -s $(TOP) -l $(DES_LIB_CMP) $(TBF_LIB_CMP)
+	@cd $(TOP_DIR); iverilog -I $(INC_DIR) -g2012 -o $(TOP).out -s $(TOP) -l $(DES_LIB_CMP) $(TBF_LIB_CMP)
 	@cd $(TOP_DIR); vvp $(TOP).out
 
 .PHONY: vivado
@@ -34,7 +36,7 @@ elaborate: compile
 
 .PHONY: compile
 compile: clean
-	@cd $(TOP_DIR); xvlog -sv $(TOP).sv -L UVM -L TBF=$(TBF_LIB_CMP) -L CMP=$(DES_LIB_CMP)
+	@cd $(TOP_DIR); xvlog -i $(INC_DIR) -sv $(TOP).sv -L UVM -L TBF=$(TBF_LIB_CMP) -L CMP=$(DES_LIB_CMP)
 
 .PHONY: clean
 clean:

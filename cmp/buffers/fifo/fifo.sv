@@ -36,8 +36,8 @@ module fifo #(
     logic data_in_hs;
     logic data_out_hs;
 
-    assign data_in_ready  = (dt_cnt != DEPTH);
-    assign data_out_valid = (dt_cnt != 0    );
+    assign data_in_ready  = (dt_cnt == DEPTH) ? data_out_ready : 1;
+    assign data_out_valid = (dt_cnt == 0) ? data_in_valid : '1;
 
     assign data_in_hs  = data_in_valid  & data_in_ready;
     assign data_out_hs = data_out_valid & data_out_ready;
@@ -45,7 +45,7 @@ module fifo #(
     assign wr_ptr_next = ((wr_ptr+1)<DEPTH) ? wr_ptr+1 : '0; 
     assign rd_ptr_next = ((rd_ptr+1)<DEPTH) ? rd_ptr+1 : '0; 
 
-    assign data_out = mem [rd_ptr];
+    assign data_out = dt_cnt ? mem [rd_ptr] : data_in;
 
     always_ff @( posedge clk_i or negedge arst_n ) begin : main
         if (~arst_n) begin : not_reset
