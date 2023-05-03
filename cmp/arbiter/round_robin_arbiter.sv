@@ -1,3 +1,11 @@
+/*
+                 clk_i         arst_n
+               ---↓----------------↓---
+              ¦                        ¦
+[NUM_REQ] req →   round_robin_arbiter  → [NUM_REQ] gnt
+              ¦                        ¦
+               ------------------------
+*/
 module round_robin_arbiter #(
     parameter  CLOG2_NUM_REQ = 2,
     localparam NUM_REQ = (2**CLOG2_NUM_REQ)
@@ -6,7 +14,7 @@ module round_robin_arbiter #(
     input  logic               arst_n,
     input  logic [NUM_REQ-1:0] req,
     output logic [NUM_REQ-1:0] gnt
-    );
+);
     
     logic [CLOG2_NUM_REQ-1:0] xbar_sel;
     

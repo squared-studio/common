@@ -1,3 +1,12 @@
+/*
+                          arst_n
+               -------------↓--------------
+              ¦                            ¦
+[NUM_REQ] req →   fixed_priority_arbiter   → [NUM_REQ] gnt
+              ¦                            ¦
+               ----------------------------
+*/
+
 module fixed_priority_arbiter #(
     parameter NUM_REQ = 4
 ) (
