@@ -1,12 +1,6 @@
 module tb_pipeline;
-  initial begin
-    $dumpfile("raw.vcd");
-    $dumpvars;
-    $display("%c[7;38m################################# TEST STARTED #################################%c[0m", 27, 27);
-  end
-  final begin
-    $display("%c[7;38m################################## TEST ENDED ##################################%c[0m", 27, 27);
-  end
+
+  `include "tb_essentials.sv"
 
   localparam DATA_WIDTH = 8;
   localparam NUM_STAGES = 8;
@@ -99,6 +93,7 @@ module tb_pipeline;
     repeat(2) @ (posedge clk_i);
 
     $display("%0d/%0d PASSED", pass, pass+fail);
+    result_print(0, "TX_CNT");
 
     $finish();
   end

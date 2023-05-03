@@ -7,9 +7,19 @@ final begin
     $display("%c[7;38m################################## TEST ENDED ##################################%c[0m", 27, 27);
 end
 
-function void result_print(bit PASS, string msg);
-    if (PASS) $write("%c[1;32m[PASS] %c[0m", 27, 27); 
-    else      $write("%c[1;31m[FAIL] %c[0m", 27, 27);
+string __TOP_NAME__ = $sformatf("%m");
+
+function void result_print (bit PASS, string msg);
+    if (PASS) begin 
+        $sformat(msg, "%c[1;32m[PASS]%c[0m %s", 27, 27, msg); 
+    end 
+    else begin 
+        int fd;
+        fd = $fopen ("cicd_error_log", "a");
+        $sformat(msg, "%c[1;31m[FAIL]%c[0m %s", 27, 27, msg);
+        $fwrite(fd, "%s %c[1;33m[%s]%c[0m\n", msg, 27, __TOP_NAME__, 27);
+        $fclose(fd); 
+    end
     $display(msg);
 endfunction
 
