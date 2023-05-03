@@ -1,2 +1,53 @@
+TOP_DIR = $(shell find -name "$(TOP).sv" | sed "s/$(TOP).sv//g")
+
+DES_LIB_CMP += $(shell find $(realpath ./cmp/) -name "*.sv")
+TBF_LIB_CMP += $(shell find $(realpath ./)/$(TOP_DIR) -name "*.sv")
+INC_DIR = $(shell realpath ./include)
+
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.out")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.vcd")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.log")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.wdb")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.jou")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.pb")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name ".Xil")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "xsim.dir")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "CICD_REPORT")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "cicd_error_log")
+
+.PHONY: run
 run:
-	@make -f runner_core TOP=tb_pipeline
+	@clear
+	@echo "To run a test with iverilog or vivado, please type:"
+	@echo "make iverilog TOP=<top_module>"
+	@echo "make vivado TOP=<top_module>"
+	@echo "make CICD"
+
+.PHONY: CICD
+CICD:
+	@make -f runner
+	@make clean
+	@clear
+	@echo -e "\033[1;32mCICD SUCCESSFULLY COMPLETE\033[0m";
+
+.PHONY: iverilog
+iverilog: clean
+	@cd $(TOP_DIR); iverilog -I $(INC_DIR) -g2012 -o $(TOP).out -s $(TOP) -l $(DES_LIB_CMP) $(TBF_LIB_CMP)
+	@cd $(TOP_DIR); vvp $(TOP).out
+
+.PHONY: vivado
+vivado: elaborate
+	@cd $(TOP_DIR); xsim top -runall
+
+.PHONY: elaborate
+elaborate: compile
+	@cd $(TOP_DIR); xelab $(TOP) -s top
+
+.PHONY: compile
+compile: clean
+	@cd $(TOP_DIR); xvlog -i $(INC_DIR) -sv $(TOP).sv -L UVM -L TBF=$(TBF_LIB_CMP) -L CMP=$(DES_LIB_CMP)
+
+.PHONY: clean
+clean:
+	@rm -rf $(CLEAN_TARGETS)
+	@clear

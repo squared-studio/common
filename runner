@@ -11,7 +11,6 @@ step1:
 
 step2: step1	
 	@$(foreach word,$(list), make -f runner_core iverilog TOP=$(word);)
-	@cd tb; make clean;
 	@clear;
 
 step3: step2	
