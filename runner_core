@@ -1,0 +1,7 @@
+TOP_DIR = $(shell find -name "$(TOP).sv" | sed "s/$(TOP).sv//g")
+DES_LIB_CMP += $(shell find ./cmp/ -name "*.sv")
+TBF_LIB_CMP += $(shell find ./$(TOP_DIR) -name "*.sv")
+INC_DIR = ./include
+iverilog:
+	@iverilog -I $(INC_DIR) -g2012 -o $(TOP).out -s $(TOP) -l $(DES_LIB_CMP) $(TBF_LIB_CMP)
+	@vvp $(TOP).out
