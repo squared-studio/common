@@ -12,8 +12,8 @@ CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.jou")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.pb")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name ".Xil")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "xsim.dir")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "CICD_REPORT")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "cicd_error_log")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "CI_REPORT")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "ci_error_log")
 
 .PHONY: run
 run:
@@ -21,14 +21,14 @@ run:
 	@echo "To run a test with iverilog or vivado, please type:"
 	@echo "make iverilog TOP=<top_module>"
 	@echo "make vivado TOP=<top_module>"
-	@echo "make CICD"
+	@echo "make CI"
 
-.PHONY: CICD
-CICD:
+.PHONY: CI
+CI:
 	@make -f runner
 	@make clean
 	@clear
-	@echo -e "\033[1;32mCICD SUCCESSFULLY COMPLETE\033[0m";
+	@echo -e "\033[1;32mCONTINUOUS INTEGRATION SUCCESSFULLY COMPLETE\033[0m";
 
 .PHONY: iverilog
 iverilog: clean

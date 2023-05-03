@@ -2,18 +2,18 @@ list += tb_fifo
 list += tb_pipeline
 
 final: step3
-	@cat CICD_REPORT;
-	@$(shell cat CICD_REPORT)
+	@cat CI_REPORT;
+	@$(shell cat CI_REPORT)
 
 step1:
-	@rm -rf CICD_REPORT;
-	@> CICD_REPORT;
+	@rm -rf CI_REPORT;
+	@> CI_REPORT;
 
 step2: step1	
 	@$(foreach word,$(list), make -f runner_core iverilog TOP=$(word);)
 	@clear;
 
 step3: step2	
-	@$(eval _TMP := $(shell find -name "cicd_error_log"))
-	@$(foreach word,$(_TMP), cat $(word) >> CICD_REPORT;)
+	@$(eval _TMP := $(shell find -name "ci_error_log"))
+	@$(foreach word,$(_TMP), cat $(word) >> CI_REPORT;)
 	@rm -f *.vcd $(_TMP)
