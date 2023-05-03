@@ -1,2 +1,2 @@
 run:
-	@make -f runner
+	@make -f runner_core TOP=tb_fifo
