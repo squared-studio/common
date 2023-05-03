@@ -49,13 +49,13 @@ module round_robin_arbiter #(
     );
   
 
-    generate;
+    generate
         for (genvar i = 0; i < NUM_REQ; i++) begin
             assign req_in_sel[i] = i + xbar_sel;
         end
     endgenerate
     
-    generate;
+    generate
         for (genvar i = 0; i < NUM_REQ; i++) begin
             assign gnt_in_sel[i] = i + (NUM_REQ - xbar_sel);
         end
