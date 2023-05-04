@@ -1,6 +1,0 @@
-TOP_DIR = $(shell find -name "$(TOP).sv" | sed "s/$(TOP).sv//g")
-FILES += $(shell find ./cmp/ -name "*.sv")
-FILES += $(shell find ./$(TOP_DIR) -name "*.sv")
-iverilog:
-	@iverilog -I ./include -g2012 -o $(TOP).out -s $(TOP) -l $(FILES)
-	@vvp $(TOP).out

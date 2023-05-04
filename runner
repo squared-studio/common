@@ -1,19 +1,16 @@
-list += tb_fifo
-list += tb_pipeline
+TOP_DIR = $(shell find $(realpath ./tb/) -name "$(TOP).sv" | sed "s/$(TOP).sv//g")
+DES_LIB_CMP = $(shell find $(realpath ./cmp/) -name "*.sv")
+TBF_LIB_CMP = $(shell find $(TOP_DIR) -name "*.sv")
+INC_DIR = $(realpath ./include)
 
-final: step3
-	@cat CI_REPORT;
-	@$(shell cat CI_REPORT)
+.PHONY: vivado
+vivado: elaborate
+	@xsim top -runall
 
-step1:
-	@rm -rf CI_REPORT;
-	@> CI_REPORT;
+.PHONY: elaborate
+elaborate: compile
+	@xelab $(TOP) -s top
 
-step2: step1	
-	@$(foreach word,$(list), make -f runner_core iverilog TOP=$(word);)
-	@clear;
-
-step3: step2	
-	@$(eval _TMP := $(shell find -name "ci_error_log"))
-	@$(foreach word,$(_TMP), cat $(word) >> CI_REPORT;)
-	@rm -f *.vcd $(_TMP)
+.PHONY: compile
+compile:
+	@xvlog -i $(INC_DIR) -sv $(TOP_DIR)$(TOP).sv -L UVM -L TBF=$(TBF_LIB_CMP) -L CMP=$(DES_LIB_CMP)
