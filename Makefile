@@ -1,6 +1,6 @@
 TOP_DIR = $(shell find $(realpath ./) -name "$(TOP).sv" | sed "s/$(TOP).sv//g")
-DES_LIB_CMP += $(shell find $(realpath ./cmp/) -name "*.sv")
-TBF_LIB_CMP += $(shell find $(TOP_DIR) -name "*.sv")
+DES_LIB_RTL += $(shell find $(realpath ./rtl/) -name "*.sv")
+TBF_LIB_RTL += $(shell find $(TOP_DIR) -name "*.sv")
 INC_DIR = $(realpath ./include)
 CI_LIST = $(shell cat CI_LIST)
 
@@ -29,11 +29,11 @@ print_vars:
 	@echo "TOP_DIR:"
 	@echo "$(TOP_DIR)";
 	@echo ""
-	@echo "DES_LIB_CMP:"
-	@echo "$(DES_LIB_CMP)";
+	@echo "DES_LIB_RTL:"
+	@echo "$(DES_LIB_RTL)";
 	@echo ""
-	@echo "TBF_LIB_CMP:"
-	@echo "$(TBF_LIB_CMP)";
+	@echo "TBF_LIB_RTL:"
+	@echo "$(TBF_LIB_RTL)";
 	@echo ""
 	@echo "INC_DIR:"
 	@echo "$(INC_DIR)";
@@ -43,7 +43,7 @@ print_vars:
 
 .PHONY: iverilog
 iverilog: clean
-	@cd $(TOP_DIR); iverilog -I $(INC_DIR) -g2012 -o $(TOP).out -s $(TOP) -l $(DES_LIB_CMP) $(TBF_LIB_CMP)
+	@cd $(TOP_DIR); iverilog -I $(INC_DIR) -g2012 -o $(TOP).out -s $(TOP) -l $(DES_LIB_RTL) $(TBF_LIB_RTL)
 	@cd $(TOP_DIR); vvp $(TOP).out
 
 .PHONY: vivado
@@ -56,7 +56,7 @@ elaborate: compile
 
 .PHONY: compile
 compile: clean
-	@cd $(TOP_DIR); xvlog -i $(INC_DIR) -sv $(TOP).sv -L UVM -L TBF=$(TBF_LIB_CMP) -L CMP=$(DES_LIB_CMP)
+	@cd $(TOP_DIR); xvlog -i $(INC_DIR) -sv $(TOP).sv -L UVM -L TBF=$(TBF_LIB_RTL) -L RTL=$(DES_LIB_RTL)
 
 .PHONY: CI
 CI: ci_collect_all_logs
@@ -83,8 +83,8 @@ ci_run_all_tests: clean
 .PHONY: ci_run_single
 ci_run_single:
 	@$(eval SEL_TOP_DIR = $(shell find $(realpath ./tb/) -name "$(SEL_TOP).sv" | sed "s/$(SEL_TOP).sv//g"))
-	@$(eval TBF_LIB_CMP = $(shell find $(SEL_TOP_DIR) -name "*.sv"))
-	@cd $(SEL_TOP_DIR); xvlog -i $(INC_DIR) -sv $(SEL_TOP_DIR)$(SEL_TOP).sv -L UVM -L TBF=$(TBF_LIB_CMP) -L CMP=$(DES_LIB_CMP)
+	@$(eval TBF_LIB_RTL = $(shell find $(SEL_TOP_DIR) -name "*.sv"))
+	@cd $(SEL_TOP_DIR); xvlog -i $(INC_DIR) -sv $(SEL_TOP_DIR)$(SEL_TOP).sv -L UVM -L TBF=$(TBF_LIB_RTL) -L RTL=$(DES_LIB_RTL)
 	@cd $(SEL_TOP_DIR); xelab $(SEL_TOP) -s top
 	@cd $(SEL_TOP_DIR); xsim top -runall
 
