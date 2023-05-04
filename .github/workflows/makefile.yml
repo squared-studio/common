@@ -1,48 +1,11 @@
-name: 'verible-linter
-
+name: Verible linter example
 on:
-  push:
-    branch: [ ]
-
-runs:
-  using: 'composite'
-  steps:
-    - name: Check if running on Ubuntu Linux
-      shell: bash
-      run: |
-          source /etc/os-release
-          case "$ID" in
-            ubuntu) echo 'Running on Ubuntu Linux'; exit 0 ;;
-                 *) echo 'Not running on Ubuntu Linux'; exit 1 ;; 
-          esac
-    - name: Install dependencies
-      shell: bash
-      run: |
-          sudo apt-get update -qq
-          sudo apt-get -y install --no-install-recommends git python3 python3-click python3-unidiff
-    - name: Install Verible
-      uses: chipsalliance/verible-actions-common/install-verible@main
+  pull_request:
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: chipsalliance/verible-linter-action@main
       with:
-        github_token: ${{ inputs.github_token }}
-        verible_version: ${{ inputs.verible_version }}
-    - name: Install reviewdog
-      uses: chipsalliance/verible-actions-common/build-reviewdog@main
-    - name: Run Verible linter with reviewdog
-      shell: bash
-      env:
-        INPUT_CONFIG_FILE: ${{ inputs.config_file }}
-        INPUT_EXCLUDE_PATHS: ${{ inputs.exclude_paths }}
-        INPUT_EXTRA_ARGS: ${{ inputs.extra_args }}
-        INPUT_EXTENSIONS: ${{ inputs.extensions }}
-        INPUT_FAIL_ON_ERROR: ${{ inputs.fail_on_error }}
-        INPUT_GITHUB_TOKEN: ${{ inputs.github_token }}
-        INPUT_LOG_FILE: ${{ inputs.log_file }}
-        INPUT_PATHS: ${{ inputs.paths }}
-        INPUT_REVIEWDOG_REPORTER: ${{ inputs.reviewdog_reporter }}
-        INPUT_SUGGEST_FIXES: ${{ inputs.suggest_fixes }}
-      run: ${{ github.action_path }}/entrypoint.sh
-    - name: Upload linter log
-      uses: actions/upload-artifact@v3
-      with:
-        name: verible-linter
-        path: ${{ inputs.log_file }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
