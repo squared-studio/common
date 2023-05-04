@@ -1,13 +1,20 @@
+
 name: Verible linter example
 on:
-  push:
-    branches: [ ]
-    
+  pull_request_target:
+
 jobs:
   lint:
     runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      contents: read
+      pull-requests: write
     steps:
-    - uses: actions/checkout@master
-    - uses: chipsalliance/verible-linter-action@main
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Run Verible action
+        uses: chipsalliance/verible-linter-action@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
