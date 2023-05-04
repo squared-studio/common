@@ -138,7 +138,7 @@ module var_fifo_tb;
         data_out_num_lanes  <= 4;
         data_out_ready <= '1;
         @ (posedge clk_i);
-        data_out_ready <= '0;l
+        data_out_ready <= '0;
 
         repeat (20) @ (posedge clk_i);
 

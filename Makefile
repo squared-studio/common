@@ -1,7 +1,7 @@
-TOP_DIR = $(shell find -name "$(TOP).sv" | sed "s/$(TOP).sv//g")
+TOP_DIR = $(shell find $(realpath ./) -name "$(TOP).sv" | sed "s/$(TOP).sv//g")
 DES_LIB_CMP += $(shell find $(realpath ./cmp/) -name "*.sv")
-TBF_LIB_CMP += $(shell find $(realpath ./)/$(TOP_DIR) -name "*.sv")
-INC_DIR = $(shell realpath ./include)
+TBF_LIB_CMP += $(shell find $(TOP_DIR) -name "*.sv")
+INC_DIR = $(realpath ./include)
 CI_LIST = $(shell cat CI_LIST)
 
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.out")
@@ -16,11 +16,30 @@ CLEAN_TARGETS += $(shell find $(realpath ./) -name "ci_error_log")
 
 .PHONY: run
 run:
-	@clear
 	@echo "To run a test with iverilog or vivado, please type:"
 	@echo "make iverilog TOP=<top_module>"
 	@echo "make vivado TOP=<top_module>"
 	@echo "make CI"
+
+.PHONY: print_vars
+print_vars:
+	@echo "TOP:"
+	@echo "$(TOP)";
+	@echo ""
+	@echo "TOP_DIR:"
+	@echo "$(TOP_DIR)";
+	@echo ""
+	@echo "DES_LIB_CMP:"
+	@echo "$(DES_LIB_CMP)";
+	@echo ""
+	@echo "TBF_LIB_CMP:"
+	@echo "$(TBF_LIB_CMP)";
+	@echo ""
+	@echo "INC_DIR:"
+	@echo "$(INC_DIR)";
+	@echo ""
+	@echo "CI_LIST:"
+	@echo "$(CI_LIST)";
 
 .PHONY: iverilog
 iverilog: clean
@@ -42,7 +61,6 @@ compile: clean
 .PHONY: CI
 CI: ci_run_step3
 	@make clean
-	@clear
 	@echo -e "\033[1;32mCONTINUOUS INTEGRATION SUCCESSFULLY COMPLETE\033[0m";
 	@cat CI_REPORT
 
@@ -55,7 +73,6 @@ ci_run_step3: ci_run_step2
 .PHONY: ci_run_step2
 ci_run_step2: ci_run_step1	
 	@$(foreach word,$(CI_LIST), make -f runner vivado TOP=$(word);)
-	@clear;
 
 .PHONY: ci_run_step1
 ci_run_step1:
@@ -65,4 +82,3 @@ ci_run_step1:
 .PHONY: clean
 clean:
 	@rm -rf $(CLEAN_TARGETS)
-	@clear
