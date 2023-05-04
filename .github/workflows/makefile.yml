@@ -1,5 +1,4 @@
-
-name: Verible linter example
+name: verible-verilog-lint
 on:
   push:
     branches: []
