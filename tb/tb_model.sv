@@ -1,11 +1,15 @@
+/*
+    DESIGNER : <DesignerNameHere>
+    MODULE   : <Module description>
+*/
 module tb_model;
-    
+
     `include "tb_essentials.sv"
 
     bit clk_i  = 1;
     bit arst_n = 1;
 
-    task start_clock ();
+    task static start_clock ();
         fork
             forever begin
                 clk_i = 1; #5;
@@ -15,7 +19,7 @@ module tb_model;
         repeat (2) @ (posedge clk_i);
     endtask
 
-    task apply_reset ();
+    task static apply_reset ();
         #100;
         arst_n = 0;
         #100;
@@ -26,9 +30,9 @@ module tb_model;
     initial begin
         apply_reset();
         start_clock();
-        
+
         result_print (1, "This is a PASS");
-         result_print (0, "And this is a FAIL")
+        result_print (0, "And this is a FAIL");
 
         $finish;
 
