@@ -65,7 +65,7 @@ CI: ci_run_step2
 	@cat CI_REPORT
 
 .PHONY: ci_run_step2
-ci_run_step2: ci_run_step1	
+ci_run_step2: ci_run_step1
 	@$(eval _TMP := $(shell find -name "error_log"))
 	@$(foreach word,$(_TMP), cat $(word) >> CI_REPORT;)
 
