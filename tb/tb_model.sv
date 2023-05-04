@@ -28,7 +28,7 @@ module tb_model;
         start_clock();
         
         result_print (1, "This is a PASS");
-        result_print (0, "And this is a FAIL");    
+        result_print (0, "And this is a FAIL")
 
         $finish
 
