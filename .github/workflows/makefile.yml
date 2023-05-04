@@ -1,51 +1,8 @@
-name: 'verible-linter'
-description: 'This action lints Verilog/SystemVerilog code'
-author: 'Antmicro'
+name: 'verible-linter
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-inputs:
-  config_file:
-    description: 'Relative path to configuration file'
-    required: true
-  extra_args:
-    description: 'Extra arguments for verible-linter'
-    required: false
-  paths:
-    description: 'Optional array of paths to directories with source code to check'
-    required: false
-    default: '.'
-  exclude_paths:
-    description: 'Exclude these paths after finding all target files'
-    required: false
-  extensions:
-    description: 'Run linting on files ending with following extensions'
-    required: false
-    default: ''
-  log_file:
-    description: 'Name for a log file'
-    required: false
-    default: 'verible-verilog-lint.log'
-  github_token:
-    description: 'GITHUB_TOKEN'
-    default: ''
-  reviewdog_reporter:
-    description: '-reporter option to reviewdog'
-    default: 'github-pr-review'
-  suggest_fixes:
-    description: 'Post results of using --autofix option as change suggestions,
-                  works only with github-pre-review reporter'
-    default: 'true'
-  fail_on_error:
-    description: 'Fail the action when rule violations are found'
-    default: 'false'
-  verible_version:
-    description: 'Use selected Verible version (defaults to latest release)'
-    default: 'latest'
+    branch: [ ]
 
 runs:
   using: 'composite'
