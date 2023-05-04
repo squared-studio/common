@@ -1,19 +1,14 @@
-name: Verible linter example
+name: Verible formatter example
 
 on:
   push:
     branches: [ ]
-    
+
 jobs:
-  lint:
+  format:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - uses: chipsalliance/verible-linter-action@main
+    - uses: chipsalliance/verible-formatter-action@main
       with:
-        extensions: |
-          .sv
-          .v
-          .vh
-          .svh
         github_token: ${{ secrets.GITHUB_TOKEN }}
