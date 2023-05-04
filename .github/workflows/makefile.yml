@@ -1,6 +1,8 @@
 name: Verible linter example
 on:
-  pull_request:
+  push:
+    branches: [ ]
+    
 jobs:
   lint:
     runs-on: ubuntu-latest
