@@ -1,14 +1,12 @@
-name: Makefile CI
+name: 'verible-linter'
+description: 'This action lints Verilog/SystemVerilog code'
+author: 'Antmicro'
 
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
-name: 'verible-linter'
-description: 'This action lints Verilog/SystemVerilog code'
-author: 'Antmicro'
 
 inputs:
   config_file:
