@@ -25,29 +25,29 @@ int pass;
 int fail;
 int cnt;
 
-logic                  arst_n_i        ;
+logic                  arst_ni        ;
 logic                  clk_in_i        ;
-logic [ElemWidth-1:0] data_in_i        ;
-logic                  data_in_valid_i ;
-logic                  data_in_ready_o ;
+logic [ElemWidth-1:0]  elem_in_i        ;
+logic                  elem_in_valid_i ;
+logic                  elem_in_ready_o ;
 logic                  clk_out_i       ;
-logic [ElemWidth-1:0] data_out_o       ;
-logic                  data_out_valid_o;
-logic                  data_out_ready_i;
+logic [ElemWidth-1:0]  elem_out_o       ;
+logic                  elem_out_valid_o;
+logic                  elem_out_ready_i;
 
 async_fifo #(
   .ElemWidth ( ElemWidth ),
   .ElemSize  ( 2          )
 ) u_async_fifo (
   .clk_in_i          ( clk_in_i          ),
-  .arst_n_i         ( arst_n_i         ),
-  .data_in_i        ( data_in_i        ),
-  .data_in_valid_i  ( data_in_valid_i  ),
-  .data_in_ready_o  ( data_in_ready_o  ),
+  .arst_ni         ( arst_ni         ),
+  .elem_in_i        ( elem_in_i        ),
+  .elem_in_valid_i  ( elem_in_valid_i  ),
+  .elem_in_ready_o  ( elem_in_ready_o  ),
   .clk_out_i          ( clk_out_i          ),
-  .data_out_o       ( data_out_o       ),
-  .data_out_valid_o ( data_out_valid_o ),
-  .data_out_ready_i ( data_out_ready_i )
+  .elem_out_o       ( elem_out_o       ),
+  .elem_out_valid_o ( elem_out_valid_o ),
+  .elem_out_ready_i ( elem_out_ready_i )
 );
 
 task static start_clock ();
@@ -64,32 +64,32 @@ task static start_clock ();
   repeat (2) @ (posedge clk_in_i);
 endtask
 
-logic [ElemWidth-1:0] data_queue [$];
+logic [ElemWidth-1:0] elem_queue [$];
 
 task static apply_reset();
-  data_queue.delete();
+  elem_queue.delete();
   pass = 0;
   fail = 0;
   cnt  = 0;
   clk_in_i = 1;
-  data_in_i = 0;
-  data_in_valid_i = 0;
-  data_out_ready_i = 0;
-  arst_n_i = 0; #5;
-  arst_n_i = 1; #5;
+  elem_in_i = 0;
+  elem_in_valid_i = 0;
+  elem_out_ready_i = 0;
+  arst_ni = 0; #5;
+  arst_ni = 1; #5;
 endtask
 
 always @(posedge clk_in_i) begin
-  if (data_in_valid_i && data_in_ready_o) begin
+  if (elem_in_valid_i && elem_in_ready_o) begin
     cnt++;
-    data_queue.push_back(data_in_i);
+    elem_queue.push_back(elem_in_i);
   end
 end
 
 always @(posedge clk_out_i) begin
-  if (data_out_valid_o && data_out_ready_i) begin
+  if (elem_out_valid_o && elem_out_ready_i) begin
     cnt--;
-    if (data_queue.pop_front() == data_out_o) begin
+    if (elem_queue.pop_front() == elem_out_o) begin
       pass++;
     end
     else begin
@@ -104,14 +104,14 @@ initial begin
 
   repeat(1000) begin
     @ (posedge clk_in_i);
-    data_in_i <= $urandom();
-    data_in_valid_i  <= !($urandom_range(0,1));
-    data_out_ready_i <= !($urandom_range(0,5));
+    elem_in_i <= $urandom();
+    elem_in_valid_i  <= !($urandom_range(0,1));
+    elem_out_ready_i <= !($urandom_range(0,5));
   end
 
   @ (posedge clk_in_i);
-  data_in_valid_i  <= '0;
-  data_out_ready_i <= '1;
+  elem_in_valid_i  <= '0;
+  elem_out_ready_i <= '1;
 
   while (cnt > 0) @ (posedge clk_in_i);
 
