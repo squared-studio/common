@@ -9,17 +9,15 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 module bin_to_gray #(
-    parameter DATA_WIDTH = 4
-) ( 
-    input  logic [DATA_WIDTH-1:0] data_in,
-    output logic [DATA_WIDTH-1:0] data_out
+    parameter int DataWidth = 4
+) (
+    input  logic [DataWidth-1:0] data_in_i,
+    output logic [DataWidth-1:0] data_out_o
 );
 
-    generate
-        assign data_out [DATA_WIDTH-1] = data_in [DATA_WIDTH-1];
-        for (genvar i = 0; i < (DATA_WIDTH-1); i++) begin
-            assign data_out [i] = data_in [1+i] ^ data_in [i];
-        end
-    endgenerate
-        
+    for (genvar i = 0; i < (DataWidth-1); i++) begin : g_lsb
+        assign data_out_o [i] = data_in_i [1+i] ^ data_in_i [i];
+    end
+    assign data_out_o [DataWidth-1] = data_in_i [DataWidth-1];
+
 endmodule
