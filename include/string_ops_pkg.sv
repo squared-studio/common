@@ -3,14 +3,14 @@
 //    AUTHOR      : Foez Ahmed
 //    EMAIL       : foez.official@gmail.com
 //
-//    MODULE      : ...
-//    DESCRIPTION : ...
+//    MODULE      : string_ops_pkg
+//    DESCRIPTION : string manipulation operations
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 package string_ops_pkg;
 
-    function int string_get(string line, string word);
+    function automatic int string_get(string line, string word);
         string str;
         string key;
         int found;
@@ -32,8 +32,8 @@ package string_ops_pkg;
             for (int j = 0; (j < key.len() && found == 0) ; j++) begin
                 if (key[j] != str[i+j]) matching = 0;
             end
-            if (matching) begin 
-                d_start = i + key.len(); 
+            if (matching) begin
+                d_start = i + key.len();
                 found = 1;
             end
         end
@@ -42,7 +42,7 @@ package string_ops_pkg;
             for (int i = d_start; (i < str.len() && found == 1); i++) begin
                 case (str[i])
                     "0", "1", "2", "3", "4", "5", "6", "7", "8", "9": d_end = i;
-                    default: found = 0; 
+                    default: found = 0;
                 endcase
             end
         end

@@ -3,8 +3,8 @@
 //    AUTHOR      : Foez Ahmed
 //    EMAIL       : foez.official@gmail.com
 //
-//    MODULE      : ...
-//    DESCRIPTION : ...
+//    MODULE      : tb_essentials
+//    DESCRIPTION : includes essential macros, function and task for testbench
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -23,8 +23,10 @@ string top_module_name = $sformatf("%m");
 
 initial begin
     $display("%c[7;38m####################### TEST STARTED #######################%c[0m", 27, 27);
+`ifdef ENABLE_DUMPFILE
     $dumpfile("raw.vcd");
     $dumpvars;
+`endif // ENABLE_DUMPFILE
     repeat (1000) repeat (1000) repeat (1000) #1000;
     result_print(0, $sformatf("%c[1;31m[FATAL][TIMEOUT]%c[0m", 27, 27));
     $finish;
