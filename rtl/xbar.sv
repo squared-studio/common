@@ -3,23 +3,28 @@
 //    AUTHOR      : Foez Ahmed
 //    EMAIL       : foez.official@gmail.com
 //
-//    MODULE      : ...
-//    DESCRIPTION : ...
+//    MODULE      : xbar
+//    DESCRIPTION : general purpose xbar
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 module xbar #(
-    parameter ELEM_WIDTH = 8,
-    parameter NUM_ELEM   = 6
+    parameter int ElemWidth = 8,
+    parameter int NumElem   = 6
 ) (
-    input  logic [NUM_ELEM-1:0][$clog2(NUM_ELEM)-1:0] input_select,
-    input  logic [NUM_ELEM-1:0][ELEM_WIDTH-1:0]       inputs      ,
-    output logic [NUM_ELEM-1:0][ELEM_WIDTH-1:0]       outputs     
+    input  logic [NumElem-1:0][$clog2(NumElem)-1:0] input_select_i,
+    input  logic [NumElem-1:0][ElemWidth-1:0]       inputs_i,
+    output logic [NumElem-1:0][ElemWidth-1:0]       outputs_o
 );
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // ASSIGNMENTS
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
     always_comb begin : main
-        for (int i = 0; i < NUM_ELEM ; i++) begin
-            outputs [i] = (input_select[i]<NUM_ELEM) ? inputs[input_select[i]] : inputs[input_select[i]-NUM_ELEM];
+        for (int i = 0; i < NumElem ; i++) begin
+            outputs_o [i] = (input_select_i[i]<NumElem) ? inputs_i[input_select_i[i]]
+                : inputs_i[input_select_i[i]-NumElem];
         end
     end
 
