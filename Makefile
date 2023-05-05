@@ -1,4 +1,4 @@
-TOP_DIR = $(shell find $(realpath ./) -name "$(TOP).sv" | sed "s/$(TOP).sv//g")
+TOP_DIR = $(shell find $(realpath ./tb/) -name "$(TOP).sv" | sed "s/$(TOP).sv//g")
 DES_LIB_RTL += $(shell find $(realpath ./rtl/) -name "*.sv")
 TBF_LIB_RTL += $(shell find $(TOP_DIR) -name "*.sv")
 INC_DIR = $(realpath ./include)
