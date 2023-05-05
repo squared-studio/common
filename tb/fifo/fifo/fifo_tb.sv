@@ -21,7 +21,7 @@ module fifo_tb;
     // LOCALPARAMS
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    localparam int DataWidth = 4;
+    localparam int ElemWidth = 4;
     localparam int Depth     = 8;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,10 +33,10 @@ module fifo_tb;
     logic arst_n = 1;
 
     logic                 arst_ni         ;
-    logic [DataWidth-1:0] data_in_i       ;
+    logic [ElemWidth-1:0] data_in_i       ;
     logic                 data_in_valid_i ;
     logic                 data_in_ready_o ;
-    logic [DataWidth-1:0] data_out_o      ;
+    logic [ElemWidth-1:0] data_out_o      ;
     logic                 data_out_valid_o;
     logic                 data_out_ready_i;
 
@@ -48,14 +48,14 @@ module fifo_tb;
     int in_cnt;
     int out_cnt;
 
-    logic [DataWidth-1:0] data_queue [$];
+    logic [ElemWidth-1:0] data_queue [$];
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // RTLS
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     fifo #(
-        .DataWidth ( DataWidth ),
+        .ElemWidth ( ElemWidth ),
         .Depth     ( Depth     )
     ) u_fifo (
         .clk_i            ( clk_i            ),

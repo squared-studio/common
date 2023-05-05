@@ -12,7 +12,7 @@
                         clk_i       arst_ni
                        ---↓------------↓---
                       ¦                    ¦
-[DataWidth] data_in_i →                    → [DataWidth] data_out_o
+[ElemWidth] data_in_i →                    → [ElemWidth] data_out_o
       data_in_valid_i →        fifo        → data_out_valid_o
       data_in_ready_o ←                    ← data_out_ready_i
                       ¦                    ¦
@@ -20,17 +20,17 @@
 */
 
 module fifo #(
-    parameter int DataWidth = 8,
+    parameter int ElemWidth = 8,
     parameter int Depth = 5
 ) (
     input  logic                 clk_i,
     input  logic                 arst_ni,
 
-    input  logic [DataWidth-1:0] data_in_i,
+    input  logic [ElemWidth-1:0] data_in_i,
     input  logic                 data_in_valid_i,
     output logic                 data_in_ready_o,
 
-    output logic [DataWidth-1:0] data_out_o,
+    output logic [ElemWidth-1:0] data_out_o,
     output logic                 data_out_valid_o,
     input  logic                 data_out_ready_i
 );
@@ -39,7 +39,7 @@ module fifo #(
     // SIGNALS
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    logic [DataWidth-1:0] mem [Depth];
+    logic [ElemWidth-1:0] mem [Depth];
 
     logic [$clog2(Depth):0] dt_cnt;
     logic [$clog2(Depth):0] wr_ptr;
