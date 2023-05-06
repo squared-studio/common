@@ -8,51 +8,63 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/* 
-                       clk_i                    arst_n
-                      ---↓-------------------------↓---
-                     ¦                                 ¦
-[DATA_WIDTH] data_in →                                 → [DATA_WIDTH] data_out
-       data_in_valid →          pipeline_core          → data_out_valid
-       data_in_ready ←                                 ← data_out_ready
-                     ¦                                 ¦
-                      ---------------------------------
+/*
+                        clk_i      arst_ni
+                       ---↓-----------↓---
+                      ¦                   ¦
+[ElemWidth] elem_in_i →                   → [ElemWidth] elem_out_o
+      elem_in_valid_i →    peline_core    → elem_out_valid_o
+      elem_in_ready_o ←                   ← elem_out_ready_i
+                      ¦                   ¦
+                       -------------------
 */
 
 module pipeline_core #(
-    parameter DATA_WIDTH = 8
+    parameter int ElemWidth = 8
 ) (
-    input  logic                  clk_i,
-    input  logic                  arst_n,
+    input  logic                 clk_i,
+    input  logic                 arst_ni,
 
-    input  logic [DATA_WIDTH-1:0] data_in,
-    input  logic                  data_in_valid,
-    output logic                  data_in_ready,
+    input  logic [ElemWidth-1:0] elem_in_i,
+    input  logic                 elem_in_valid_i,
+    output logic                 elem_in_ready_o,
 
-    output logic [DATA_WIDTH-1:0] data_out,
-    output logic                  data_out_valid,
-    input  logic                  data_out_ready
+    output logic [ElemWidth-1:0] elem_out_o,
+    output logic                 elem_out_valid_o,
+    input  logic                 elem_out_ready_i
 );
 
-    logic                  is_full;
-    logic [DATA_WIDTH-1:0] mem;
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // SIGNALS
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    logic                is_full;
+    logic [ElemWidth-1:0] mem;
 
     logic input_handshake;
     logic output_handshake;
 
-    assign data_in_ready    = (is_full) ? data_out_ready : '1;
-    assign data_out         = mem;
-    assign data_out_valid   = is_full;
-    assign input_handshake  = data_in_valid & data_in_ready;
-    assign output_handshake = data_out_valid & data_out_ready;
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // ASSIGNMENTS
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    always_ff @( posedge clk_i or negedge arst_n) begin : main_block
-        if (~arst_n) begin : do_reset
+    assign elem_in_ready_o  = (is_full) ? elem_out_ready_i : '1;
+    assign elem_out_o       = mem;
+    assign elem_out_valid_o = is_full;
+    assign input_handshake  = elem_in_valid_i & elem_in_ready_o;
+    assign output_handshake = elem_out_valid_o & elem_out_ready_i;
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // SEQUENCIALS
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    always_ff @( posedge clk_i or negedge arst_ni) begin : main_block
+        if (~arst_ni) begin : do_reset
             is_full <= '0;
         end
         else begin : not_reset
             if (input_handshake) begin
-                mem <= data_in;
+                mem <= elem_in_i;
             end
             case ({input_handshake, output_handshake})
                 2'b01   : is_full <= '0;

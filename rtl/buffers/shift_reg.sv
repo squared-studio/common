@@ -8,55 +8,63 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/* 
-                         clk_i   arst_n    load      en    l_shift
+/*
+                         clk_i   arst_ni   load_i   en_i   l_shift_i
                         ---↓--------↓--------↓--------↓--------↓---
                        ¦                                           ¦
-       [ELEM_WIDTH] si →                   shift                   → [ELEM_WIDTH] so
-[DEPTH][ELEM_WIDTH] pi →                  register                 → [DEPTH][ELEM_WIDTH] po
+       [ElemWidth] s_i →                   shift                   → [ElemWidth] s_o
+[Depth][ElemWidth] p_i →                  register                 → [Depth][ElemWidth] p_o
                        ¦                                           ¦
                         -------------------------------------------
 */
 
 module shift_reg #(
-    parameter ELEM_WIDTH = 4,
-    parameter DEPTH      = 8
+    parameter int ElemWidth = 4,
+    parameter int Depth      = 8
 ) (
     input  logic                             clk_i,
-    input  logic                             arst_n,
+    input  logic                             arst_ni,
 
-    input  logic                             load,
-    input  logic                             en,
-    input  logic                             l_shift,
+    input  logic                             load_i,
+    input  logic                             en_i,
+    input  logic                             l_shift_i,
 
-    input  logic [ELEM_WIDTH-1:0]            si,
-    output logic [ELEM_WIDTH-1:0]            so,
+    input  logic [ElemWidth-1:0]            s_i,
+    output logic [ElemWidth-1:0]            s_o,
 
-    input  logic [DEPTH-1:0][ELEM_WIDTH-1:0] pi,
-    output logic [DEPTH-1:0][ELEM_WIDTH-1:0] po    
+    input  logic [Depth-1:0][ElemWidth-1:0] p_i,
+    output logic [Depth-1:0][ElemWidth-1:0] p_o
 );
 
-    assign so = l_shift ? po[DEPTH-1] : po[0];
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // ASSIGNMENTS
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    always_ff @(posedge clk_i or negedge arst_n) begin
-        if (~arst_n) begin
-            po <= '0;
-        end 
-        else if (en) begin
-            if (load) begin
-                po <= pi;
+    assign s_o = l_shift_i ? p_o[Depth-1] : p_o[0];
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // SEQUENCIALS
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    always_ff @(posedge clk_i or negedge arst_ni) begin
+        if (~arst_ni) begin
+            p_o <= '0;
+        end
+        else if (en_i) begin
+            if (load_i) begin
+                p_o <= p_i;
             end
             else begin
-                if (l_shift) begin
-                    po[0] <= si;
-                    for (int i=1; i<DEPTH; i++) begin
-                        po[i] <= po[i-1];
+                if (l_shift_i) begin
+                    p_o[0] <= s_i;
+                    for (int i=1; i<Depth; i++) begin
+                        p_o[i] <= p_o[i-1];
                     end
                 end
                 else begin
-                    po[DEPTH-1] <= si;
-                    for (int i=1; i<DEPTH; i++) begin
-                        po[i-1] <= po[i];
+                    p_o[Depth-1] <= s_i;
+                    for (int i=1; i<Depth; i++) begin
+                        p_o[i-1] <= p_o[i];
                     end
                 end
             end
