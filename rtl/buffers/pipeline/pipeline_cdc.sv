@@ -3,21 +3,21 @@
 //    AUTHOR      : Foez Ahmed
 //    EMAIL       : foez.official@gmail.com
 //
-//    MODULE      : ...
-//    DESCRIPTION : ...
+//    MODULE      : pipeline_cdc
+//    DESCRIPTION : pipeline for clock domain crossing
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*
                             arst_ni
-                       ---------↓--------
-                      ¦                  ¦
-             clk_in_i →                  ← clk_out_i
-[ElemWidth] elem_in_i →    async_fifo    → [ElemWidth] elem_out_o
-      elem_in_valid_i →                  → elem_out_valid_o
-      elem_in_ready_o ←                  ← elem_out_ready_i
-                      ¦                  ¦
-                       ------------------
+                       ----------↓---------
+                      ¦                    ¦
+             clk_in_i →                    ← clk_out_i
+[ElemWidth] elem_in_i →    pipeline_cdc    → [ElemWidth] elem_out_o
+      elem_in_valid_i →                    → elem_out_valid_o
+      elem_in_ready_o ←                    ← elem_out_ready_i
+                      ¦                    ¦
+                       --------------------
 */
 
 module pipeline_cdc #(
@@ -55,7 +55,7 @@ module pipeline_cdc #(
     // SEQUENCIALS
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    always @ (negedge arstn) begin
+    always @ (negedge arst_ni) begin
         if (~arst_ni) begin
             mem      <= '0;
             mem_full <= '0;

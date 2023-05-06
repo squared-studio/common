@@ -3,27 +3,41 @@
 //    AUTHOR      : Foez Ahmed
 //    EMAIL       : foez.official@gmail.com
 //
-//    MODULE      : ...
-//    DESCRIPTION : ...
+//    MODULE      : priority_encoder
+//    DESCRIPTION : simple priority encoder
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/*
+                  ------------------------
+                 ¦                        ¦
+[NumInputs] in_i →    priority_encoder    → [$clog2(NumInputs)] code_o
+                 ¦                        ¦
+                  ------------------------
+*/
+
 module priority_encoder #(
-    parameter NUM_INPUTS = 4
+    parameter int NumInputs = 4
 ) (
-    input  logic [NUM_INPUTS-1:0]         in,
-    output logic [$clog2(NUM_INPUTS)-1:0] out
+    input  logic [NumInputs-1:0]         in_i,
+    output logic [$clog2(NumInputs)-1:0] code_o
 );
 
-    logic [$clog2(NUM_INPUTS)-1:0] out_ [NUM_INPUTS];
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // SIGNALS
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    assign out = out_[NUM_INPUTS-1];
+    logic [$clog2(NumInputs)-1:0] out_ [NumInputs];
 
-    generate
-        assign out_[0] = 0;
-        for (genvar i=1; i<NUM_INPUTS; i++) begin
-            assign out_[i] = in[i] ? i : out_[i-1];
-        end
-    endgenerate
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // ASSIGNMENTS
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    assign code_o = out_[NumInputs-1];
+
+    assign out_[0] = 0;
+    for (genvar i=1; i<NumInputs; i++) begin : g_msb
+        assign out_[i] = in_i[i] ? i : out_[i-1];
+    end
 
 endmodule

@@ -3,8 +3,8 @@
 //    AUTHOR      : Foez Ahmed
 //    EMAIL       : foez.official@gmail.com
 //
-//    MODULE      : ...
-//    DESCRIPTION : ...
+//    MODULE      : bin_to_gray
+//    DESCRIPTION : converter module for binary to gray code conversion
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 

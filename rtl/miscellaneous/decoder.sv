@@ -3,22 +3,32 @@
 //    AUTHOR      : Foez Ahmed
 //    EMAIL       : foez.official@gmail.com
 //
-//    MODULE      : ...
-//    DESCRIPTION : ...
+//    MODULE      : decoder
+//    DESCRIPTION : simple decoder for code to one-hot
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/*
+                    ---------------
+                   ¦               ¦
+[CodeWidth] code_i →    decoder    → [2**CodeWidth] out_o
+                   ¦               ¦
+                    ---------------
+*/
+
 module decoder #(
-    parameter CODE_WIDTH = 4
+    parameter int CodeWidth = 4
 ) (
-    input  logic [CODE_WIDTH-1:0]    code,
-    output logic [2**CODE_WIDTH-1:0] out
+    input  logic [CodeWidth-1:0]    code_i,
+    output logic [2**CodeWidth-1:0] out_o
 );
 
-    generate
-        for (genvar i=0; i<(2**CODE_WIDTH); i++) begin
-            assign out[i] = (code==i);
-        end
-    endgenerate
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // ASSIGNMENTS
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    for (genvar i=0; i<(2**CodeWidth); i++) begin : g_outputs
+        assign out_o[i] = (code_i==i);
+    end
 
 endmodule

@@ -3,45 +3,63 @@
 //    AUTHOR      : Foez Ahmed
 //    EMAIL       : foez.official@gmail.com
 //
-//    MODULE      : ...
-//    DESCRIPTION : ...
+//    MODULE      : mem_core
+//    DESCRIPTION : basic building block for memory
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/* 
-                     clk_i       we_n
-                    ---↓----------↓---
-                   ¦                  ¦
-              addr →     mem_core     ¦
-[CELL_WIDTH] wdata →                  → [CELL_WIDTG] rdata
-                   ¦                  ¦
-                    ------------------
+/*
+                           clk_i
+                     --------↓---------
+                    ¦                  ¦
+ [AddrWidth] addr_i →                  ¦
+[ElemWidth] wdata_i →     mem_core     → [CELL_WIDTG] rdata_o
+               we_i →                  ¦
+                    ¦                  ¦
+                     ------------------
 */
 
 module mem_core #(
-    parameter  CELL_WIDTH = 8,
-    parameter  ADDR_WIDTH = 8,
-    localparam DEPTH      = (2**ADDR_WIDTH)
+    parameter  int ElemWidth = 8,
+    parameter  int AddrWidth = 8
 ) (
-    input  logic                  clk_i,
-    input  logic                  cs,
-    input  logic                  we,
-    input  logic [ADDR_WIDTH-1:0] addr,
-    input  logic [CELL_WIDTH-1:0] wdata,
-    output logic [CELL_WIDTH-1:0] rdata
+    input  logic                 clk_i,
+    input  logic                 cs_i,
+    input  logic                 we_i,
+    input  logic [AddrWidth-1:0] addr_i,
+    input  logic [ElemWidth-1:0] wdata_i,
+    output logic [ElemWidth-1:0] rdata_o
 );
 
-    logic [DEPTH-1:0][CELL_WIDTH-1:0] mem;
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // LOCALPARAMS
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    localparam int Depth = (2**AddrWidth);
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // SIGNALS
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    logic [Depth-1:0][ElemWidth-1:0] mem;
 
     logic do_write;
-    
-    assign rdata = cs ? mem [addr] : 'z;
 
-    assign do_write = cs & we;
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // ASSIGNMENTS
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    always_ff @( posedge clk_i ) begin 
+    assign rdata_o = mem [addr_i];
+
+    assign do_write = cs_i & we_i;
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // SEQUENCIALS
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    always_ff @( posedge clk_i ) begin
         if (do_write) begin
-            mem[addr] <= wdata;
+            mem[addr_i] <= wdata_i;
         end
     end
 
