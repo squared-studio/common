@@ -20,10 +20,10 @@
 */
 
 module mem_bank #(
-    parameter int AddrWidth = 8,
-    parameter int DataSize  = 2,
-    localparam int DataBytes = (2**DataSize),
-    localparam int DataWidth = (8*(2**DataSize))
+    parameter  int AddrWidth = 8,
+    parameter  int DataSize  = 2,
+    localparam int DataBytes = (2 ** DataSize),
+    localparam int DataWidth = (8 * (2 ** DataSize))
 ) (
     input  logic                 clk_i,
     input  logic                 cs_i,
@@ -33,22 +33,22 @@ module mem_bank #(
     output logic [DataWidth-1:0] rdata_o
 );
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    // RTLS
-    ////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  // RTLS
+  //////////////////////////////////////////////////////////////////////////////////////////////////
 
-    for (genvar i = 0; i < DataBytes; i++) begin : g_mem_cores
-        mem_core #(
-            .ElemWidth ( 8                    ),
-            .AddrWidth ( AddrWidth - DataSize )
-        ) u_mem_core (
-            .clk_i   ( clk_i                        ),
-            .cs_i    ( cs_i                         ),
-            .we_i    ( wstrb_i[i]                   ),
-            .addr_i  ( addr_i[AddrWidth-1:DataSize] ),
-            .wdata_i ( wdata_i[(8*(i+1)-1):(8*i)]   ),
-            .rdata_o ( rdata_o[(8*(i+1)-1):(8*i)]   )
-        );
-    end
+  for (genvar i = 0; i < DataBytes; i++) begin : g_mem_cores
+    mem_core #(
+        .ElemWidth(8),
+        .AddrWidth(AddrWidth - DataSize)
+    ) u_mem_core (
+        .clk_i  (clk_i),
+        .cs_i   (cs_i),
+        .we_i   (wstrb_i[i]),
+        .addr_i (addr_i[AddrWidth-1:DataSize]),
+        .wdata_i(wdata_i[(8*(i+1)-1):(8*i)]),
+        .rdata_o(rdata_o[(8*(i+1)-1):(8*i)])
+    );
+  end
 
 endmodule
