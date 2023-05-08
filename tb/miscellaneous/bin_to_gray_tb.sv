@@ -90,7 +90,7 @@ module bin_to_gray_tb;
       if (data_out_o != dout_bin2gray(data_in_i)) FAIL++;
     end
 
-    result_print(!FAIL, "Bin to Gray Convertion not Successful");
+    result_print(!FAIL, "Bin to Gray Convertion Successful");
 
     #100;
     $finish;
