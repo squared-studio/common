@@ -12,9 +12,9 @@
                        clk_i        cs_i
                       ---↓----------↓---
                      ¦                  ¦
-   [AddrWidth] addr_i →                  ¦
-  [DataWidth] wdata_i →     mem_bank     → [DataWidth] rdata_o
-  [DataBytes] wstrb_i →                  ¦
+  [AddrWidth] addr_i →                  ¦
+ [DataWidth] wdata_i →     mem_bank     → [DataWidth] rdata_o
+ [DataBytes] wstrb_i →                  ¦
                      ¦                  ¦
                       ------------------
 */

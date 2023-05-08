@@ -4,7 +4,7 @@
 //    EMAIL       : foez.official@gmail.com
 //
 //    MODULE      : reg_file_2r_1w
-//    DESCRIPTION : basic building block for memory
+//    DESCRIPTION : simple reg file with single write and multi read
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -15,7 +15,7 @@
 [IndexWidth] rd_addr_i[NumReaders] →                      → [ ElemWidth] rd_data_o[NumReaders]
                                    ¦                      ¦
             [IndexWidth] wr_addr_i →    reg_file_nr_1w    ¦
-            [ ElemWidth] wr_data_o →                      ¦
+            [ ElemWidth] wr_data_o ←                      ¦
             [ ElemWidth] wr_data_i →                      ¦
                               we_i →                      ¦
                                    ¦                      ¦
