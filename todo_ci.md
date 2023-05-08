@@ -17,3 +17,4 @@
 [](./rtl/miscellaneous/priority_encoder.sv)
 [](./rtl/miscellaneous/xbar.sv)
 [](./rtl/rtl_model.sv)
+[](./rtl/mem/reg_file_2r_1w.sv)
