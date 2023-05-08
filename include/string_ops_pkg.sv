@@ -58,7 +58,7 @@ package string_ops_pkg;
 
   endfunction
 
-  function automatic int find(string line, string word);
+  function automatic int string_find(string line, string word);
     int index;
     if ((word.len() < line.len()) && (word.len() > 0)) begin
       int found = 0;
@@ -77,8 +77,18 @@ package string_ops_pkg;
     return index;
   endfunction
 
-  function automatic string insert(string line, int index, string word);
-    // TODO
+  function automatic string string_insert(string line, int index, string word);
+    if (line.len() == 0) begin
+      return word;
+    end else if (index == 0) begin
+      return $sformatf("%s%s", word, line);
+    end else if (index >= line.len()) begin
+      return $sformatf("%s%s", line, word);
+    end else begin
+      string str1 = line.substr(0, index - 1);
+      string str2 = line.substr(index, line.len() - 1);
+      return $sformatf("%s%s%s", str1, word, str2);
+    end
   endfunction
 
 endpackage
