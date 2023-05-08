@@ -14,8 +14,7 @@
                                    ¦                      ¦
 [IndexWidth] rd_addr_i[NumReaders] →                      → [ ElemWidth] rd_data_o[NumReaders]
                                    ¦                      ¦
-            [IndexWidth] wr_addr_i →    reg_file_nr_1w    ¦
-            [ ElemWidth] wr_data_o ←                      ¦
+            [IndexWidth] wr_addr_i →    reg_file_nr_1w    → [ ElemWidth] wr_data_o
             [ ElemWidth] wr_data_i →                      ¦
                               we_i →                      ¦
                                    ¦                      ¦
