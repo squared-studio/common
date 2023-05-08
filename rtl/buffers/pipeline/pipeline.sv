@@ -9,14 +9,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /* 
-                       clk_i                                 arst_n
-                      ---↓--------------------------------------↓---
-                     ¦                                              ¦
-[DATA_WIDTH] data_in →                                              → [DATA_WIDTH] data_out
-       data_in_valid →                   pipeline                   → data_out_valid
-       data_in_ready ←                                              ← data_out_ready
-                     ¦                                              ¦
-                      ----------------------------------------------
+                       clk_i   arst_n
+                      ---↓--------↓---
+                     ¦                ¦
+[DATA_WIDTH] data_in →                → [DATA_WIDTH] data_out
+       data_in_valid →    pipeline    → data_out_valid
+       data_in_ready ←                ← data_out_ready
+                     ¦                ¦
+                      ----------------
 */
 
 module pipeline #(
