@@ -78,7 +78,7 @@ ci_collect_all_logs: ci_run_all_tests
 .PHONY: ci_run_all_tests
 ci_run_all_tests: clean
 	@> CI_REPORT;
-	@$(foreach word,$(CI_LIST), make ci_run_single SEL_TOP=$(word);)
+	@$(foreach word, $(CI_LIST), make ci_run_single SEL_TOP=$(word);)
 
 .PHONY: ci_run_single
 ci_run_single:
@@ -91,3 +91,12 @@ ci_run_single:
 .PHONY: clean
 clean:
 	@rm -rf $(CLEAN_TARGETS)
+
+.PHONY: gen_check_list
+gen_check_list:
+	@$(eval CHECK_LIST := $(shell find include -name "*.sv"))
+	@$(eval CHECK_LIST += $(shell find rtl -name "*.sv"))
+	@$(eval CHECK_LIST += $(shell find tb -name "*.sv"))
+	@($(foreach word, $(CHECK_LIST), echo "[](./$(word))";)) | clip
+	@echo -e "\033[2;35mList copied to clipboard\033[0m"
+	

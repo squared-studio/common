@@ -8,45 +8,47 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/* 
-                       clk_i        cs
+/*
+                       clk_i        cs_i
                       ---↓----------↓---
                      ¦                  ¦
-                addr →                  ¦
-  [DATA_WIDTH] wdata →     mem_bank     → [DATA_WIDTH] rdata
-  [DATA_BYTES] wstrb →                  ¦
+   [AddrWidth] addr_i →                  ¦
+  [DataWidth] wdata_i →     mem_bank     → [DataWidth] rdata_o
+  [DataBytes] wstrb_i →                  ¦
                      ¦                  ¦
                       ------------------
 */
 
 module mem_bank #(
-    parameter ADDR_WIDTH = 8,
-    parameter DATA_SIZE  = 2,
-    localparam DATA_BYTES = (2**DATA_SIZE),
-    localparam DATA_WIDTH = (8*(2**DATA_SIZE))
+    parameter  int AddrWidth = 8,
+    parameter  int DataSize  = 2,
+    localparam int DataBytes = (2 ** DataSize),
+    localparam int DataWidth = (8 * (2 ** DataSize))
 ) (
-    input  logic                  clk_i,
-    input  logic                  cs,
-    input  logic [ADDR_WIDTH-1:0] addr,
-    input  logic [DATA_WIDTH-1:0] wdata,
-    input  logic [DATA_BYTES-1:0] wstrb,
-    output logic [DATA_WIDTH-1:0] rdata
+    input  logic                 clk_i,
+    input  logic                 cs_i,
+    input  logic [AddrWidth-1:0] addr_i,
+    input  logic [DataWidth-1:0] wdata_i,
+    input  logic [DataBytes-1:0] wstrb_i,
+    output logic [DataWidth-1:0] rdata_o
 );
 
-    generate
-        for (genvar i = 0; i < DATA_BYTES; i++) begin
-            mem_core #(
-                .CELL_WIDTH ( 8                      ),
-                .ADDR_WIDTH ( ADDR_WIDTH - DATA_SIZE )
-            ) u_mem_core (
-                .clk_i ( clk_i                        ),
-                .cs    ( cs                           ),
-                .we    ( wstrb[i]                     ),
-                .addr  ( addr[ADDR_WIDTH-1:DATA_SIZE] ),
-                .wdata ( wdata[(8*(i+1)-1):(8*i)]     ),
-                .rdata ( rdata[(8*(i+1)-1):(8*i)]     )
-            );    
-        end
-    endgenerate
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  // RTLS
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+
+  for (genvar i = 0; i < DataBytes; i++) begin : g_mem_cores
+    mem_core #(
+        .ElemWidth(8),
+        .AddrWidth(AddrWidth - DataSize)
+    ) u_mem_core (
+        .clk_i  (clk_i),
+        .cs_i   (cs_i),
+        .we_i   (wstrb_i[i]),
+        .addr_i (addr_i[AddrWidth-1:DataSize]),
+        .wdata_i(wdata_i[(8*(i+1)-1):(8*i)]),
+        .rdata_o(rdata_o[(8*(i+1)-1):(8*i)])
+    );
+  end
 
 endmodule
