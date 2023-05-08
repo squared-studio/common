@@ -20,7 +20,7 @@ module bin_to_gray_tb;
   // LOCALPARAMS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  localparam int DataWidth = 32;
+  localparam int DataWidth = 11;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   // TYPEDEFS
@@ -71,10 +71,9 @@ module bin_to_gray_tb;
   // Function
   function automatic logic [DataWidth:0] dout_bin2gray(logic [DataWidth-1:0] data_in);
     dout_bin2gray[DataWidth-1] = data_in[DataWidth-1];
-    for (int i = 1; i < DataWidth; i++) begin
-      dout_bin2gray[i] = data_in[i] ^ data_in[i-1];
+    for (int i = 0; i < DataWidth-1; i++) begin
+      dout_bin2gray[i] = data_in[i] ^ data_in[i+1];
     end
-    return 0;
   endfunction
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -90,7 +89,7 @@ module bin_to_gray_tb;
       if (data_out_o != dout_bin2gray(data_in_i)) FAIL++;
     end
 
-    result_print(!FAIL, "Bin to Gray Convertion Successful");
+    result_print(!FAIL, "Bin to Gray Conversion");
 
     #100;
     $finish;
