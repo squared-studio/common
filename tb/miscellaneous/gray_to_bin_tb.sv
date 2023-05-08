@@ -1,10 +1,10 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 //    AUTHOR      : Razu
-//    EMAIL       : ...
+//    EMAIL       : engr.razu.ahamed@gmail.com
 //
-//    MODULE      : ...
-//    DESCRIPTION : ...
+//    MODULE      : gray_to_bin_tb;
+//    DESCRIPTION : It's verify gray to binary converter Module
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -20,7 +20,7 @@ module gray_to_bin_tb;
   // LOCALPARAMS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  localparam int DataWidth = 4;
+  localparam int DataWidth = 11;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   // SIGNALS
@@ -46,7 +46,7 @@ module gray_to_bin_tb;
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   function automatic logic [DataWidth-1:0] data_out_gray_to_bin(logic [DataWidth-1:0] data_in);
-    data_out_gray_to_bin[3] = data_in[3];
+    data_out_gray_to_bin[DataWidth-1] = data_in[DataWidth-1];
     for (int i = DataWidth - 2; i >= 0; i--) begin
       data_out_gray_to_bin[i] = data_out_gray_to_bin[i+1] ^ data_in[i];
     end
@@ -59,14 +59,16 @@ module gray_to_bin_tb;
   initial begin
 
     static int fail = 0;
+    static int pass = 0;
 
     for (int i = 0; i < 2 ** DataWidth; i++) begin
       data_in_i <= $urandom;
       #1;
-      if (data_out_o != data_out_gray_to_bin(data_in_i)) fail++;
+      if (data_out_o !== data_out_gray_to_bin(data_in_i)) fail++;
+      else pass++;
     end
 
-    result_print(!fail, "data conversion");
+    result_print(!fail, $sformatf("data conversion %0d/%0d", pass, pass+fail));
 
     $finish;
 
