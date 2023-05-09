@@ -1,3 +1,5 @@
+TOP_DIR = $(shell find $(realpath ./tb/) -name "$(TOP).sv" | sed "s/$(TOP).sv//g")
+TBF_LIB_RTL = $(shell find $(TOP_DIR) -name "*.sv")
 DES_LIB_RTL += $(shell find $(realpath ./rtl/) -name "*.sv")
 INC_DIR = $(realpath ./include)
 CI_LIST = $(shell cat CI_LIST)
@@ -21,8 +23,6 @@ run:
 
 .PHONY: print_vars
 print_vars: 
-	@$(eval TOP_DIR = $(shell find $(realpath ./tb/) -name "$(TOP).sv" | sed "s/$(TOP).sv//g"))
-	@$(eval TBF_LIB_RTL = $(shell find $(TOP_DIR) -name "*.sv"))
 	@echo "TOP:"
 	@echo "$(TOP)";
 	@echo ""
@@ -41,19 +41,12 @@ print_vars:
 	@echo "CI_LIST:"
 	@echo "$(CI_LIST)";
 
-#.PHONY: locate
-#locate:
-#	@$(eval TOP_DIR := $(shell find $(realpath ./tb/) -name "$(TOP).sv" | sed "s/$(TOP).sv//g"))
-#	@$(eval TBF_LIB_RTL := $(shell find $(TOP_DIR) -name "*.sv"))
-
 .PHONY: iverilog
 iverilog: clean
 	@make sim_iverilog
 
 .PHONY: sim_iverilog
 sim_iverilog:
-	@$(eval TOP_DIR = $(shell find $(realpath ./tb/) -name "$(TOP).sv" | sed "s/$(TOP).sv//g"))
-	@$(eval TBF_LIB_RTL = $(shell find $(TOP_DIR) -name "*.sv"))
 	@cd $(TOP_DIR); iverilog -I $(INC_DIR) -g2012 -o $(TOP).out -s $(TOP) -l $(DES_LIB_RTL) $(TBF_LIB_RTL)
 	@cd $(TOP_DIR); vvp $(TOP).out
 
@@ -63,8 +56,6 @@ vivado: clean
 
 .PHONY: sim_vivado
 sim_vivado:
-	@$(eval TOP_DIR = $(shell find $(realpath ./tb/) -name "$(TOP).sv" | sed "s/$(TOP).sv//g"))
-	@$(eval TBF_LIB_RTL = $(shell find $(TOP_DIR) -name "*.sv"))
 	@cd $(TOP_DIR); xvlog -i $(INC_DIR) -sv $(TOP_DIR)$(TOP).sv -L UVM -L TBF=$(TBF_LIB_RTL) -L RTL=$(DES_LIB_RTL)
 	@cd $(TOP_DIR); xelab $(TOP) -s top
 	@cd $(TOP_DIR); xsim top -runall
@@ -107,6 +98,7 @@ ci_iverilog_collect:
 ci_print: 
 	@echo " " >> CI_REPORT;
 	@git log -1 >> CI_REPORT;
+	@make clean
 	@echo " "
 	@echo " "
 	@echo " "
