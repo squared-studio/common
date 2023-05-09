@@ -17,5 +17,5 @@ jobs:
         sudo apt-get install iverilog
 
     - run: |
-        export CDIR=$(PWD)
-        echo "$(CDIR)"
+        export CDIR=$(pwd)
+        echo $(CDIR)
