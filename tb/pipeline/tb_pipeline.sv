@@ -12,25 +12,25 @@ module tb_pipeline;
 
   `include "tb_essentials.sv"
 
-  localparam DATA_WIDTH = 8;
-  localparam NUM_STAGES = 8;
+  localparam int DataWidth = 8;
+  localparam int NumStages = 8;
 
-  int                    pass;
-  int                    fail;
-  int                    cnt;
+  int                   pass;
+  int                   fail;
+  int                   cnt;
 
-  logic                  clk_i;
-  logic                  arst_n;
-  logic [DATA_WIDTH-1:0] data_in;
-  logic                  data_in_valid;
-  logic                  data_in_ready;
-  logic [DATA_WIDTH-1:0] data_out;
-  logic                  data_out_valid;
-  logic                  data_out_ready;
+  logic                 clk_i;
+  logic                 arst_n;
+  logic [DataWidth-1:0] data_in;
+  logic                 data_in_valid;
+  logic                 data_in_ready;
+  logic [DataWidth-1:0] data_out;
+  logic                 data_out_valid;
+  logic                 data_out_ready;
 
   pipeline #(
-      .DATA_WIDTH(DATA_WIDTH),
-      .NUM_STAGES(NUM_STAGES)
+      .DataWidth(DataWidth),
+      .NumStages(NumStages)
   ) u_pipeline (
       .clk_i         (clk_i),
       .arst_n        (arst_n),
@@ -42,7 +42,7 @@ module tb_pipeline;
       .data_out_ready(data_out_ready)
   );
 
-  task start_clock();
+  task static start_clock();
     fork
       forever begin
         clk_i = 1;
@@ -54,9 +54,9 @@ module tb_pipeline;
     repeat (2) @(posedge clk_i);
   endtask
 
-  logic [DATA_WIDTH-1:0] data_queue[$];
+  logic [DataWidth-1:0] data_queue[$];
 
-  task apply_reset();
+  task static apply_reset();
     data_queue.delete();
     pass = 0;
     fail = 0;
@@ -92,7 +92,7 @@ module tb_pipeline;
 
     repeat (50) begin
       @(posedge clk_i);
-      data_in <= $random();
+      data_in <= $urandom();
       data_in_valid <= !($urandom_range(0, 1));
       data_out_ready <= !($urandom_range(0, 5));
     end

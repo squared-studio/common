@@ -13,32 +13,32 @@ module var_fifo_tb;
   `include "tb_essentials.sv"
 
   // Parameters
-  localparam ELEM_WIDTH = 4;
-  localparam NUM_ELEM = 4;
-  localparam FIFO_DEPTH = 8;
+  localparam int ElemWidth = 4;
+  localparam int NumElem = 4;
+  localparam int FifoDepth = 8;
 
   // Ports
-  logic                                            clk_i;
-  logic                                            arst_n;
-  logic [  $clog2(NUM_ELEM+1)-1:0]                 data_in_num_lanes;
-  logic [    $clog2(NUM_ELEM)-1:0]                 data_in_start_lane;
-  logic                                            data_in_req_valid;
-  logic [            NUM_ELEM-1:0][ELEM_WIDTH-1:0] data_in;
-  logic                                            data_in_valid;
-  logic                                            data_in_ready;
-  logic [  $clog2(NUM_ELEM+1)-1:0]                 data_out_num_lanes;
-  logic [    $clog2(NUM_ELEM)-1:0]                 data_out_start_lane;
-  logic                                            data_out_req_valid;
-  logic [            NUM_ELEM-1:0][ELEM_WIDTH-1:0] data_out;
-  logic                                            data_out_valid;
-  logic                                            data_out_ready;
-  logic [$clog2(FIFO_DEPTH+1)-1:0]                 space_available;
-  logic [$clog2(FIFO_DEPTH+1)-1:0]                 elem_available;
+  logic                                          clk_i;
+  logic                                          arst_n;
+  logic [  $clog2(NumElem+1)-1:0]                data_in_num_lanes;
+  logic [    $clog2(NumElem)-1:0]                data_in_start_lane;
+  logic                                          data_in_req_valid;
+  logic [            NumElem-1:0][ElemWidth-1:0] data_in;
+  logic                                          data_in_valid;
+  logic                                          data_in_ready;
+  logic [  $clog2(NumElem+1)-1:0]                data_out_num_lanes;
+  logic [    $clog2(NumElem)-1:0]                data_out_start_lane;
+  logic                                          data_out_req_valid;
+  logic [            NumElem-1:0][ElemWidth-1:0] data_out;
+  logic                                          data_out_valid;
+  logic                                          data_out_ready;
+  logic [$clog2(FifoDepth+1)-1:0]                space_available;
+  logic [$clog2(FifoDepth+1)-1:0]                elem_available;
 
   var_fifo #(
-      .ELEM_WIDTH(ELEM_WIDTH),
-      .NUM_ELEM  (NUM_ELEM),
-      .FIFO_DEPTH(FIFO_DEPTH)
+      .ElemWidth(ElemWidth),
+      .NumElem  (NumElem),
+      .FifoDepth(FifoDepth)
   ) var_fifo_dut (
       .clk_i(clk_i),
       .arst_n(arst_n),
@@ -59,7 +59,7 @@ module var_fifo_tb;
   );
 
 
-  task start_clock();
+  task static start_clock();
     fork
       forever begin
         clk_i = 1;
@@ -71,7 +71,7 @@ module var_fifo_tb;
     repeat (2) @(posedge clk_i);
   endtask
 
-  task apply_reset();
+  task static apply_reset();
     #100;
     arst_n              = 0;
     clk_i               = '1;
@@ -92,8 +92,8 @@ module var_fifo_tb;
     start_clock();
     repeat (5) @(posedge clk_i);
 
-    for (int i = 0; i < NUM_ELEM; i++) begin
-      for (int j = 0; j < (NUM_ELEM + 1); j++) begin
+    for (int i = 0; i < NumElem; i++) begin
+      for (int j = 0; j < (NumElem + 1); j++) begin
         data_in_start_lane = i;
         data_in_num_lanes  = j;
         @(posedge clk_i);
@@ -121,8 +121,8 @@ module var_fifo_tb;
 
     repeat (20) @(posedge clk_i);
 
-    for (int i = 0; i < NUM_ELEM; i++) begin
-      for (int j = 0; j < (NUM_ELEM + 1); j++) begin
+    for (int i = 0; i < NumElem; i++) begin
+      for (int j = 0; j < (NumElem + 1); j++) begin
         data_out_start_lane = i;
         data_out_num_lanes  = j;
         @(posedge clk_i);

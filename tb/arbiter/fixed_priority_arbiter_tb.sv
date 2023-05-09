@@ -12,23 +12,23 @@ module fixed_priority_arbiter_tb;
 
   // Parameters
 
-  localparam NUM_REQ = 4;
+  localparam int NumReq = 4;
 
   // Ports
   reg clk_i;
-  reg [NUM_REQ-1:0] req;
-  wire [NUM_REQ-1:0] gnt;
+  reg [NumReq-1:0] req;
+  wire [NumReq-1:0] gnt;
 
   fixed_priority_arbiter #(
-      .NUM_REQ(NUM_REQ)
+      .NumReq(NumReq)
   ) fixed_priority_arbiter_dut (
       .req(req),
       .gnt(gnt)
   );
 
   initial begin
-    int PASS;
-    int FAIL;
+    static int pass;
+    static int fail;
 
     fork
       forever begin
@@ -45,24 +45,24 @@ module fixed_priority_arbiter_tb;
       @(negedge clk_i) begin
         bit cont;
         cont = 1;
-        for (int i = 0; (i < NUM_REQ) && cont; i++) begin
+        for (int i = 0; (i < NumReq) && cont; i++) begin
           if (req[i] == '1) begin
             cont = 0;
             if (gnt == (1 << i)) begin
               $write("PASSED: ");
-              PASS++;
+              pass++;
             end else begin
               $write("FAILED: ");
-              FAIL++;
+              fail++;
             end
-            $display("%b %b", req, gnt);
+            //$display("%h %h", req, gnt);
           end
         end
 
       end
 
       begin
-        for (int i = 0; i < (2 ** NUM_REQ); i++) begin
+        for (int i = 0; i < (2 ** NumReq); i++) begin
           @(posedge clk_i);
           req <= i;
         end
@@ -71,7 +71,7 @@ module fixed_priority_arbiter_tb;
 
     join_any
 
-    $display("%0d", PASS, "/%0d", PASS + FAIL, " PASSED");
+    $display("%0d", pass, "/%0d", pass + fail, " PASSED");
     $finish;
   end
 

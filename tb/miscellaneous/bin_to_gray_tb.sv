@@ -71,7 +71,7 @@ module bin_to_gray_tb;
   // Function
   function automatic logic [DataWidth:0] dout_bin2gray(logic [DataWidth-1:0] data_in);
     dout_bin2gray[DataWidth-1] = data_in[DataWidth-1];
-    for (int i = 0; i < DataWidth-1; i++) begin
+    for (int i = 0; i < DataWidth - 1; i++) begin
       dout_bin2gray[i] = data_in[i] ^ data_in[i+1];
     end
   endfunction
@@ -81,15 +81,15 @@ module bin_to_gray_tb;
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   initial begin
-    int FAIL = 0;
+    int fail = 0;
 
     for (int i = 0; i < 2 ** DataWidth; i++) begin
       data_in_i <= $urandom;
       #1;
-      if (data_out_o != dout_bin2gray(data_in_i)) FAIL++;
+      if (data_out_o != dout_bin2gray(data_in_i)) fail++;
     end
 
-    result_print(!FAIL, "Bin to Gray Conversion");
+    result_print(!fail, "Bin to Gray Conversion");
 
     #100;
     $finish;

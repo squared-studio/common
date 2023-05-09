@@ -9,134 +9,141 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*
-                                         clk_i                     arst_n
+                                         clk_i                     arst_ni
                                         ---↓--------------------------↓---
                                        ¦                                  ¦
-[$clog2(NUM_ELEM+1)] data_in_num_lanes →                                  ← [$clog2(NUM_ELEM+1)] data_out_num_lanes
- [$clog2(NUM_ELEM)] data_in_start_lane →                                  ← [$clog2(NUM_ELEM)] data_out_start_lane
-                     data_in_req_valid ←                                  → data_out_req_valid
+[$clog2(NumElem+1)] data_in_num_lanes_i →                                  ← [$clog2(NumElem+1)] data_out_num_lanes_i
+ [$clog2(NumElem)] data_in_start_lane_i →                                  ← [$clog2(NumElem)] data_out_start_lane_i
+                     data_in_req_valid_o ←                                  → data_out_req_valid_o
                                        ¦             var_fifo             ¦
-        [NUM_ELEM][ELEM_WIDTH] data_in →                                  → [NUM_ELEM][ELEM_WIDTH] data_out
-                         data_in_valid →                                  → data_out_valid
-                         data_in_ready ←                                  ← data_out_ready
+        [NumElem][ElemWidth] data_in_i →                                  → [NumElem][ElemWidth] data_out_o
+                         data_in_valid_i →                                  → data_out_valid_o
+                         data_in_ready_o ←                                  ← data_out_ready_i
                                        ¦                                  ¦
                                         ---↓--------------------------↓---
-                                        space_available     elem_available
-                                 [$clog2(FIFO_DEPTH+1)]     [$clog2(FIFO_DEPTH+1)]
+                                      space_available_o     elem_available_o
+                                  [$clog2(FifoDepth+1)]     [$clog2(FifoDepth+1)]
 */
 
 module var_fifo #(
-    parameter ELEM_WIDTH = 8,
-    parameter NUM_ELEM   = 4,
-    parameter FIFO_DEPTH = 4 * NUM_ELEM
+    parameter int ElemWidth = 8,
+    parameter int NumElem   = 4,
+    parameter int FifoDepth = 4 * NumElem
 ) (
     input logic clk_i,
-    input logic arst_n,
+    input logic arst_ni,
 
-    input  logic [$clog2(NUM_ELEM+1)-1:0] data_in_num_lanes,
-    input  logic [  $clog2(NUM_ELEM)-1:0] data_in_start_lane,
-    output logic                          data_in_req_valid,
+    input  logic [$clog2(NumElem+1)-1:0] data_in_num_lanes_i,
+    input  logic [  $clog2(NumElem)-1:0] data_in_start_lane_i,
+    output logic                         data_in_req_valid_o,
 
-    input  logic [NUM_ELEM-1:0][ELEM_WIDTH-1:0] data_in,
-    input  logic                                data_in_valid,
-    output logic                                data_in_ready,
+    input  logic [NumElem-1:0][ElemWidth-1:0] data_in_i,
+    input  logic                              data_in_valid_i,
+    output logic                              data_in_ready_o,
 
-    input  logic [$clog2(NUM_ELEM+1)-1:0] data_out_num_lanes,
-    input  logic [  $clog2(NUM_ELEM)-1:0] data_out_start_lane,
-    output logic                          data_out_req_valid,
+    input  logic [$clog2(NumElem+1)-1:0] data_out_num_lanes_i,
+    input  logic [  $clog2(NumElem)-1:0] data_out_start_lane_i,
+    output logic                         data_out_req_valid_o,
 
-    output logic [NUM_ELEM-1:0][ELEM_WIDTH-1:0] data_out,
-    output logic                                data_out_valid,
-    input  logic                                data_out_ready,
+    output logic [NumElem-1:0][ElemWidth-1:0] data_out_o,
+    output logic                              data_out_valid_o,
+    input  logic                              data_out_ready_i,
 
-    output logic [$clog2(FIFO_DEPTH+1)-1:0] space_available,
-    output logic [$clog2(FIFO_DEPTH+1)-1:0] elem_available
+    output logic [$clog2(FifoDepth+1)-1:0] space_available_o,
+    output logic [$clog2(FifoDepth+1)-1:0] elem_available_o
 );
 
-  logic [$clog2(NUM_ELEM+1)-1:0] wr_ptr;
-  logic [$clog2(NUM_ELEM+1)-1:0] rd_ptr;
-  logic [$clog2(NUM_ELEM+1)-1:0] wr_ptr_next;
-  logic [$clog2(NUM_ELEM+1)-1:0] rd_ptr_next;
-  logic [$clog2(FIFO_DEPTH+1)-1:0] elem_available_next;
-  logic [$clog2(FIFO_DEPTH+1)-1:0] num_data_ins;
-  logic [$clog2(FIFO_DEPTH+1)-1:0] num_data_outs;
+  logic [$clog2(NumElem+1)-1:0] wr_ptr;
+  logic [$clog2(NumElem+1)-1:0] rd_ptr;
+  logic [$clog2(NumElem+1)-1:0] wr_ptr_next;
+  logic [$clog2(NumElem+1)-1:0] rd_ptr_next;
+  logic [$clog2(FifoDepth+1)-1:0] elem_available_next;
+  logic [$clog2(FifoDepth+1)-1:0] num_data_ins;
+  logic [$clog2(FifoDepth+1)-1:0] num_data_outs;
 
-  logic [NUM_ELEM-1:0][ELEM_WIDTH-1:0] data_in_x;
-  logic [NUM_ELEM-1:0][ELEM_WIDTH-1:0] data_out_x;
+  logic [NumElem-1:0][ElemWidth-1:0] data_in_x;
+  logic [NumElem-1:0][ElemWidth-1:0] data_out_x;
 
   logic in_handshake;
   logic out_handshake;
 
-  logic [FIFO_DEPTH-1:0][ELEM_WIDTH-1:0] mem;
+  logic [FifoDepth-1:0][ElemWidth-1:0] mem;
 
-  logic [NUM_ELEM-1:0][$clog2(NUM_ELEM)-1:0] data_in_xbar_select;
-  logic [NUM_ELEM-1:0][$clog2(NUM_ELEM)-1:0] data_out_xbar_select;
+  logic [NumElem-1:0][$clog2(NumElem)-1:0] data_in_xbar_select;
+  logic [NumElem-1:0][$clog2(NumElem)-1:0] data_out_xbar_select;
 
-  assign data_in_req_valid = ((data_in_start_lane + data_in_num_lanes) > NUM_ELEM) ? '0 : '1;
-  assign data_in_ready = data_in_req_valid ? ((space_available < data_in_num_lanes) ? '0 : '1) : '0;
-  assign data_out_req_valid = ((data_out_start_lane + data_out_num_lanes) > NUM_ELEM) ? '0 : '1;
+  assign data_in_req_valid_o = ((data_in_start_lane_i + data_in_num_lanes_i) > NumElem) ? '0 : '1;
 
-  assign data_out_valid = data_out_req_valid ? ((elem_available<data_out_num_lanes) ? '0 : '1) : '0;
-  assign space_available = FIFO_DEPTH - elem_available;
+  assign data_in_ready_o =
+    data_in_req_valid_o ? ((space_available_o < data_in_num_lanes_i) ? '0 : '1) : '0;
 
-  assign in_handshake = data_in_valid & data_in_ready;
-  assign out_handshake = data_out_valid & data_out_ready;
+  assign data_out_req_valid_o =
+    ((data_out_start_lane_i + data_out_num_lanes_i) > NumElem) ? '0 : '1;
 
-  assign num_data_ins = in_handshake ? data_in_num_lanes : '0;
-  assign num_data_outs = out_handshake ? data_out_num_lanes : '0;
+  assign data_out_valid_o =
+    data_out_req_valid_o ? ((elem_available_o<data_out_num_lanes_i) ? '0 : '1) : '0;
 
-  assign elem_available_next = elem_available + num_data_ins - num_data_outs;
+  assign space_available_o = FifoDepth - elem_available_o;
 
-  assign wr_ptr_next = ((wr_ptr+data_in_num_lanes)<FIFO_DEPTH) ? (wr_ptr+data_in_num_lanes) : ((wr_ptr+data_in_num_lanes)-FIFO_DEPTH);
-  assign rd_ptr_next = ((rd_ptr+data_out_num_lanes)<FIFO_DEPTH) ? (rd_ptr+data_out_num_lanes) : ((rd_ptr+data_out_num_lanes)-FIFO_DEPTH);
+  assign in_handshake = data_in_valid_i & data_in_ready_o;
+  assign out_handshake = data_out_valid_o & data_out_ready_i;
 
-  generate
-    for (genvar i = 0; i < NUM_ELEM; i++) begin
-      assign data_in_xbar_select[i] = i + data_in_start_lane;
-    end
-  endgenerate
+  assign num_data_ins = in_handshake ? data_in_num_lanes_i : '0;
+  assign num_data_outs = out_handshake ? data_out_num_lanes_i : '0;
 
-  generate  // TODO : CHECK 
-    for (genvar i = 0; i < NUM_ELEM; i++) begin
-      assign data_out_xbar_select [i] = (i < data_out_start_lane) ? ((i+NUM_ELEM) - data_out_start_lane) : (i - data_out_start_lane);
-    end
-  endgenerate
+  assign elem_available_next = elem_available_o + num_data_ins - num_data_outs;
 
-  generate
-    for (genvar i = 0; i < NUM_ELEM; i++) begin
-      assign data_out_x[i] = mem[((rd_ptr+i)<FIFO_DEPTH)?(rd_ptr+i) : ((rd_ptr+i)-FIFO_DEPTH)];
-    end
-  endgenerate
+  assign wr_ptr_next =
+    ((wr_ptr+data_in_num_lanes_i)<FifoDepth) ? (wr_ptr+data_in_num_lanes_i) :
+      ((wr_ptr+data_in_num_lanes_i)-FifoDepth);
+
+  assign rd_ptr_next =
+    ((rd_ptr+data_out_num_lanes_i)<FifoDepth) ? (rd_ptr+data_out_num_lanes_i) :
+      ((rd_ptr+data_out_num_lanes_i)-FifoDepth);
+
+  for (genvar i = 0; i < NumElem; i++) begin : g_data_in_xbar_select
+    assign data_in_xbar_select[i] = i + data_in_start_lane_i;
+  end
+
+  for (genvar i = 0; i < NumElem; i++) begin : g_data_out_xbar_select
+    assign data_out_xbar_select [i] =
+      (i < data_out_start_lane_i) ? ((i+NumElem) - data_out_start_lane_i) :
+        (i - data_out_start_lane_i);
+  end
+
+  for (genvar i = 0; i < NumElem; i++) begin : g_data_out_x
+    assign data_out_x[i] = mem[((rd_ptr+i)<FifoDepth)?(rd_ptr+i) : ((rd_ptr+i)-FifoDepth)];
+  end
 
   xbar #(
-      .ELEM_WIDTH(ELEM_WIDTH),
-      .NUM_ELEM  (NUM_ELEM)
+      .ElemWidth(ElemWidth),
+      .NumElem  (NumElem)
   ) xbar_data_in (
       .input_select(data_in_xbar_select),
-      .inputs      (data_in),
+      .inputs      (data_in_i),
       .outputs     (data_in_x)
   );
 
   xbar #(
-      .ELEM_WIDTH(ELEM_WIDTH),
-      .NUM_ELEM  (NUM_ELEM)
+      .ElemWidth(ElemWidth),
+      .NumElem  (NumElem)
   ) xbar_data_out (
       .input_select(data_out_xbar_select),
       .inputs      (data_out_x),
-      .outputs     (data_out)
+      .outputs     (data_out_o)
   );
 
-  always_ff @(posedge clk_i or negedge arst_n) begin
-    if (~arst_n) begin
-      elem_available <= '0;
+  always_ff @(posedge clk_i or negedge arst_ni) begin
+    if (~arst_ni) begin
+      elem_available_o <= '0;
       wr_ptr <= '0;
       rd_ptr <= '0;
     end else begin
-      elem_available <= elem_available_next;
+      elem_available_o <= elem_available_next;
       if (in_handshake) begin
         wr_ptr <= wr_ptr_next;
-        for (int i = 0; i < NUM_ELEM; i++) begin
-          if (i < data_in_num_lanes) begin
+        for (int i = 0; i < NumElem; i++) begin
+          if (i < data_in_num_lanes_i) begin
             mem[wr_ptr+i] <= data_in_x[i];
           end
         end
