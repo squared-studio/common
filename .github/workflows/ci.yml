@@ -1,0 +1,24 @@
+name: Makefile CI
+
+on:
+  push:
+    branches: [ ]
+  pull_request:
+    branches: [ ]
+
+jobs:
+  build-and-analyze:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Verilog Compiler
+      uses: jge162/verilog_compiler@1.0.0
+
+    - run: |
+        echo "Install required dependencies"
+        sudo apt-get update
+        sudo apt-get install iverilog
+        sudo apt-get install verilator
+
+    - run: |
+        make CI_Iverilog
