@@ -8,62 +8,62 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/* 
-                       clk_i                    arst_n
+/*
+                       clk_i                    arst_ni
                       ---↓-------------------------↓---
                      ¦                                 ¦
-                     ¦                                 → [DATA_WIDTH] data_out_main
-                     ¦                                 → data_out_main_valid
-[DATA_WIDTH] data_in →                                 ← data_out_main_ready
-       data_in_valid →         pipeline_branch         ¦
-       data_in_ready ←                                 → [DATA_WIDTH] data_out_scnd
-                     ¦                                 → data_out_scnd_valid
-                     ¦                                 ← data_out_scnd_ready
+                     ¦                                 → [DataWidth] data_out_main_o
+                     ¦                                 → data_out_main_valid_o
+[DataWidth] data_in_i →                                 ← data_out_main_ready_i
+       data_in_valid_i →         pipeline_branch         ¦
+       data_in_ready_o ←                                 → [DataWidth] data_out_scnd_o
+                     ¦                                 → data_out_scnd_valid_o
+                     ¦                                 ← data_out_scnd_ready_i
                      ¦                                 ¦
                       ---------------------------------
 */
 
 module pipeline_branch #(
-    parameter DATA_WIDTH = 8
+    parameter int DataWidth = 8
 ) (
     input logic clk_i,
-    input logic arst_n,
+    input logic arst_ni,
 
-    input  logic [DATA_WIDTH-1:0] data_in,
-    input  logic                  data_in_valid,
-    output logic                  data_in_ready,
+    input  logic [DataWidth-1:0] data_in_i,
+    input  logic                 data_in_valid_i,
+    output logic                 data_in_ready_o,
 
-    output logic [DATA_WIDTH-1:0] data_out_main,
-    output logic                  data_out_main_valid,
-    input  logic                  data_out_main_ready,
+    output logic [DataWidth-1:0] data_out_main_o,
+    output logic                 data_out_main_valid_o,
+    input  logic                 data_out_main_ready_i,
 
-    output logic [DATA_WIDTH-1:0] data_out_scnd,
-    output logic                  data_out_scnd_valid,
-    input  logic                  data_out_scnd_ready
+    output logic [DataWidth-1:0] data_out_scnd_o,
+    output logic                 data_out_scnd_valid_o,
+    input  logic                 data_out_scnd_ready_i
 );
 
-  logic [DATA_WIDTH-1:0] data_out_core;
-  logic                  data_out_core_valid;
-  logic                  data_out_core_ready;
+  logic [DataWidth-1:0] data_out_core;
+  logic                 data_out_core_valid;
+  logic                 data_out_core_ready;
 
-  assign data_out_main = data_out_core;
-  assign data_out_scnd = data_out_core;
+  assign data_out_main_o = data_out_core;
+  assign data_out_scnd_o = data_out_core;
 
-  assign data_out_main_valid = data_out_core_valid;
-  assign data_out_scnd_valid = data_out_core_valid & ~data_out_main_ready;
-  assign data_out_core_ready = data_out_scnd_ready | data_out_main_ready;
+  assign data_out_main_valid_o = data_out_core_valid;
+  assign data_out_scnd_valid_o = data_out_core_valid & ~data_out_main_ready_i;
+  assign data_out_core_ready = data_out_scnd_ready_i | data_out_main_ready_i;
 
   pipeline_core #(
-      .DATA_WIDTH(DATA_WIDTH)
+      .DataWidth(DataWidth)
   ) pipeline_core_dut (
-      .clk_i         (clk_i),
-      .arst_n        (arst_n),
-      .data_in       (data_in),
-      .data_in_valid (data_in_valid),
-      .data_in_ready (data_in_ready),
-      .data_out      (data_out_core),
-      .data_out_valid(data_out_core_valid),
-      .data_out_ready(data_out_core_ready)
+      .clk_i          (clk_i),
+      .arst_ni        (arst_ni),
+      .data_in_i      (data_in_i),
+      .data_in_valid_i(data_in_valid_i),
+      .data_in_ready_o(data_in_ready_o),
+      .data_out       (data_out_core),
+      .data_out_valid (data_out_core_valid),
+      .data_out_ready (data_out_core_ready)
   );
 
 endmodule
