@@ -16,14 +16,14 @@ module fixed_priority_arbiter_tb;
 
   // Ports
   reg clk_i;
-  reg [NumReq-1:0] req;
-  wire [NumReq-1:0] gnt;
+  reg [NumReq-1:0] req_i;
+  wire [NumReq-1:0] gnt_o;
 
   fixed_priority_arbiter #(
       .NumReq(NumReq)
   ) fixed_priority_arbiter_dut (
-      .req(req),
-      .gnt(gnt)
+      .req_i(req_i),
+      .gnt_o(gnt_o)
   );
 
   initial begin
@@ -46,16 +46,16 @@ module fixed_priority_arbiter_tb;
         bit cont;
         cont = 1;
         for (int i = 0; (i < NumReq) && cont; i++) begin
-          if (req[i] == '1) begin
+          if (req_i[i] == '1) begin
             cont = 0;
-            if (gnt == (1 << i)) begin
+            if (gnt_o == (1 << i)) begin
               $write("PASSED: ");
               pass++;
             end else begin
               $write("FAILED: ");
               fail++;
             end
-            //$display("%h %h", req, gnt);
+            $display("0b%b 0b%b", req_i, gnt_o);
           end
         end
 
@@ -64,7 +64,7 @@ module fixed_priority_arbiter_tb;
       begin
         for (int i = 0; i < (2 ** NumReq); i++) begin
           @(posedge clk_i);
-          req <= i;
+          req_i <= i;
         end
         @(posedge clk_i);
       end
