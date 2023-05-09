@@ -17,4 +17,5 @@ jobs:
         sudo apt-get install iverilog
 
     - run: |
-        iverilog -o tb_model tb_model.sv
+        export CDIR=$(PWD)
+        echo "$(CDIR)"
