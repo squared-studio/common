@@ -9,34 +9,30 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*
-               ----------------------------
-              ¦                            ¦
-[NUM_REQ] req →   fixed_priority_arbiter   → [NUM_REQ] gnt
-              ¦                            ¦
-               ----------------------------
+                ----------------------------
+               ¦                            ¦
+[NumReq] req_i →   fixed_priority_arbiter   → [NumReq] gnt_o
+               ¦                            ¦
+                ----------------------------
 */
 
 module fixed_priority_arbiter #(
-    parameter NUM_REQ = 4
+    parameter int NumReq = 4
 ) (
-    input  logic [NUM_REQ-1:0] req,
-    output logic [NUM_REQ-1:0] gnt
+    input  logic [NumReq-1:0] req_i,
+    output logic [NumReq-1:0] gnt_o
 );
 
-  logic [NUM_REQ-1:1] gnt_found;
+  logic [NumReq-1:1] gnt_found;
 
-  generate
-    assign gnt_found[1] = gnt[0];
-    for (genvar i = 2; i < NUM_REQ; i++) begin
-      assign gnt_found[i] = gnt_found[i-1] | gnt[i-1];
-    end
-  endgenerate
+  assign gnt_found[1] = gnt_o[0];
+  for (genvar i = 2; i < NumReq; i++) begin : g_gnt_found_MSB
+    assign gnt_found[i] = gnt_found[i-1] | gnt_o[i-1];
+  end
 
-  generate
-    assign gnt[0] = req[0];
-    for (genvar i = 1; i < NUM_REQ; i++) begin
-      assign gnt[i] = gnt_found[i] ? '0 : req[i];
-    end
-  endgenerate
+  assign gnt_o[0] = req_i[0];
+  for (genvar i = 1; i < NumReq; i++) begin : g_gnt_MSB
+    assign gnt_o[i] = gnt_found[i] ? '0 : req_i[i];
+  end
 
 endmodule

@@ -11,35 +11,35 @@
 module round_robin_arbiter_tb;
 
   // Parameters
-  localparam CLOG2_NUM_REQ = 4;
-  localparam NUM_REQ = (2 ** CLOG2_NUM_REQ);
+  localparam int Clog2NumReq = 4;
+  localparam int NumReq = (2 ** Clog2NumReq);
 
   // Ports
   logic clk_i = 1;
-  logic arst_n = 1;
-  logic [NUM_REQ-1:0] req;
-  logic [NUM_REQ-1:0] gnt;
+  logic arst_ni = 1;
+  logic [NumReq-1:0] req_i;
+  logic [NumReq-1:0] gnt_o;
 
   round_robin_arbiter #(
-      .CLOG2_NUM_REQ(CLOG2_NUM_REQ)
+      .Clog2NumReq(Clog2NumReq)
   ) round_robin_arbiter_dut (
-      .clk_i(clk_i),
-      .arst_n(arst_n),
-      .req(req),
-      .gnt(gnt)
+      .clk_i  (clk_i),
+      .arst_ni(arst_ni),
+      .req_i  (req_i),
+      .gnt_o  (gnt_o)
   );
 
   initial begin
     $dumpfile("raw.vcd");
     $dumpvars();
-    req <= '0;
-    arst_n = 1;
+    req_i <= '0;
+    arst_ni = 1;
     #10;
-    arst_n = 0;
+    arst_ni = 0;
     #10;
-    arst_n = 1;
+    arst_ni = 1;
     #10;
-    req <= 'h5a5a;
+    req_i <= 'h5a5a;
     repeat (50) begin
       @(posedge clk_i);
     end

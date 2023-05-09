@@ -9,38 +9,44 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 module apb_mem #(
-    parameter ADDR_WIDTH = 0,
-    parameter DATA_WIDTH = 0
+    parameter int AddrWidth = 0,
+    parameter int DataWidth = 0
 ) (
-    input  wire                  clk,
-    input  wire                  arst_n,
-    input  wire                  psel,
-    input  wire                  penable,
-    input  wire [ADDR_WIDTH-1:0] paddr,
-    input  wire                  pwrite,
-    input  wire [DATA_WIDTH-1:0] pwdata,
-    output wire [DATA_WIDTH-1:0] prdata,
-    output wire                  pready
+    input  wire                 clk_i,
+    input  wire                 arst_ni,
+    input  wire                 psel_i,
+    input  wire                 penable_i,
+    input  wire [AddrWidth-1:0] paddr_i,
+    input  wire                 pwrite_i,
+    input  wire [DataWidth-1:0] pwdata_i,
+    output wire [DataWidth-1:0] prdata_o,
+    output wire                 pready_o
 );
 
-  enum int {IDLE, SETUP, ACCESS}                  state;
+  typedef enum int {
+    IDLE,
+    SETUP,
+    ACCESS
+  } state_t;
 
-  reg                            [DATA_WIDTH-1:0] mem   [2**ADDR_WIDTH];
-  reg                            [DATA_WIDTH-1:0] rdata;
-  reg                                             ready;
+  state_t                 state;
 
-  assign prdata = (state == ACCESS) ? rdata : 'z;
-  assign pready = (state == ACCESS) ? ready : 'z;
+  logic   [DataWidth-1:0] mem   [2**AddrWidth];
+  logic   [DataWidth-1:0] rdata;
+  logic                   ready;
 
-  assign rdata  = mem[paddr];
+  assign prdata_o = (state == ACCESS) ? rdata : 'z;
+  assign pready_o = (state == ACCESS) ? ready : 'z;
 
-  always_ff @(posedge clk or negedge arst_n) begin
+  assign rdata = mem[paddr_i];
 
-    if (~arst_n) begin  // RESET
+  always_ff @(posedge clk_i or negedge arst_ni) begin
+
+    if (~arst_ni) begin  // RESET
       state <= IDLE;
       ready <= '0;
     end else begin
-      if (psel) begin
+      if (psel_i) begin
         case (state)
           default: begin
             state <= IDLE;
@@ -48,27 +54,27 @@ module apb_mem #(
           end
 
           IDLE: begin
-            if (psel & ~penable) begin
+            if (psel_i & ~penable_i) begin
               state <= SETUP;
               ready <= '0;
             end
           end
 
           SETUP: begin
-            if (penable) begin
+            if (penable_i) begin
               state <= ACCESS;
-              if (pwrite) begin
-                mem[paddr] <= pwdata;
+              if (pwrite_i) begin
+                mem[paddr_i] <= pwdata_i;
               end
               ready <= '1;
             end
           end
 
           ACCESS: begin
-            if (~psel) begin
+            if (~psel_i) begin
               state <= IDLE;
               ready <= '0;
-            end else if (~penable) begin
+            end else if (~penable_i) begin
               state <= SETUP;
               ready <= '0;
             end

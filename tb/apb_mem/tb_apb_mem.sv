@@ -14,113 +14,112 @@ module tb_apb_mem;
     $dumpfile("raw.vcd");
     $dumpvars;
     $display(
-        "%c[7;38m################################# TEST STARTED #################################%c[0m",
+        "%c[7;38m############################## TEST STARTED ##############################%c[0m",
         27, 27);
   end
   final begin
     $display(
-        "%c[7;38m################################## TEST ENDED ##################################%c[0m",
+        "%c[7;38m############################### TEST ENDED ###############################%c[0m",
         27, 27);
   end
 
-  localparam ADDR_WIDTH = 8;
-  localparam DATA_WIDTH = 8;
+  localparam int AddrWidth = 8;
+  localparam int DataWidth = 8;
 
-  logic                  clk;
-  logic                  arst_n;
-  logic [           3:0] psel;
-  logic                  penable;
-  logic [ADDR_WIDTH-1:0] paddr;
-  logic                  pwrite;
-  logic [DATA_WIDTH-1:0] pwdata;
-  wire  [DATA_WIDTH-1:0] prdata;
-  wire                   pready;
+  logic                 clk_i;
+  logic                 arst_ni;
+  logic [          3:0] psel_i;
+  logic                 penable_i;
+  logic [AddrWidth-1:0] paddr_i;
+  logic                 pwrite_i;
+  logic [DataWidth-1:0] pwdata_i;
+  wire  [DataWidth-1:0] prdata_o;
+  wire                  pready_o;
 
-  generate
-    for (genvar i = 0; i < 4; i++) begin
-      apb_mem #(
-          .ADDR_WIDTH(ADDR_WIDTH),
-          .DATA_WIDTH(DATA_WIDTH)
-      ) u_apb_mem (
-          .clk(clk),
-          .arst_n(arst_n),
-          .psel(psel[i]),
-          .penable(penable),
-          .paddr(paddr),
-          .pwrite(pwrite),
-          .pwdata(pwdata),
-          .prdata(prdata),
-          .pready(pready)
-      );
-    end
-  endgenerate
+  for (genvar i = 0; i < 4; i++) begin : g_slaves
+    apb_mem #(
+        .AddrWidth(AddrWidth),
+        .DataWidth(DataWidth)
+    ) u_apb_mem (
+        .clk_i(clk_i),
+        .arst_ni(arst_ni),
+        .psel_i(psel_i[i]),
+        .penable_i(penable_i),
+        .paddr_i(paddr_i),
+        .pwrite_i(pwrite_i),
+        .pwdata_i(pwdata_i),
+        .prdata_o(prdata_o),
+        .pready_o(pready_o)
+    );
+  end
 
 
 
-  task apply_reset();
-    arst_n = '1;
-    clk    = '1;
+
+  task static apply_reset();
+    arst_ni = '1;
+    clk_i   = '1;
     #100;
-    arst_n = '0;
-    psel = 0;
-    penable = 0;
-    paddr = 0;
-    pwrite = 0;
-    pwdata = 0;
+    arst_ni = '0;
+    psel_i = 0;
+    penable_i = 0;
+    paddr_i = 0;
+    pwrite_i = 0;
+    pwdata_i = 0;
     #100;
-    arst_n = '1;
+    arst_ni = '1;
     #100;
   endtask
 
-  task start_clock();
+  task static start_clock();
     fork
       forever begin
-        clk = 1;
+        clk_i = 1;
         #5;
-        clk = 0;
+        clk_i = 0;
         #5;
       end
     join_none
-    repeat (2) @(posedge clk);
+    repeat (2) @(posedge clk_i);
   endtask
 
-  task just_write(byte sel, byte addr, byte data);
-    @(posedge clk);
-    paddr     <= addr;
-    pwrite    <= '1;
-    pwdata    <= data;
-    psel[sel] <= '1;
-    penable   <= '0;
+  task static just_write(byte sel, byte addr, byte data);
+    @(posedge clk_i);
+    paddr_i     <= addr;
+    pwrite_i    <= '1;
+    pwdata_i    <= data;
+    psel_i[sel] <= '1;
+    penable_i   <= '0;
 
-    @(posedge clk);
-    penable <= '1;
+    @(posedge clk_i);
+    penable_i <= '1;
 
-    do @(posedge clk); while (pready !== '1);
+    do @(posedge clk_i); while (pready_o !== '1);
 
-    @(posedge clk);
-    penable <= '0;
+    @(posedge clk_i);
+    penable_i <= '0;
 
-    @(posedge clk);
-    psel <= '0;
+    @(posedge clk_i);
+    psel_i <= '0;
   endtask
 
-  task just_read(byte sel, byte addr);
-    @(posedge clk);
-    paddr     <= addr;
-    pwrite    <= '0;
-    psel[sel] <= '1;
-    penable   <= '0;
+  task static just_read(byte sel, byte addr);
+    @(posedge clk_i);
+    paddr_i     <= addr;
+    pwrite_i    <= '0;
+    psel_i[sel] <= '1;
+    penable_i   <= '0;
 
-    @(posedge clk);
-    penable <= '1;
+    @(posedge clk_i);
+    penable_i <= '1;
 
-    do @(posedge clk); while (pready !== '1);
+    do @(posedge clk_i); while (pready_o !== '1);
 
-    @(posedge clk);
-    penable <= '0;
+    @(posedge clk_i);
+    penable_i <= '0;
 
-    @(posedge clk);
-    psel <= '0;
+    @(posedge clk_i);
+    psel_i <= '0;
   endtask
 
   initial begin
@@ -133,7 +132,7 @@ module tb_apb_mem;
     just_read(0, 0);
     just_read(1, 0);
 
-    repeat (20) @(posedge clk);
+    repeat (20) @(posedge clk_i);
     $finish;
   end
 

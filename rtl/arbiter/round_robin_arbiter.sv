@@ -9,83 +9,79 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*
-                 clk_i         arst_n
+                 clk_i         arst_ni
                ---↓----------------↓---
               ¦                        ¦
-[NUM_REQ] req →   round_robin_arbiter  → [NUM_REQ] gnt
+[NumReq] req_i →   round_robin_arbiter  → [NumReq] gnt_o
               ¦                        ¦
                ------------------------
 */
 module round_robin_arbiter #(
-    parameter CLOG2_NUM_REQ = 2,
-    localparam NUM_REQ = (2 ** CLOG2_NUM_REQ)
+    parameter int Clog2NumReq = 2,
+    localparam int NumReq = (2 ** Clog2NumReq)
 ) (
-    input  logic               clk_i,
-    input  logic               arst_n,
-    input  logic [NUM_REQ-1:0] req,
-    output logic [NUM_REQ-1:0] gnt
+    input  logic              clk_i,
+    input  logic              arst_ni,
+    input  logic [NumReq-1:0] req_i,
+    output logic [NumReq-1:0] gnt_o
 );
 
-  logic [CLOG2_NUM_REQ-1:0] xbar_sel;
+  logic [Clog2NumReq-1:0] xbar_sel;
 
-  logic [NUM_REQ-1:0][CLOG2_NUM_REQ-1:0] req_in_sel;
-  logic [NUM_REQ-1:0][CLOG2_NUM_REQ-1:0] gnt_in_sel;
+  logic [NumReq-1:0][Clog2NumReq-1:0] req_in_sel;
+  logic [NumReq-1:0][Clog2NumReq-1:0] gnt_in_sel;
 
-  logic [NUM_REQ-1:0] req_xbar;
-  logic [NUM_REQ-1:0] gnt_xbar;
+  logic [NumReq-1:0] req_xbar;
+  logic [NumReq-1:0] gnt_xbar;
 
-  logic [CLOG2_NUM_REQ-1:0] gnt_code;
+  logic [Clog2NumReq-1:0] gnt_code;
 
   logic gnt_found;
 
   xbar #(
-      .ELEM_WIDTH(1),
-      .NUM_ELEM  (NUM_REQ)
+      .ElemWidth(1),
+      .NumElem  (NumReq)
   ) xbar_req (
-      .input_select(req_in_sel),
-      .inputs      (req),
-      .outputs     (req_xbar)
+      .input_select_i(req_in_sel),
+      .inputs_i      (req_i),
+      .outputs_o     (req_xbar)
   );
 
   xbar #(
-      .ELEM_WIDTH(1),
-      .NUM_ELEM  (NUM_REQ)
+      .ElemWidth(1),
+      .NumElem  (NumReq)
   ) xbar_gnt (
-      .input_select(gnt_in_sel),
-      .inputs      (gnt_xbar),
-      .outputs     (gnt)
+      .input_select_i(gnt_in_sel),
+      .inputs_i      (gnt_xbar),
+      .outputs_o     (gnt_o)
   );
 
-  generate
-    for (genvar i = 0; i < NUM_REQ; i++) begin
-      assign req_in_sel[i] = i + xbar_sel;
-    end
-  endgenerate
+  for (genvar i = 0; i < NumReq; i++) begin : g_req_in_sel
+    assign req_in_sel[i] = i + xbar_sel;
+  end
 
-  generate
-    for (genvar i = 0; i < NUM_REQ; i++) begin
-      assign gnt_in_sel[i] = i + (NUM_REQ - xbar_sel);
-    end
-  endgenerate
+  for (genvar i = 0; i < NumReq; i++) begin : g_gnt_in_sel
+    assign gnt_in_sel[i] = i + (NumReq - xbar_sel);
+  end
 
   fixed_priority_arbiter #(
-      .NUM_REQ(NUM_REQ)
+      .NumReq(NumReq)
   ) u_fixed_priority_arbiter (
-      .req(req_xbar),
-      .gnt(gnt_xbar)
+      .req_i(req_xbar),
+      .gnt_o(gnt_xbar)
   );
 
   priority_encoder #(
-      .NUM_INPUTS(NUM_REQ)
+      .NumInputs(NumReq)
   ) gnt_encode (
-      .in (gnt),
-      .out(gnt_code)
+      .in_i  (gnt_o),
+      .code_o(gnt_code)
   );
 
-  assign gnt_found = |gnt;
+  assign gnt_found = |gnt_o;
 
-  always_ff @(posedge clk_i or negedge arst_n) begin
-    if (~arst_n) begin
+  always_ff @(posedge clk_i or negedge arst_ni) begin
+    if (~arst_ni) begin
       xbar_sel <= '0;
     end else begin
       if (gnt_found) begin
