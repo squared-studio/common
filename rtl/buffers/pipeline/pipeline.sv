@@ -8,101 +8,97 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/* 
-                       clk_i   arst_n
+/*
+                       clk_i   arst_ni
                       ---↓--------↓---
                      ¦                ¦
-[DATA_WIDTH] data_in →                → [DATA_WIDTH] data_out
-       data_in_valid →    pipeline    → data_out_valid
-       data_in_ready ←                ← data_out_ready
+[DataWidth] data_in_i →                → [DataWidth] data_out_o
+       data_in_valid_i →    pipeline    → data_out_valid_o
+       data_in_ready_o ←                ← data_out_ready_i
                      ¦                ¦
                       ----------------
 */
 
 module pipeline #(
-    parameter DATA_WIDTH = 8,
-    parameter NUM_STAGES = 1
+    parameter int DataWidth = 8,
+    parameter int NumStages = 1
 ) (
     input logic clk_i,
-    input logic arst_n,
+    input logic arst_ni,
 
-    input  logic [DATA_WIDTH-1:0] data_in,
-    input  logic                  data_in_valid,
-    output logic                  data_in_ready,
+    input  logic [DataWidth-1:0] data_in_i,
+    input  logic                 data_in_valid_i,
+    output logic                 data_in_ready_o,
 
-    output logic [DATA_WIDTH-1:0] data_out,
-    output logic                  data_out_valid,
-    input  logic                  data_out_ready
+    output logic [DataWidth-1:0] data_out_o,
+    output logic                 data_out_valid_o,
+    input  logic                 data_out_ready_i
 );
 
-  generate
+  if (NumStages == 0) begin : g_NumStages_0
+    assign data_out_o       = data_in_i;
+    assign data_out_valid_o = data_in_valid_i;
+    assign data_in_ready_o  = data_out_ready_i;
+  end else if (NumStages == 1) begin : g_NumStages_1
+    pipeline_core #(
+        .DataWidth(DataWidth)
+    ) u_pipeline_core (
+        .clk_i           (clk_i),
+        .arst_ni         (arst_ni),
+        .data_in_i       (data_in_i),
+        .data_in_valid_i (data_in_valid_i),
+        .data_in_ready_o (data_in_ready_o),
+        .data_out_o      (data_out_o),
+        .data_out_valid_o(data_out_valid_o),
+        .data_out_ready_i(data_out_ready_i)
+    );
+  end else begin : g_NumStages_1p
 
-    if (NUM_STAGES == 0) begin
-      assign data_out       = data_in;
-      assign data_out_valid = data_in_valid;
-      assign data_in_ready  = data_out_ready;
-    end else if (NUM_STAGES == 1) begin
+    logic [DataWidth-1:0] data_ [NumStages-1];
+    logic                 valid_[NumStages-1];
+    logic                 ready_[NumStages-1];
+
+    pipeline_core #(
+        .DataWidth(DataWidth)
+    ) u_pipeline_core_first (
+        .clk_i           (clk_i),
+        .arst_ni         (arst_ni),
+        .data_in_i       (data_in_i),
+        .data_in_valid_i (data_in_valid_i),
+        .data_in_ready_o (data_in_ready_o),
+        .data_out_o      (data_[0]),
+        .data_out_valid_o(valid_[0]),
+        .data_out_ready_i(ready_[0])
+    );
+
+    for (genvar i = 0; i < (NumStages - 2); i++) begin : g_pipeline_core_1p
       pipeline_core #(
-          .DATA_WIDTH(DATA_WIDTH)
-      ) u_pipeline_core (
-          .clk_i         (clk_i),
-          .arst_n        (arst_n),
-          .data_in       (data_in),
-          .data_in_valid (data_in_valid),
-          .data_in_ready (data_in_ready),
-          .data_out      (data_out),
-          .data_out_valid(data_out_valid),
-          .data_out_ready(data_out_ready)
+          .DataWidth(DataWidth)
+      ) u_pipeline_core_middle (
+          .clk_i           (clk_i),
+          .arst_ni         (arst_ni),
+          .data_in_i       (data_[i]),
+          .data_in_valid_i (valid_[i]),
+          .data_in_ready_o (ready_[i]),
+          .data_out_o      (data_[i+1]),
+          .data_out_valid_o(valid_[i+1]),
+          .data_out_ready_i(ready_[i+1])
       );
-    end else begin
-
-      logic [DATA_WIDTH-1:0] data_ [NUM_STAGES-1];
-      logic                  valid_[NUM_STAGES-1];
-      logic                  ready_[NUM_STAGES-1];
-
-      pipeline_core #(
-          .DATA_WIDTH(DATA_WIDTH)
-      ) u_pipeline_core_first (
-          .clk_i         (clk_i),
-          .arst_n        (arst_n),
-          .data_in       (data_in),
-          .data_in_valid (data_in_valid),
-          .data_in_ready (data_in_ready),
-          .data_out      (data_[0]),
-          .data_out_valid(valid_[0]),
-          .data_out_ready(ready_[0])
-      );
-
-      for (genvar i = 0; i < (NUM_STAGES - 2); i++) begin
-        pipeline_core #(
-            .DATA_WIDTH(DATA_WIDTH)
-        ) u_pipeline_core_middle (
-            .clk_i         (clk_i),
-            .arst_n        (arst_n),
-            .data_in       (data_[i]),
-            .data_in_valid (valid_[i]),
-            .data_in_ready (ready_[i]),
-            .data_out      (data_[i+1]),
-            .data_out_valid(valid_[i+1]),
-            .data_out_ready(ready_[i+1])
-        );
-      end
-
-      pipeline_core #(
-          .DATA_WIDTH(DATA_WIDTH)
-      ) u_pipeline_core_last (
-          .clk_i         (clk_i),
-          .arst_n        (arst_n),
-          .data_in       (data_[NUM_STAGES-2]),
-          .data_in_valid (valid_[NUM_STAGES-2]),
-          .data_in_ready (ready_[NUM_STAGES-2]),
-          .data_out      (data_out),
-          .data_out_valid(data_out_valid),
-          .data_out_ready(data_out_ready)
-      );
-
     end
 
-  endgenerate
+    pipeline_core #(
+        .DataWidth(DataWidth)
+    ) u_pipeline_core_last (
+        .clk_i           (clk_i),
+        .arst_ni         (arst_ni),
+        .data_in_i       (data_[NumStages-2]),
+        .data_in_valid_i (valid_[NumStages-2]),
+        .data_in_ready_o (ready_[NumStages-2]),
+        .data_out_o      (data_out_o),
+        .data_out_valid_o(data_out_valid_o),
+        .data_out_ready_i(data_out_ready_i)
+    );
+
+  end
 
 endmodule
