@@ -21,4 +21,4 @@ jobs:
         sudo apt-get install verilator
 
     - run: |
-        make CI_Iverilog
+        make CI_iverilog
