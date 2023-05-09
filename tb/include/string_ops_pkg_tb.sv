@@ -35,11 +35,11 @@ module string_ops_pkg_tb;
     fail = 0;
     //               0         1         2         3         4         5
     //               012345678901234567890123456789012345678901234567890
-    if (string_find("xsergvftyhuk,klkjm,kihjriotbmklqgipem;fujhnjyggdcds", "uk,k") !== 10) fail++;
-    if (string_find("xsergvftyhuk,klkjm,kihjriotbmklqgipem;fujhnjyggdcds", "otb") !== 25) fail++;
-    if (string_find("xsergvftyhuk,klkjm,kihjriotbmklqgipem;fujhnjyggdcds", "tbmkl") !== 26) fail++;
-    if (string_find("xsergvftyhuk,klkjm,kihjriotbmklqgipem;fujhnjyggdcds", "vftyh") !== 5) fail++;
-    if (string_find("xsergvftyhuk,klkjm,kihjriotbmklqgipem;fujhnjyggdcds", "11111") !== 0) fail++;
+    if (string_find("xsergvftyhuk,klkjm,kihjriotbmklqgipem;fujhnjyggdcds", "uk,k") != 10) fail++;
+    if (string_find("xsergvftyhuk,klkjm,kihjriotbmklqgipem;fujhnjyggdcds", "otb") != 25) fail++;
+    if (string_find("xsergvftyhuk,klkjm,kihjriotbmklqgipem;fujhnjyggdcds", "tbmkl") != 26) fail++;
+    if (string_find("xsergvftyhuk,klkjm,kihjriotbmklqgipem;fujhnjyggdcds", "vftyh") != 5) fail++;
+    if (string_find("xsergvftyhuk,klkjm,kihjriotbmklqgipem;fujhnjyggdcds", "11111") != 0) fail++;
     result_print(!fail, "string_ops_pkg::string_find");
   endtask
 
