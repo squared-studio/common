@@ -19,5 +19,4 @@ jobs:
 #        sudo apt-get install iverilog
 
     - run: |
-        cd tb
-        echo "setting: $(pwd)"
+        make sim_iverilog TOP=tb_model
