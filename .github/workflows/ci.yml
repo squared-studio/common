@@ -12,10 +12,9 @@ jobs:
     - name: Verilog Compiler
       uses: jge162/verilog_compiler@1.0.0
 
-    - run: |
-        sudo apt-get update
-        sudo apt-get install iverilog
+#    - run: |
+#        sudo apt-get update
+#        sudo apt-get install iverilog
 
     - run: |
-        export CDIR=$(pwd)
-        echo $(CDIR)
+        echo "setting: $(pwd)"
