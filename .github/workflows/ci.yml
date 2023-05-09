@@ -2,7 +2,9 @@ name: CI
 
 on:
   push:
-    branches: []
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build-and-analyze:
@@ -17,4 +19,5 @@ jobs:
 #        sudo apt-get install iverilog
 
     - run: |
+        cd tb
         echo "setting: $(pwd)"
