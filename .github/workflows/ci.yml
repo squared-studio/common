@@ -1,4 +1,4 @@
-name: Makefile CI
+name: CI
 
 on:
   push:
@@ -19,5 +19,4 @@ jobs:
         sudo apt-get install verilator
 
     - run: |
-        chmod +x Makefile
-        make CI_iverilog
+        make iverilog TOP=tb_model
