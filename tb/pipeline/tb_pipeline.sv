@@ -12,7 +12,7 @@ module tb_pipeline;
 
   `include "tb_essentials.sv"
 
-  localparam int DataWidth = 8;
+  localparam int ElemWidth = 8;
   localparam int NumStages = 8;
 
   int                   pass;
@@ -21,25 +21,25 @@ module tb_pipeline;
 
   logic                 clk_i;
   logic                 arst_ni;
-  logic [DataWidth-1:0] data_in_i;
-  logic                 data_in_valid_i;
-  logic                 data_in_ready_o;
-  logic [DataWidth-1:0] data_out_o;
-  logic                 data_out_valid_o;
-  logic                 data_out_ready_i;
+  logic [ElemWidth-1:0] elem_in_i;
+  logic                 elem_in_valid_i;
+  logic                 elem_in_ready_o;
+  logic [ElemWidth-1:0] elem_out_o;
+  logic                 elem_out_valid_o;
+  logic                 elem_out_ready_i;
 
   pipeline #(
-      .DataWidth(DataWidth),
+      .ElemWidth(ElemWidth),
       .NumStages(NumStages)
   ) u_pipeline (
       .clk_i           (clk_i),
       .arst_ni         (arst_ni),
-      .data_in_i       (data_in_i),
-      .data_in_valid_i (data_in_valid_i),
-      .data_in_ready_o (data_in_ready_o),
-      .data_out_o      (data_out_o),
-      .data_out_valid_o(data_out_valid_o),
-      .data_out_ready_i(data_out_ready_i)
+      .elem_in_i       (elem_in_i),
+      .elem_in_valid_i (elem_in_valid_i),
+      .elem_in_ready_o (elem_in_ready_o),
+      .elem_out_o      (elem_out_o),
+      .elem_out_valid_o(elem_out_valid_o),
+      .elem_out_ready_i(elem_out_ready_i)
   );
 
   task static start_clock();
@@ -54,17 +54,17 @@ module tb_pipeline;
     repeat (2) @(posedge clk_i);
   endtask
 
-  logic [DataWidth-1:0] data_queue[$];
+  logic [ElemWidth-1:0] elem_queue[$];
 
   task static apply_reset();
-    data_queue.delete();
+    elem_queue.delete();
     pass = 0;
     fail = 0;
     cnt = 0;
     clk_i = 1;
-    data_in_i = 0;
-    data_in_valid_i = 0;
-    data_out_ready_i = 0;
+    elem_in_i = 0;
+    elem_in_valid_i = 0;
+    elem_out_ready_i = 0;
     arst_ni = 0;
     #5;
     arst_ni = 1;
@@ -72,13 +72,13 @@ module tb_pipeline;
   endtask
 
   always @(posedge clk_i) begin
-    if (data_in_valid_i && data_in_ready_o) begin
+    if (elem_in_valid_i && elem_in_ready_o) begin
       cnt++;
-      data_queue.push_back(data_in_i);
+      elem_queue.push_back(elem_in_i);
     end
-    if (data_out_valid_o && data_out_ready_i) begin
+    if (elem_out_valid_o && elem_out_ready_i) begin
       cnt--;
-      if (data_queue.pop_front() == data_out_o) begin
+      if (elem_queue.pop_front() == elem_out_o) begin
         pass++;
       end else begin
         fail++;
@@ -92,14 +92,14 @@ module tb_pipeline;
 
     repeat (50) begin
       @(posedge clk_i);
-      data_in_i <= $urandom();
-      data_in_valid_i <= !($urandom_range(0, 1));
-      data_out_ready_i <= !($urandom_range(0, 5));
+      elem_in_i <= $urandom();
+      elem_in_valid_i <= !($urandom_range(0, 1));
+      elem_out_ready_i <= !($urandom_range(0, 5));
     end
 
     @(posedge clk_i);
-    data_in_valid_i  <= '0;
-    data_out_ready_i <= '1;
+    elem_in_valid_i  <= '0;
+    elem_out_ready_i <= '1;
 
     while (cnt > 0) @(posedge clk_i);
 

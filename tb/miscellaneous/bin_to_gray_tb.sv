@@ -81,15 +81,18 @@ module bin_to_gray_tb;
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   initial begin
-    int fail = 0;
+
+    static int fail = 0;
+    static int pass = 0;
 
     for (int i = 0; i < 2 ** DataWidth; i++) begin
       data_in_i <= $urandom;
       #1;
       if (data_out_o != dout_bin2gray(data_in_i)) fail++;
+      else pass++;
     end
 
-    result_print(!fail, "Bin to Gray Conversion");
+    result_print(!fail, $sformatf("data conversion %0d/%0d", pass, pass + fail));
 
     #100;
     $finish;

@@ -9,20 +9,20 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*
-                                         clk_i                     arst_ni
-                                        ---↓--------------------------↓---
-                                       ¦                                  ¦
+                                          clk_i                     arst_ni
+                                         ---↓--------------------------↓---
+                                        ¦                                  ¦
 [$clog2(NumElem+1)] data_in_num_lanes_i →                                  ← [$clog2(NumElem+1)] data_out_num_lanes_i
  [$clog2(NumElem)] data_in_start_lane_i →                                  ← [$clog2(NumElem)] data_out_start_lane_i
-                     data_in_req_valid_o ←                                  → data_out_req_valid_o
-                                       ¦             var_fifo             ¦
-        [NumElem][ElemWidth] data_in_i →                                  → [NumElem][ElemWidth] data_out_o
-                         data_in_valid_i →                                  → data_out_valid_o
-                         data_in_ready_o ←                                  ← data_out_ready_i
-                                       ¦                                  ¦
-                                        ---↓--------------------------↓---
-                                      space_available_o     elem_available_o
-                                  [$clog2(FifoDepth+1)]     [$clog2(FifoDepth+1)]
+                    data_in_req_valid_o ←                                  → data_out_req_valid_o
+                                        ¦             var_fifo             ¦
+         [NumElem][ElemWidth] data_in_i →                                  → [NumElem][ElemWidth] data_out_o
+                        data_in_valid_i →                                  → data_out_valid_o
+                        data_in_ready_o ←                                  ← data_out_ready_i
+                                        ¦                                  ¦
+                                         ---↓--------------------------↓---
+                                       space_available_o     elem_available_o
+                                   [$clog2(FifoDepth+1)]     [$clog2(FifoDepth+1)]
 */
 
 module var_fifo #(
@@ -119,18 +119,18 @@ module var_fifo #(
       .ElemWidth(ElemWidth),
       .NumElem  (NumElem)
   ) xbar_data_in (
-      .input_select(data_in_xbar_select),
-      .inputs      (data_in_i),
-      .outputs     (data_in_x)
+      .input_select_i(data_in_xbar_select),
+      .inputs_i      (data_in_i),
+      .outputs_o     (data_in_x)
   );
 
   xbar #(
       .ElemWidth(ElemWidth),
       .NumElem  (NumElem)
   ) xbar_data_out (
-      .input_select(data_out_xbar_select),
-      .inputs      (data_out_x),
-      .outputs     (data_out_o)
+      .input_select_i(data_out_xbar_select),
+      .inputs_i      (data_out_x),
+      .outputs_o     (data_out_o)
   );
 
   always_ff @(posedge clk_i or negedge arst_ni) begin

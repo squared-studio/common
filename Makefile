@@ -43,10 +43,6 @@ print_vars:
 
 .PHONY: iverilog
 iverilog: clean
-	@make sim_iverilog
-
-.PHONY: sim_iverilog
-sim_iverilog:
 	@cd $(TOP_DIR); iverilog -I $(INC_DIR) -g2012 -o $(TOP).out -s $(TOP) -l $(DES_LIB_RTL) $(TBF_LIB_RTL)
 	@cd $(TOP_DIR); vvp $(TOP).out
 
@@ -65,12 +61,6 @@ CI: clean
 	@make ci_vivado_run
 	@make ci_vivado_collect
 	@make ci_print
-	
-.PHONY: CI_iverilog
-CI_iverilog: clean
-	@make ci_iverilog_run
-	@make ci_iverilog_collect
-	@make ci_print
 
 .PHONY: ci_vivado_run
 ci_vivado_run:
@@ -82,17 +72,6 @@ ci_vivado_collect:
 	@$(eval _TMP := $(shell find -name "*.log"))
 	@$(foreach word,$(_TMP), cat $(word) >> CI_REPORT_TEMP;)
 	@cat CI_REPORT_TEMP | grep -E "ERROR: |\[PASS\]|\[FAIL\]" >> CI_REPORT;
-
-.PHONY: ci_iverilog_run
-ci_iverilog_run:
-	@> CI_REPORT;
-	@$(foreach word, $(CI_LIST), make sim_iverilog TOP=$(word);)
-
-.PHONY: ci_iverilog_collect
-ci_iverilog_collect: 
-	@$(eval _TMP := $(shell find -name "*.out"))
-	@$(foreach word,$(_TMP), vvp $(word) >> CI_REPORT_TEMP;)
-	@cat CI_REPORT_TEMP | grep -E "error: |\[PASS\]|\[FAIL\]" >> CI_REPORT;
 
 .PHONY: ci_print
 ci_print: 
