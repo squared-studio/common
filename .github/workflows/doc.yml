@@ -1,4 +1,4 @@
-name: verible-verilog-lint
+name: teroshdl-documenter
 on:
   push:
     branches: []
