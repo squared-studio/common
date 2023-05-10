@@ -13,6 +13,8 @@ CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.pb")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name ".Xil")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "xsim.dir")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "CI_REPORT_TEMP")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "___list")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "___flist")
 
 .PHONY: run
 run:
@@ -45,6 +47,28 @@ print_vars:
 iverilog: clean
 	@cd $(TOP_DIR); iverilog -I $(INC_DIR) -g2012 -o $(TOP).out -s $(TOP) -l $(DES_LIB_RTL) $(TBF_LIB_RTL)
 	@cd $(TOP_DIR); vvp $(TOP).out
+
+.PHONY: list_modules
+list_modules: clean
+	@$(eval RTL_FILE := $(shell find rtl -name "$(RTL).sv"))
+	@xvlog -i $(INC_DIR) -sv $(RTL_FILE) -L UVM -L RTL=$(DES_LIB_RTL)
+	@xelab $(RTL) -s top
+	@cat xelab.log | grep -E "work" > ___list
+	@sed -i "s/.*work\.//gi" ___list;
+	@sed -i "s/(.*//gi" ___list;
+	@sed -i "s/_default.*//gi" ___list;
+
+.PHONY: locate_files
+locate_files: list_modules
+	@$(eval _TMP := $(shell cat ___list))
+	@$(foreach word,$(_TMP), find -name "$(word).sv" >> ___flist;)
+
+.PHONY: flist
+flist: locate_files
+	@cat ___flist | clip
+	@make clean
+	@clear
+	@echo -e "\033[2;35m$(RTL) flist copied to clipboard\033[0m"
 
 .PHONY: vivado
 vivado: clean
