@@ -1,0 +1,14 @@
+name: verible-verilog-lint
+on:
+  push:
+    branches: []
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: TerosTechnology/teroshdl-documenter-action@main
+        with:
+          args: -i ./ --recursive --out html
