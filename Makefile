@@ -76,11 +76,7 @@ locate_files: list_modules
 
 .PHONY: flist
 flist: locate_files
-	@> ___list	
-	@$(eval _TMP := $(shell cat ___flist))
-	@$(foreach word,$(_TMP), cat $(word) | grep -E "include " >> ___list;)
-	@cat ___flist >> ___list;
-	@cat ___list | clip
+	@cat ___flist | clip
 	@make clean
 	@clear
 	@echo -e "\033[2;35m$(RTL) flist copied to clipboard\033[0m"
