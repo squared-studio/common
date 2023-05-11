@@ -38,7 +38,7 @@ module tb_model;
   // generates static task start_clk_i with tHigh:3 tLow:7
   `CREATE_CLK(clk_i, 3, 7)
 
-  bit arst_n = 1;
+  bit arst_ni = 1;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   // VARIABLES
@@ -76,9 +76,9 @@ module tb_model;
 
   task static apply_reset();
     #100;
-    arst_n = 0;
+    arst_ni = 0;
     #100;
-    arst_n = 1;
+    arst_ni = 1;
     #100;
   endtask
 

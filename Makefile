@@ -9,11 +9,12 @@
 ##
 ####################################################################################################
 
-TOP_DIR = $(shell find $(realpath ./tb/) -name "$(TOP).sv" | sed "s/$(TOP).sv//g")
-TBF_LIB_RTL = $(shell find $(TOP_DIR) -name "*.sv")
-DES_LIB_RTL += $(shell find $(realpath ./rtl/) -name "*.sv")
-INC_DIR = $(realpath ./include)
-CI_LIST = $(shell cat CI_LIST)
+TOP_DIR  = $(shell find $(realpath ./tb/) -name "$(TOP).sv" | sed "s/$(TOP).sv//g")
+TBF_LIB  = $(shell find $(TOP_DIR) -name "*.sv")
+DES_LIB += $(shell find $(realpath ./rtl/) -name "*.sv")
+INTF_LIB = $(shell find $(realpath ./intf/) -name "*.sv")
+INC_DIR  = $(realpath ./include)
+CI_LIST  = $(shell cat CI_LIST)
 
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.out")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.vcd")
@@ -42,11 +43,14 @@ print_vars:
 	@echo "TOP_DIR:"
 	@echo "$(TOP_DIR)";
 	@echo ""
-	@echo "DES_LIB_RTL:"
-	@echo "$(DES_LIB_RTL)";
+	@echo "DES_LIB:"
+	@echo "$(DES_LIB)";
 	@echo ""
-	@echo "TBF_LIB_RTL:"
-	@echo "$(TBF_LIB_RTL)";
+	@echo "INTF_LIB:"
+	@echo "$(INTF_LIB)";
+	@echo ""
+	@echo "TBF_LIB:"
+	@echo "$(TBF_LIB)";
 	@echo ""
 	@echo "INC_DIR:"
 	@echo "$(INC_DIR)";
@@ -56,13 +60,13 @@ print_vars:
 
 .PHONY: iverilog
 iverilog: clean
-	@cd $(TOP_DIR); iverilog -I $(INC_DIR) -g2012 -o $(TOP).out -s $(TOP) -l $(DES_LIB_RTL) $(TBF_LIB_RTL)
+	@cd $(TOP_DIR); iverilog -I $(INC_DIR) -g2012 -o $(TOP).out -s $(TOP) -l $(DES_LIB) $(TBF_LIB)
 	@cd $(TOP_DIR); vvp $(TOP).out
 
 .PHONY: list_modules
 list_modules: clean
 	@$(eval RTL_FILE := $(shell find rtl -name "$(RTL).sv"))
-	@xvlog -i $(INC_DIR) -sv $(RTL_FILE) -L UVM -L RTL=$(DES_LIB_RTL)
+	@xvlog -i $(INC_DIR) -sv $(RTL_FILE) -L RTL=$(DES_LIB)
 	@xelab $(RTL) -s top
 	@cat xelab.log | grep -E "work" > ___list
 	@sed -i "s/.*work\.//gi" ___list;
@@ -87,7 +91,7 @@ vivado: clean
 
 .PHONY: sim_vivado
 sim_vivado:
-	@cd $(TOP_DIR); xvlog -i $(INC_DIR) -sv $(TOP_DIR)$(TOP).sv -L UVM -L TBF=$(TBF_LIB_RTL) -L RTL=$(DES_LIB_RTL)
+	@cd $(TOP_DIR); xvlog -i $(INC_DIR) -sv $(TOP_DIR)$(TOP).sv -L UVM -L TBF=$(TBF_LIB) -L RTL=$(DES_LIB) -L INTF=$(INTF_LIB)
 	@cd $(TOP_DIR); xelab $(TOP) -s top
 	@cd $(TOP_DIR); xsim top -runall
 
