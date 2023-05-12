@@ -132,9 +132,6 @@ module mem_bank_tb;
   initial begin
     start_clk_i();
 
-    //mem_write (0, $urandom, '1);
-    //mem_read  (0);
-
     mem_write(0, 'h12345678, '1);
     mem_read(0);
 
