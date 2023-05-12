@@ -38,17 +38,21 @@ module mem_bank #(
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   for (genvar i = 0; i < DataBytes; i++) begin : g_mem_cores
+
+    logic do_write;
+    assign do_write = wstrb_i[i] & cs_i;
+
     mem_core #(
         .ElemWidth(8),
         .AddrWidth(AddrWidth - DataSize)
     ) u_mem_core (
         .clk_i  (clk_i),
-        .cs_i   (cs_i),
-        .we_i   (wstrb_i[i]),
+        .we_i   (do_write),
         .addr_i (addr_i[AddrWidth-1:DataSize]),
         .wdata_i(wdata_i[(8*(i+1)-1):(8*i)]),
         .rdata_o(rdata_o[(8*(i+1)-1):(8*i)])
     );
+
   end
 
 endmodule

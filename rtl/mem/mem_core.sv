@@ -24,7 +24,6 @@ module mem_core #(
     parameter int AddrWidth = 8
 ) (
     input  logic                 clk_i,
-    input  logic                 cs_i,
     input  logic                 we_i,
     input  logic [AddrWidth-1:0] addr_i,
     input  logic [ElemWidth-1:0] wdata_i,
@@ -43,24 +42,18 @@ module mem_core #(
 
   logic [Depth-1:0][ElemWidth-1:0] mem;
 
-  logic do_write;
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  // ASSIGNMENTS
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-
-  assign rdata_o  = mem[addr_i];
-
-  assign do_write = cs_i & we_i;
-
   //////////////////////////////////////////////////////////////////////////////////////////////////
   // SEQUENCIALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   always_ff @(posedge clk_i) begin
-    if (do_write) begin
+    if (we_i) begin
       mem[addr_i] <= wdata_i;
     end
+  end
+
+  always_ff @(posedge clk_i) begin
+    rdata_o <= mem[addr_i];
   end
 
 endmodule
