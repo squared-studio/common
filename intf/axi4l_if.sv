@@ -1,4 +1,4 @@
-interface axi4_if #(
+interface axi4l_if #(
     parameter type axi_req_t = logic,
     parameter type axi_rsp_t = logic
 ) (

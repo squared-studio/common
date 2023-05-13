@@ -8,6 +8,16 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/*
+                                           ------------
+                                          ¦            ¦
+            [NumElem][ElemWidth] inputs_i →            → [NumElem][ElemWidth] outputs_o
+                                          ¦    xbar    ¦
+[NumElem][$clog2(NumElem)] input_select_i →            ¦
+                                          ¦            ¦
+                                           ------------
+*/
+
 module xbar #(
     parameter int ElemWidth = 8,
     parameter int NumElem   = 6

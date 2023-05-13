@@ -60,8 +60,8 @@ module fifo #(
   assign elem_in_hs = elem_in_valid_i & elem_in_ready_o;
   assign elem_out_hs = elem_out_valid_o & elem_out_ready_i;
 
-  assign wr_ptr_next = ((wr_ptr + 1) < Depth) ? wr_ptr + 1 : '0;
-  assign rd_ptr_next = ((rd_ptr + 1) < Depth) ? rd_ptr + 1 : '0;
+  assign wr_ptr_next = ((wr_ptr + 1) == Depth) ? '0 : wr_ptr + 1 ;
+  assign rd_ptr_next = ((rd_ptr + 1) == Depth) ? '0 : rd_ptr + 1 ;
 
   assign elem_out_o = dt_cnt ? mem[rd_ptr] : elem_in_i;
 
