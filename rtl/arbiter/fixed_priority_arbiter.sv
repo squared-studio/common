@@ -3,15 +3,18 @@
 //    AUTHOR      : Foez Ahmed
 //    EMAIL       : foez.official@gmail.com
 //
-//    MODULE      : ...
-//    DESCRIPTION : ...
+//    MODULE      : fixed_priority_arbiter
+//    DESCRIPTION : general purpose fixed priority arbiter. req_i[0] has the highest priority
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*
-                ----------------------------
+                allow_req_i          arst_ni
+                ---↓--------------------↓---
                ¦                            ¦
 [NumReq] req_i →   fixed_priority_arbiter   → [NumReq] gnt_o
+               ¦                            ¦
+          en_i →                            ¦
                ¦                            ¦
                 ----------------------------
 */
@@ -19,20 +22,44 @@
 module fixed_priority_arbiter #(
     parameter int NumReq = 4
 ) (
+    input  logic              arst_ni,
+    input  logic              allow_req_i,
+    input  logic              en_i,
     input  logic [NumReq-1:0] req_i,
     output logic [NumReq-1:0] gnt_o
 );
 
-  logic [NumReq-1:1] gnt_found;
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  // SIGNALS
+  //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  assign gnt_found[1] = gnt_o[0];
-  for (genvar i = 2; i < NumReq; i++) begin : g_gnt_found_MSB
-    assign gnt_found[i] = gnt_found[i-1] | gnt_o[i-1];
+  logic [NumReq-1:0] gnt_already_found;
+  logic [NumReq-1:0] latch_out;
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  // ASSIGNMENTS
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+
+  assign gnt_already_found[0] = ~allow_req_i;
+  for (genvar i = 1; i < NumReq; i++) begin : g_gnt_found
+    assign gnt_already_found[i] = gnt_already_found[i-1] | gnt_o[i-1];
   end
 
-  assign gnt_o[0] = req_i[0];
-  for (genvar i = 1; i < NumReq; i++) begin : g_gnt_MSB
-    assign gnt_o[i] = gnt_found[i] ? '0 : req_i[i];
+  for (genvar i = 0; i < NumReq; i++) begin : g_gnt
+    assign gnt_o[i] = gnt_already_found[i] ? '0 : latch_out[i];
   end
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  // RTLS
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+
+  latch #(
+      .ElemWidth(NumReq)
+  ) u_latch_req_i (
+      .arst_ni(arst_ni),
+      .en_i(en_i),
+      .d_i (req_i),
+      .q_o (latch_out)
+  );
 
 endmodule

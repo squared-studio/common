@@ -9,19 +9,22 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*
-                 clk_i         arst_ni
-               ---↓----------------↓---
-              ¦                        ¦
-[NumReq] req_i →   round_robin_arbiter  → [NumReq] gnt_o
-              ¦                        ¦
-               ------------------------
+                  clk_i             arst_ni
+                ---↓-------------------↓---
+               ¦                           ¦
+[NumReq] req_i →    round_robin_arbiter    → [NumReq] gnt_o
+               ¦                           ¦
+                ---------------------------
 */
+
 module round_robin_arbiter #(
     parameter int Clog2NumReq = 2,
     localparam int NumReq = (2 ** Clog2NumReq)
 ) (
     input  logic              clk_i,
     input  logic              arst_ni,
+    input  logic              allow_req_i,
+    input  logic              en_i,
     input  logic [NumReq-1:0] req_i,
     output logic [NumReq-1:0] gnt_o
 );
@@ -66,9 +69,12 @@ module round_robin_arbiter #(
 
   fixed_priority_arbiter #(
       .NumReq(NumReq)
-  ) u_fixed_priority_arbiter (
-      .req_i(req_xbar),
-      .gnt_o(gnt_xbar)
+  ) fixed_priority_arbiter_dut (
+      .arst_ni(arst_ni),
+      .allow_req_i(allow_req_i),
+      .en_i(en_i),
+      .req_i(req_i),
+      .gnt_o(gnt_o)
   );
 
   priority_encoder #(
