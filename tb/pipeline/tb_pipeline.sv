@@ -10,7 +10,7 @@
 
 module tb_pipeline;
 
-  `include "tb_essentials.sv"
+  `include "vip/tb_ess.sv"
 
   localparam int ElemWidth = 8;
   localparam int NumStages = 8;

@@ -10,7 +10,7 @@
 
 module var_fifo_tb;
 
-  `include "tb_essentials.sv"
+  `include "vip/tb_ess.sv"
 
   // Parameters
   localparam int ElemWidth = 4;

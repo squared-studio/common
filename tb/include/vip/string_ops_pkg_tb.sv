@@ -8,11 +8,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-`include "string_ops_pkg.sv"
+`include "vip/string_ops_pkg.sv"
 
 module string_ops_pkg_tb;
 
-  `include "tb_essentials.sv"
+  `include "vip/tb_ess.sv"
 
   import string_ops_pkg::string_get;
   import string_ops_pkg::string_find;
