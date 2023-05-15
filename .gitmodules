@@ -1,6 +1,3 @@
-[submodule "sub/xcelerium/axi_vreader_vwriter"]
-	path = sub/xcelerium/axi_vreader_vwriter
-	url = https://github.com/xcelerium/axi_vreader_vwriter.git
 [submodule "sub/xcelerium/scalar-unit"]
 	path = sub/xcelerium/scalar-unit
 	url = https://github.com/xcelerium/scalar-unit.git
