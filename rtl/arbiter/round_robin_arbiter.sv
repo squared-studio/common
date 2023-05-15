@@ -3,7 +3,7 @@
 //    AUTHOR      : Foez Ahmed
 //    EMAIL       : foez.official@gmail.com
 //
-//    MODULE      : ...
+//    MODULE      : round_robin_arbiter
 //    DESCRIPTION : ...
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -73,8 +73,8 @@ module round_robin_arbiter #(
       .arst_ni(arst_ni),
       .allow_req_i(allow_req_i),
       .en_i(en_i),
-      .req_i(req_i),
-      .gnt_o(gnt_o)
+      .req_i(req_xbar),
+      .gnt_o(gnt_xbar)
   );
 
   priority_encoder #(
@@ -90,7 +90,7 @@ module round_robin_arbiter #(
     if (~arst_ni) begin
       xbar_sel <= '0;
     end else begin
-      if (gnt_found) begin
+      if (en_i & gnt_found) begin
         xbar_sel <= gnt_code + 1;
       end
     end
