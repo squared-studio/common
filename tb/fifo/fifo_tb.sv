@@ -3,8 +3,8 @@
 //    AUTHOR      : Foez Ahmed
 //    EMAIL       : foez.official@gmail.com
 //
-//    MODULE      : ...
-//    DESCRIPTION : ...
+//    MODULE      : fifo_tb
+//    DESCRIPTION : testbench for fifo module
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
