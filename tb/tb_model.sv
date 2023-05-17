@@ -8,6 +8,12 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//`include "axi4/typedef.svh"
+//`include "axi4l/typedef.svh"
+//`include "vip/bus_dvr_mon.svh"
+
+//`include "vip/string_ops_pkg.sv"
+
 module tb_model;
 
   //`define ENABLE_DUMPFILE
