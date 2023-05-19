@@ -4,7 +4,7 @@
 //    EMAIL       : foez.official@gmail.com
 //
 //    MODULE      : axi4l/typedef.svh
-//    DESCRIPTION : macros for axi4 typedefs
+//    DESCRIPTION : macros for axi4l typedefs
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -12,58 +12,58 @@
 // INTERNAL MACRO FOR THIS FILE
 `define AXI4L_AX_CHAN_T(__NM__, __AW__)                                                            \
   typedef struct packed {                                                                          \
-    logic [``__AW__``-1:0] addr;                                                                   \
-    logic [2:0] prot;                                                                              \
+    logic [``__AW__``-1:0] addr ;                                                                  \
+    logic [2:0]            prot ;                                                                  \
   } ``__NM__``;                                                                                    \
 
 
 // INTERNAL MACRO FOR THIS FILE
 `define AXI4L_W_CHAN_T(__NM__, __DW__)                                                             \
   typedef struct packed {                                                                          \
-    logic [``__DW__``-1:0] data;                                                                   \
-    logic [``__DW__``/8-1:0] strb;                                                                 \
+    logic [``__DW__``-1:0]   data ;                                                                \
+    logic [``__DW__``/8-1:0] strb ;                                                                \
   } ``__NM__``;                                                                                    \
 
 
 // INTERNAL MACRO FOR THIS FILE
 `define AXI4L_B_CHAN_T(__NM__)                                                                     \
   typedef struct packed {                                                                          \
-    logic [1:0] resp;                                                                              \
+    logic [1:0] resp ;                                                                             \
   } ``__NM__``;                                                                                    \
 
 
 // INTERNAL MACRO FOR THIS FILE
 `define AXI4L_R_CHAN_T(__NM__, __DW__)                                                             \
   typedef struct packed {                                                                          \
-    logic [``__DW__``-1:0] data;                                                                   \
-    logic [1:0] resp;                                                                              \
+    logic [``__DW__``-1:0] data ;                                                                  \
+    logic [1:0]            resp ;                                                                  \
   } ``__NM__``;                                                                                    \
 
 
 // INTERNAL MACRO FOR THIS FILE
 `define AXI4L_REQ_T(__NM__, __AW_CHAN_T__, __W_CHAN_T__, __AR_CHAN_T__)                            \
   typedef struct packed {                                                                          \
-    ``__AW_CHAN_T__`` aw;                                                                          \
-    logic             aw_valid;                                                                    \
-    ``__W_CHAN_T__``  w;                                                                           \
-    logic             w_valid;                                                                     \
-    logic             b_ready;                                                                     \
-    ``__AR_CHAN_T__`` ar;                                                                          \
-    logic             ar_valid;                                                                    \
-    logic             r_ready;                                                                     \
+    ``__AW_CHAN_T__`` aw       ;                                                                   \
+    logic             aw_valid ;                                                                   \
+    ``__W_CHAN_T__``  w        ;                                                                   \
+    logic             w_valid  ;                                                                   \
+    logic             b_ready  ;                                                                   \
+    ``__AR_CHAN_T__`` ar       ;                                                                   \
+    logic             ar_valid ;                                                                   \
+    logic             r_ready  ;                                                                   \
   } ``__NM__``;                                                                                    \
 
 
 // INTERNAL MACRO FOR THIS FILE
 `define AXI4L_RSP_T(__NM__, __B_CHAN_T__, __R_CHAN_T__)                                            \
   typedef struct packed {                                                                          \
-    logic     aw_ready;                                                                            \
-    logic     w_ready;                                                                             \
-    ``__B_CHAN_T__``  b;                                                                           \
-    logic     b_valid;                                                                             \
-    logic     ar_ready;                                                                            \
-    ``__R_CHAN_T__``  r;                                                                           \
-    logic     r_valid;                                                                             \
+    logic            aw_ready ;                                                                    \
+    logic            w_ready  ;                                                                    \
+    ``__B_CHAN_T__`` b        ;                                                                    \
+    logic            b_valid  ;                                                                    \
+    logic            ar_ready ;                                                                    \
+    ``__R_CHAN_T__`` r        ;                                                                    \
+    logic            r_valid  ;                                                                    \
   } ``__NM__``;                                                                                    \
 
 
