@@ -1,6 +1,3 @@
-[submodule "sub/xcelerium/scalar-unit"]
-	path = sub/xcelerium/scalar-unit
-	url = https://github.com/xcelerium/scalar-unit.git
 [submodule "sub/pulp-platform/axi"]
 	path = sub/pulp-platform/axi
 	url = https://github.com/pulp-platform/axi.git
