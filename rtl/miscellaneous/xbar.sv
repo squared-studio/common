@@ -1,22 +1,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//    AUTHOR      : Foez Ahmed
-//    EMAIL       : foez.official@gmail.com
+//    Author      : Foez Ahmed
 //
-//    MODULE      : xbar
-//    DESCRIPTION : general purpose xbar
+//    Email       : foez.official@gmail.com
+//
+//    module      : xbar
+//
+//    Description : general purpose xbar
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*
-                                           ------------
-                                          ¦            ¦
-            [NumElem][ElemWidth] inputs_i →            → [NumElem][ElemWidth] outputs_o
-                                          ¦    xbar    ¦
-[NumElem][$clog2(NumElem)] input_select_i →            ¦
-                                          ¦            ¦
-                                           ------------
-*/
 
 module xbar #(
     parameter int ElemWidth = 8,

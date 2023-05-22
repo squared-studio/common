@@ -1,23 +1,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//    AUTHOR      : Foez Ahmed
-//    EMAIL       : foez.official@gmail.com
+//    Author      : Foez Ahmed
 //
-//    MODULE      : fixed_priority_arbiter
-//    DESCRIPTION : general purpose fixed priority arbiter. req_i[0] has the highest priority
+//    Email       : foez.official@gmail.com
+//
+//    module      : fixed_priority_arbiter
+//
+//    Description : general purpose fixed priority arbiter. req_i[0] has the highest priority
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*
-                allow_req_i          arst_ni
-                ---↓--------------------↓---
-               ¦                            ¦
-[NumReq] req_i →                            → [NumReq] gnt_o
-               ¦   fixed_priority_arbiter   ¦
-          en_i →                            ¦
-               ¦                            ¦
-                ----------------------------
-*/
 
 module fixed_priority_arbiter #(
     parameter int NumReq = 4

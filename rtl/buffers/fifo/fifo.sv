@@ -1,23 +1,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//    AUTHOR      : Foez Ahmed
-//    EMAIL       : foez.official@gmail.com
+//    Author      : Foez Ahmed
 //
-//    MODULE      : fifo
-//    DESCRIPTION : synchronous fifo buffer with valid ready handshake
+//    Email       : foez.official@gmail.com
+//
+//    module      : fifo
+//
+//    Description : synchronous fifo buffer with valid ready handshake
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*
-                        clk_i       arst_ni
-                       ---↓------------↓---
-                      ¦                    ¦
-[ElemWidth] elem_in_i →                    → [ElemWidth] elem_out_o
-      elem_in_valid_i →        fifo        → elem_out_valid_o
-      elem_in_ready_o ←                    ← elem_out_ready_i
-                      ¦                    ¦
-                       --------------------
-*/
 
 module fifo #(
     parameter int ElemWidth = 8,

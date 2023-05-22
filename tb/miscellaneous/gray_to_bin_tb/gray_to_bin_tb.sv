@@ -1,10 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//    AUTHOR      : Razu
-//    EMAIL       : engr.razu.ahamed@gmail.com
+//    Author      : Razu
 //
-//    MODULE      : gray_to_bin_tb;
-//    DESCRIPTION : It's verify gray to binary converter Module
+//    Email       : engr.razu.ahamed@gmail.com
+//
+//    module      : gray_to_bin_tb;
+//
+//    Description : It's verify gray to binary converter Module
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 

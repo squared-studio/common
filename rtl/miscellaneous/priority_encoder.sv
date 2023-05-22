@@ -1,20 +1,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//    AUTHOR      : Foez Ahmed
-//    EMAIL       : foez.official@gmail.com
+//    Author      : Foez Ahmed
 //
-//    MODULE      : priority_encoder
-//    DESCRIPTION : simple priority encoder
+//    Email       : foez.official@gmail.com
+//
+//    module      : priority_encoder
+//
+//    Description : simple priority encoder
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*
-                  ------------------------
-                 ¦                        ¦
-[NumInputs] in_i →    priority_encoder    → [$clog2(NumInputs)] code_o
-                 ¦                        ¦
-                  ------------------------
-*/
 
 module priority_encoder #(
     parameter int NumInputs = 4

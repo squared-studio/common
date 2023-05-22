@@ -1,20 +1,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//    AUTHOR      : Foez Ahmed
-//    EMAIL       : foez.official@gmail.com
+//    Author      : Foez Ahmed
 //
-//    MODULE      : decoder
-//    DESCRIPTION : simple decoder for code to one-hot
+//    Email       : foez.official@gmail.com
+//
+//    module      : decoder
+//
+//    Description : simple decoder for code to one-hot
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*
-                    ---------------
-                   ¦               ¦
-[CodeWidth] code_i →    decoder    → [2**CodeWidth] out_o
-                   ¦               ¦
-                    ---------------
-*/
 
 module decoder #(
     parameter int CodeWidth = 4

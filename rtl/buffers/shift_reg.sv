@@ -1,22 +1,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//    AUTHOR      : Foez Ahmed
-//    EMAIL       : foez.official@gmail.com
+//    Author      : Foez Ahmed
 //
-//    MODULE      : ...
-//    DESCRIPTION : ...
+//    Email       : foez.official@gmail.com
+//
+//    module      : ...
+//
+//    Description : ...
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*
-                         clk_i   arst_ni   load_i   en_i   l_shift_i
-                        ---↓--------↓--------↓--------↓--------↓---
-                       ¦                                           ¦
-       [ElemWidth] s_i →                   shift                   → [ElemWidth] s_o
-[Depth][ElemWidth] p_i →                  register                 → [Depth][ElemWidth] p_o
-                       ¦                                           ¦
-                        -------------------------------------------
-*/
 
 module shift_reg #(
     parameter int ElemWidth = 4,

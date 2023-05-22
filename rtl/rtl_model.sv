@@ -1,23 +1,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//    AUTHOR      : ...
-//    EMAIL       : ...
+//    Author      : ...
 //
-//    MODULE      : ...
-//    DESCRIPTION : ...
+//    Email       : ...
+//
+//    module      : ...
+//
+//    Description : ...
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*
-                        clk_i       arst_ni
-                       ---↓------------↓---
-                      ¦                    ¦
-[DataWidth] data_in_i →                    → [DataWidth] data_out_o
-      data_in_valid_i →      rtl_model     → data_out_valid_o
-      data_in_ready_o ←                    ← data_out_ready_i
-                      ¦                    ¦
-                       --------------------
-*/
 
 module rtl_model #(
     parameter int DataWidth = 8,

@@ -1,21 +1,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//    AUTHOR      : Foez Ahmed
-//    EMAIL       : foez.official@gmail.com
+//    Author      : Foez Ahmed
 //
-//    MODULE      : round_robin_arbiter
-//    DESCRIPTION : ...
+//    Email       : foez.official@gmail.com
+//
+//    module      : round_robin_arbiter
+//
+//    Description : ...
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*
-                  clk_i             arst_ni
-                ---↓-------------------↓---
-               ¦                           ¦
-[NumReq] req_i →    round_robin_arbiter    → [NumReq] gnt_o
-               ¦                           ¦
-                ---------------------------
-*/
 
 module round_robin_arbiter #(
     parameter int Clog2NumReq = 2,

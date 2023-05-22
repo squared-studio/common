@@ -1,10 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//    AUTHOR      : Foez Ahmed
-//    EMAIL       : foez.official@gmail.com
+//    Author      : Foez Ahmed
 //
-//    MODULE      : string_ops_pkg
-//    DESCRIPTION : string manipulation operations
+//    Email       : foez.official@gmail.com
+//
+//    module      : string_ops_pkg
+//
+//    Description : string manipulation operations
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 

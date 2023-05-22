@@ -1,10 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//    AUTHOR      : Foez Ahmed
-//    EMAIL       : foez.official@gmail.com
+//    Author      : Foez Ahmed
 //
-//    MODULE      : axi4l/typedef.svh
-//    DESCRIPTION : macros for axi4l typedefs
+//    Email       : foez.official@gmail.com
+//
+//    module      : axi4l/typedef.svh
+//
+//    Description : macros for axi4l typedefs
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 

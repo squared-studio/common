@@ -1,22 +1,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//    AUTHOR      : Foez Ahmed
-//    EMAIL       : foez.official@gmail.com
+//    Author      : Foez Ahmed
 //
-//    MODULE      : latch
-//    DESCRIPTION : general purpose latch
+//    Email       : foez.official@gmail.com
+//
+//    module      : latch
+//
+//    Description : general purpose latch
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*
-                 ------------------------
-                ¦                        ¦
-[ElemWidth] d_i →                        → [ElemWidth] q_o
-                ¦    priority_encoder    ¦
-           en_i →                        ¦
-                ¦                        ¦
-                 ------------------------
-*/
 
 module latch #(
     parameter int ElemWidth = 8

@@ -1,10 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//    AUTHOR      : Foez Ahmed
-//    EMAIL       : foez.official@gmail.com
+//    Author      : Foez Ahmed
 //
-//    MODULE      : axi4l/assign.svh
-//    DESCRIPTION : macros for axi4l assignments
+//    Email       : foez.official@gmail.com
+//
+//    module      : axi4l/assign.svh
+//
+//    Description : macros for axi4l assignments
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 

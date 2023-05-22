@@ -1,10 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//    AUTHOR      : Khadija Yeasmin Fariya
-//    EMAIL       : fariya.khadijayeasmin@gmail.com
+//    Author      : Khadija Yeasmin Fariya
 //
-//    MODULE      : bin_to_gray_tb
-//    DESCRIPTION : Binary to Gray Converter Testbench
+//    Email       : fariya.khadijayeasmin@gmail.com
+//
+//    module      : bin_to_gray_tb
+//
+//    Description : Binary to Gray Converter Testbench
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 

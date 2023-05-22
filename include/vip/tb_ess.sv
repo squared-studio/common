@@ -1,10 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//    AUTHOR      : Foez Ahmed
-//    EMAIL       : foez.official@gmail.com
+//    Author      : Foez Ahmed
 //
-//    MODULE      : tb_essentials
-//    DESCRIPTION : includes essential macros, function and task for testbench
+//    Email       : foez.official@gmail.com
+//
+//    module      : tb_essentials
+//
+//    Description : includes essential macros, function and task for testbench
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 

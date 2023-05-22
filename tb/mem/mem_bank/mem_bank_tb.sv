@@ -1,10 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//    AUTHOR      : Foez Ahmed
-//    EMAIL       : foez.official@gmail.com
+//    Author      : Foez Ahmed
 //
-//    MODULE      : mem_bank_tb
-//    DESCRIPTION : A testbench for memory bank verification
+//    Email       : foez.official@gmail.com
+//
+//    module      : mem_bank_tb
+//
+//    Description : A testbench for memory bank verification
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 

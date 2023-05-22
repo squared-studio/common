@@ -1,20 +1,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//    AUTHOR      : Foez Ahmed
-//    EMAIL       : foez.official@gmail.com
+//    Author      : Foez Ahmed
 //
-//    MODULE      : bin_to_gray
-//    DESCRIPTION : converter module for binary to gray code conversion
+//    Email       : foez.official@gmail.com
+//
+//    module      : bin_to_gray
+//
+//    Description : converter module for binary to gray code conversion
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*
-                       -------------------
-                      ¦                   ¦
-[DataWidth] data_in_i →    bin_to_gray    → [DataWidth] data_out_o
-                      ¦                   ¦
-                       -------------------
-*/
 
 module bin_to_gray #(
     parameter int DataWidth = 4

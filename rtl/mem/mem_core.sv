@@ -1,23 +1,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//    AUTHOR      : Foez Ahmed
-//    EMAIL       : foez.official@gmail.com
+//    Author      : Foez Ahmed
 //
-//    MODULE      : mem_core
-//    DESCRIPTION : basic building block for memory
+//    Email       : foez.official@gmail.com
+//
+//    module      : mem_core
+//
+//    Description : basic building block for memory
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*
-                           clk_i
-                     --------↓---------
-                    ¦                  ¦
- [AddrWidth] addr_i →                  ¦
-[ElemWidth] wdata_i →     mem_core     → [CELL_WIDTG] rdata_o
-               we_i →                  ¦
-                    ¦                  ¦
-                     ------------------
-*/
 
 module mem_core #(
     parameter int ElemWidth = 8,

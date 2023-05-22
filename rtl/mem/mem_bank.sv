@@ -1,23 +1,16 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//    AUTHOR      : Foez Ahmed
-//    EMAIL       : foez.official@gmail.com
+//    Author      : Foez Ahmed
 //
-//    MODULE      : ...
-//    DESCRIPTION : ...
+//
+//    Email       : foez.official@gmail.com
+//
+//    module      : ...
+//
+//
+//    Description : ...
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*
-                       clk_i        cs_i
-                      ---↓----------↓---
-                     ¦                  ¦
-  [AddrWidth] addr_i →                  ¦
- [DataWidth] wdata_i →     mem_bank     → [DataWidth] rdata_o
- [DataBytes] wstrb_i →                  ¦
-                     ¦                  ¦
-                      ------------------
-*/
 
 module mem_bank #(
     parameter  int AddrWidth = 8,
