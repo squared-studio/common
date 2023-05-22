@@ -1,15 +1,15 @@
-name: Verilator
-on: [push]
+name: TerosHDL
+on:
+  push:
+    branches: []
 
 jobs:
-  clean-verilog:
+  lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2 # Checkout source
-    - uses: reviewdog/action-setup@v1 # Setup reviewdog
-    - uses: SuibianP/verilog-cleaner@v1 # lint and format
+
+    - uses: actions/checkout@v2
+
+    - uses: TerosTechnology/teroshdl-documenter-action@main
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-    - uses: peter-evans/create-pull-request@v3 # Creates pull request with formatting results
-      with:
-        delete-branch: true
+        args: -i ./ --recursive --out html
