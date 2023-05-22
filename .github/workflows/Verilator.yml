@@ -1,18 +1,15 @@
 name: Verilator
-on:
-  push:
-    branches: []
+on: [push]
 
 jobs:
-  verilate:
+  clean-verilog:
     runs-on: ubuntu-latest
-    permissions:
-      checks: write
-      contents: read
-      pull-requests: write
     steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-      - name: Verilator Sim
-        uses: drom/action-verilator@v0.1.11
+    - uses: actions/checkout@v2 # Checkout source
+    - uses: reviewdog/action-setup@v1 # Setup reviewdog
+    - uses: SuibianP/verilog-cleaner@v1 # lint and format
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+    - uses: peter-evans/create-pull-request@v3 # Creates pull request with formatting results
+      with:
+        delete-branch: true
