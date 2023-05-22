@@ -12,8 +12,8 @@
                 allow_req_i          arst_ni
                 ---↓--------------------↓---
                ¦                            ¦
-[NumReq] req_i →   fixed_priority_arbiter   → [NumReq] gnt_o
-               ¦                            ¦
+[NumReq] req_i →                            → [NumReq] gnt_o
+               ¦   fixed_priority_arbiter   ¦
           en_i →                            ¦
                ¦                            ¦
                 ----------------------------

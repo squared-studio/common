@@ -9,14 +9,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*
-                       clk_i   arst_ni
-                      ---↓--------↓---
-                     ¦                ¦
+                        clk_i   arst_ni
+                       ---↓--------↓---
+                      ¦                ¦
 [ElemWidth] elem_in_i →                → [ElemWidth] elem_out_o
-       elem_in_valid_i →    pipeline    → elem_out_valid_o
-       elem_in_ready_o ←                ← elem_out_ready_i
-                     ¦                ¦
-                      ----------------
+      elem_in_valid_i →    pipeline    → elem_out_valid_o
+      elem_in_ready_o ←                ← elem_out_ready_i
+                      ¦                ¦
+                       ----------------
 */
 
 module pipeline #(

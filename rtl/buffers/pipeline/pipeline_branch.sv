@@ -9,18 +9,18 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*
-                       clk_i                    arst_ni
-                      ---↓-------------------------↓---
-                     ¦                                 ¦
-                     ¦                                 → [DataWidth] data_out_main_o
-                     ¦                                 → data_out_main_valid_o
+                        clk_i                    arst_ni
+                       ---↓-------------------------↓---
+                      ¦                                 ¦
+                      ¦                                 → [DataWidth] data_out_main_o
+                      ¦                                 → data_out_main_valid_o
 [DataWidth] data_in_i →                                 ← data_out_main_ready_i
-       data_in_valid_i →         pipeline_branch         ¦
-       data_in_ready_o ←                                 → [DataWidth] data_out_scnd_o
-                     ¦                                 → data_out_scnd_valid_o
-                     ¦                                 ← data_out_scnd_ready_i
-                     ¦                                 ¦
-                      ---------------------------------
+      data_in_valid_i →         pipeline_branch         ¦
+      data_in_ready_o ←                                 → [DataWidth] data_out_scnd_o
+                      ¦                                 → data_out_scnd_valid_o
+                      ¦                                 ← data_out_scnd_ready_i
+                      ¦                                 ¦
+                       ---------------------------------
 */
 
 module pipeline_branch #(

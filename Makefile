@@ -10,8 +10,8 @@
 ####################################################################################################
 
 TOP_DIR  = $(shell find $(realpath ./tb/) -name "$(TOP).sv" | sed "s/$(TOP).sv//g")
-TBF_LIB  = $(shell find $(TOP_DIR) -name "*.sv")
-DES_LIB += $(shell find $(realpath ./rtl/) -name "*.sv")
+TBF_LIB  = $(shell find $(TOP_DIR) -name "*.v" -o -name "*.sv")
+DES_LIB += $(shell find $(realpath ./rtl/) -name "*.v" -o -name "*.sv")
 INTF_LIB = $(shell find $(realpath ./intf/) -name "*.sv")
 INC_DIR  = $(realpath ./include)
 CI_LIST  = $(shell cat CI_LIST)
@@ -129,9 +129,9 @@ clean:
 
 .PHONY: gen_check_list
 gen_check_list:
-	@$(eval CHECK_LIST := $(shell find include -name "*.sv"))
-	@$(eval CHECK_LIST += $(shell find rtl -name "*.sv"))
-	@$(eval CHECK_LIST += $(shell find tb -name "*.sv"))
+	@$(eval CHECK_LIST := $(shell find include -name "*.v" -o -name "*.vh" -o -name "*.sv" -o -name "*.svh"))
+	@$(eval CHECK_LIST += $(shell find rtl -name "*.v" -o -name "*.vh" -o -name "*.sv" -o -name "*.svh"))
+	@$(eval CHECK_LIST += $(shell find tb -name "*.v" -o -name "*.vh" -o -name "*.sv" -o -name "*.svh"))
 	@($(foreach word, $(CHECK_LIST), echo "[](./$(word))";)) | clip
 	@echo -e "\033[2;35mList copied to clipboard\033[0m"
 	
