@@ -2,11 +2,9 @@
 //
 //    Author      : Foez Ahmed
 //
-//
 //    Email       : foez.official@gmail.com
 //
 //    module      : ...
-//
 //
 //    Description : ...
 //
