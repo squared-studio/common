@@ -116,7 +116,7 @@ ci_print:
 	else\
 		echo -e "\033[1;31m" >> CI_REPORT;\
 	fi
-	@echo "$(_PASS)/$(shell expr $(_FAIL) + $(_PASS)) PASSED" >> CI_REPORT;
+	@echo ">>>>>>>>>>>>>>>>>>>> $(_PASS)/$(shell expr $(_FAIL) + $(_PASS)) PASSED <<<<<<<<<<<<<<<<<<<<" >> CI_REPORT;
 	@echo -e "\033[0m" >> CI_REPORT;
 	@git log -1 >> CI_REPORT;
 	@make clean
