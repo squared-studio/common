@@ -4,7 +4,7 @@
 ##
 ####################################################################################################
 
-TOP_DIR  = $(shell find $(realpath ./tb/) -name "$(TOP).sv" | sed "s/$(TOP).sv//g")
+TOP_DIR  = $(shell find $(realpath ./tb/) -wholename "*$(TOP)/$(TOP).sv" | sed "s/$(TOP).sv//g")
 TBF_LIB  = $(shell find $(TOP_DIR) -name "*.v" -o -name "*.sv")
 DES_LIB += $(shell find $(realpath ./rtl/) -name "*.v" -o -name "*.sv")
 INTF_LIB = $(shell find $(realpath ./intf/) -name "*.sv")
@@ -108,8 +108,16 @@ ci_vivado_collect:
 	@cat CI_REPORT_TEMP | grep -E "ERROR: |\[PASS\]|\[FAIL\]" >> CI_REPORT;
 
 .PHONY: ci_print
-ci_print: 
-	@echo " " >> CI_REPORT;
+ci_print:
+	@$(eval _PASS := $(shell grep -c "1;32m\[PASS\]" CI_REPORT))
+	@$(eval _FAIL := $(shell grep -c "1;31m\[FAIL\]" CI_REPORT)) 
+	@if [ "$(_FAIL)" = "0" ]; then \
+		echo -e "\033[1;32m" >> CI_REPORT;\
+	else\
+		echo -e "\033[1;31m" >> CI_REPORT;\
+	fi
+	@echo "$(_PASS)/$(shell expr $(_FAIL) + $(_PASS)) PASSED" >> CI_REPORT;
+	@echo -e "\033[0m" >> CI_REPORT;
 	@git log -1 >> CI_REPORT;
 	@make clean
 	@echo " "

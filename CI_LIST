@@ -3,4 +3,3 @@ fifo_tb
 gray_to_bin_tb
 mem_bank_tb
 string_ops_pkg_tb
-tb_model

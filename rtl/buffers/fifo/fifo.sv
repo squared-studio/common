@@ -1,5 +1,4 @@
-//    Simple synchronous FIFO with asynchronous reset. Operates with validity handshake protocol.
-//
+// Simple synchronous FIFO with asynchronous reset. Operates with validity handshake protocol.
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
 module fifo #(
@@ -22,7 +21,7 @@ module fifo #(
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  logic [ElemWidth-1:0] mem [Depth];  // Memory of the FIFO
+  logic [ElemWidth-1:0] mem[Depth];  // Memory of the FIFO
 
   logic [$clog2(Depth):0] el_cnt;  // Available element count
 
@@ -31,8 +30,8 @@ module fifo #(
   logic [$clog2(Depth):0] wr_ptr_next;  // Write pointer next
   logic [$clog2(Depth):0] rd_ptr_next;  // Read pointer next
 
-  logic                   elem_in_hs;   // Input handshake
-  logic                   elem_out_hs;  // Output handshake
+  logic elem_in_hs;  // Input handshake
+  logic elem_out_hs;  // Output handshake
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-ASSIGNMENTS
@@ -55,28 +54,30 @@ module fifo #(
 
   // Update pointers and memory
   always_ff @(posedge clk_i or negedge arst_ni) begin : main
-    if (~arst_ni) begin : not_reset // Apply reset
+    if (~arst_ni) begin : not_reset  // Apply reset
       el_cnt <= '0;
       wr_ptr <= '0;
       rd_ptr <= '0;
-    end else begin : do_reset // Update pointers and memory
-      case ({elem_out_hs, elem_in_hs})
-        2'b11: begin // Both side handshake
+    end else begin : do_reset  // Update pointers and memory
+      case ({
+        elem_out_hs, elem_in_hs
+      })
+        2'b11: begin  // Both side handshake
           el_cnt <= el_cnt;
           rd_ptr <= rd_ptr_next;
           wr_ptr <= wr_ptr_next;
         end
-        2'b10: begin // Output handshake only
+        2'b10: begin  // Output handshake only
           el_cnt <= el_cnt - 1;
           rd_ptr <= rd_ptr_next;
           wr_ptr <= wr_ptr;
         end
-        2'b01: begin // Input handshake only
+        2'b01: begin  // Input handshake only
           el_cnt <= el_cnt + 1;
           rd_ptr <= rd_ptr;
           wr_ptr <= wr_ptr_next;
         end
-        default: begin // Latch on
+        default: begin  // Latch on
           el_cnt <= el_cnt;
           rd_ptr <= rd_ptr;
           wr_ptr <= wr_ptr;
