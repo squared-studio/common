@@ -23,6 +23,8 @@ CLEAN_TARGETS += $(shell find $(realpath ./) -name "CI_REPORT_TEMP")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "___list")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "___flist")
 
+OS = $(shell uname)
+
 .PHONY: run
 run:
 	@echo "To run a test with iverilog or vivado, please type:"
@@ -75,7 +77,7 @@ locate_files: list_modules
 
 .PHONY: flist
 flist: locate_files
-	@cat ___flist | clip
+	@if [ "$(OS)" = "Linux" ]; then cat ___flist | xclip -sel clip >> CI_REPORT; else cat ___flist | clip; fi
 	@make clean
 	@clear
 	@echo -e "\033[2;35m$(RTL) flist copied to clipboard\033[0m"
