@@ -16,4 +16,4 @@ jobs:
       run: sudo apt-get install verilator
 
     - name: Run check
-      run: verilator --lint-only -Wall tb/tb_model.sv
+      run: verilator -I include --lint-only -Wall tb/tb_model.sv
