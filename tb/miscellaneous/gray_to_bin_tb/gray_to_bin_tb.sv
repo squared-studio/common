@@ -1,4 +1,4 @@
-// ### Author : Razu (engr.razu.ahamed@gmail.com)
+// ### Author : Razu Bhai (engr.razu.ahamed@gmail.com)
 
 module gray_to_bin_tb;
 
