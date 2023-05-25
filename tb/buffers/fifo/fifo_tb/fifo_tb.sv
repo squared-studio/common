@@ -24,8 +24,6 @@ module fifo_tb;
 
   // generates static task start_clk_i with tHigh:3 tLow:7
   `CREATE_CLK(clk_i, 3, 7)
-  logic                 arst_n = 1;
-
   logic                 arst_ni;
   logic [ElemWidth-1:0] elem_in_i;
   logic                 elem_in_valid_i;
@@ -93,7 +91,7 @@ module fifo_tb;
     end
     if (elem_out_valid_o && elem_out_ready_i) begin
       out_cnt++;
-      if (elem_queue.pop_front() != elem_out_o) begin
+      if (elem_queue.pop_front() !== elem_out_o) begin
         err++;
       end
     end
@@ -209,6 +207,15 @@ module fifo_tb;
     arst_ni <= 1;
     @(posedge clk_i);
 
+    // overflow
+    while (out_cnt < 100) begin
+      elem_in_i        <= $urandom;
+      elem_in_valid_i  <= ($urandom_range(0, 9) > 0);
+      elem_out_ready_i <= ($urandom_range(0, 9) > 8);
+      @(posedge clk_i);
+    end
+
+    // underflow
     while (out_cnt < 100) begin
       elem_in_i        <= $urandom;
       elem_in_valid_i  <= ($urandom_range(0, 9) > 8);
@@ -216,6 +223,7 @@ module fifo_tb;
       @(posedge clk_i);
     end
 
+    // normal
     while (in_cnt < 200) begin
       elem_in_i        <= $urandom;
       elem_in_valid_i  <= $urandom_range(0, 1);
