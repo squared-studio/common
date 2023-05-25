@@ -28,7 +28,7 @@ module round_robin_arbiter #(
       .ElemWidth(1),
       .NumElem  (NumReq)
   ) xbar_req (
-      .input_select_i(req_in_sel),
+      .select_i(req_in_sel),
       .inputs_i      (req_i),
       .outputs_o     (req_xbar)
   );
@@ -37,7 +37,7 @@ module round_robin_arbiter #(
       .ElemWidth(1),
       .NumElem  (NumReq)
   ) xbar_gnt (
-      .input_select_i(gnt_in_sel),
+      .select_i(gnt_in_sel),
       .inputs_i      (gnt_xbar),
       .outputs_o     (gnt_o)
   );

@@ -94,7 +94,7 @@ module var_fifo #(
       .ElemWidth(ElemWidth),
       .NumElem  (NumElem)
   ) xbar_data_in (
-      .input_select_i(data_in_xbar_select),
+      .select_i(data_in_xbar_select),
       .inputs_i      (data_in_i),
       .outputs_o     (data_in_x)
   );
@@ -103,7 +103,7 @@ module var_fifo #(
       .ElemWidth(ElemWidth),
       .NumElem  (NumElem)
   ) xbar_data_out (
-      .input_select_i(data_out_xbar_select),
+      .select_i(data_out_xbar_select),
       .inputs_i      (data_out_x),
       .outputs_o     (data_out_o)
   );
