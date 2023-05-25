@@ -1,5 +1,7 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
+`define SIMULATION
+
 `define CREATE_CLK(__CLK__, __HIGH__, __LOW__)                                                     \
   bit ``__CLK__`` = '1;                                                                            \
   task static start_``__CLK__``();                                                                 \

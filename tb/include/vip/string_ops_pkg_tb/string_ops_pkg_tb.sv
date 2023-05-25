@@ -20,7 +20,7 @@ module string_ops_pkg_tb;
     if (string_get("AW=5 W=4 B=3 AR=2 R=1", "AR") != 2) fail++;
     if (string_get("AW=5 W=4 B=3 AR=2 R=1", "R") != 1) fail++;
     if (string_get("AW=5 W=4 B=3 AR=2 R=1", "C") != 0) fail++;
-    result_print(!fail, "string_ops_pkg::string_get");
+    result_print(!fail, "string_get");
   endtask
 
   task static string_find_test();
@@ -32,7 +32,7 @@ module string_ops_pkg_tb;
     if (string_find("xsergvftyhuk,klkjm,kihjriotbmklqgipem;fujhnjyggdcds", "tbmkl") != 26) fail++;
     if (string_find("xsergvftyhuk,klkjm,kihjriotbmklqgipem;fujhnjyggdcds", "vftyh") != 5) fail++;
     if (string_find("xsergvftyhuk,klkjm,kihjriotbmklqgipem;fujhnjyggdcds", "11111") != 0) fail++;
-    result_print(!fail, "string_ops_pkg::string_find");
+    result_print(!fail, "string_find");
   endtask
 
   task static string_insert_test();
@@ -41,7 +41,7 @@ module string_ops_pkg_tb;
     if (string_insert("Tt", 1, "es") != "Test") fail++;
     if (string_insert("Te", 2, "st") != "Test") fail++;
     if (string_insert("Te", 3, "st") != "Test") fail++;
-    result_print(!fail, "string_ops_pkg::string_insert");
+    result_print(!fail, "string_insert");
   endtask
 
 

@@ -1,46 +1,46 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
 module pipeline_branch #(
-    parameter int DataWidth = 8
+    parameter int ElemWidth = 8
 ) (
     input logic clk_i,
     input logic arst_ni,
 
-    input  logic [DataWidth-1:0] data_in_i,
-    input  logic                 data_in_valid_i,
-    output logic                 data_in_ready_o,
+    input  logic [ElemWidth-1:0] elem_in_i,
+    input  logic                 elem_in_valid_i,
+    output logic                 elem_in_ready_o,
 
-    output logic [DataWidth-1:0] data_out_main_o,
-    output logic                 data_out_main_valid_o,
-    input  logic                 data_out_main_ready_i,
+    output logic [ElemWidth-1:0] elem_out_main_o,
+    output logic                 elem_out_main_valid_o,
+    input  logic                 elem_out_main_ready_i,
 
-    output logic [DataWidth-1:0] data_out_scnd_o,
-    output logic                 data_out_scnd_valid_o,
-    input  logic                 data_out_scnd_ready_i
+    output logic [ElemWidth-1:0] elem_out_scnd_o,
+    output logic                 elem_out_scnd_valid_o,
+    input  logic                 elem_out_scnd_ready_i
 );
 
-  logic [DataWidth-1:0] data_out_core;
-  logic                 data_out_core_valid;
-  logic                 data_out_core_ready;
+  logic [ElemWidth-1:0] elem_out_core;
+  logic                 elem_out_core_valid;
+  logic                 elem_out_core_ready;
 
-  assign data_out_main_o = data_out_core;
-  assign data_out_scnd_o = data_out_core;
+  assign elem_out_main_o = elem_out_core;
+  assign elem_out_scnd_o = elem_out_core;
 
-  assign data_out_main_valid_o = data_out_core_valid;
-  assign data_out_scnd_valid_o = data_out_core_valid & ~data_out_main_ready_i;
-  assign data_out_core_ready = data_out_scnd_ready_i | data_out_main_ready_i;
+  assign elem_out_main_valid_o = elem_out_core_valid;
+  assign elem_out_scnd_valid_o = elem_out_core_valid & ~elem_out_main_ready_i;
+  assign elem_out_core_ready = elem_out_scnd_ready_i | elem_out_main_ready_i;
 
   pipeline_core #(
-      .DataWidth(DataWidth)
+      .ElemWidth(ElemWidth)
   ) pipeline_core_dut (
-      .clk_i          (clk_i),
-      .arst_ni        (arst_ni),
-      .data_in_i      (data_in_i),
-      .data_in_valid_i(data_in_valid_i),
-      .data_in_ready_o(data_in_ready_o),
-      .data_out       (data_out_core),
-      .data_out_valid (data_out_core_valid),
-      .data_out_ready (data_out_core_ready)
+      .clk_i           (clk_i),
+      .arst_ni         (arst_ni),
+      .elem_in_i       (elem_in_i),
+      .elem_in_valid_i (elem_in_valid_i),
+      .elem_in_ready_o (elem_in_ready_o),
+      .elem_out_o      (elem_out),
+      .elem_out_valid_o(elem_out_valid),
+      .elem_out_ready_i(elem_out_ready)
   );
 
 endmodule
