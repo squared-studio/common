@@ -7,8 +7,8 @@
   task static start_``__CLK__``();                                                                 \
     fork                                                                                           \
       forever begin                                                                                \
-        clk_i = 1; #``__HIGH__``;                                                                  \
-        clk_i = 0; #``__LOW__``;                                                                   \
+        ``__CLK__`` = 1; #``__HIGH__``;                                                                  \
+        ``__CLK__`` = 0; #``__LOW__``;                                                                   \
       end                                                                                          \
     join_none                                                                                      \
   endtask                                                                                          \
