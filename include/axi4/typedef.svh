@@ -10,38 +10,38 @@
 
 
 // INTERNAL MACRO FOR THIS FILE
-`define AXI4_AX_CHAN_T(__NM__, __IW__, __AW__, __UREQW__)                                          \
+`define AXI4_AX_CHAN_T(__NM__, __IW__, __AW__, __UW__)                                             \
   typedef struct packed {                                                                          \
-    logic [``__IW__``-1:0]    id     ;                                                             \
-    logic [``__AW__``-1:0]    addr   ;                                                             \
-    logic [7:0]               len    ;                                                             \
-    logic [2:0]               size   ;                                                             \
-    logic [1:0]               burst  ;                                                             \
-    logic [0:0]               lock   ;                                                             \
-    logic [3:0]               cache  ;                                                             \
-    logic [2:0]               prot   ;                                                             \
-    logic [3:0]               qos    ;                                                             \
-    logic [3:0]               region ;                                                             \
-    logic [``__UREQW__``-1:0] user   ;                                                             \
+    logic [``__IW__``-1:0] id     ;                                                                \
+    logic [``__AW__``-1:0] addr   ;                                                                \
+    logic [7:0]            len    ;                                                                \
+    logic [2:0]            size   ;                                                                \
+    logic [1:0]            burst  ;                                                                \
+    logic [0:0]            lock   ;                                                                \
+    logic [3:0]            cache  ;                                                                \
+    logic [2:0]            prot   ;                                                                \
+    logic [3:0]            qos    ;                                                                \
+    logic [3:0]            region ;                                                                \
+    logic [``__UW__``-1:0] user   ;                                                                \
   } ``__NM__``;                                                                                    \
 
 
 // INTERNAL MACRO FOR THIS FILE
-`define AXI4_W_CHAN_T(__NM__, __DW__, __UDTAW__)                                                   \
+`define AXI4_W_CHAN_T(__NM__, __DW__, __UW__)                                                      \
   typedef struct packed {                                                                          \
-    logic [``__DW__``-1:0]    data ;                                                               \
-    logic [``__DW__``/8-1:0]  strb ;                                                               \
-    logic [0:0]               last ;                                                               \
-    logic [``__UDTAW__``-1:0] user ;                                                               \
+    logic [``__DW__``-1:0]   data ;                                                                \
+    logic [``__DW__``/8-1:0] strb ;                                                                \
+    logic [0:0]              last ;                                                                \
+    logic [``__UW__``-1:0]   user ;                                                                \
   } ``__NM__``;                                                                                    \
 
 
 // INTERNAL MACRO FOR THIS FILE
-`define AXI4_B_CHAN_T(__NM__, __IW__, __URSPW__)                                                   \
+`define AXI4_B_CHAN_T(__NM__, __IW__, __UW__)                                                      \
   typedef struct packed {                                                                          \
-    logic [``__IW__``-1:0]    id   ;                                                               \
-    logic [1:0]               resp ;                                                               \
-    logic [``__URSPW__``-1:0] user ;                                                               \
+    logic [``__IW__``-1:0] id   ;                                                                  \
+    logic [1:0]            resp ;                                                                  \
+    logic [``__UW__``-1:0] user ;                                                                  \
   } ``__NM__``;                                                                                    \
 
 
@@ -83,13 +83,13 @@
   } ``__NM__``;                                                                                    \
 
 
-`define AXI4_T(__NM__, __IW__, __AW__, __DW__, __UREQW__, __UDTAW__, __URSPW__)                    \
+`define AXI4_T(__NM__, __AW__, __DW__, __IRW__, __IWW__, __UREQW__, __UDTAW__, __URSPW__)          \
   `AXI4_R_USER_T(``__NM__``_r_user_t,``__UDTAW__``, ``__URSPW__``)                                 \
-  `AXI4_AX_CHAN_T(``__NM__``_aw_chan_t, ``__IW__``, ``__AW__``, ``__UREQW__``)                     \
+  `AXI4_AX_CHAN_T(``__NM__``_aw_chan_t, ``__IWW__``, ``__AW__``, ``__UREQW__``)                    \
   `AXI4_W_CHAN_T(``__NM__``_w_chan_t, ``__DW__``, ``__UDTAW__``)                                   \
-  `AXI4_B_CHAN_T(``__NM__``_b_chan_t, ``__IW__``, ``__URSPW__``)                                   \
-  `AXI4_AX_CHAN_T(``__NM__``_ar_chan_t, ``__IW__``, ``__AW__``, ``__UREQW__``)                     \
-  `AXI4_R_CHAN_T(``__NM__``_r_chan_t, ``__IW__``, ``__DW__``, ``__NM__``_r_user_t)                 \
+  `AXI4_B_CHAN_T(``__NM__``_b_chan_t, ``__IWW__``, ``__URSPW__``)                                  \
+  `AXI4_AX_CHAN_T(``__NM__``_ar_chan_t, ``__IRW__``, ``__AW__``, ``__UREQW__``)                    \
+  `AXI4_R_CHAN_T(``__NM__``_r_chan_t, ``__IRW__``, ``__DW__``, ``__NM__``_r_user_t)                \
   `AXI4_REQ_T(``__NM__``_req_t, ``__NM__``_aw_chan_t, ``__NM__``_w_chan_t, ``__NM__``_ar_chan_t)   \
   `AXI4_RSP_T(``__NM__``_rsp_t, ``__NM__``_b_chan_t, ``__NM__``_r_chan_t)                          \
 

@@ -1,17 +1,101 @@
 interface axi4l_if #(
-    parameter type axi_req_t = logic,
-    parameter type axi_rsp_t = logic
+  parameter int ADDR_WIDTH,
+  parameter int DATA_WIDTH
 ) (
-    // verilog_linter: off
-    input logic ACLK,
-    input logic ARESETn
-    // verilog_linter: on
+  input logic ACLK,
+  input logic ARESETn
 );
 
-  // modport manager(input clk_i, input arst_ni, output req, input rsp);
+  logic [ADDR_WIDTH-1:0] AWADDR;
+  logic [2:0]            AWPROT;
+  logic [0:0]            AWVALID;
+  logic [0:0]            AWREADY;
 
-  // modport subordinate(input clk_i, input arst_ni, input req, output rsp);
+  logic [DATA_WIDTH-1:0]   WDATA;
+  logic [DATA_WIDTH/8-1:0] WSTRB;
+  logic [0:0]              WVALID;
+  logic [0:0]              WREADY;
 
-  // modport monitor(input clk_i, input arst_ni, input req, input rsp);
+  logic [1:0] BRESP;
+  logic [0:0] BVALID;
+  logic [0:0] BREADY;
+
+  logic [ADDR_WIDTH-1:0] ARADDR;
+  logic [2:0]            ARPROT;
+  logic [0:0]            ARVALID;
+  logic [0:0]            ARREADY;
+
+  logic [DATA_WIDTH-1:0] RDATA;
+  logic [1:0]            RRESP;
+  logic [0:0]            RVALID;
+  logic [0:0]            RREADY;
+
+
+  modport manager(
+      input ACLK,
+      input ARESETn,
+      output AWADDR,
+      output AWPROT,
+      output AWVALID,
+      input AWREADY,
+      output WDATA,
+      output WSTRB,
+      output WVALID,
+      input WREADY,
+      input BRESP,
+      input BVALID,
+      output BREADY,
+      output ARADDR,
+      output ARVALID,
+      input ARREADY,
+      input RDATA,
+      input RRESP,
+      input RVALID,
+      output RREADY
+  );
+
+  modport subordinate(
+    input AWADDR,
+    input AWPROT,
+    input AWVALID,
+    output AWREADY,
+    input WDATA,
+    input WSTRB,
+    input WVALID,
+    output WREADY,
+    output BRESP,
+    output BVALID,
+    input BREADY,
+    input ARADDR,
+    input ARVALID,
+    output ARREADY,
+    output RDATA,
+    output RRESP,
+    output RVALID,
+    input RREADY
+  );
+
+  modport monitor(
+    input ACLK,
+    input ARESETn,
+    input AWADDR,
+    input AWPROT,
+    input AWVALID,
+    input AWREADY,
+    input WDATA,
+    input WSTRB,
+    input WVALID,
+    input WREADY,
+    input BRESP,
+    input BVALID,
+    input BREADY,
+    input ARADDR,
+    input ARVALID,
+    input ARREADY,
+    input RDATA,
+    input RRESP,
+    input RVALID,
+    input RREADY
+  );
 
 endinterface
