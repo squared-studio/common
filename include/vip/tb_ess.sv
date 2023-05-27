@@ -16,23 +16,23 @@
 string top_module_name = $sformatf("%m");
 
 initial begin
-  $display("%c[7;38m####################### TEST STARTED #######################%c[0m", 27, 27);
+  $display("\033[7;38m####################### TEST STARTED #######################\033[0m");
 `ifdef ENABLE_DUMPFILE
   $dumpfile("raw.vcd");
   $dumpvars;
 `endif  // ENABLE_DUMPFILE
   repeat (1000) repeat (1000) repeat (1000) #1000;
-  result_print(0, $sformatf("%c[1;31m[FATAL][TIMEOUT]%c[0m", 27, 27));
+  result_print(0, $sformatf("\033[1;31m[FATAL][TIMEOUT]\033[0m"));
   $finish;
 end
 
 final begin
-  $display("%c[7;38m######################## TEST ENDED ########################%c[0m", 27, 27);
+  $display("\033[7;38m######################## TEST ENDED ########################\033[0m");
 end
 
 function automatic void result_print(bit PASS, string msg);
-  if (PASS) $sformat(msg, "%c[1;32m[PASS]%c[0m %s", 27, 27, msg);
-  else $sformat(msg, "%c[1;31m[FAIL]%c[0m %s", 27, 27, msg);
-  $sformat(msg, "%s %c[1;33m[%s]%c[0m", msg, 27, top_module_name, 27);
+  if (PASS) $sformat(msg, "\033[1;32m[PASS]\033[0m %s", msg);
+  else $sformat(msg, "\033[1;31m[FAIL]\033[0m %s", msg);
+  $sformat(msg, "%s \033[1;33m[%s]\033[0m", msg, top_module_name);
   $display(msg);
 endfunction
