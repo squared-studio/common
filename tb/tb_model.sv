@@ -9,7 +9,7 @@
 
 //`include "vip/string_ops_pkg.sv"
 
-module tb_model; 
+module tb_model;
 
   //`define ENABLE_DUMPFILE
 
