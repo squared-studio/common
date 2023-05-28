@@ -1,8 +1,8 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
 module shift_reg #(
-    parameter int ElemWidth = 4,
-    parameter int Depth     = 8
+    parameter int ELEM_WIDTH = 4,
+    parameter int DEPTH      = 8
 ) (
     input logic clk_i,
     input logic arst_ni,
@@ -11,14 +11,14 @@ module shift_reg #(
     input logic en_i,
     input logic l_shift_i,
 
-    input  logic [ElemWidth-1:0] s_i,
-    output logic [ElemWidth-1:0] s_o,
+    input  logic [ELEM_WIDTH-1:0] s_i,
+    output logic [ELEM_WIDTH-1:0] s_o,
 
-    input  logic [Depth-1:0][ElemWidth-1:0] p_i,
-    output logic [Depth-1:0][ElemWidth-1:0] p_o
+    input  logic [DEPTH-1:0][ELEM_WIDTH-1:0] p_i,
+    output logic [DEPTH-1:0][ELEM_WIDTH-1:0] p_o
 );
 
-  assign s_o = l_shift_i ? p_o[Depth-1] : p_o[0];
+  assign s_o = l_shift_i ? p_o[DEPTH-1] : p_o[0];
 
   always_ff @(posedge clk_i or negedge arst_ni) begin
     if (~arst_ni) begin
@@ -29,12 +29,12 @@ module shift_reg #(
       end else begin
         if (l_shift_i) begin
           p_o[0] <= s_i;
-          for (int i = 1; i < Depth; i++) begin
+          for (int i = 1; i < DEPTH; i++) begin
             p_o[i] <= p_o[i-1];
           end
         end else begin
-          p_o[Depth-1] <= s_i;
-          for (int i = 1; i < Depth; i++) begin
+          p_o[DEPTH-1] <= s_i;
+          for (int i = 1; i < DEPTH; i++) begin
             p_o[i-1] <= p_o[i];
           end
         end

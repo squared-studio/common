@@ -47,8 +47,8 @@ module fifo_tb;
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   fifo #(
-      .ElemWidth(ElemWidth),
-      .Depth    (Depth)
+      .ELEM_WIDTH(ElemWidth),
+      .DEPTH     (Depth)
   ) u_fifo (
       .clk_i           (clk_i),
       .arst_ni         (arst_ni),

@@ -1,45 +1,46 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
 module round_robin_arbiter #(
-    parameter int Clog2NumReq = 2,
-    localparam int NumReq = (2 ** Clog2NumReq)
+    parameter int CLOG_2_NUM_REQ = 2
 ) (
-    input  logic              clk_i,
-    input  logic              arst_ni,
-    input  logic              allow_req_i,
-    input  logic              en_i,
-    input  logic [NumReq-1:0] req_i,
-    output logic [NumReq-1:0] gnt_o
+    input  logic                             clk_i,
+    input  logic                             arst_ni,
+    input  logic                             allow_req_i,
+    input  logic                             en_i,
+    input  logic [(2 ** CLOG_2_NUM_REQ)-1:0] req_i,
+    output logic [(2 ** CLOG_2_NUM_REQ)-1:0] gnt_o
 );
 
-  logic [Clog2NumReq-1:0] xbar_sel;
+  localparam int NumReq = (2 ** CLOG_2_NUM_REQ);
 
-  logic [NumReq-1:0][Clog2NumReq-1:0] req_in_sel;
-  logic [NumReq-1:0][Clog2NumReq-1:0] gnt_in_sel;
+  logic [CLOG_2_NUM_REQ-1:0] xbar_sel;
+
+  logic [NumReq-1:0][CLOG_2_NUM_REQ-1:0] req_in_sel;
+  logic [NumReq-1:0][CLOG_2_NUM_REQ-1:0] gnt_in_sel;
 
   logic [NumReq-1:0] req_xbar;
   logic [NumReq-1:0] gnt_xbar;
 
-  logic [Clog2NumReq-1:0] gnt_code;
+  logic [CLOG_2_NUM_REQ-1:0] gnt_code;
 
   logic gnt_found;
 
   xbar #(
-      .ElemWidth(1),
-      .NumElem  (NumReq)
+      .ELEM_WIDTH(1),
+      .NUM_ELEM  (NumReq)
   ) xbar_req (
-      .select_i(req_in_sel),
-      .inputs_i      (req_i),
-      .outputs_o     (req_xbar)
+      .select_i (req_in_sel),
+      .inputs_i (req_i),
+      .outputs_o(req_xbar)
   );
 
   xbar #(
-      .ElemWidth(1),
-      .NumElem  (NumReq)
+      .ELEM_WIDTH(1),
+      .NUM_ELEM  (NumReq)
   ) xbar_gnt (
-      .select_i(gnt_in_sel),
-      .inputs_i      (gnt_xbar),
-      .outputs_o     (gnt_o)
+      .select_i (gnt_in_sel),
+      .inputs_i (gnt_xbar),
+      .outputs_o(gnt_o)
   );
 
   for (genvar i = 0; i < NumReq; i++) begin : g_req_in_sel
@@ -51,7 +52,7 @@ module round_robin_arbiter #(
   end
 
   fixed_priority_arbiter #(
-      .NumReq(NumReq)
+      .NUM_REQ(NumReq)
   ) fixed_priority_arbiter_dut (
       .arst_ni(arst_ni),
       .allow_req_i(allow_req_i),
@@ -61,7 +62,7 @@ module round_robin_arbiter #(
   );
 
   priority_encoder #(
-      .NumInputs(NumReq)
+      .NUM_INPUTS(NumReq)
   ) gnt_encode (
       .in_i  (gnt_o),
       .code_o(gnt_code)

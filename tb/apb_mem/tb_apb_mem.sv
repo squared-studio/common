@@ -30,8 +30,8 @@ module tb_apb_mem;
 
   for (genvar i = 0; i < 4; i++) begin : g_slaves
     apb_mem #(
-        .AddrWidth(AddrWidth),
-        .DataWidth(DataWidth)
+        .ADDR_WIDTH(AddrWidth),
+        .DATA_WIDTH(DataWidth)
     ) u_apb_mem (
         .clk_i(clk_i),
         .arst_ni(arst_ni),

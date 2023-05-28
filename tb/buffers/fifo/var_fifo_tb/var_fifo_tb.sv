@@ -28,9 +28,9 @@ module var_fifo_tb;
   logic [$clog2(FifoDepth+1)-1:0]                elem_available_o;
 
   var_fifo #(
-      .ElemWidth(ElemWidth),
-      .NumElem  (NumElem),
-      .FifoDepth(FifoDepth)
+      .ELEM_WIDTH(ElemWidth),
+      .NUM_ELEM  (NumElem),
+      .FIFO_DEPTH(FifoDepth)
   ) var_fifo_dut (
       .clk_i(clk_i),
       .arst_ni(arst_ni),
