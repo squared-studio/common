@@ -1,6 +1,5 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com))
 
-
 // macro for setting or assigning axi4l req to req
 `define AXI4L_REQ_TO_REQ(__MODE__, __SRC__, __DST__)                                               \
   ``__MODE__`` ``__DST__``.aw.addr  = ``__SRC__``.aw.addr  ;                                       \

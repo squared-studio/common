@@ -1,6 +1,5 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com))
 
-
 // INTERNAL MACRO FOR THIS FILE
 `define AXI4L_AX_CHAN_T(__NM__, __AW__)                                                            \
   typedef struct packed {                                                                          \
