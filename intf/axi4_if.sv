@@ -64,6 +64,7 @@ interface axi4_if #(
   modport manager(
       input ACLK,
       input ARESETn,
+
       output AWID,
       output AWADDR,
       output AWLEN,
@@ -77,17 +78,20 @@ interface axi4_if #(
       output AWUSER,
       output AWVALID,
       input AWREADY,
+      
       output WDATA,
       output WSTRB,
       output WLAST,
       output WUSER,
       output WVALID,
       input WREADY,
+
       input BID,
       input BRESP,
       input BUSER,
       input BVALID,
       output BREADY,
+
       output ARID,
       output ARADDR,
       output ARLEN,
@@ -101,6 +105,7 @@ interface axi4_if #(
       output ARUSER,
       output ARVALID,
       input ARREADY,
+
       input RID,
       input RDATA,
       input RRESP,
@@ -113,6 +118,7 @@ interface axi4_if #(
   modport subordinate(
       input ACLK,
       input ARESETn,
+
       input AWID,
       input AWADDR,
       input AWLEN,
@@ -126,17 +132,20 @@ interface axi4_if #(
       input AWUSER,
       input AWVALID,
       output AWREADY,
+
       input WDATA,
       input WSTRB,
       input WLAST,
       input WUSER,
       input WVALID,
       output WREADY,
+
       output BID,
       output BRESP,
       output BUSER,
       output BVALID,
       input BREADY,
+
       input ARID,
       input ARADDR,
       input ARLEN,
@@ -150,6 +159,7 @@ interface axi4_if #(
       input ARUSER,
       input ARVALID,
       output ARREADY,
+
       output RID,
       output RDATA,
       output RRESP,
@@ -162,6 +172,7 @@ interface axi4_if #(
   modport monitor(
       input ACLK,
       input ARESETn,
+
       input AWID,
       input AWADDR,
       input AWLEN,
@@ -175,17 +186,20 @@ interface axi4_if #(
       input AWUSER,
       input AWVALID,
       input AWREADY,
+
       input WDATA,
       input WSTRB,
       input WLAST,
       input WUSER,
       input WVALID,
       input WREADY,
+
       input BID,
       input BRESP,
       input BUSER,
       input BVALID,
       input BREADY,
+
       input ARID,
       input ARADDR,
       input ARLEN,
@@ -199,6 +213,7 @@ interface axi4_if #(
       input ARUSER,
       input ARVALID,
       input ARREADY,
+
       input RID,
       input RDATA,
       input RRESP,
