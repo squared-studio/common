@@ -27,7 +27,7 @@ module gray_to_bin_tb;
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   gray_to_bin #(
-      .DataWidth(DataWidth)
+      .DATA_WIDTH(DataWidth)
   ) gray_to_bin_dut (
       .data_in_i (data_in_i),
       .data_out_o(data_out_o)
@@ -60,7 +60,7 @@ module gray_to_bin_tb;
       else pass++;
     end
 
-    result_print(!fail, $sformatf("data conversion %0d/%0d", pass, pass+fail));
+    result_print(!fail, $sformatf("data conversion %0d/%0d", pass, pass + fail));
 
     $finish;
 

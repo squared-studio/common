@@ -12,7 +12,7 @@ module fixed_priority_arbiter_tb;
   wire [NumReq-1:0] gnt_o;
 
   fixed_priority_arbiter #(
-      .NumReq(NumReq)
+      .NUM_REQ(NumReq)
   ) fixed_priority_arbiter_dut (
       .req_i(req_i),
       .gnt_o(gnt_o)

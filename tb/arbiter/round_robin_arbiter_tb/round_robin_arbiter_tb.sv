@@ -13,7 +13,7 @@ module round_robin_arbiter_tb;
   logic [NumReq-1:0] gnt_o;
 
   round_robin_arbiter #(
-      .Clog2NumReq(Clog2NumReq)
+      .CLOG_2_NUM_REQ(Clog2NumReq)
   ) round_robin_arbiter_dut (
       .clk_i  (clk_i),
       .arst_ni(arst_ni),

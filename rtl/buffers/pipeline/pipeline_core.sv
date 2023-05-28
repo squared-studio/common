@@ -1,25 +1,25 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
 module pipeline_core #(
-    parameter int ElemWidth = 8
+    parameter int ELEM_WIDTH = 8
 ) (
     input logic clk_i,
     input logic arst_ni,
 
-    input  logic [ElemWidth-1:0] elem_in_i,
-    input  logic                 elem_in_valid_i,
-    output logic                 elem_in_ready_o,
+    input  logic [ELEM_WIDTH-1:0] elem_in_i,
+    input  logic                  elem_in_valid_i,
+    output logic                  elem_in_ready_o,
 
-    output logic [ElemWidth-1:0] elem_out_o,
-    output logic                 elem_out_valid_o,
-    input  logic                 elem_out_ready_i
+    output logic [ELEM_WIDTH-1:0] elem_out_o,
+    output logic                  elem_out_valid_o,
+    input  logic                  elem_out_ready_i
 );
 
-  logic                 is_full;
-  logic [ElemWidth-1:0] mem;
+  logic                  is_full;
+  logic [ELEM_WIDTH-1:0] mem;
 
-  logic                 input_handshake;
-  logic                 output_handshake;
+  logic                  input_handshake;
+  logic                  output_handshake;
 
   assign elem_in_ready_o  = (is_full) ? elem_out_ready_i : '1;
   assign elem_out_o       = mem;

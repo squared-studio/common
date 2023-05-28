@@ -79,8 +79,8 @@ module mem_bank_tb;
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   mem_bank #(
-      .AddrWidth(AddrWidth),
-      .DataSize (DataSize)
+      .ADDR_WIDTH(AddrWidth),
+      .DATA_SIZE (DataSize)
   ) mem_bank_dut (
       .clk_i  (clk_i),
       .cs_i   (cs_i),
@@ -94,27 +94,22 @@ module mem_bank_tb;
   //-METHODS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  task static mem_write(
-    input bit [AddrWidth-1:0]      addr,
-    input bit [DataBytes-1:0][7:0] data,
-    input bit [DataBytes-1:0]      strb
-  );
+  task static mem_write(input bit [AddrWidth-1:0] addr, input bit [DataBytes-1:0][7:0] data,
+                        input bit [DataBytes-1:0] strb);
     cs_i    <= '1;
     addr_i  <= addr;
     wdata_i <= data;
     wstrb_i <= strb;
     @(posedge clk_i);
-    cs_i    <= '0;
+    cs_i <= '0;
   endtask
 
-  task static mem_read(
-    input bit [AddrWidth-1:0] addr
-  );
+  task static mem_read(input bit [AddrWidth-1:0] addr);
     cs_i    <= '1;
     addr_i  <= addr;
     wstrb_i <= '0;
     @(posedge clk_i);
-    cs_i    <= '0;
+    cs_i <= '0;
   endtask
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -132,7 +127,7 @@ module mem_bank_tb;
     wdata_i <= '1;
     wstrb_i <= '1;
     @(posedge clk_i);
-    cs_i    <= '0;
+    cs_i <= '0;
     mem_read(0);
 
     @(posedge clk_i);

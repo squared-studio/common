@@ -2,7 +2,7 @@
 //                  handshakes
 
 module handshake_storage #(
-    parameter int Depth = 4
+    parameter int DEPTH = 4
 ) (
     input  logic                       clk_i,
     input  logic                       arst_ni,
@@ -10,13 +10,13 @@ module handshake_storage #(
     output logic                       in_ready_o,
     output logic                       out_valid_o,
     input  logic                       out_ready_i,
-    output logic [$clog2(Depth+1)-1:0] cnt_o
+    output logic [$clog2(DEPTH+1)-1:0] cnt_o
 );
 
   logic in_hs;
   logic out_hs;
 
-  assign in_ready_o = (cnt_o != Depth);
+  assign in_ready_o = (cnt_o != DEPTH);
   assign out_valid_o = (cnt_o != '0);
 
   assign in_hs = in_valid_i & in_ready_o;

@@ -21,8 +21,8 @@ module tb_pipeline;
   logic                 elem_out_ready_i;
 
   pipeline #(
-      .ElemWidth(ElemWidth),
-      .NumStages(NumStages)
+      .ELEM_WIDTH(ElemWidth),
+      .NUM_STAGES(NumStages)
   ) u_pipeline (
       .clk_i           (clk_i),
       .arst_ni         (arst_ni),

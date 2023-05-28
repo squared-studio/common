@@ -50,7 +50,7 @@ module bin_to_gray_tb;
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   bin_to_gray #(
-      .DataWidth(DataWidth)
+      .DATA_WIDTH(DataWidth)
   ) bin_to_gray_dut (
       .data_in_i (data_in_i),
       .data_out_o(data_out_o)

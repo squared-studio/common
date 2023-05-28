@@ -1,18 +1,18 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
 module apb_mem #(
-    parameter int AddrWidth = 0,
-    parameter int DataWidth = 0
+    parameter int ADDR_WIDTH = 0,
+    parameter int DATA_WIDTH = 0
 ) (
-    input  wire                 clk_i,
-    input  wire                 arst_ni,
-    input  wire                 psel_i,
-    input  wire                 penable_i,
-    input  wire [AddrWidth-1:0] paddr_i,
-    input  wire                 pwrite_i,
-    input  wire [DataWidth-1:0] pwdata_i,
-    output wire [DataWidth-1:0] prdata_o,
-    output wire                 pready_o
+    input  wire                  clk_i,
+    input  wire                  arst_ni,
+    input  wire                  psel_i,
+    input  wire                  penable_i,
+    input  wire [ADDR_WIDTH-1:0] paddr_i,
+    input  wire                  pwrite_i,
+    input  wire [DATA_WIDTH-1:0] pwdata_i,
+    output wire [DATA_WIDTH-1:0] prdata_o,
+    output wire                  pready_o
 );
 
   typedef enum int {
@@ -21,11 +21,11 @@ module apb_mem #(
     ACCESS
   } state_t;
 
-  state_t                 state;
+  state_t                  state;
 
-  logic   [DataWidth-1:0] mem   [2**AddrWidth];
-  logic   [DataWidth-1:0] rdata;
-  logic                   ready;
+  logic   [DATA_WIDTH-1:0] mem   [2**ADDR_WIDTH];
+  logic   [DATA_WIDTH-1:0] rdata;
+  logic                    ready;
 
   assign prdata_o = (state == ACCESS) ? rdata : 'z;
   assign pready_o = (state == ACCESS) ? ready : 'z;
