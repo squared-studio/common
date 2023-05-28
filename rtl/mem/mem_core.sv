@@ -64,8 +64,4 @@ module mem_core #(
     end
   end
 
-  initial begin
-    $display("%m");
-  end
-
 endmodule

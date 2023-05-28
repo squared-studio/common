@@ -34,20 +34,26 @@ interface axi4l_if #(
   modport manager(
       input ACLK,
       input ARESETn,
+
       output AWADDR,
       output AWPROT,
       output AWVALID,
       input AWREADY,
+
       output WDATA,
       output WSTRB,
       output WVALID,
       input WREADY,
+
       input BRESP,
       input BVALID,
       output BREADY,
+
       output ARADDR,
+      output ARPROT,
       output ARVALID,
       input ARREADY,
+
       input RDATA,
       input RRESP,
       input RVALID,
@@ -55,20 +61,28 @@ interface axi4l_if #(
   );
 
   modport subordinate(
+    input ACLK,
+    input ARESETn,
+
     input AWADDR,
     input AWPROT,
     input AWVALID,
     output AWREADY,
+
     input WDATA,
     input WSTRB,
     input WVALID,
     output WREADY,
+
     output BRESP,
     output BVALID,
     input BREADY,
+
     input ARADDR,
+    input ARPROT,
     input ARVALID,
     output ARREADY,
+
     output RDATA,
     output RRESP,
     output RVALID,
@@ -78,20 +92,26 @@ interface axi4l_if #(
   modport monitor(
     input ACLK,
     input ARESETn,
+
     input AWADDR,
     input AWPROT,
     input AWVALID,
     input AWREADY,
+
     input WDATA,
     input WSTRB,
     input WVALID,
     input WREADY,
+
     input BRESP,
     input BVALID,
     input BREADY,
+
     input ARADDR,
+    input ARPROT,
     input ARVALID,
     input ARREADY,
+
     input RDATA,
     input RRESP,
     input RVALID,
