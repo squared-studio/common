@@ -1,3 +1,5 @@
+// ### Author : Foez Ahmed (foez.official@gmail.com))
+
 interface axi4_if #(
     parameter int ADDR_WIDTH,
     parameter int DATA_WIDTH,
@@ -78,7 +80,7 @@ interface axi4_if #(
       output AWUSER,
       output AWVALID,
       input AWREADY,
-      
+
       output WDATA,
       output WSTRB,
       output WLAST,

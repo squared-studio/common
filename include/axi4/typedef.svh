@@ -1,6 +1,5 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
-
 // INTERNAL MACRO FOR THIS FILE
 `define AXI4_R_USER_T(__NM__, __UDTAW__, __URSPW__)                                                \
   typedef struct packed {                                                                          \
