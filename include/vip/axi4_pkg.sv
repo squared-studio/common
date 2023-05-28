@@ -4,6 +4,9 @@ package axi4_pkg;
 
   `include "axi4/typedef.svh"
 
+  parameter bit [1:0] FIXED = 0;
+  parameter bit [1:0] INCR = 1;
+  parameter bit [1:0] WRAP = 2;
 
   class axi4_seq_item #(
       parameter int ADDR_WIDTH = 0,
@@ -12,10 +15,6 @@ package axi4_pkg;
       parameter int USER_DATA_WIDTH = 0,
       parameter int USER_RESP_WIDTH = 0
   );
-
-    localparam bit [1:0] FIXED = 0;
-    localparam bit [1:0] INCR = 1;
-    localparam bit [1:0] WRAP = 2;
 
     rand bit [                0:0] TYPE;
     rand bit [     ADDR_WIDTH-1:0] ADDR;
@@ -32,10 +31,25 @@ package axi4_pkg;
     bit      [                7:0] DATA      [$:4095];
     bit      [                0:0] STRB      [$:4095];
 
+    constraint boundary_4kb_c {((2 ** SIZE) * (1 + LEN)) <= (2 ** 12);}
+    constraint size_c {((2 ** SIZE) * 8) <= DATA_WIDTH;}
     constraint burst_c {BURST inside {FIXED, INCR, WRAP};}
+    constraint cache_c {CACHE inside {0, 1, 2, 3, 6, 7, 10, 11, 14, 15};}
 
     constraint wrap_c {
-      if (BURST==WRAP) LEN inside {1, 3, 5, 7, 15};
+      if (BURST == WRAP) {
+        (ADDR % (2 ** SIZE)) == 0;
+        LEN inside {1, 3, 7, 15};
+      }
+    }
+
+    constraint excl_access_c {
+      if (LOCK == 1) {
+        (ADDR % ((2 ** SIZE) * (LEN + 1))) == 0;
+        LEN <= 15;
+        ((2 ** SIZE) * (LEN + 1)) inside {1, 2, 4, 8, 16, 32, 64, 128};
+        CACHE == 0;
+      }
     }
 
   endclass
