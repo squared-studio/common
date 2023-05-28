@@ -9,7 +9,6 @@ TBF_LIB  = $(shell find $(TOP_DIR) -name "*.v" -o -name "*.sv")
 DES_LIB += $(shell find $(realpath ./rtl/) -name "*.v" -o -name "*.sv")
 INTF_LIB = $(shell find $(realpath ./intf/) -name "*.sv")
 INC_DIR  = $(realpath ./include)
-CI_LIST  = $(shell cat CI_LIST)
 
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.out")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.vcd")
@@ -24,6 +23,7 @@ CLEAN_TARGETS += $(shell find $(realpath ./) -name "___list")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "___flist")
 
 OS = $(shell uname)
+CI_LIST  = $(shell cat CI_LIST)
 
 .PHONY: run
 run:
@@ -39,6 +39,15 @@ print_vars:
 	@echo ""
 	@echo "TOP_DIR:"
 	@echo "$(TOP_DIR)";
+	@echo ""
+	@echo "vivado_compile:"
+	@echo "$(shell cat $(TOP_DIR)vivado_compile.config)";
+	@echo ""
+	@echo "vivado_elaborate:"
+	@echo "$(shell cat $(TOP_DIR)vivado_elaborate.config)";
+	@echo ""
+	@echo "vivado_stimulate:"
+	@echo "$(shell cat $(TOP_DIR)vivado_stimulate.config)";
 	@echo ""
 	@echo "DES_LIB:"
 	@echo "$(DES_LIB)";
@@ -88,9 +97,12 @@ vivado: clean
 
 .PHONY: sim_vivado
 sim_vivado:
-	@cd $(TOP_DIR); xvlog -i $(INC_DIR) -sv $(TOP_DIR)$(TOP).sv -L UVM -L TBF=$(TBF_LIB) -L RTL=$(DES_LIB) -L INTF=$(INTF_LIB)
-	@cd $(TOP_DIR); xelab $(TOP) -s top
-	@cd $(TOP_DIR); xsim top -runall
+	@touch $(TOP_DIR)vivado_compile.config 
+	@touch $(TOP_DIR)vivado_elaborate.config 
+	@touch $(TOP_DIR)vivado_stimulate.config 
+	@cd $(TOP_DIR); xvlog -f $(TOP_DIR)vivado_compile.config -i $(INC_DIR) -sv $(TOP_DIR)$(TOP).sv -L UVM -L TBF=$(TBF_LIB) -L RTL=$(DES_LIB) -L INTF=$(INTF_LIB)
+	@cd $(TOP_DIR); xelab -f $(TOP_DIR)vivado_elaborate.config $(TOP) -s top
+	@cd $(TOP_DIR); xsim top -f $(TOP_DIR)vivado_stimulate.config -runall
 
 .PHONY: CI
 CI: clean
