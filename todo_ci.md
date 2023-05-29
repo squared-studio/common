@@ -12,4 +12,3 @@
 [](./rtl/miscellaneous/decoder.sv)
 [](./rtl/miscellaneous/handshake_storage.sv)
 [](./rtl/miscellaneous/priority_encoder.sv)
-[](./rtl/miscellaneous/xbar.sv)
