@@ -114,9 +114,9 @@ module xbar_tb;
 
     for (int i = 0; i < NumElem; i++) begin
       if (outputs_o[i] == inputs_i[select_i[i]]) begin
-        error++;
-      end else begin
         error = error;
+      end else begin
+        error++;
       end
     end
     result_print(error == 0, "CrossBar verified");
