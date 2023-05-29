@@ -15,6 +15,6 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Verilator Sim
-        uses: uses: drom/action-verilator@v0.1.11
+        uses: drom/action-verilator@v0.1.11
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
