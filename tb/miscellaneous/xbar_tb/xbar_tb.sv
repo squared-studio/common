@@ -1,4 +1,4 @@
-// Description here
+// A simple test bench for verifying the functionality of a crossbar
 // ### Author : Walid Akash (walidakash070@gmail.com)
 
 module xbar_tb;
@@ -32,8 +32,8 @@ module xbar_tb;
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   xbar #(
-      .ElemWidth(ElemWidth),
-      .NumElem  (NumElem)
+      .ELEM_WIDTH(ElemWidth),
+      .NUM_ELEM  (NumElem)
   ) xbar_dut (
       .select_i (select_i),
       .inputs_i (inputs_i),
@@ -48,18 +48,21 @@ module xbar_tb;
     automatic int error = 0;
     repeat (100) begin
 
+      // Generating random stimuli
       for (int i = 0; i < NumElem; i++) begin
         inputs_i[i] <= $urandom;
         select_i[i] <= $urandom;
       end
       #1;
 
+      // Trimming select as needed
       foreach (select_i[i]) begin
         while (select_i[i] >= NumElem) begin
           select_i[i] = select_i[i] - NumElem;
         end
       end
 
+      // Verifying results
       for (int i = 0; i < NumElem; i++) begin
         if (outputs_o[i] !== inputs_i[select_i[i]]) begin
           error++;
@@ -68,7 +71,9 @@ module xbar_tb;
     end
 
     result_print(!error, "CrossBar verification");
+
     $finish;
+
   end
 
 endmodule
