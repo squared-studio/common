@@ -1,123 +1,79 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com))
 
+`include "axi4l/typedef.svh"
+`include "vip/bus_dvr_mon.svh"
+
 interface axi4l_if #(
-  parameter int ADDR_WIDTH,
-  parameter int DATA_WIDTH
+    parameter type req_t = logic,
+    parameter type rsp_t = logic
 ) (
-  input logic ACLK,
-  input logic ARESETn
+    input logic clk_i,
+    input logic arst_ni
 );
 
-  logic [ADDR_WIDTH-1:0] AWADDR;
-  logic [2:0]            AWPROT;
-  logic [0:0]            AWVALID;
-  logic [0:0]            AWREADY;
+  req_t req;
+  rsp_t rsp;
 
-  logic [DATA_WIDTH-1:0]   WDATA;
-  logic [DATA_WIDTH/8-1:0] WSTRB;
-  logic [0:0]              WVALID;
-  logic [0:0]              WREADY;
+  `AXI4L_T(axi, $bits(req.ar.addr), $bits(req.r.data))
 
-  logic [1:0] BRESP;
-  logic [0:0] BVALID;
-  logic [0:0] BREADY;
+  logic                          ACLK;
+  logic                          ARESETn;
 
-  logic [ADDR_WIDTH-1:0] ARADDR;
-  logic [2:0]            ARPROT;
-  logic [0:0]            ARVALID;
-  logic [0:0]            ARREADY;
+  logic [$bits(req.aw.addr)-1:0] AWADDR;
+  logic [                   2:0] AWPROT;
+  logic [                   0:0] AWVALID;
+  logic [                   0:0] AWREADY;
 
-  logic [DATA_WIDTH-1:0] RDATA;
-  logic [1:0]            RRESP;
-  logic [0:0]            RVALID;
-  logic [0:0]            RREADY;
+  logic [ $bits(req.w.data)-1:0] WDATA;
+  logic [ $bits(req.w.strb)-1:0] WSTRB;
+  logic [                   0:0] WVALID;
+  logic [                   0:0] WREADY;
 
+  logic [                   1:0] BRESP;
+  logic [                   0:0] BVALID;
+  logic [                   0:0] BREADY;
 
-  modport manager(
-      input ACLK,
-      input ARESETn,
+  logic [$bits(req.ar.addr)-1:0] ARADDR;
+  logic [                   2:0] ARPROT;
+  logic [                   0:0] ARVALID;
+  logic [                   0:0] ARREADY;
 
-      output AWADDR,
-      output AWPROT,
-      output AWVALID,
-      input AWREADY,
+  logic [ $bits(rsp.r.data)-1:0] RDATA;
+  logic [                   1:0] RRESP;
+  logic [                   0:0] RVALID;
+  logic [                   0:0] RREADY;
 
-      output WDATA,
-      output WSTRB,
-      output WVALID,
-      input WREADY,
+  assign ACLK    = clk_i;
+  assign ARESETn = arst_ni;
 
-      input BRESP,
-      input BVALID,
-      output BREADY,
+  assign AWADDR  = req.aw.addr ;
+  assign AWPROT  = req.aw.prot ;
+  assign AWVALID = req.aw_valid;
+  assign AWREADY = rsp.aw_ready;
 
-      output ARADDR,
-      output ARPROT,
-      output ARVALID,
-      input ARREADY,
+  assign WDATA   = req.w.data  ;
+  assign WSTRB   = req.w.strb  ;
+  assign WVALID  = req.w_valid ;
+  assign WREADY  = rsp.w_ready ;
 
-      input RDATA,
-      input RRESP,
-      input RVALID,
-      output RREADY
-  );
+  assign BRESP   = rsp.b.resp  ;
+  assign BVALID  = rsp.b_valid ;
+  assign BREADY  = req.b_ready ;
 
-  modport subordinate(
-    input ACLK,
-    input ARESETn,
+  assign ARADDR  = req.ar.addr ;
+  assign ARPROT  = req.ar.prot ;
+  assign ARVALID = req.ar_valid;
+  assign ARREADY = rsp.ar_ready;
 
-    input AWADDR,
-    input AWPROT,
-    input AWVALID,
-    output AWREADY,
+  assign RDATA   = rsp.r.data  ;
+  assign RRESP   = rsp.r.resp  ;
+  assign RVALID  = rsp.r_valid ;
+  assign RREADY  = req.r_ready ;
 
-    input WDATA,
-    input WSTRB,
-    input WVALID,
-    output WREADY,
-
-    output BRESP,
-    output BVALID,
-    input BREADY,
-
-    input ARADDR,
-    input ARPROT,
-    input ARVALID,
-    output ARREADY,
-
-    output RDATA,
-    output RRESP,
-    output RVALID,
-    input RREADY
-  );
-
-  modport monitor(
-    input ACLK,
-    input ARESETn,
-
-    input AWADDR,
-    input AWPROT,
-    input AWVALID,
-    input AWREADY,
-
-    input WDATA,
-    input WSTRB,
-    input WVALID,
-    input WREADY,
-
-    input BRESP,
-    input BVALID,
-    input BREADY,
-
-    input ARADDR,
-    input ARPROT,
-    input ARVALID,
-    input ARREADY,
-
-    input RDATA,
-    input RRESP,
-    input RVALID,
-    input RREADY
-  );
+  `HANDSHAKE_SEND_RECV_LOOK(aw, axi_aw_chan_t, clk_i, req.aw, req.aw_valid, rsp.aw_ready)
+  `HANDSHAKE_SEND_RECV_LOOK(w, axi_w_chan_t, clk_i, req.w, req.w_valid, rsp.w_ready)
+  `HANDSHAKE_SEND_RECV_LOOK(b, axi_b_chan_t, clk_i, rsp.b, rsp.b_valid, req.b_ready)
+  `HANDSHAKE_SEND_RECV_LOOK(ar, axi_ar_chan_t, clk_i, req.ar, req.ar_valid, rsp.ar_ready)
+  `HANDSHAKE_SEND_RECV_LOOK(r, axi_r_chan_t, clk_i, rsp.r, rsp.r_valid, req.r_ready)
 
 endinterface
