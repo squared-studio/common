@@ -89,7 +89,7 @@ flist: locate_files
 	@if [ "$(OS)" = "Linux" ]; then cat ___flist | xclip -sel clip >> CI_REPORT; else cat ___flist | clip; fi
 	@make clean
 	@clear
-	@echo -e "\033[2;35m$(RTL) flist copied to clipboard\033[0m"
+	@echo -e "\x1b[2;35m$(RTL) flist copied to clipboard\x1b[0m"
 
 .PHONY: vivado
 vivado: clean
@@ -126,18 +126,18 @@ ci_print:
 	@$(eval _PASS := $(shell grep -c "1;32m\[PASS\]" CI_REPORT))
 	@$(eval _FAIL := $(shell grep -c "1;31m\[FAIL\]" CI_REPORT)) 
 	@if [ "$(_FAIL)" = "0" ]; then \
-		echo -e "\033[1;32m" >> CI_REPORT;\
+		echo -e "\x1b[1;32m" >> CI_REPORT;\
 	else\
-		echo -e "\033[1;31m" >> CI_REPORT;\
+		echo -e "\x1b[1;31m" >> CI_REPORT;\
 	fi
 	@echo ">>>>>>>>>>>>>>>>>>>> $(_PASS)/$(shell expr $(_FAIL) + $(_PASS)) PASSED <<<<<<<<<<<<<<<<<<<<" >> CI_REPORT;
-	@echo -e "\033[0m" >> CI_REPORT;
+	@echo -e "\x1b[0m" >> CI_REPORT;
 	@git log -1 >> CI_REPORT;
 	@make clean
 	@echo " "
 	@echo " "
 	@echo " "
-	@echo -e "\033[1;32mCONTINUOUS INTEGRATION SUCCESSFULLY COMPLETE\033[0m";
+	@echo -e "\x1b[1;32mCONTINUOUS INTEGRATION SUCCESSFULLY COMPLETE\x1b[0m";
 	@cat CI_REPORT
 
 .PHONY: clean
@@ -150,5 +150,5 @@ gen_check_list:
 	@$(eval CHECK_LIST += $(shell find rtl -name "*.v" -o -name "*.vh" -o -name "*.sv" -o -name "*.svh"))
 	@$(eval CHECK_LIST += $(shell find tb -name "*.v" -o -name "*.vh" -o -name "*.sv" -o -name "*.svh"))
 	@($(foreach word, $(CHECK_LIST), echo "[](./$(word))";)) | clip
-	@echo -e "\033[2;35mList copied to clipboard\033[0m"
+	@echo -e "\x1b[2;35mList copied to clipboard\x1b[0m"
 	
