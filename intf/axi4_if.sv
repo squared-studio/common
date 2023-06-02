@@ -14,8 +14,8 @@ interface axi4_if #(
   req_t req;
   rsp_t rsp;
 
-  `AXI4_T(axi, $bits(req.ar.addr), $bits(req.r.data), $bits(req.ar.id), $bits(req.aw.id),
-          $bits(req.aw.user), $bits(req.w.user), $bits(req.b.user))
+  `AXI4_T(axi, $bits(req.ar.addr), $bits(rsp.r.data), $bits(req.ar.id), $bits(req.aw.id),
+          $bits(req.aw.user), $bits(req.w.user), $bits(rsp.b.user))
 
   logic                          ACLK;
   logic                          ARESETn;

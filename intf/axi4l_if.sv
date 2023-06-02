@@ -14,7 +14,7 @@ interface axi4l_if #(
   req_t req;
   rsp_t rsp;
 
-  `AXI4L_T(axi, $bits(req.ar.addr), $bits(req.r.data))
+  `AXI4L_T(axi, $bits(req.ar.addr), $bits(rsp.r.data))
 
   logic                          ACLK;
   logic                          ARESETn;
