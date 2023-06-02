@@ -36,6 +36,12 @@ package axi4_pkg;
     constraint burst_c {BURST inside {FIXED, INCR, WRAP};}
     constraint cache_c {CACHE inside {0, 1, 2, 3, 6, 7, 10, 11, 14, 15};}
 
+    constraint fixed_c {
+      if (BURST == FIXED) {
+        LEN < 16;
+      }
+    }
+    
     constraint wrap_c {
       if (BURST == WRAP) {
         (ADDR % (2 ** SIZE)) == 0;
