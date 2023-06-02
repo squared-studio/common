@@ -30,9 +30,9 @@ package axi4_pkg;
     rand bit [USER_DATA_WIDTH-1:0] USER_DATA;
     bit      [                7:0] DATA      [$:4095];
     bit      [                0:0] STRB      [$:4095];
-    
+
     constraint size_c {((2 ** SIZE) * 8) <= DATA_WIDTH;}
-    
+
     constraint burst_c {
       BURST inside {FIXED, INCR, WRAP};
       if (BURST == FIXED) {
@@ -40,10 +40,12 @@ package axi4_pkg;
       }
       if (BURST == INCR) {
         ((2 ** SIZE) * (1 + LEN)) <= (2 ** 12);
+        (((2 ** SIZE) * (1 + LEN)) - (ADDR % (2**SIZE))) < (2**12);
       }
       if (BURST == WRAP) {
         (ADDR % (2 ** SIZE)) == 0;
         LEN inside {1, 3, 7, 15};
+        ((2 ** SIZE) * (1 + LEN)) < (2 ** 12);
       }
     }
 
@@ -55,7 +57,7 @@ package axi4_pkg;
         CACHE == 0;
       }
     }
-    
+
     constraint cache_c {CACHE inside {0, 1, 2, 3, 6, 7, 10, 11, 14, 15};}
 
   endclass
