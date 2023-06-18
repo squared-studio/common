@@ -1,5 +1,7 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
+(* no_ungroup *)
+(* no_boundary_optimization *)
 module ff_back_to_back #(
     parameter int NUM_STAGES = 4
 ) (
