@@ -27,9 +27,8 @@ CI_LIST  = $(shell cat CI_LIST)
 
 .PHONY: run
 run:
-	@echo "To run a test with iverilog or vivado, please type:"
-	@echo "make iverilog TOP=<top_module>"
-	@echo "make vivado TOP=<top_module>"
+	@echo "To run a test with vivado, please type:"
+	@echo "make simulate TOP=<top_module>"
 	@echo "make CI"
 
 .PHONY: print_vars
@@ -91,12 +90,12 @@ flist: locate_files
 	@clear
 	@echo -e "\x1b[2;35m$(RTL) flist copied to clipboard\x1b[0m"
 
-.PHONY: vivado
-vivado: clean
-	@make sim_vivado
+.PHONY: simulate
+simulate: clean
+	@make vivado
 
-.PHONY: sim_vivado
-sim_vivado:
+.PHONY: vivado
+vivado:
 	@touch $(TOP_DIR)vivado_compile.config 
 	@touch $(TOP_DIR)vivado_elaborate.config 
 	@touch $(TOP_DIR)vivado_stimulate.config 
@@ -113,7 +112,7 @@ CI: clean
 .PHONY: ci_vivado_run
 ci_vivado_run:
 	@> CI_REPORT;
-	@$(foreach word, $(CI_LIST), make sim_vivado TOP=$(word);)
+	@$(foreach word, $(CI_LIST), make vivado TOP=$(word);)
 
 .PHONY: ci_vivado_collect
 ci_vivado_collect: 
