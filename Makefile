@@ -40,13 +40,13 @@ print_vars:
 	@echo "$(TOP_DIR)";
 	@echo ""
 	@echo "vivado_compile:"
-	@echo "$(shell cat $(TOP_DIR)vivado_compile.config)";
+	@echo "$(shell cat $(TOP_DIR)vivado_compile_extra_command_line_options)";
 	@echo ""
 	@echo "vivado_elaborate:"
-	@echo "$(shell cat $(TOP_DIR)vivado_elaborate.config)";
+	@echo "$(shell cat $(TOP_DIR)vivado_elaborate_extra_command_line_options)";
 	@echo ""
 	@echo "vivado_stimulate:"
-	@echo "$(shell cat $(TOP_DIR)vivado_stimulate.config)";
+	@echo "$(shell cat $(TOP_DIR)vivado_stimulate_extra_command_line_options)";
 	@echo ""
 	@echo "DES_LIB:"
 	@echo "$(DES_LIB)";
@@ -96,12 +96,12 @@ simulate: clean
 
 .PHONY: vivado
 vivado:
-	@touch $(TOP_DIR)vivado_compile.config 
-	@touch $(TOP_DIR)vivado_elaborate.config 
-	@touch $(TOP_DIR)vivado_stimulate.config 
-	@cd $(TOP_DIR); xvlog -f $(TOP_DIR)vivado_compile.config -i $(INC_DIR) -sv $(TOP_DIR)$(TOP).sv -L UVM -L TBF=$(TBF_LIB) -L RTL=$(DES_LIB) -L INTF=$(INTF_LIB)
-	@cd $(TOP_DIR); xelab -f $(TOP_DIR)vivado_elaborate.config $(TOP) -s top
-	@cd $(TOP_DIR); xsim top -f $(TOP_DIR)vivado_stimulate.config -runall
+	@touch $(TOP_DIR)vivado_compile_extra_command_line_options 
+	@touch $(TOP_DIR)vivado_elaborate_extra_command_line_options 
+	@touch $(TOP_DIR)vivado_stimulate_extra_command_line_options 
+	@cd $(TOP_DIR); xvlog -f $(TOP_DIR)vivado_compile_extra_command_line_options -i $(INC_DIR) -sv $(TOP_DIR)$(TOP).sv -L UVM -L TBF=$(TBF_LIB) -L RTL=$(DES_LIB) -L INTF=$(INTF_LIB)
+	@cd $(TOP_DIR); xelab -f $(TOP_DIR)vivado_elaborate_extra_command_line_options $(TOP) -s top
+	@cd $(TOP_DIR); xsim top -f $(TOP_DIR)vivado_stimulate_extra_command_line_options -runall
 
 .PHONY: CI
 CI: clean
