@@ -30,9 +30,9 @@ final begin
   $display("\x1b[7;38m######################## TEST ENDED ########################\x1b[0m");
 end
 
-function automatic void result_print(bit PASS, string msg);
-  if (PASS) $sformat(msg, "\x1b[1;32m[PASS]\x1b[0m %s", msg);
-  else $sformat(msg, "\x1b[1;31m[FAIL]\x1b[0m %s", msg);
+function automatic void result_print(int PASS, string msg);
+  if (PASS==0) $sformat(msg, "\x1b[1;31m[FAIL]\x1b[0m %s", msg);
+  else $sformat(msg, "\x1b[1;32m[PASS]\x1b[0m %s", msg);
   $sformat(msg, "%s \x1b[1;33m[%s]\x1b[0m", msg, top_module_name);
   $display(msg);
 endfunction
