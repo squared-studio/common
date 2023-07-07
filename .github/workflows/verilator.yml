@@ -1,0 +1,21 @@
+name: verilator-lint
+on:
+  push:
+    branches: []
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      contents: read
+      pull-requests: write
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: sudo apt-get install verilator
+
+    - name: Run Verilator
+      run: make verilator_lint
+

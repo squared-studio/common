@@ -151,3 +151,6 @@ gen_check_list:
 	@($(foreach word, $(CHECK_LIST), echo "[](./$(word))";)) | clip
 	@echo -e "\x1b[2;35mList copied to clipboard\x1b[0m"
 	
+.PHONY: verilator_lint
+verilator_lint:
+	@($(foreach word, $(DES_LIB), verilator --lint-only $(DES_LIB) --top-module $(shell basename -s .sv $(word));))
