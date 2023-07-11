@@ -37,8 +37,8 @@ module fifo #(
   //-ASSIGNMENTS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  assign elem_in_ready_o = (el_cnt == DEPTH) ? elem_out_ready_i : 1;
-  assign elem_out_valid_o = (el_cnt == 0) ? elem_in_valid_i : '1;
+  assign elem_in_ready_o = (el_cnt == DEPTH) ? elem_out_ready_i : '1;
+  assign elem_out_valid_o = (el_cnt == '0) ? elem_in_valid_i : '1;
 
   assign elem_in_hs = elem_in_valid_i & elem_in_ready_o;
   assign elem_out_hs = elem_out_valid_o & elem_out_ready_i;
