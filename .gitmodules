@@ -13,3 +13,6 @@
 [submodule "sub/pulp-platform/axi_mem_if"]
 	path = sub/pulp-platform/axi_mem_if
 	url = https://github.com/pulp-platform/axi_mem_if.git
+[submodule "sub/mortbopet/Ripes"]
+	path = sub/mortbopet/Ripes
+	url = https://github.com/mortbopet/Ripes.git
