@@ -1,7 +1,7 @@
-// Mux with direct output select
+// General purpose MUX
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
-module mux_core #(
+module mux #(
     parameter int ELEM_WIDTH = 8,  // Width of each crossbar element
     parameter int NUM_ELEM   = 6   // Number of elements in the crossbar
 ) (
@@ -24,6 +24,6 @@ module mux_core #(
     assign out = (sel_i == i) ? inputs_i[i] : 'z;
   end
 
-  assign output_o = out;
+  buf (out, output_o);
 
 endmodule
