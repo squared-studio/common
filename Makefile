@@ -91,8 +91,7 @@ flist: locate_files
 	@echo -e "\x1b[2;35m$(RTL) flist copied to clipboard\x1b[0m"
 
 .PHONY: simulate
-simulate: clean
-	@make vivado
+simulate: clean vivado
 
 .PHONY: vivado
 vivado:
@@ -104,10 +103,7 @@ vivado:
 	@cd $(TOP_DIR); xsim top -f $(TOP_DIR)vivado_stimulate_extra_command_line_options -runall
 
 .PHONY: CI
-CI: clean
-	@make ci_vivado_run
-	@make ci_vivado_collect
-	@make ci_print
+CI: clean ci_vivado_run ci_vivado_collect ci_print
 
 .PHONY: ci_vivado_run
 ci_vivado_run:
