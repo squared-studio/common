@@ -7,7 +7,7 @@ module mux #(
 ) (
     input  logic [$clog2(NUM_ELEM)-1:0]                 sel_i,     // Output enable
     input  logic [        NUM_ELEM-1:0][ELEM_WIDTH-1:0] inputs_i,  // Array of input bus
-    output logic [      ELEM_WIDTH-1:0]                 output_o   // Array of output bus
+    output logic [      ELEM_WIDTH-1:0]                 output_o   // Output bus
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -24,6 +24,15 @@ module mux #(
     assign out = (sel_i == i) ? inputs_i[i] : 'z;
   end
 
-  buf (out, output_o);
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //-RTLS
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+
+  buffer #(
+      .WIDTH(ELEM_WIDTH)
+  ) output_o_buf (
+      .d_i(out),
+      .q_o(output_o)
+  );
 
 endmodule
