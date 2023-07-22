@@ -25,11 +25,43 @@ CLEAN_TARGETS += $(shell find $(realpath ./) -name "___flist")
 OS = $(shell uname)
 CI_LIST  = $(shell cat CI_LIST)
 
-.PHONY: run
-run:
-	@echo "To run a test with vivado, please type:"
-	@echo "make simulate TOP=<top_module>"
-	@echo "make CI"
+####################################################################################################
+# General
+####################################################################################################
+
+.PHONY: help
+help:
+	@echo -e ""
+	@echo -e "\033[3;30mTo run a test with vivado, type:\033[0m"
+	@echo -e "\033[1;38mmake simulate TOP=<tb_top>\033[0m"
+	@echo -e ""
+	@echo -e "\033[3;30mTo clean all temps, type:\033[0m"
+	@echo -e "\033[1;38mmake clean\033[0m"
+	@echo -e ""
+	@echo -e "\033[3;30mTo run CI check, type:\033[0m"
+	@echo -e "\033[1;38mmake CI\033[0m"
+	@echo -e ""
+	@echo -e "\033[3;30mTo run a test with iverilog, type:\033[0m"
+	@echo -e "\033[1;38mmake iverilog TOP=<tb_top>\033[0m"
+	@echo -e ""
+	@echo -e "\033[3;30mTo generate variables for a testbench, type:\033[0m"
+	@echo -e "\033[1;38mmake gen_check_list TOP=<tb_top>\033[0m"
+	@echo -e ""
+	@echo -e "\033[3;30mTo generate a list of all Verilog/SystemVerilog files, type:\033[0m"
+	@echo -e "\033[1;38mmake gen_check_list\033[0m"
+	@echo -e ""
+	@echo -e "\033[3;30mTo generate flist of an RTL, type:\033[0m"
+	@echo -e "\033[1;38mmake flist RTL=<rtl>\033[0m"
+	@echo -e ""
+
+.PHONY: gen_check_list
+gen_check_list:
+	@$(eval CHECK_LIST := $(shell find include -name "*.v" -o -name "*.vh" -o -name "*.sv" -o -name "*.svh"))
+	@$(eval CHECK_LIST += $(shell find rtl -name "*.v" -o -name "*.vh" -o -name "*.sv" -o -name "*.svh"))
+	@$(eval CHECK_LIST += $(shell find intf -name "*.v" -o -name "*.vh" -o -name "*.sv" -o -name "*.svh"))
+	@$(eval CHECK_LIST += $(shell find tb -name "*.v" -o -name "*.vh" -o -name "*.sv" -o -name "*.svh"))
+	@($(foreach word, $(CHECK_LIST), echo "[](./$(word))";)) | clip
+	@echo -e "\x1b[2;35mList copied to clipboard\x1b[0m"
 
 .PHONY: print_vars
 print_vars: 
@@ -63,10 +95,13 @@ print_vars:
 	@echo "CI_LIST:"
 	@echo "$(CI_LIST)";
 
-.PHONY: iverilog
-iverilog: clean
-	@cd $(TOP_DIR); iverilog -I $(INC_DIR) -g2012 -o $(TOP).out -s $(TOP) -l $(DES_LIB) $(TBF_LIB)
-	@cd $(TOP_DIR); vvp $(TOP).out
+.PHONY: clean
+clean:
+	@rm -rf $(CLEAN_TARGETS)
+
+####################################################################################################
+# FLIST (Vivado) 
+####################################################################################################
 
 .PHONY: list_modules
 list_modules: clean
@@ -90,6 +125,10 @@ flist: locate_files
 	@clear
 	@echo -e "\x1b[2;35m$(RTL) flist copied to clipboard\x1b[0m"
 
+####################################################################################################
+# Simulate (Vivado) 
+####################################################################################################
+
 .PHONY: simulate
 simulate: clean vivado
 
@@ -101,6 +140,10 @@ vivado:
 	@cd $(TOP_DIR); xvlog -f $(TOP_DIR)vivado_compile_extra_command_line_options -i $(INC_DIR) -sv $(TOP_DIR)$(TOP).sv -L UVM -L TBF=$(TBF_LIB) -L RTL=$(DES_LIB) -L INTF=$(INTF_LIB)
 	@cd $(TOP_DIR); xelab -f $(TOP_DIR)vivado_elaborate_extra_command_line_options $(TOP) -s top
 	@cd $(TOP_DIR); xsim top -f $(TOP_DIR)vivado_stimulate_extra_command_line_options -runall
+
+####################################################################################################
+# CI (Vivado) 
+####################################################################################################
 
 .PHONY: CI
 CI: clean ci_vivado_run ci_vivado_collect ci_print
@@ -135,18 +178,19 @@ ci_print:
 	@echo -e "\x1b[1;32mCONTINUOUS INTEGRATION SUCCESSFULLY COMPLETE\x1b[0m";
 	@cat CI_REPORT
 
-.PHONY: clean
-clean:
-	@rm -rf $(CLEAN_TARGETS)
+####################################################################################################
+# Lint (Verilator)
+####################################################################################################
 
-.PHONY: gen_check_list
-gen_check_list:
-	@$(eval CHECK_LIST := $(shell find include -name "*.v" -o -name "*.vh" -o -name "*.sv" -o -name "*.svh"))
-	@$(eval CHECK_LIST += $(shell find rtl -name "*.v" -o -name "*.vh" -o -name "*.sv" -o -name "*.svh"))
-	@$(eval CHECK_LIST += $(shell find tb -name "*.v" -o -name "*.vh" -o -name "*.sv" -o -name "*.svh"))
-	@($(foreach word, $(CHECK_LIST), echo "[](./$(word))";)) | clip
-	@echo -e "\x1b[2;35mList copied to clipboard\x1b[0m"
-	
 .PHONY: verilator_lint
 verilator_lint:
 	@($(foreach word, $(DES_LIB), verilator --lint-only $(DES_LIB) --top-module $(shell basename -s .sv $(word));))
+
+####################################################################################################
+# Simulate (iverilog)
+####################################################################################################
+
+.PHONY: iverilog
+iverilog: clean
+	@cd $(TOP_DIR); iverilog -I $(INC_DIR) -g2012 -o $(TOP).out -s $(TOP) -l $(DES_LIB) $(TBF_LIB)
+	@cd $(TOP_DIR); vvp $(TOP).out
