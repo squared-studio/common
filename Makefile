@@ -4,6 +4,7 @@
 ##
 ####################################################################################################
 
+TOP      = $(shell cat ___TOP)
 TOP_DIR  = $(shell find $(realpath ./tb/) -wholename "*$(TOP)/$(TOP).sv" | sed "s/$(TOP).sv//g")
 TBF_LIB  = $(shell find $(TOP_DIR) -name "*.v" -o -name "*.sv")
 DES_LIB += $(shell find $(realpath ./rtl/) -name "*.v" -o -name "*.sv")
@@ -134,6 +135,7 @@ simulate: clean vivado
 
 .PHONY: vivado
 vivado:
+	@echo "$(TOP)" > ___TOP
 	@touch $(TOP_DIR)vivado_compile_extra_command_line_options 
 	@touch $(TOP_DIR)vivado_elaborate_extra_command_line_options 
 	@touch $(TOP_DIR)vivado_stimulate_extra_command_line_options 
@@ -192,5 +194,17 @@ verilator_lint:
 
 .PHONY: iverilog
 iverilog: clean
+	@echo "$(TOP)" > ___TOP
 	@cd $(TOP_DIR); iverilog -I $(INC_DIR) -g2012 -o $(TOP).out -s $(TOP) -l $(DES_LIB) $(TBF_LIB)
 	@cd $(TOP_DIR); vvp $(TOP).out
+
+####################################################################################################
+# Simulate (iverilog)
+####################################################################################################
+
+.PHONY: wave
+wave:
+	@cd $(TOP_DIR); \
+	test -e *.gtkw && gtkwave *.gtkw \
+	|| test -e dump.vcd && gtkwave dump.vcd \
+	|| echo -e "\033[1;31mNo wave found\033[0m"

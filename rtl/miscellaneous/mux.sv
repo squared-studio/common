@@ -28,11 +28,8 @@ module mux #(
   //-RTLS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  buffer #(
-      .WIDTH(ELEM_WIDTH)
-  ) output_o_buf (
-      .d_i(out),
-      .q_o(output_o)
-  );
+  for (genvar i = 0; i < ELEM_WIDTH; i++) begin : g_out_buff
+    buf (output_o[i], out[i]);
+  end
 
 endmodule

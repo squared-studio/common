@@ -20,8 +20,14 @@ module xbar #(
   //-ASSIGNMENTS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  for (genvar i = 0; i < NUM_ELEM; i++) begin : g_overflow_handle
-    assign selects[i] = (select_i[i] < NUM_ELEM) ? select_i[i] : (select_i[i] - NUM_ELEM);
+  if ((2 ** ($clog2(NUM_ELEM))) == NUM_ELEM) begin : g_overflow
+    for (genvar i = 0; i < NUM_ELEM; i++) begin : g_selects_assign
+      assign selects[i] = select_i[i];
+    end
+  end else begin : g_overflow
+    for (genvar i = 0; i < NUM_ELEM; i++) begin : g_selects_assign
+      assign selects[i] = (select_i[i] < NUM_ELEM) ? select_i[i] : (select_i[i] - NUM_ELEM);
+    end
   end
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

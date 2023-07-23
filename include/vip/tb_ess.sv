@@ -18,7 +18,7 @@ string top_module_name = $sformatf("%m");
 initial begin
   $display("\x1b[7;38m####################### TEST STARTED #######################\x1b[0m");
 `ifdef ENABLE_DUMPFILE
-  $dumpfile("raw.vcd");
+  $dumpfile("dump.vcd");
   $dumpvars;
 `endif  // ENABLE_DUMPFILE
   repeat (1000) repeat (1000) repeat (1000) #1000;
