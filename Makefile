@@ -39,6 +39,12 @@ help:
 	@echo -e "\033[3;30mTo clean all temps, type:\033[0m"
 	@echo -e "\033[1;38mmake clean\033[0m"
 	@echo -e ""
+	@echo -e "\033[3;30mTo open wavedump using vivado, type:\033[0m"
+	@echo -e "\033[1;38mmake vwave TOP=<tb_top>\033[0m"
+	@echo -e ""
+	@echo -e "\033[3;30mTo open wavedump using gtkwave, type:\033[0m"
+	@echo -e "\033[1;38mmake gwave TOP=<tb_top>\033[0m"
+	@echo -e ""
 	@echo -e "\033[3;30mTo run CI check, type:\033[0m"
 	@echo -e "\033[1;38mmake CI\033[0m"
 	@echo -e ""
@@ -199,12 +205,22 @@ iverilog: clean
 	@cd $(TOP_DIR); vvp $(TOP).out
 
 ####################################################################################################
-# Simulate (iverilog)
+# Waveform (GTKWave)
 ####################################################################################################
 
-.PHONY: wave
-wave:
+.PHONY: gwave
+gwave:
 	@cd $(TOP_DIR); \
 	test -e *.gtkw && gtkwave *.gtkw \
 	|| test -e dump.vcd && gtkwave dump.vcd \
+	|| echo -e "\033[1;31mNo wave found\033[0m"
+
+####################################################################################################
+# Waveform (Vivado)
+####################################################################################################
+
+.PHONY: vwave
+vwave:
+	@cd $(TOP_DIR); \
+	test -e *.wdb && vivado *.wdb \
 	|| echo -e "\033[1;31mNo wave found\033[0m"
