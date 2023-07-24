@@ -118,7 +118,7 @@ module mux_tb #(
   begin
     int pass;
     int fail;
-    
+
     // random_input task call
     `ifdef RANDOM_TEST
     $display("\033[42;37m************** THIS IS RANDOM TESTING **************\033[0m");
@@ -126,7 +126,6 @@ module mux_tb #(
     begin
       random_input(pass, fail);
     end
-    
     `else
     //generated input task call
     $display("\033[42;37m************** THIS IS SEQUENCE TESTING **************\033[0m");
