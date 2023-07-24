@@ -221,6 +221,4 @@ gwave:
 
 .PHONY: vwave
 vwave:
-	@cd $(TOP_DIR); \
-	test -e *.wdb && vivado *.wdb \
-	|| echo -e "\033[1;31mNo wave found\033[0m"
+	@cd $(TOP_DIR); xsim top -f $(TOP_DIR)vivado_stimulate_extra_command_line_options -gui
