@@ -7,7 +7,7 @@ module mux_tb #(
     parameter int RUN_TEST   = 10     // number of test to run/repeat
   );
 
-`define ENABLE_DUMPFILE
+//`define ENABLE_DUMPFILE
 //`define DEBUG   //comment this to turn off mux elements display
 `define RANDOM_TEST   //comment this to run generated sequence test
 
