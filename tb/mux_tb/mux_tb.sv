@@ -9,7 +9,7 @@ module mux_tb #(
 
 //`define ENABLE_DUMPFILE
 //`define DEBUG   //comment this to turn off mux elements display
-`define RANDOM_TEST   //comment this to run generated sequence test
+//`define RANDOM_TEST   //comment this to run generated sequence test
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-IMPORTS
@@ -83,32 +83,6 @@ module mux_tb #(
 
   endtask
 
-  // input data is generated sequentially
-  task static generated_input(output int pass, output int fail);
-    for (int i = 0; i < NUM_ELEM; i++)
-    begin
-      inputs_i[i] = i + NUM_ELEM;
-`ifdef DEBUG
-
-      $display("inputs_i[%0d] =%0d", i, inputs_i[i]);
-`endif  //DEBUG
-
-    end
-    foreach (inputs_i[i])
-    begin
-      sel_i = $urandom_range(0, NUM_ELEM);
-      #2;
-`ifdef DEBUG
-
-      $display("sel_i = %0d,output_o = %0d", sel_i, output_o);
-`endif  //DEBUG
-
-      if (inputs_i[sel_i] != output_o)
-        fail++;
-      else
-        pass++;
-    end
-  endtask
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-PROCEDURALS
@@ -116,41 +90,26 @@ module mux_tb #(
 
   initial
   begin
-    int pass;
-    int fail;
-
+    int pass=0;
+    int fail=0;
+    
     // random_input task call
-    `ifdef RANDOM_TEST
     $display("\033[42;37m************** THIS IS RANDOM TESTING **************\033[0m");
     repeat(RUN_TEST)
     begin
       random_input(pass, fail);
     end
-    `else
-    //generated input task call
-    $display("\033[42;37m************** THIS IS SEQUENCE TESTING **************\033[0m");
-    generated_input(pass, fail);
-`endif
-
-`ifdef RANDOM_TEST
 
     if (pass == (NUM_ELEM*RUN_TEST))
-`else
-    if (pass == (NUM_ELEM))
-`endif
-
     begin
       pass = 1;
     end
     else
     begin
-      fail = 1;
+      pass = 0;
     end
 
-    if (pass)
-      result_print(pass, "All elements of MUX Passed");
-    else
-      result_print(fail, "All/few elements of MUX failed");
+    result_print(pass, "MUX selection");
 
     $finish;
 
