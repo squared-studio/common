@@ -2,5 +2,6 @@ bin_to_gray_tb
 fifo_tb
 gray_to_bin_tb
 mem_bank_tb
+mux_tb
 string_ops_pkg_tb
 xbar_tb
