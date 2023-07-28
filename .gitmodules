@@ -16,3 +16,6 @@
 [submodule "sub/mortbopet/Ripes"]
 	path = sub/mortbopet/Ripes
 	url = https://github.com/mortbopet/Ripes.git
+[submodule "sub/pulp-platform/boot-code"]
+	path = sub/pulp-platform/boot-code
+	url = https://github.com/pulp-platform/boot-code.git
