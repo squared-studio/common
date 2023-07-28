@@ -15,7 +15,7 @@ module demux #(
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   for (genvar i = 0; i < NUM_ELEM; i++) begin : g_outputs
-    assign outputs_o = (sel_i == i) ? input_i : '0;
+    assign outputs_o[i] = (sel_i == i) ? input_i : '0;
   end
 
 endmodule

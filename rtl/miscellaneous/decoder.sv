@@ -2,19 +2,24 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
 module decoder #(
-    parameter int CODE_WIDTH = 4  // Code with
+    parameter int ADDR_WIDTH = 4  // Code with
 ) (
-    input  logic [CODE_WIDTH-1:0] code_i, // Code input
-    output logic [2**CODE_WIDTH-1:0] out_o   // Wire output
+    input  logic [   ADDR_WIDTH-1:0] addr_i,        // Address input
+    input  logic                     addr_valid_i,  // Address Valid input
+    output logic [2**ADDR_WIDTH-1:0] select_o       // Wire output
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-ASSIGNMENTS
+  //-RTLS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  // Generate output based on code
-  for (genvar i = 0; i < 2**CODE_WIDTH; i++) begin : g_outputs
-    assign out_o[i] = (code_i == i);
-  end
+  demux #(
+      .ELEM_WIDTH(1),
+      .NUM_ELEM  (2 ** ADDR_WIDTH)
+  ) u_demux (
+      .sel_i(addr_i),
+      .input_i(addr_valid_i),
+      .outputs_o(select_o)
+  );
 
 endmodule
