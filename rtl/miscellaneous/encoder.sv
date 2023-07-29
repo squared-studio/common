@@ -1,10 +1,10 @@
-// A simple encoder module for translating single wires into address and address valid
+// General purpose Encoder
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
 module encoder #(
     parameter int NUM_WIRE = 4  // Number of output wires
 ) (
-    input  logic [NUM_WIRE-1:0]         select_i,     // Wire input
+    input  logic [        NUM_WIRE-1:0] d_i,          // Wire input
     output logic [$clog2(NUM_WIRE)-1:0] addr_o,       // Address output
     output logic                        addr_valid_o  // Address Valid output
 );
@@ -19,10 +19,10 @@ module encoder #(
   //-ASSIGNMENTS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  assign addr_valid_o = |select_i;
+  assign addr_valid_o = |d_i;
 
   for (genvar i = 0; i < NUM_WIRE; i++) begin : g_addr
-    assign addr = select_i[i] ? i : 'z;
+    assign addr = d_i[i] ? i : 'z;
   end
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

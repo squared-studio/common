@@ -2,30 +2,51 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
 module priority_encoder #(
-    parameter int NUM_INPUTS = 4  // Number of Inputs
+    parameter int NUM_WIRE            = 4,  // Number of output wires
+    parameter bit HIGH_INDEX_PRIORITY = 1   // Prioritize Higher index
 ) (
-    input  logic [        NUM_INPUTS-1:0] in_i,         // Wire input
-    output logic [$clog2(NUM_INPUTS)-1:0] code_o,       // Code output
-    output logic                          code_valid_o  // Code output is valid
+    input  logic [        NUM_WIRE-1:0] select_i,     // Wire input
+    output logic [$clog2(NUM_WIRE)-1:0] addr_o,       // Address output
+    output logic                        addr_valid_o  // Address Valid output
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  logic [$clog2(NUM_INPUTS)-1:0] out_[NUM_INPUTS];  // finalizing output based on previous
+  logic [NUM_WIRE-1:0] select_found;
+  logic [NUM_WIRE-1:0] allowed_selects;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-ASSIGNMENTS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  assign code_o = out_[0];
-
-  assign code_valid_o = | in_i;
-
-  for (genvar i = 0; i < (NUM_INPUTS - 1); i++) begin : g_msb
-    assign out_[i] = in_i[i] ? i : out_[i+1];
+  for (genvar i = 0; i < NUM_WIRE; i++) begin : g_allowed_selects
+    assign allowed_selects[i] = select_i[i] & ~select_found[i];
   end
-  assign out_[NUM_INPUTS - 1] = in_i[NUM_INPUTS - 1] ? (NUM_INPUTS - 1) : 0;
+
+  if (HIGH_INDEX_PRIORITY) begin : g_msb_p
+    assign select_found[NUM_WIRE-1] = 0;
+    for (genvar i = (NUM_WIRE - 2); i <= 0; i--) begin : g_select_found
+      assign select_found[i] = select_found[i+1] | select_i[i+1];
+    end
+  end else begin : g_lsb_p
+    assign select_found[0] = 0;
+    for (genvar i = 1; i < NUM_WIRE; i++) begin : g_select_found
+      assign select_found[i] = select_found[i-1] | select_i[i-1];
+    end
+  end
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //-RTLS
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+
+  encoder #(
+      .NUM_WIRE(NUM_WIRE)
+  ) u_encoder (
+      .d_i(allowed_selects),
+      .addr_o(addr_o),
+      .addr_valid_o(addr_valid_o)
+  );
 
 endmodule
