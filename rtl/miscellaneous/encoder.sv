@@ -2,18 +2,18 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
 module encoder #(
-    parameter int ADDR_WIDTH = 4  // Code with
+    parameter int NUM_WIRE = 4  // Number of output wires
 ) (
-    input  logic [2**ADDR_WIDTH-1:0] select_i,     // Wire input
-    output logic [   ADDR_WIDTH-1:0] addr_o,       // Address output
-    output logic                     addr_valid_o  // Address Valid output
+    input  logic [NUM_WIRE-1:0]         select_i,     // Wire input
+    output logic [$clog2(NUM_WIRE)-1:0] addr_o,       // Address output
+    output logic                        addr_valid_o  // Address Valid output
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  wire [ADDR_WIDTH-1:0] addr;
+  wire [$clog2(NUM_WIRE)-1:0] addr;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-ASSIGNMENTS
@@ -21,7 +21,7 @@ module encoder #(
 
   assign addr_valid_o = |select_i;
 
-  for (genvar i = 0; i < 2 ** ADDR_WIDTH; i++) begin : g_addr
+  for (genvar i = 0; i < NUM_WIRE; i++) begin : g_addr
     assign addr = select_i[i] ? i : 'z;
   end
 
@@ -29,7 +29,7 @@ module encoder #(
   //-RTLS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  for (genvar i = 0; i < ADDR_WIDTH; i++) begin : g_buf_addr_o
+  for (genvar i = 0; i < $clog2(NUM_WIRE); i++) begin : g_buf_addr_o
     buf (addr_o[i], addr[i]);
   end
 

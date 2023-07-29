@@ -1,12 +1,12 @@
-// A simple decoder module for translating a code into individual wire set as HIGH
+// General purpose decoder module
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
 module decoder #(
-    parameter int ADDR_WIDTH = 4  // Code with
+    parameter int NUM_WIRE = 4  // Number of output wires
 ) (
-    input  logic [   ADDR_WIDTH-1:0] addr_i,        // Address input
-    input  logic                     addr_valid_i,  // Address Valid input
-    output logic [2**ADDR_WIDTH-1:0] select_o       // Wire output
+    input  logic [$clog2(NUM_WIRE)-1:0] a_i,        // Address input
+    input  logic                        a_valid_i,  // Address Valid input
+    output logic [        NUM_WIRE-1:0] d_o         // data    output
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -15,11 +15,11 @@ module decoder #(
 
   demux #(
       .ELEM_WIDTH(1),
-      .NUM_ELEM  (2 ** ADDR_WIDTH)
+      .NUM_ELEM  (NUM_WIRE)
   ) u_demux (
-      .sel_i(addr_i),
-      .input_i(addr_valid_i),
-      .outputs_o(select_o)
+      .sel_i(a_i),
+      .input_i(a_valid_i),
+      .outputs_o(d_o)
   );
 
 endmodule
