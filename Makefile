@@ -169,7 +169,7 @@ vivado:
 	@touch $(TOP_DIR)vivado_compile_extra_command_line_options 
 	@touch $(TOP_DIR)vivado_elaborate_extra_command_line_options 
 	@touch $(TOP_DIR)vivado_stimulate_extra_command_line_options 
-	@cd $(TOP_DIR); xvlog -f $(TOP_DIR)vivado_compile_extra_command_line_options -i $(INC_DIR) -sv $(TOP_DIR)$(TOP).sv -L UVM -L TBF=$(TBF_LIB) -L RTL=$(DES_LIB) -L INTF=$(INTF_LIB)
+	@cd $(TOP_DIR); xvlog -f $(TOP_DIR)vivado_compile_extra_command_line_options -d SIMULATION -i $(INC_DIR) -sv $(TOP_DIR)$(TOP).sv -L UVM -L TBF=$(TBF_LIB) -L RTL=$(DES_LIB) -L INTF=$(INTF_LIB)
 	@cd $(TOP_DIR); xelab -f $(TOP_DIR)vivado_elaborate_extra_command_line_options $(TOP) -s top
 	@cd $(TOP_DIR); xsim top -f $(TOP_DIR)vivado_stimulate_extra_command_line_options -runall
 

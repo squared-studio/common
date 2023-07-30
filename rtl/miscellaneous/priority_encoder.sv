@@ -26,7 +26,7 @@ module priority_encoder #(
   end
 
   if (HIGH_INDEX_PRIORITY) begin : g_msb_p
-    for (genvar i = 0; i < (NUM_WIRE-1); i++) begin : g_select_found
+    for (genvar i = 0; i < (NUM_WIRE - 1); i++) begin : g_select_found
       assign select_found[i] = select_found[i+1] | d_i[i+1];
     end
     assign select_found[NUM_WIRE-1] = 0;
@@ -48,5 +48,17 @@ module priority_encoder #(
       .addr_o(addr_o),
       .addr_valid_o(addr_valid_o)
   );
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //-INITIAL CHECKS
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+
+`ifdef SIMULATION
+  initial begin
+    if (NUM_WIRE > 32) begin
+      $display("\033[7;31m %m NUM_WIRE=%0d \033[0m", NUM_WIRE);
+    end
+  end
+`endif  // SIMULATION
 
 endmodule

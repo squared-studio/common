@@ -1,14 +1,14 @@
 // Address decored module
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
-`include "default_param_type_pkg.sv"
+`include "default_param_pkg.sv"
 
 module addr_decoder #(
-    parameter int  ADDR_WIDTH = default_param_type_pkg::ADDR_DECODER_ADDR_WIDTH,
-    parameter int  NUM_SLV = default_param_type_pkg::ADDR_DECODER_NUM_SLV,
-    parameter int  NUM_RULES = default_param_type_pkg::ADDR_DECODER_NUM_RULES,
-    parameter type addr_map_t = default_param_type_pkg::addr_decoder_addr_map_t,
-    parameter addr_map_t ADDR_MAP [NUM_RULES] = default_param_type_pkg::ADDR_MAP
+    parameter int  ADDR_WIDTH = default_param_pkg::ADDR_DECODER_ADDR_WIDTH,
+    parameter int  NUM_SLV = default_param_pkg::ADDR_DECODER_NUM_SLV,
+    parameter int  NUM_RULES = default_param_pkg::ADDR_DECODER_NUM_RULES,
+    parameter type addr_map_t = default_param_pkg::addr_decoder_addr_map_t,
+    parameter addr_map_t ADDR_MAP [NUM_RULES] = default_param_pkg::ADDR_MAP
 ) (
     input  logic      [     ADDR_WIDTH-1:0] addr_i,
     output logic      [$clog2(NUM_SLV)-1:0] slave_index_o,
