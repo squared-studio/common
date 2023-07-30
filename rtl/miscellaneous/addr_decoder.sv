@@ -5,11 +5,11 @@
 
 module addr_decoder #(
     parameter int  ADDR_WIDTH = default_param_type_pkg::ADDR_DECODER_ADDR_WIDTH,
-    parameter int  NUM_SLV    = default_param_type_pkg::ADDR_DECODER_NUM_SLV,
-    parameter int  NUM_RULES  = default_param_type_pkg::ADDR_DECODER_NUM_RULES,
-    parameter type addr_map_t = default_param_type_pkg::addr_decoder_addr_map_t
+    parameter int  NUM_SLV = default_param_type_pkg::ADDR_DECODER_NUM_SLV,
+    parameter int  NUM_RULES = default_param_type_pkg::ADDR_DECODER_NUM_RULES,
+    parameter type addr_map_t = default_param_type_pkg::addr_decoder_addr_map_t,
+    parameter addr_map_t ADDR_MAP [NUM_RULES] = default_param_type_pkg::ADDR_MAP
 ) (
-    input  addr_map_t                       addr_map_i   [NUM_RULES],
     input  logic      [     ADDR_WIDTH-1:0] addr_i,
     output logic      [$clog2(NUM_SLV)-1:0] slave_index_o,
     output logic                            addr_found_o
@@ -29,11 +29,11 @@ module addr_decoder #(
 
   for (genvar i = 0; i < NUM_RULES; i++) begin : g_addr_rule_select
     assign addr_rule_select [i] =
-        ((addr_map_i[i].lower_bound >= addr_i) & (addr_i < addr_map_i[i].lower_bound));
+        ((ADDR_MAP[i].lower_bound >= addr_i) & (addr_i < ADDR_MAP[i].lower_bound));
   end
 
   for (genvar i = 0; i < NUM_RULES; i++) begin : g_mux_in
-    assign mux_in[i] = addr_map_i[i].slave_index;
+    assign mux_in[i] = ADDR_MAP[i].slave_index;
   end
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
