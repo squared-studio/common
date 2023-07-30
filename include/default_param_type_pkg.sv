@@ -2,9 +2,9 @@
 
 package default_param_type_pkg;
 
-  localparam int addr_decoder_num_slv = 15;
-  localparam int addr_decoder_addr_width = 64;
-  localparam int addr_decoder_num_rules = 37;
-  `ADDR_MAP_T(addr_decoder_addr_map_t, addr_decoder_num_slv, addr_decoder_addr_width)
+  parameter int ADDR_DECODER_NUM_SLV = 15;
+  parameter int ADDR_DECODER_ADDR_WIDTH = 64;
+  parameter int ADDR_DECODER_NUM_RULES = 37;
+  `ADDR_MAP_T(addr_decoder_addr_map_t, ADDR_DECODER_NUM_SLV, ADDR_DECODER_ADDR_WIDTH)
 
 endpackage

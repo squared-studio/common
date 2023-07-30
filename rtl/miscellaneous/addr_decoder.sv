@@ -4,9 +4,9 @@
 `include "default_param_type_pkg.sv"
 
 module addr_decoder #(
-    parameter int  ADDR_WIDTH = default_param_type_pkg::addr_decoder_addr_width,
-    parameter int  NUM_SLV    = default_param_type_pkg::addr_decoder_num_slv,
-    parameter int  NUM_RULES  = default_param_type_pkg::addr_decoder_num_rules,
+    parameter int  ADDR_WIDTH = default_param_type_pkg::ADDR_DECODER_ADDR_WIDTH,
+    parameter int  NUM_SLV    = default_param_type_pkg::ADDR_DECODER_NUM_SLV,
+    parameter int  NUM_RULES  = default_param_type_pkg::ADDR_DECODER_NUM_RULES,
     parameter type addr_map_t = default_param_type_pkg::addr_decoder_addr_map_t
 ) (
     input  addr_map_t                       addr_map_i   [NUM_RULES],
