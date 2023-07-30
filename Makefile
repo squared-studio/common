@@ -42,6 +42,9 @@ help:
 	@echo -e "\033[3;30mTo open wavedump using vivado, type:\033[0m"
 	@echo -e "\033[1;38mmake vwave TOP=<tb_top>\033[0m"
 	@echo -e ""
+	@echo -e "\033[3;30mTo open schematic using vivado, type:\033[0m"
+	@echo -e "\033[1;38mmake schematic RTL=<rtl>\033[0m"
+	@echo -e ""
 	@echo -e "\033[3;30mTo open wavedump using gtkwave, type:\033[0m"
 	@echo -e "\033[1;38mmake gwave TOP=<tb_top>\033[0m"
 	@echo -e ""
@@ -104,6 +107,7 @@ print_vars:
 
 .PHONY: clean
 clean:
+	@rm -rf top.cache top.hw top.ip_user_files top.sim top.xpr top.tcl
 	@rm -rf $(CLEAN_TARGETS)
 
 ####################################################################################################
@@ -135,6 +139,22 @@ flist: locate_files
 	@make clean
 	@clear
 	@echo -e "\x1b[2;35m$(RTL) flist copied to clipboard\x1b[0m"
+
+####################################################################################################
+# Schematic (Vivado)
+####################################################################################################
+
+.PHONY: schematic
+schematic: locate_files
+	@echo "create_project top" > top.tcl
+	@echo "set_property include_dirs ./include [current_fileset]" >> top.tcl
+	@$(foreach word, $(shell cat ___flist), echo "add_files $(word)" >> top.tcl;)
+	@echo "set_property top $(RTL) [current_fileset]" >> top.tcl
+	@echo "start_gui" >> top.tcl
+	@echo "synth_design -top $(RTL) -lint" >> top.tcl 
+	@echo "synth_design -rtl -rtl_skip_mlo -name rtl_1" >> top.tcl 
+	@vivado -mode tcl -source top.tcl
+	@make clean
 
 ####################################################################################################
 # Simulate (Vivado) 
