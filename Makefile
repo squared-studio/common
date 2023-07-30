@@ -114,6 +114,7 @@ clean:
 list_all: clean
 	@mkdir -p flist_rtl
 	@$(foreach word, $(DES_LIB), touch flist_rtl/$(shell basename -s .sv $(word);))
+	@rm touch
 
 .PHONY: list_modules
 list_modules: list_all
