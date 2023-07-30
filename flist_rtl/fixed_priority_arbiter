@@ -1,0 +1,2 @@
+./rtl/miscellaneous/latch.sv
+./rtl/arbiter/fixed_priority_arbiter.sv

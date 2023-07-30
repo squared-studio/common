@@ -110,8 +110,13 @@ clean:
 # FLIST (Vivado) 
 ####################################################################################################
 
+.PHONY: list_all
+list_all: clean
+	@mkdir -p flist_rtl
+	@$(foreach word, $(DES_LIB), touch flist_rtl/$(shell basename -s .sv $(word);))
+
 .PHONY: list_modules
-list_modules: clean
+list_modules: list_all
 	@$(eval RTL_FILE := $(shell find rtl -name "$(RTL).sv"))
 	@xvlog -i $(INC_DIR) -sv $(RTL_FILE) -L RTL=$(DES_LIB)
 	@xelab $(RTL) -s top
@@ -127,10 +132,10 @@ locate_files: list_modules
 
 .PHONY: flist
 flist: locate_files
-	@if [ "$(OS)" = "Linux" ]; then cat ___flist | xclip -sel clip >> CI_REPORT; else cat ___flist | clip; fi
+	@cat ___flist > flist_rtl/$(RTL)
 	@make clean
 	@clear
-	@echo -e "\x1b[2;35m$(RTL) flist copied to clipboard\x1b[0m"
+	@echo -e "\x1b[2;35m$(RTL) flist created at flist_rtl/$(RTL)\x1b[0m"
 
 ####################################################################################################
 # Simulate (Vivado) 

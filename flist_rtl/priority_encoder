@@ -1,0 +1,2 @@
+./rtl/miscellaneous/encoder.sv
+./rtl/miscellaneous/priority_encoder.sv

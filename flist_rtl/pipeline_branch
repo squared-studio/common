@@ -1,0 +1,2 @@
+./rtl/buffers/pipeline/pipeline_core.sv
+./rtl/buffers/pipeline/pipeline_branch.sv

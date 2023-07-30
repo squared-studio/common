@@ -1,0 +1,2 @@
+./rtl/miscellaneous/demux.sv
+./rtl/miscellaneous/decoder.sv
