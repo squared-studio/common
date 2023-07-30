@@ -64,8 +64,9 @@ module round_robin_arbiter #(
   priority_encoder #(
       .NUM_INPUTS(NumReq)
   ) gnt_encode (
-      .in_i  (gnt_o),
-      .code_o(gnt_code)
+      .d_i  (gnt_o),
+      .addr_o(gnt_code),
+      .addr_valid_o()
   );
 
   assign gnt_found = |gnt_o;

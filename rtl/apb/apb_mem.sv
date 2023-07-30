@@ -1,8 +1,8 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
 module apb_mem #(
-    parameter int ADDR_WIDTH = 0,
-    parameter int DATA_WIDTH = 0
+    parameter int ADDR_WIDTH = 32,
+    parameter int DATA_WIDTH = 32
 ) (
     input  wire                  clk_i,
     input  wire                  arst_ni,
