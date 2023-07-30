@@ -198,7 +198,8 @@ ci_print:
 
 .PHONY: verilator_lint
 verilator_lint:
-	@($(foreach word, $(DES_LIB), verilator --lint-only $(DES_LIB) --top-module $(shell basename -s .sv $(word));))
+#	@($(foreach word, $(DES_LIB), verilator --lint-only $(DES_LIB) --top-module $(shell basename -s .sv $(word));))
+	@($(foreach word, $(shell ls ./flist_rtl -1 ), verilator --lint-only $(DES_LIB) --top-module $(word);))
 
 ####################################################################################################
 # Simulate (iverilog)
