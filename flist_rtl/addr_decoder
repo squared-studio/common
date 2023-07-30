@@ -1,5 +1,0 @@
-./include/default_param_type_pkg.sv
-./rtl/miscellaneous/encoder.sv
-./rtl/miscellaneous/priority_encoder.sv
-./rtl/miscellaneous/mux.sv
-./rtl/miscellaneous/addr_decoder.sv

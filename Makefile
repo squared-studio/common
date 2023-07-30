@@ -112,12 +112,10 @@ clean:
 
 .PHONY: list_all
 list_all: clean
-	@mkdir -p flist_rtl
-	@$(foreach word, $(DES_LIB), touch flist_rtl/$(shell basename -s .sv $(word);))
-	@rm touch
+	@$(foreach word, $(DES_LIB), echo "$(shell basename -s .sv $(word))";)
 
 .PHONY: list_modules
-list_modules: list_all
+list_modules: clean
 	@$(eval RTL_FILE := $(shell find rtl -name "$(RTL).sv"))
 	@xvlog -i $(INC_DIR) -sv $(RTL_FILE) -L RTL=$(DES_LIB)
 	@xelab $(RTL) -s top
@@ -133,10 +131,10 @@ locate_files: list_modules
 
 .PHONY: flist
 flist: locate_files
-	@cat ___flist > flist_rtl/$(RTL)
+	@if [ "$(OS)" = "Linux" ]; then cat ___flist | xclip -sel clip >> CI_REPORT; else cat ___flist | clip; fi
 	@make clean
 	@clear
-	@echo -e "\x1b[2;35m$(RTL) flist created at flist_rtl/$(RTL)\x1b[0m"
+	@echo -e "\x1b[2;35m$(RTL) flist copied to clipboard\x1b[0m"
 
 ####################################################################################################
 # Simulate (Vivado) 
@@ -198,7 +196,7 @@ ci_print:
 
 .PHONY: verilator_lint
 verilator_lint:
-	@($(foreach word, $(shell ls ./flist_rtl -1 ), verilator -I$(INC_DIR) --lint-only $(DES_LIB) --top-module $(word);))
+	@($(foreach word, $(DES_LIB), verilator --lint-only $(DES_LIB) --top-module $(shell basename -s .sv $(word));))
 
 ####################################################################################################
 # Simulate (iverilog)

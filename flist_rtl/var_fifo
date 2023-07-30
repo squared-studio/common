@@ -1,3 +1,0 @@
-./rtl/miscellaneous/mux.sv
-./rtl/miscellaneous/xbar.sv
-./rtl/buffers/fifo/var_fifo.sv
