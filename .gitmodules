@@ -19,3 +19,6 @@
 [submodule "sub/pulp-platform/boot-code"]
 	path = sub/pulp-platform/boot-code
 	url = https://github.com/pulp-platform/boot-code.git
+[submodule "sub/riscv/riscv-v-spec"]
+	path = sub/riscv/riscv-v-spec
+	url = https://github.com/riscv/riscv-v-spec.git

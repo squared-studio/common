@@ -2,46 +2,18 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
 module mux #(
-    parameter int ELEM_WIDTH = 8,  // Width of each crossbar element
-    parameter int NUM_ELEM   = 6   // Number of elements in the crossbar
+    parameter int ELEM_WIDTH = 8,  // Width of each mux input element
+    parameter int NUM_ELEM   = 6   // Number of elements in the mux
 ) (
-    input  logic [$clog2(NUM_ELEM)-1:0]                 sel_i,     // Output enable
-    input  logic [        NUM_ELEM-1:0][ELEM_WIDTH-1:0] inputs_i,  // Array of input bus
-    output logic [      ELEM_WIDTH-1:0]                 output_o   // Output bus
+    input  logic [$clog2(NUM_ELEM)-1:0] s_i,            // select
+    input  logic [      ELEM_WIDTH-1:0] i_i[NUM_ELEM],  // Array of input bus
+    output logic [      ELEM_WIDTH-1:0] o_o             // Output bus
 );
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-SIGNALS
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-
-  wire [ELEM_WIDTH-1:0] out;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-ASSIGNMENTS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  for (genvar i = 0; i < NUM_ELEM; i++) begin : g_out
-    assign out = (sel_i == i) ? inputs_i[i] : 'z;
-  end
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-RTLS
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-
-  for (genvar i = 0; i < ELEM_WIDTH; i++) begin : g_out_buff
-    buf (output_o[i], out[i]);
-  end
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-INITIAL CHECKS
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-
-`ifdef SIMULATION
-  initial begin
-    if (NUM_ELEM > 64) begin
-      $display("\033[7;31m %m NUM_ELEM=%0d \033[0m", NUM_ELEM);
-    end
-  end
-`endif  // SIMULATION
+  assign o_o = i_i[s_i];
 
 endmodule

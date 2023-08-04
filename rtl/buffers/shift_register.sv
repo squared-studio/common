@@ -1,6 +1,6 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
-module shift_reg #(
+module shift_register #(
     parameter int ELEM_WIDTH = 4,
     parameter int DEPTH      = 8
 ) (

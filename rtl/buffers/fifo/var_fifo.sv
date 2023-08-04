@@ -2,8 +2,8 @@
 
 module var_fifo #(
     parameter int ELEM_WIDTH = 8,
-    parameter int NUM_ELEM   = 4,
-    parameter int FIFO_DEPTH = 4 * NUM_ELEM
+    parameter int NUM_ELEM   = 128,
+    parameter int FIFO_DEPTH = 2 * NUM_ELEM
 ) (
     input logic clk_i,
     input logic arst_ni,

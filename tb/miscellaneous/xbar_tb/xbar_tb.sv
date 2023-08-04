@@ -23,9 +23,9 @@ module xbar_tb;
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  logic [NumElem-1:0][$clog2(NumElem)-1:0] select_i;
-  logic [NumElem-1:0][ElemWidth-1:0] inputs_i;
-  logic [NumElem-1:0][ElemWidth-1:0] outputs_o;
+  logic [$clog2(NumElem)-1:0] select_i [NumElem];
+  logic [      ElemWidth-1:0] inputs_i [NumElem];
+  logic [      ElemWidth-1:0] outputs_o[NumElem];
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-RTLS
