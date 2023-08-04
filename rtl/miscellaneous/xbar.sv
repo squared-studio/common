@@ -5,9 +5,9 @@ module xbar #(
     parameter int ELEM_WIDTH = 8,  // Width of each crossbar element
     parameter int NUM_ELEM   = 6   // Number of elements in the crossbar
 ) (
-    input  logic [$clog2(NUM_ELEM)-1:0] select_i [NUM_ELEM],  // Input bus select
-    input  logic [      ELEM_WIDTH-1:0] inputs_i [NUM_ELEM],  // Array of input bus
-    output logic [      ELEM_WIDTH-1:0] outputs_o[NUM_ELEM]   // Array of output bus
+    input  logic [$clog2(NUM_ELEM)-1:0] s_i[NUM_ELEM],  // Input bus select
+    input  logic [      ELEM_WIDTH-1:0] i_i[NUM_ELEM],  // Array of input bus
+    output logic [      ELEM_WIDTH-1:0] o_o[NUM_ELEM]   // Array of output bus
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -22,11 +22,11 @@ module xbar #(
 
   if ((2 ** ($clog2(NUM_ELEM))) == NUM_ELEM) begin : g_overflow
     for (genvar i = 0; i < NUM_ELEM; i++) begin : g_selects_assign
-      assign selects[i] = select_i[i];
+      assign selects[i] = s_i[i];
     end
   end else begin : g_overflow
     for (genvar i = 0; i < NUM_ELEM; i++) begin : g_selects_assign
-      assign selects[i] = (select_i[i] < NUM_ELEM) ? select_i[i] : (select_i[i] - NUM_ELEM);
+      assign selects[i] = (s_i[i] < NUM_ELEM) ? s_i[i] : (s_i[i] - NUM_ELEM);
     end
   end
 
@@ -40,8 +40,8 @@ module xbar #(
         .NUM_ELEM  (NUM_ELEM)
     ) mux_dut (
         .s_i(selects[i]),
-        .i_i(inputs_i),
-        .o_o(outputs_o[i])
+        .i_i(i_i),
+        .o_o(o_o[i])
     );
   end
 

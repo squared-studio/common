@@ -35,9 +35,9 @@ module xbar_tb;
       .ELEM_WIDTH(ElemWidth),
       .NUM_ELEM  (NumElem)
   ) xbar_dut (
-      .select_i (select_i),
-      .inputs_i (inputs_i),
-      .outputs_o(outputs_o)
+      .s_i (select_i),
+      .i_i (inputs_i),
+      .o_o(outputs_o)
   );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
