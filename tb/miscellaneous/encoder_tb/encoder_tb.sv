@@ -57,6 +57,21 @@ module encoder_tb;
       //d_i = 8'b0100_0000;
       d_i = i;
       #5;
+      // check :
+      // valid check: if one d_i is high then addr_valid otherwise invalid
+      // do an OR operation for the d_i index value if that particular index is high ---> result will be equal to add_o then PASS otherwise FAIL
+      foreach(d_i[i]) begin
+        bit [$clog2(NumWire)-1:0] or_ = 0;
+        if(d_i[i]) begin
+          or_ |= i;
+        end
+        if (or_ == addr_o) begin
+          $display("PASS---> or_ = 0b%b, addr_o = 0b%b", or_,addr_o);
+        end
+      end
+
+
+
       $display("number of test =%0d, d_i = 0b%b, addr_o = 0b%b addr_valid_o = 0b%b", i, d_i,
                addr_o, addr_valid_o);
     end
