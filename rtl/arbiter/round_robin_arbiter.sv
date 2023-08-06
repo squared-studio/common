@@ -1,83 +1,79 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
 module round_robin_arbiter #(
-    parameter int CLOG_2_NUM_REQ = 2
+    parameter int NUM_REQ = 4
 ) (
-    input  logic                             clk_i,
-    input  logic                             arst_ni,
-    input  logic                             allow_req_i,
-    input  logic                             en_i,
-    input  logic [(2 ** CLOG_2_NUM_REQ)-1:0] req_i,
-    output logic [(2 ** CLOG_2_NUM_REQ)-1:0] gnt_o
+    input  logic                       clk_i,
+    input  logic                       arst_ni,
+    input  logic                       allow_req_i,
+    input  logic [        NUM_REQ-1:0] req_i,
+    output logic [$clog2(NUM_REQ)-1:0] gnt_addr_o,
+    output logic                       gnt_addr_valid_o
 );
 
-  localparam int NumReq = (2 ** CLOG_2_NUM_REQ);
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //-SIGNALS
+  //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  logic [CLOG_2_NUM_REQ-1:0] xbar_sel;
+  logic [$clog2(NUM_REQ)-1:0] last_gnt;
+  logic [$clog2(NUM_REQ)-1:0] next_gnt;
 
-  logic [NumReq-1:0][CLOG_2_NUM_REQ-1:0] req_in_sel;
-  logic [NumReq-1:0][CLOG_2_NUM_REQ-1:0] gnt_in_sel;
+  logic [0:0] xbar_in[NUM_REQ];
+  logic [0:0] xbar_out[NUM_REQ];
 
-  logic [NumReq-1:0] req_xbar;
-  logic [NumReq-1:0] gnt_xbar;
+  logic [NUM_REQ-1:0] fpa_in;
 
-  logic [CLOG_2_NUM_REQ-1:0] gnt_code;
+  logic [NUM_REQ-1:0] fpa_gnt_addr_valid;
 
-  logic gnt_found;
+  logic [$clog2(NUM_REQ)-1:0] rot_gnt_addr_o;
 
-  xbar #(
-      .ELEM_WIDTH(1),
-      .NUM_ELEM  (NumReq)
-  ) xbar_req (
-      .select_i (req_in_sel),
-      .inputs_i (req_i),
-      .outputs_o(req_xbar)
-  );
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //-ASSIGNMENTS
+  //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  xbar #(
-      .ELEM_WIDTH(1),
-      .NUM_ELEM  (NumReq)
-  ) xbar_gnt (
-      .select_i (gnt_in_sel),
-      .inputs_i (gnt_xbar),
-      .outputs_o(gnt_o)
-  );
+  assign gnt_addr_o = ((rot_gnt_addr_o + next_gnt ) < NUM_REQ) ? (rot_gnt_addr_o + next_gnt )
+                      : ((rot_gnt_addr_o + next_gnt) - NUM_REQ);
 
-  for (genvar i = 0; i < NumReq; i++) begin : g_req_in_sel
-    assign req_in_sel[i] = i + xbar_sel;
+  assign next_gnt = ((last_gnt + 1) < NUM_REQ) ? (last_gnt + 1) : ((last_gnt + 1) - NUM_REQ);
+
+  for (genvar i = 0; i < NUM_REQ; i++) begin : g_xbar_in_out
+    assign xbar_in[i] = req_i[i];
+    assign fpa_in[i]  = xbar_out[i];
   end
 
-  for (genvar i = 0; i < NumReq; i++) begin : g_gnt_in_sel
-    assign gnt_in_sel[i] = i + (NumReq - xbar_sel);
-  end
+  assign gnt_addr_valid_o = fpa_gnt_addr_valid & arst_ni;
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //-RTLS
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+
+  circular_xbar #(
+      .ELEM_WIDTH(1),
+      .NUM_ELEM  (NUM_REQ)
+  ) circular_xbar_dut (
+      .s_i(next_gnt),
+      .i_i(xbar_in),
+      .o_o(xbar_out)
+  );
 
   fixed_priority_arbiter #(
-      .NUM_REQ(NumReq)
+      .NUM_REQ(NUM_REQ)
   ) fixed_priority_arbiter_dut (
-      .arst_ni(arst_ni),
       .allow_req_i(allow_req_i),
-      .en_i(en_i),
-      .req_i(req_xbar),
-      .gnt_o(gnt_xbar)
+      .req_i(fpa_in),
+      .gnt_addr_o(rot_gnt_addr_o),
+      .gnt_addr_valid_o(fpa_gnt_addr_valid)
   );
 
-  priority_encoder #(
-      .NUM_INPUTS(NumReq)
-  ) gnt_encode (
-      .d_i  (gnt_o),
-      .addr_o(gnt_code),
-      .addr_valid_o()
-  );
-
-  assign gnt_found = |gnt_o;
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //-SEQUENCIALS
+  //////////////////////////////////////////////////////////////////////////////////////////////////
 
   always_ff @(posedge clk_i or negedge arst_ni) begin
     if (~arst_ni) begin
-      xbar_sel <= '0;
-    end else begin
-      if (en_i & gnt_found) begin
-        xbar_sel <= gnt_code + 1;
-      end
+      last_gnt <= NUM_REQ - 1;
+    end else if (gnt_addr_valid_o) begin
+      last_gnt <= gnt_addr_o;
     end
   end
 
