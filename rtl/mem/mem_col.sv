@@ -23,9 +23,9 @@ module mem_col #(
       .ELEM_WIDTH(1),
       .NUM_ELEM  (2 ** ADDR_WIDTH)
   ) u_demux (
-      .sel_i    (waddr_i),
-      .input_i  (we_i),
-      .outputs_o(demux_we)
+      .s_i(waddr_i),
+      .i_i(we_i),
+      .o_o(demux_we)
   );
 
   for (genvar i = 0; i < 2 ** ADDR_WIDTH; i++) begin : g_reg_array
@@ -44,9 +44,9 @@ module mem_col #(
       .ELEM_WIDTH(ELEM_WIDTH),
       .NUM_ELEM  (2 ** ADDR_WIDTH)
   ) u_mux (
-      .sel_i   (raddr_i),
-      .inputs_i(reg_mux_in),
-      .output_o(rdata_o)
+      .s_i(raddr_i),
+      .i_i(reg_mux_in),
+      .o_o(rdata_o)
   );
 
 endmodule
