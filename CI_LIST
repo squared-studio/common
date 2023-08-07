@@ -1,4 +1,5 @@
 bin_to_gray_tb
+encoder_tb
 fifo_tb
 gray_to_bin_tb
 mem_bank_tb

@@ -1,3 +1,6 @@
+// Testbench for encoder
+// ### Author : Md. Mohiuddin Reyad (mreyad30207@gmail.com)
+
 module encoder_tb;
 
   //`define ENABLE_DUMPFILE
@@ -24,11 +27,13 @@ module encoder_tb;
   wire [$clog2(NumWire)-1:0] addr_o;
   wire                       addr_valid_o;
 
+  reg                        or_red;
+
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-ASSIGNMENTS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+  assign or_red = |d_i;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-RTLS
@@ -54,7 +59,7 @@ module encoder_tb;
     // check :
     // valid check: if one d_i is high then addr_valid otherwise invalid
     // do an OR operation for the d_i index value if that particular index is high ---> result will be equal to add_o then PASS otherwise FAIL
-    for (int i = 0; i < 2**NumWire; i++) begin
+    for (int i = 0; i < 2 ** NumWire; i++) begin
       int or_ = 0;
       d_i <= $urandom;
       #5;
@@ -73,26 +78,24 @@ module encoder_tb;
 `ifdef DEBUG  // print or_
       $display("or_=%0d", or_);
 `endif  //DEBUG
-      if (or_ == addr_o) begin
-        pass_addr_o = 1;
+      if (or_ === addr_o) begin
+        pass++;
 `ifdef DEBUG  //PASS print
         $display("PASS");
 `endif  //DEBUG
       end
-      if (or_ > 0) begin  // addr_valid_o check---->logic update --> index 0 | 0 => 0
-        pass_valid = 1;
+      if (or_red === addr_valid_o) begin
+        pass++;
       end
 `ifdef DEBUG
       $display("valid= %0d -------addr_valid_o=%0d", valid, addr_valid_o);
 `endif  //DEBUG
-      if (pass_valid == pass_addr_o) pass++;
     end
     #10;
     //$display("PASS=%0d",pass);
-    if (pass == 2**NumWire) begin
+    if (pass == (2 * (2 ** NumWire))) begin
       pass = 1;
-    end
-    else begin
+    end else begin
       pass = 0;
     end
     result_print(pass, "Encoder Test");
