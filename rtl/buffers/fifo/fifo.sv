@@ -23,8 +23,6 @@ module fifo #(
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  logic [ELEM_WIDTH-1:0] mem[DEPTH];  // Memory of the FIFO
-
   logic [$clog2(DEPTH):0] wr_ptr;  // Write pointer
   logic [$clog2(DEPTH):0] rd_ptr;  // Read pointer
   logic [$clog2(DEPTH):0] wr_ptr_next;  // Write pointer next
@@ -32,6 +30,8 @@ module fifo #(
 
   logic elem_in_hs;  // Input handshake
   logic elem_out_hs;  // Output handshake
+
+  logic [ELEM_WIDTH-1:0] rdata_o;  // Mem read out
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-ASSIGNMENTS
@@ -46,14 +46,31 @@ module fifo #(
   assign wr_ptr_next = ((wr_ptr + 1) == DEPTH) ? '0 : wr_ptr + 1;
   assign rd_ptr_next = ((rd_ptr + 1) == DEPTH) ? '0 : rd_ptr + 1;
 
-  assign elem_out_o = el_cnt_o ? mem[rd_ptr] : elem_in_i;
+  assign elem_out_o = el_cnt_o ? rdata_o : elem_in_i;
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //-RTLS
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+
+  mem #(
+      .ELEM_WIDTH(ELEM_WIDTH),
+      .DEPTH(DEPTH)
+  ) mem_dut (
+      .clk_i(clk_i),
+      .arst_ni('1),
+      .we_i(elem_in_hs),
+      .waddr_i(wr_ptr),
+      .wdata_i(elem_in_i),
+      .raddr_i(rd_ptr),
+      .rdata_o(rdata_o)
+  );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-SEQUENCIALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   // Update pointers and memory
-  always_ff @(posedge clk_i or negedge arst_ni) begin : main
+  always_ff @(posedge clk_i or negedge arst_ni) begin
     if (~arst_ni) begin : not_reset  // Apply reset
       el_cnt_o <= '0;
       wr_ptr   <= '0;
@@ -83,7 +100,6 @@ module fifo #(
           wr_ptr   <= wr_ptr;
         end
       endcase
-      if (elem_in_hs) mem[wr_ptr] <= elem_in_i;
     end
   end
 
