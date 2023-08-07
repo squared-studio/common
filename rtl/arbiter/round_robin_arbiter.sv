@@ -18,9 +18,6 @@ module round_robin_arbiter #(
   logic [$clog2(NUM_REQ)-1:0] last_gnt;
   logic [$clog2(NUM_REQ)-1:0] next_gnt;
 
-  logic [0:0] xbar_in[NUM_REQ];
-  logic [0:0] xbar_out[NUM_REQ];
-
   logic [NUM_REQ-1:0] fpa_in;
 
   logic [NUM_REQ-1:0] fpa_gnt_addr_valid;
@@ -36,11 +33,6 @@ module round_robin_arbiter #(
 
   assign next_gnt = ((last_gnt + 1) < NUM_REQ) ? (last_gnt + 1) : ((last_gnt + 1) - NUM_REQ);
 
-  for (genvar i = 0; i < NUM_REQ; i++) begin : g_xbar_in_out
-    assign xbar_in[i] = req_i[i];
-    assign fpa_in[i]  = xbar_out[i];
-  end
-
   assign gnt_addr_valid_o = fpa_gnt_addr_valid & arst_ni;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -52,8 +44,8 @@ module round_robin_arbiter #(
       .NUM_ELEM  (NUM_REQ)
   ) circular_xbar_dut (
       .s_i(next_gnt),
-      .i_i(xbar_in),
-      .o_o(xbar_out)
+      .i_i(req_i),
+      .o_o(fpa_in)
   );
 
   fixed_priority_arbiter #(
