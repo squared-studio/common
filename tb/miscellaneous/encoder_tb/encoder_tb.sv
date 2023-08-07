@@ -1,6 +1,7 @@
 module encoder_tb;
 
   //`define ENABLE_DUMPFILE
+  //`define DEBUG ;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-IMPORTS
@@ -45,38 +46,67 @@ module encoder_tb;
   //-METHODS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+  task manual_test(input logic [NumWire-1:0] data_in, output [31:0] pass )
+    d_i = data_in;
+    
+    
+  endtask
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-PROCEDURALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   initial begin
-
-    for (int i = 0; i < 2 ** NumWire; i++) begin
-      //d_i = 8'b0100_0000;
-      d_i = i;
-      #5;
-      // check :
-      // valid check: if one d_i is high then addr_valid otherwise invalid
-      // do an OR operation for the d_i index value if that particular index is high ---> result will be equal to add_o then PASS otherwise FAIL
-      foreach(d_i[i]) begin
-        bit [$clog2(NumWire)-1:0] or_ = 0;
-        if(d_i[i]) begin
+    int or_ = 0;
+    int pass = 0;
+    int pass_valid = 0;
+    int pass_addr_o = 0;
+    // check :
+    // valid check: if one d_i is high then addr_valid otherwise invalid
+    // do an OR operation for the d_i index value if that particular index is high ---> result will be equal to add_o then PASS otherwise FAIL
+    
+    
+    for (int i = 0; i < 2**NumWire; i++) begin
+      d_i = $urandom;
+      // #5;
+      foreach (d_i[i]) begin
+`ifdef DEBUG
+        $display("d_i index =%0d", i);
+`endif  //DEBUG
+        if (d_i[i]) begin
           or_ |= i;
-        end
-        if (or_ == addr_o) begin
-          $display("PASS---> or_ = 0b%b, addr_o = 0b%b", or_,addr_o);
+`ifdef DEBUG
+          $display("d_i[%0d]=%0d", i, d_i[i]);
+`endif  //DEBUG
         end
       end
-
-
-
-      $display("number of test =%0d, d_i = 0b%b, addr_o = 0b%b addr_valid_o = 0b%b", i, d_i,
-               addr_o, addr_valid_o);
+      #20;
+`ifdef DEBUG  // print or_
+      $display("or_=%0d", or_);
+`endif  //DEBUG
+      if (or_ == addr_o) begin
+        pass_addr_o = 1;
+`ifdef DEBUG  //PASS print
+        $display("PASS");
+`endif  //DEBUG
+      end
+      if (or_ > 0) begin  // addr_valid_o check
+        pass_valid = 1;
+      end
+`ifdef DEBUG
+      $display("valid= %0d -------addr_valid_o=%0d", valid, addr_valid_o);
+`endif  //DEBUG
+      if (pass_valid == pass_addr_o) pass++;
     end
-
-    result_print(1, "This is a PASS");
+    #10;
+    //$display("PASS=%0d",pass);
+    if (pass == 2**NumWire) begin
+      pass = 1;
+    end
+    else begin
+      pass = 0;
+    end
+    result_print(pass, "Encoder Test");
 
     $finish;
 
