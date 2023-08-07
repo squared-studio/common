@@ -21,9 +21,9 @@ module mux_tb #(
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  logic [$clog2(NUM_ELEM)-1:0] sel_i;
-  logic [      ELEM_WIDTH-1:0] inputs_i [NUM_ELEM];
-  logic [      ELEM_WIDTH-1:0] output_o;
+  logic [$clog2(NUM_ELEM)-1:0]                 sel_i;
+  logic [        NUM_ELEM-1:0][ELEM_WIDTH-1:0] inputs_i;
+  logic [      ELEM_WIDTH-1:0]                 output_o;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-RTLS

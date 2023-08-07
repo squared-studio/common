@@ -23,9 +23,9 @@ module xbar_tb;
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  logic [$clog2(NumElem)-1:0] select_i [NumElem];
-  logic [      ElemWidth-1:0] inputs_i [NumElem];
-  logic [      ElemWidth-1:0] outputs_o[NumElem];
+  logic [NumElem-1:0][$clog2(NumElem)-1:0] select_i;
+  logic [NumElem-1:0][      ElemWidth-1:0] inputs_i;
+  logic [NumElem-1:0][      ElemWidth-1:0] outputs_o;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-RTLS
@@ -35,8 +35,8 @@ module xbar_tb;
       .ELEM_WIDTH(ElemWidth),
       .NUM_ELEM  (NumElem)
   ) xbar_dut (
-      .s_i (select_i),
-      .i_i (inputs_i),
+      .s_i(select_i),
+      .i_i(inputs_i),
       .o_o(outputs_o)
   );
 
