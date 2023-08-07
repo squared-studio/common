@@ -42,33 +42,22 @@ module encoder_tb;
       .addr_valid_o(addr_valid_o)
   );
 
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-METHODS
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-
-  task manual_test(input logic [NumWire-1:0] data_in, output [31:0] pass )
-    d_i = data_in;
-    
-    
-  endtask
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-PROCEDURALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   initial begin
-    int or_ = 0;
     int pass = 0;
     int pass_valid = 0;
     int pass_addr_o = 0;
     // check :
     // valid check: if one d_i is high then addr_valid otherwise invalid
     // do an OR operation for the d_i index value if that particular index is high ---> result will be equal to add_o then PASS otherwise FAIL
-    
-    
     for (int i = 0; i < 2**NumWire; i++) begin
-      d_i = $urandom;
-      // #5;
+      int or_ = 0;
+      d_i <= $urandom;
+      #5;
       foreach (d_i[i]) begin
 `ifdef DEBUG
         $display("d_i index =%0d", i);
@@ -90,7 +79,7 @@ module encoder_tb;
         $display("PASS");
 `endif  //DEBUG
       end
-      if (or_ > 0) begin  // addr_valid_o check
+      if (or_ > 0) begin  // addr_valid_o check---->logic update --> index 0 | 0 => 0
         pass_valid = 1;
       end
 `ifdef DEBUG
