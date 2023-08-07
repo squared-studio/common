@@ -1,18 +1,18 @@
 module fixed_priority_arbiter_tb;
 
   // Parameters
-  localparam int NUM_REQ = 6;
+  localparam int NumReq = 6;
 
   // Ports
-  reg                        clk_i = 0;
-  reg                        arst_ni = 0;
-  reg                        allow_req_i = 0;
-  reg  [        NUM_REQ-1:0] req_i;
-  wire [$clog2(NUM_REQ)-1:0] gnt_addr_o;
-  wire                       gnt_addr_valid_o;
+  reg                       clk_i = 0;
+  reg                       arst_ni = 0;
+  reg                       allow_req_i = 0;
+  reg  [        NumReq-1:0] req_i;
+  wire [$clog2(NumReq)-1:0] gnt_addr_o;
+  wire                      gnt_addr_valid_o;
 
   fixed_priority_arbiter #(
-      .NUM_REQ(NUM_REQ)
+      .NUM_REQ(NumReq)
   ) fixed_priority_arbiter_dut (
       .allow_req_i(allow_req_i),
       .req_i(req_i),
