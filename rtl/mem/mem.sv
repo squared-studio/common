@@ -3,17 +3,17 @@
 
 module mem #(
     parameter int ELEM_WIDTH = 8,
-    parameter int DEPTH   = 7
+    parameter int DEPTH = 7
 ) (
     input logic clk_i,
     input logic arst_ni,
 
-    input logic                        we_i,
+    input logic                     we_i,
     input logic [$clog2(DEPTH)-1:0] waddr_i,
-    input logic [      ELEM_WIDTH-1:0] wdata_i,
+    input logic [   ELEM_WIDTH-1:0] wdata_i,
 
     input  logic [$clog2(DEPTH)-1:0] raddr_i,
-    output logic [      ELEM_WIDTH-1:0] rdata_o
+    output logic [   ELEM_WIDTH-1:0] rdata_o
 );
 
   logic [DEPTH-1:0] demux_we;
@@ -30,7 +30,8 @@ module mem #(
 
   for (genvar i = 0; i < DEPTH; i++) begin : g_reg_array
     register #(
-        .ELEM_WIDTH(ELEM_WIDTH)
+        .ELEM_WIDTH (ELEM_WIDTH),
+        .RESET_VALUE('0)
     ) register_dut (
         .clk_i  (clk_i),
         .arst_ni(arst_ni),
