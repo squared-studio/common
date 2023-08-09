@@ -15,10 +15,20 @@ always_ff @(posedge clk_i or negedge arstn_i) begin
     count_o <= '0;
   end
   else if (up_i && ~down_i) begin
-    count_o++;
+    if (count_o == COUNT) begin
+      count_o <= '0;
+    end
+    else begin
+      count_o <= count + 1;
+    end
   end
   else if (down_i && ~up_i)begin
-    count_o--;
+    if (count_o == '0) begin
+      count_o <= COUNT;
+    end
+    else begin
+      count_o <= count_o - 1 ;
+    end
   end
   else begin
     count_o <= '0;
