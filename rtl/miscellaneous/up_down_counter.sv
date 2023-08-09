@@ -1,3 +1,5 @@
+// A simple up down counter that counts up to COUNT
+// ### Author : Md. Mohiuddin Reyad (mreyad30207@gmail.com)
 module up_down_counter #(
   parameter int COUNT = 25      // max value of count
 )(
