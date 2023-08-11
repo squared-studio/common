@@ -20,7 +20,6 @@ module mem #(
   logic [DEPTH-1:0][ELEM_WIDTH-1:0] reg_mux_in;
 
   demux #(
-      .ELEM_WIDTH(1),
       .NUM_ELEM  (DEPTH)
   ) u_demux (
       .s_i(waddr_i),
