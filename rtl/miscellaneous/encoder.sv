@@ -13,20 +13,20 @@ module encoder #(
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  logic [NUM_WIRE/2-1:0] addr_array[$clog2(NUM_WIRE)];
+  logic [NUM_WIRE/2-1:0] addr_or_red[$clog2(NUM_WIRE)]; // addr or reduction array
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-ASSIGNMENTS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  for (genvar j = 0; j < $clog2(NUM_WIRE); j++) begin : g_addr_array
+  for (genvar j = 0; j < $clog2(NUM_WIRE); j++) begin : g_addr_or_red
     always_comb begin
       int k;
-      addr_array[j] = '0;
+      addr_or_red[j] = '0;
       k = 0;
       for (int i = 0; i < NUM_WIRE; i++) begin
         if (!((i % (2 ** (j + 1))) < ((2 ** (j + 1)) / 2))) begin
-          addr_array[j][k] = d_i[i];
+          addr_or_red[j][k] = d_i[i];
           k++;
         end
       end
@@ -34,7 +34,7 @@ module encoder #(
   end
 
   for (genvar i = 0; i < $clog2(NUM_WIRE); i++) begin : g_addr_o
-    assign addr_o [i] = |addr_array[i];
+    assign addr_o[i] = |addr_or_red[i];
   end
 
   assign addr_valid_o = |d_i;

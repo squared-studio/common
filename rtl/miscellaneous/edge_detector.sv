@@ -1,22 +1,22 @@
-// Description
+// Edge Detector Module
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
 module edge_detector #(
-    parameter bit POSEDGE = 1,
-    parameter bit NEGEDGE = 1
+    parameter bit POSEDGE = 1,  // detect positive edge
+    parameter bit NEGEDGE = 1   // detect negative edge
 ) (
-    input  logic arst_ni,
-    input  logic clk_i,
-    input  logic d_i,
-    output logic posedge_o,
-    output logic negedge_o
+    input  logic arst_ni,    // Asynchronous reset
+    input  logic clk_i,      // Global clock
+    input  logic d_i,        // Data in
+    output logic posedge_o,  // posedge detected
+    output logic negedge_o   // negedge detected
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  logic q;
+  logic q;  // previous d_i
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-ASSIGNMENTS

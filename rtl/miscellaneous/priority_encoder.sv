@@ -1,4 +1,4 @@
-// A simple priority encoder which prioritizes the LSB
+// A simple priority encoder
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
 module priority_encoder #(
@@ -14,26 +14,27 @@ module priority_encoder #(
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  logic [NUM_WIRE-1:0] select_found;
-  logic [NUM_WIRE-1:0] allowed_selects;
+  logic [NUM_WIRE-1:0] select_already_found;  // Select already found. Current select won't work
+
+  logic [NUM_WIRE-1:0] allowed_selects;  // Computed select based on select_already_found
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-ASSIGNMENTS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   for (genvar i = 0; i < NUM_WIRE; i++) begin : g_allowed_selects
-    assign allowed_selects[i] = d_i[i] & ~select_found[i];
+    assign allowed_selects[i] = d_i[i] & ~select_already_found[i];
   end
 
   if (HIGH_INDEX_PRIORITY) begin : g_msb_p
     for (genvar i = 0; i < (NUM_WIRE - 1); i++) begin : g_select_found
-      assign select_found[i] = select_found[i+1] | d_i[i+1];
+      assign select_already_found[i] = select_already_found[i+1] | d_i[i+1];
     end
-    assign select_found[NUM_WIRE-1] = 0;
+    assign select_already_found[NUM_WIRE-1] = 0;
   end else begin : g_lsb_p
-    assign select_found[0] = 0;
+    assign select_already_found[0] = 0;
     for (genvar i = 1; i < NUM_WIRE; i++) begin : g_select_found
-      assign select_found[i] = select_found[i-1] | d_i[i-1];
+      assign select_already_found[i] = select_already_found[i-1] | d_i[i-1];
     end
   end
 

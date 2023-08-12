@@ -1,7 +1,7 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 //                  handshakes
 
-module handshake_storage #(
+module handshake_counter #(
     parameter int DEPTH = 4
 ) (
     input  logic                       clk_i,
@@ -37,3 +37,5 @@ module handshake_storage #(
   end
 
 endmodule
+
+// TODO

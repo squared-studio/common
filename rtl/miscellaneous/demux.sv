@@ -13,9 +13,9 @@ module demux #(
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  logic [$clog2(NUM_ELEM)-1:0] s_n;
+  logic [$clog2(NUM_ELEM)-1:0] s_n;  // Invited select
 
-  logic [  $clog2(NUM_ELEM):0] and_red[NUM_ELEM];
+  logic [$clog2(NUM_ELEM):0] output_and_red[NUM_ELEM];  // Output and reduction
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-ASSIGNMENTS
@@ -26,14 +26,14 @@ module demux #(
   always_comb begin
     for (bit [$clog2(NUM_ELEM):0] i = 0; i < NUM_ELEM; i++) begin
       for (int j = 0; j < $clog2(NUM_ELEM); j++) begin
-        and_red[i][j] = i[j] ? s_i[j] : s_n[j];
+        output_and_red[i][j] = i[j] ? s_i[j] : s_n[j];
       end
-      and_red[i][$clog2(NUM_ELEM)] = i_i;
+      output_and_red[i][$clog2(NUM_ELEM)] = i_i;
     end
   end
 
-  for (genvar i = 0; i < NUM_ELEM; i++) begin : g_and_red
-    assign o_o[i] = &and_red[i];
+  for (genvar i = 0; i < NUM_ELEM; i++) begin : g_output_and_red
+    assign o_o[i] = &output_and_red[i];
   end
 
 endmodule
