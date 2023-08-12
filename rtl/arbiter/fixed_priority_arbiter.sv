@@ -3,17 +3,17 @@
 module fixed_priority_arbiter #(
     parameter int NUM_REQ = 4
 ) (
-    input  logic                       allow_req_i,
-    input  logic [        NUM_REQ-1:0] req_i,
-    output logic [$clog2(NUM_REQ)-1:0] gnt_addr_o,
-    output logic                       gnt_addr_valid_o
+    input  logic                       allow_req_i,      // Allow requests
+    input  logic [        NUM_REQ-1:0] req_i,            // Requests
+    output logic [$clog2(NUM_REQ)-1:0] gnt_addr_o,       // Grant Address
+    output logic                       gnt_addr_valid_o  // Grant Valid
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  logic addr_valid_o;
+  logic addr_valid_o;  // Priority encoder address valid
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-ASSIGNMENTS
@@ -35,5 +35,3 @@ module fixed_priority_arbiter #(
   );
 
 endmodule
-
-// TODO

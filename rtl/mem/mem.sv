@@ -2,25 +2,33 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
 module mem #(
-    parameter int ELEM_WIDTH = 8,
-    parameter int DEPTH = 7
+    parameter int ELEM_WIDTH = 8,  // Memory element width
+    parameter int DEPTH      = 7   // Memory depth
 ) (
-    input logic clk_i,
-    input logic arst_ni,
+    input logic clk_i,   // Global clock
+    input logic arst_ni, // Asynchronous reset
 
-    input logic                     we_i,
-    input logic [$clog2(DEPTH)-1:0] waddr_i,
-    input logic [   ELEM_WIDTH-1:0] wdata_i,
+    input logic                     we_i,     // Write enable
+    input logic [$clog2(DEPTH)-1:0] waddr_i,  // Write address
+    input logic [   ELEM_WIDTH-1:0] wdata_i,  // write data
 
-    input  logic [$clog2(DEPTH)-1:0] raddr_i,
-    output logic [   ELEM_WIDTH-1:0] rdata_o
+    input  logic [$clog2(DEPTH)-1:0] raddr_i, // Read address
+    output logic [   ELEM_WIDTH-1:0] rdata_o  // Read data
 );
 
-  logic [DEPTH-1:0] demux_we;
-  logic [DEPTH-1:0][ELEM_WIDTH-1:0] reg_mux_in;
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //-SIGNALS
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+
+  logic [DEPTH-1:0] demux_we;  // Demux for write enable
+  logic [DEPTH-1:0][ELEM_WIDTH-1:0] reg_mux_in;  // Mux in from memory elements
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //-RTLS
+  //////////////////////////////////////////////////////////////////////////////////////////////////
 
   demux #(
-      .NUM_ELEM  (DEPTH)
+      .NUM_ELEM(DEPTH)
   ) u_demux (
       .s_i(waddr_i),
       .i_i(we_i),
@@ -50,5 +58,3 @@ module mem #(
   );
 
 endmodule
-
-// TODO
