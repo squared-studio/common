@@ -23,7 +23,7 @@ module priority_encoder #(
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   for (genvar i = 0; i < NUM_WIRE; i++) begin : g_allowed_selects
-    assign allowed_selects[i] = d_i[i] & ~select_already_found[i];
+    assign allowed_selects[i] = ~(~d_i[i] | select_already_found[i]);
   end
 
   if (HIGH_INDEX_PRIORITY) begin : g_msb_p
