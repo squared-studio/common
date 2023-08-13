@@ -34,7 +34,6 @@ module cdc_pipeline #(
   logic                  w9;
   logic                  w10;
   logic                  w11;
-  logic                  w12;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-ASSIGNMENTS
@@ -42,7 +41,7 @@ module cdc_pipeline #(
 
   nor g0 (w0, ~elem_in_valid_i, w1);
   nor g1 (elem_in_ready_o, w1, ~w2);
-  and g2 (w12, w10, w11);
+  and g2 (w11, w10, ~elem_out_valid_o);
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-RTLS
@@ -104,9 +103,9 @@ module cdc_pipeline #(
   ) u5 (
       .arst_ni(arst_ni),
       .clk_i(elem_out_clk_i),
-      .d_i(w11),
-      .posedge_o(w8),
-      .negedge_o(w9)
+      .d_i(elem_out_valid_o),
+      .posedge_o(w9),
+      .negedge_o(w8)
   );
 
   pipeline_core #(
@@ -115,8 +114,8 @@ module cdc_pipeline #(
       .clk_i           (elem_out_clk_i),
       .arst_ni         (arst_ni),
       .elem_in_i       (w6),
-      .elem_in_valid_i (w12),
-      .elem_in_ready_o (w11),
+      .elem_in_valid_i (w11),
+      .elem_in_ready_o (),
       .elem_out_o      (elem_out_o),
       .elem_out_valid_o(elem_out_valid_o),
       .elem_out_ready_i(elem_out_ready_i)

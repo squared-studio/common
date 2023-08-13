@@ -1,0 +1,52 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Sun Aug 13 08:34:07 2023
+[*]
+[dumpfile] "C:\Users\foeza\Documents\SystemVerilog\tb\buffers\pipeline\cdc_pipeline_tb\dump.vcd"
+[dumpfile_mtime] "Sun Aug 13 08:33:24 2023"
+[dumpfile_size] 235760
+[savefile] "C:\Users\foeza\Documents\SystemVerilog\tb\buffers\pipeline\cdc_pipeline_tb\wave.gtkw"
+[timestart] 0
+[size] 1920 1009
+[pos] -9 -9
+*-28.565523 16560000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] cdc_pipeline_tb.
+[treeopen] cdc_pipeline_tb.cdc_pipeline_dut.
+[sst_width] 197
+[signals_width] 158
+[sst_expanded] 1
+[sst_vpaned_height] 297
+@28
+[color] 3
+cdc_pipeline_tb.arst_ni
+@200
+-
+@28
+[color] 3
+cdc_pipeline_tb.elem_in_clk_i
+@22
+cdc_pipeline_tb.elem_in_i[31:0]
+@28
+cdc_pipeline_tb.elem_in_valid_i
+cdc_pipeline_tb.elem_in_ready_o
+@200
+-
+@28
+[color] 3
+cdc_pipeline_tb.elem_out_clk_i
+@22
+cdc_pipeline_tb.elem_out_o[31:0]
+@28
+cdc_pipeline_tb.elem_out_valid_o
+cdc_pipeline_tb.elem_out_ready_i
+@200
+-
+@28
+[color] 2
+cdc_pipeline_tb.elem_in_clk_i
+[color] 2
+cdc_pipeline_tb.cdc_pipeline_dut.u6.elem_in_valid_i
+[color] 2
+cdc_pipeline_tb.elem_out_clk_i
+[pattern_trace] 1
+[pattern_trace] 0

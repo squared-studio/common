@@ -4,6 +4,7 @@
 ##
 ####################################################################################################
 
+ROOT     = $(shell pwd)
 TOP      = $(shell cat ___TOP)
 TOP_DIR  = $(shell find $(realpath ./tb/) -wholename "*$(TOP)/$(TOP).sv" | sed "s/$(TOP).sv//g")
 TBF_LIB  = $(shell find $(TOP_DIR) -name "*.v" -o -name "*.sv")
@@ -232,13 +233,14 @@ iverilog: clean
 # Waveform (GTKWave)
 ####################################################################################################
 
+.PHONY: rawVCD
+rawVCD:
+	@cd $(TOP_DIR); test -e dump.vcd && gtkwave dump.vcd || echo -e "\033[1;31mNo wave found\033[0m"
+
 .PHONY: gwave
 gwave:
-	@cd $(TOP_DIR); \
-	test -e *.gtkw && gtkwave *.gtkw \
-	|| test -e dump.vcd && gtkwave dump.vcd \
-	|| echo -e "\033[1;31mNo wave found\033[0m"
-
+	@cd $(TOP_DIR); test -e *.gtkw && gtkwave *.gtkw || cd $(ROOT); make rawVCD
+	
 ####################################################################################################
 # Waveform (Vivado)
 ####################################################################################################
