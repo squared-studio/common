@@ -41,7 +41,7 @@ module cdc_pipeline #(
 
   nor g0 (w0, ~elem_in_valid_i, w1);
   nor g1 (elem_in_ready_o, w1, ~w2);
-  and g2 (w11, w10, ~elem_out_valid_o);
+  nor g2 (w11, ~w10, elem_out_valid_o);
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-RTLS

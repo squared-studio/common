@@ -114,10 +114,16 @@ module cdc_pipeline_tb;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     fork
+      forever begin
+        @(posedge elem_in_clk_i);
+        elem_in_i <= $urandom;
+      end
+    join_none
+
+    fork
       begin
         @(posedge elem_in_clk_i);
         elem_in_valid_i <= '1;
-        elem_in_i <= $urandom;
       end
       begin
         @(posedge elem_out_clk_i);
