@@ -275,7 +275,7 @@ STEP1:
 	@touch ___TMP_RAW_PARAM
 	@touch ___TMP_RAW_IO
 	@cat ___TMP_RAW_PARAM | sed "s/ *\/\/.*//g" > ___TMP_PARAM
-	@cat ___TMP_PARAM | sed "s/,//g" | sed "s/$$/;/g" | sed "s/ *parameter */localparam/g" > ___PARAM
+	@cat ___TMP_PARAM | sed "s/,//g" | sed "s/$$/;/g" | sed "s/ *parameter */localparam /g" > ___PARAM
 	@cat ___TMP_RAW_IO | sed "s/ *\/\/.*//g" > ___TMP_IO
 	@cat ___TMP_IO | sed "s/,//g" | sed "s/$$/;/g" | sed "s/ni;/ni = '1;/g" | sed "s/i;/i = '0;/g" | sed "s/ *input *\| *output *//g" > ___IO
 	@cat ___TMP_PARAM | sed "s/\[.*\]//g" | sed "s/  *=.*//g" | sed "s/  *.*  *//g" > ___JUST_PARAM
@@ -311,3 +311,4 @@ STEP3:
 	@rm ___PARAM
 	@cat ___FINAL | $(CLIP)
 	@rm ___FINAL
+	@echo -e "\033[2;35m$(RTL) instance copied to clipboard\033[0m"
