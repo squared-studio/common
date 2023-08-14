@@ -350,4 +350,4 @@ module_raw_inst:
 .PHONY: module_inst
 module_inst:
 	@cat ___module_raw_inst \
-		| sed -z "s/,\n  )/\n  )/g" > ___module_inst
+		| sed -z "s/,\n)/\n)/g" > ___module_inst
