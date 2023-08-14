@@ -290,9 +290,8 @@ copy_instance: clean
 	@echo "" >> ___TO_COPY
 	@cat ___module_inst >> ___TO_COPY
 	@echo "" >> ___TO_COPY
-	@make clean
 	@cat ___TO_COPY | $(CLIP)
-	@rm ___TO_COPY
+	@make clean
 	@echo -e "\033[2;35m$(RTL) instance copied to clipboard\033[0m"
 
 .PHONY: module_header
