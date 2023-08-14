@@ -115,9 +115,9 @@ clean:
 # FLIST (Vivado) 
 ####################################################################################################
 
-.PHONY: list_all
-list_all: clean
-	@$(foreach word, $(DES_LIB), echo "$(shell basename -s .sv $(word))";)
+.PHONY: find_rtl
+find_rtl:
+	@find $(realpath ./rtl/) -iname "*$(RTL)*.sv"
 
 .PHONY: list_modules
 list_modules: clean
