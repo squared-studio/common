@@ -25,6 +25,11 @@ CLEAN_TARGETS += $(shell find $(realpath ./) -name "___list")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "___flist")
 
 OS = $(shell uname)
+ifeq ($(OS),Linux)
+  CLIP = xclip -sel clip
+else
+	CLIP = clip
+endif
 CI_LIST  = $(shell cat CI_LIST)
 
 ####################################################################################################
@@ -49,6 +54,9 @@ help:
 	@echo -e "\033[3;30mTo open wavedump using gtkwave, type:\033[0m"
 	@echo -e "\033[1;38mmake gwave TOP=<tb_top>\033[0m"
 	@echo -e ""
+	@echo -e "\033[3;30mTo find any rtl, type:\033[0m"
+	@echo -e "\033[1;38mmake find_rtl RTL=<tb_top>\033[0m"
+	@echo -e ""
 	@echo -e "\033[3;30mTo run CI check, type:\033[0m"
 	@echo -e "\033[1;38mmake CI\033[0m"
 	@echo -e ""
@@ -71,11 +79,11 @@ gen_check_list:
 	@$(eval CHECK_LIST += $(shell find rtl -name "*.v" -o -name "*.vh" -o -name "*.sv" -o -name "*.svh"))
 	@$(eval CHECK_LIST += $(shell find intf -name "*.v" -o -name "*.vh" -o -name "*.sv" -o -name "*.svh"))
 	@$(eval CHECK_LIST += $(shell find tb -name "*.v" -o -name "*.vh" -o -name "*.sv" -o -name "*.svh"))
-	@($(foreach word, $(CHECK_LIST), echo "[](./$(word))";)) | clip
-	@echo -e "\x1b[2;35mList copied to clipboard\x1b[0m"
+	@($(foreach word, $(CHECK_LIST), echo "[](./$(word))";)) | $(CLIP)
+	@echo -e "\033[2;35mList copied to clipboard\033[0m"
 
 .PHONY: print_vars
-print_vars: 
+print_vars:
 	@echo "TOP:"
 	@echo "$(TOP)";
 	@echo ""
@@ -112,7 +120,7 @@ clean:
 	@rm -rf $(CLEAN_TARGETS)
 
 ####################################################################################################
-# FLIST (Vivado) 
+# FLIST (Vivado)
 ####################################################################################################
 
 .PHONY: find_rtl
@@ -136,10 +144,10 @@ locate_files: list_modules
 
 .PHONY: flist
 flist: locate_files
-	@if [ "$(OS)" = "Linux" ]; then cat ___flist | xclip -sel clip >> CI_REPORT; else cat ___flist | clip; fi
+	@cat ___flist | $(CLIP)
 	@make clean
 	@clear
-	@echo -e "\x1b[2;35m$(RTL) flist copied to clipboard\x1b[0m"
+	@echo -e "\033[2;35m$(RTL) flist copied to clipboard\033[0m"
 
 ####################################################################################################
 # Schematic (Vivado)
@@ -152,13 +160,13 @@ schematic: locate_files
 	@$(foreach word, $(shell cat ___flist), echo "add_files $(word)" >> top.tcl;)
 	@echo "set_property top $(RTL) [current_fileset]" >> top.tcl
 	@echo "start_gui" >> top.tcl
-	@echo "synth_design -top $(RTL) -lint" >> top.tcl 
-	@echo "synth_design -rtl -rtl_skip_mlo -name rtl_1" >> top.tcl 
+	@echo "synth_design -top $(RTL) -lint" >> top.tcl
+	@echo "synth_design -rtl -rtl_skip_mlo -name rtl_1" >> top.tcl
 	@vivado -mode tcl -source top.tcl
 	@make clean
 
 ####################################################################################################
-# Simulate (Vivado) 
+# Simulate (Vivado)
 ####################################################################################################
 
 .PHONY: simulate
@@ -167,15 +175,15 @@ simulate: clean vivado
 .PHONY: vivado
 vivado:
 	@echo "$(TOP)" > ___TOP
-	@touch $(TOP_DIR)vivado_compile_extra_command_line_options 
-	@touch $(TOP_DIR)vivado_elaborate_extra_command_line_options 
-	@touch $(TOP_DIR)vivado_stimulate_extra_command_line_options 
+	@touch $(TOP_DIR)vivado_compile_extra_command_line_options
+	@touch $(TOP_DIR)vivado_elaborate_extra_command_line_options
+	@touch $(TOP_DIR)vivado_stimulate_extra_command_line_options
 	@cd $(TOP_DIR); xvlog -f $(TOP_DIR)vivado_compile_extra_command_line_options -d SIMULATION -i $(INC_DIR) -sv $(TOP_DIR)$(TOP).sv -L UVM -L TBF=$(TBF_LIB) -L RTL=$(DES_LIB) -L INTF=$(INTF_LIB)
 	@cd $(TOP_DIR); xelab -f $(TOP_DIR)vivado_elaborate_extra_command_line_options $(TOP) -s top
 	@cd $(TOP_DIR); xsim top -f $(TOP_DIR)vivado_stimulate_extra_command_line_options -runall
 
 ####################################################################################################
-# CI (Vivado) 
+# CI (Vivado)
 ####################################################################################################
 
 .PHONY: CI
@@ -187,7 +195,7 @@ ci_vivado_run:
 	@$(foreach word, $(CI_LIST), make vivado TOP=$(word);)
 
 .PHONY: ci_vivado_collect
-ci_vivado_collect: 
+ci_vivado_collect:
 	@$(eval _TMP := $(shell find -name "*.log"))
 	@$(foreach word,$(_TMP), cat $(word) >> CI_REPORT_TEMP;)
 	@cat CI_REPORT_TEMP | grep -E "ERROR: |\[PASS\]|\[FAIL\]" >> CI_REPORT;
@@ -195,20 +203,20 @@ ci_vivado_collect:
 .PHONY: ci_print
 ci_print:
 	@$(eval _PASS := $(shell grep -c "1;32m\[PASS\]" CI_REPORT))
-	@$(eval _FAIL := $(shell grep -c "1;31m\[FAIL\]" CI_REPORT)) 
+	@$(eval _FAIL := $(shell grep -c "1;31m\[FAIL\]" CI_REPORT))
 	@if [ "$(_FAIL)" = "0" ]; then \
-		echo -e "\x1b[1;32m" >> CI_REPORT;\
+		echo -e "\033[1;32m" >> CI_REPORT;\
 	else\
-		echo -e "\x1b[1;31m" >> CI_REPORT;\
+		echo -e "\033[1;31m" >> CI_REPORT;\
 	fi
 	@echo ">>>>>>>>>>>>>>>>>>>> $(_PASS)/$(shell expr $(_FAIL) + $(_PASS)) PASSED <<<<<<<<<<<<<<<<<<<<" >> CI_REPORT;
-	@echo -e "\x1b[0m" >> CI_REPORT;
+	@echo -e "\033[0m" >> CI_REPORT;
 	@git log -1 >> CI_REPORT;
 	@make clean
 	@echo " "
 	@echo " "
 	@echo " "
-	@echo -e "\x1b[1;32mCONTINUOUS INTEGRATION SUCCESSFULLY COMPLETE\x1b[0m";
+	@echo -e "\033[1;32mCONTINUOUS INTEGRATION SUCCESSFULLY COMPLETE\033[0m";
 	@cat CI_REPORT
 
 ####################################################################################################
@@ -240,7 +248,7 @@ rawVCD:
 .PHONY: gwave
 gwave:
 	@cd $(TOP_DIR); test -e *.gtkw && gtkwave *.gtkw || cd $(ROOT); make rawVCD
-	
+
 ####################################################################################################
 # Waveform (Vivado)
 ####################################################################################################
@@ -248,3 +256,55 @@ gwave:
 .PHONY: vwave
 vwave:
 	@cd $(TOP_DIR); xsim top -f $(TOP_DIR)vivado_stimulate_extra_command_line_options -gui
+
+####################################################################################################
+# Copy Instance
+####################################################################################################
+
+.PHONY: copy_instance
+copy_instance: clean STEP1 STEP2 STEP3
+
+
+STEP1:
+	@$(eval RTL_FILE := $(shell find $(realpath ./rtl/) -name "$(RTL).sv"))
+	@cat $(RTL_FILE) | grep -E -w "parameter" > ___TMP_RAW_PARAM
+	@cat $(RTL_FILE) | grep -E -w "input|output" > ___TMP_RAW_IO
+	@touch ___TMP_RAW_PARAM
+	@touch ___TMP_RAW_IO
+	@cat ___TMP_RAW_PARAM | sed "s/ *\/\/.*//g" > ___TMP_PARAM
+	@cat ___TMP_PARAM | sed "s/,//g" | sed "s/$$/;/g" | sed "s/ *parameter */localparam/g" > ___PARAM
+	@cat ___TMP_RAW_IO | sed "s/ *\/\/.*//g" > ___TMP_IO
+	@cat ___TMP_IO | sed "s/,//g" | sed "s/$$/;/g" | sed "s/ni;/ni = '1;/g" | sed "s/i;/i = '0;/g" | sed "s/ *input *\| *output *//g" > ___IO
+	@cat ___TMP_PARAM | sed "s/\[.*\]//g" | sed "s/  *=.*//g" | sed "s/  *.*  *//g" > ___JUST_PARAM
+	@cat ___TMP_IO | sed "s/  *.*  *//g" | sed "s/,//g" > ___JUST_IO
+	@echo "$(RTL) #(" > ___TMP_INST
+
+STEP2: 
+	@($(foreach word, $(shell cat ___JUST_PARAM), echo "    .$(word)($(word))," >> ___TMP_INST;))
+	@echo ") u_$(RTL) (" >> ___TMP_INST
+	@($(foreach word, $(shell cat ___JUST_IO), echo "    .$(word)($(word))," >> ___TMP_INST;))
+	@echo ");" >> ___TMP_INST
+	@cat ___TMP_INST | sed -z "s/,\n)/\n)/g" > ___INST
+
+STEP3:
+	@echo "" > ___FINAL
+	@cat ___PARAM >> ___FINAL
+	@echo "" >> ___FINAL
+	@echo "" >> ___FINAL
+	@cat ___IO >> ___FINAL
+	@echo "" >> ___FINAL
+	@echo "" >> ___FINAL
+	@cat ___INST >> ___FINAL
+	@echo "" >> ___FINAL
+	@rm ___JUST_IO
+	@rm ___JUST_PARAM
+	@rm ___TMP_INST
+	@rm ___TMP_IO
+	@rm ___TMP_PARAM
+	@rm ___TMP_RAW_IO
+	@rm ___TMP_RAW_PARAM
+	@rm ___INST
+	@rm ___IO
+	@rm ___PARAM
+	@cat ___FINAL | $(CLIP)
+	@rm ___FINAL
