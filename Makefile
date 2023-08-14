@@ -31,6 +31,7 @@ CLEAN_TARGETS += ___module_port
 CLEAN_TARGETS += ___module_raw_port
 CLEAN_TARGETS += ___module_inst
 CLEAN_TARGETS += ___module_raw_inst
+CLEAN_TARGETS += ___TO_COPY
 
 OS = $(shell uname)
 ifeq ($(OS),Linux)
