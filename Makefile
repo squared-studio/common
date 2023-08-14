@@ -8,9 +8,10 @@ ROOT     = $(shell pwd)
 TOP      = $(shell cat ___TOP)
 TOP_DIR  = $(shell find $(realpath ./tb/) -wholename "*$(TOP)/$(TOP).sv" | sed "s/$(TOP).sv//g")
 TBF_LIB  = $(shell find $(TOP_DIR) -name "*.v" -o -name "*.sv")
-DES_LIB += $(shell find $(realpath ./rtl/) -name "*.v" -o -name "*.sv")
+DES_LIB  = $(shell find $(realpath ./rtl/) -name "*.v" -o -name "*.sv")
 INTF_LIB = $(shell find $(realpath ./intf/) -name "*.sv")
 INC_DIR  = $(realpath ./include)
+RTL_FILE = $(shell find $(realpath ./rtl/) -name "$(RTL).sv")
 
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.out")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.vcd")
@@ -23,6 +24,13 @@ CLEAN_TARGETS += $(shell find $(realpath ./) -name "xsim.dir")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "CI_REPORT_TEMP")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "___list")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "___flist")
+CLEAN_TARGETS += ___module_header
+CLEAN_TARGETS += ___module_param
+CLEAN_TARGETS += ___module_raw_param
+CLEAN_TARGETS += ___module_port
+CLEAN_TARGETS += ___module_raw_port
+CLEAN_TARGETS += ___module_inst
+CLEAN_TARGETS += ___module_raw_inst
 
 OS = $(shell uname)
 ifeq ($(OS),Linux)
@@ -228,7 +236,8 @@ ci_print:
 
 .PHONY: verilator_lint
 verilator_lint:
-	@($(foreach word, $(DES_LIB), verilator --lint-only $(DES_LIB) --top-module $(shell basename -s .sv $(word));))
+	@($(foreach word, $(DES_LIB), \
+		verilator --lint-only $(DES_LIB) --top-module $(shell basename -s .sv $(word));))
 
 ####################################################################################################
 # Simulate (iverilog)
@@ -265,50 +274,80 @@ vwave:
 ####################################################################################################
 
 .PHONY: copy_instance
-copy_instance: clean STEP1 STEP2 STEP3
-
-
-STEP1:
-	@$(eval RTL_FILE := $(shell find $(realpath ./rtl/) -name "$(RTL).sv"))
-	@cat $(RTL_FILE) | grep -E -w "parameter" > ___TMP_RAW_PARAM
-	@cat $(RTL_FILE) | grep -E -w "input|output" > ___TMP_RAW_IO
-	@touch ___TMP_RAW_PARAM
-	@touch ___TMP_RAW_IO
-	@cat ___TMP_RAW_PARAM | sed "s/ *\/\/.*//g" > ___TMP_PARAM
-	@cat ___TMP_PARAM | sed "s/,//g" | sed "s/$$/;/g" | sed "s/ *parameter */localparam /g" > ___PARAM
-	@cat ___TMP_RAW_IO | sed "s/ *\/\/.*//g" > ___TMP_IO
-	@cat ___TMP_IO | sed "s/,//g" | sed "s/$$/;/g" | sed "s/ni;/ni = '1;/g" | sed "s/i;/i = '0;/g" | sed "s/ *input *\| *output *//g" > ___IO
-	@cat ___TMP_PARAM | sed "s/\[.*\]//g" | sed "s/  *=.*//g" | sed "s/  *.*  *//g" > ___JUST_PARAM
-	@cat ___TMP_IO | sed "s/  *.*  *//g" | sed "s/,//g" > ___JUST_IO
-	@echo "$(RTL) #(" > ___TMP_INST
-
-STEP2: 
-	@($(foreach word, $(shell cat ___JUST_PARAM), echo "    .$(word)($(word))," >> ___TMP_INST;))
-	@echo ") u_$(RTL) (" >> ___TMP_INST
-	@($(foreach word, $(shell cat ___JUST_IO), echo "    .$(word)($(word))," >> ___TMP_INST;))
-	@echo ");" >> ___TMP_INST
-	@cat ___TMP_INST | sed -z "s/,\n)/\n)/g" > ___INST
-
-STEP3:
-	@echo "" > ___FINAL
-	@cat ___PARAM >> ___FINAL
-	@echo "" >> ___FINAL
-	@echo "" >> ___FINAL
-	@cat ___IO >> ___FINAL
-	@echo "" >> ___FINAL
-	@echo "" >> ___FINAL
-	@cat ___INST >> ___FINAL
-	@echo "" >> ___FINAL
-	@rm ___JUST_IO
-	@rm ___JUST_PARAM
-	@rm ___TMP_INST
-	@rm ___TMP_IO
-	@rm ___TMP_PARAM
-	@rm ___TMP_RAW_IO
-	@rm ___TMP_RAW_PARAM
-	@rm ___INST
-	@rm ___IO
-	@rm ___PARAM
-	@cat ___FINAL | $(CLIP)
-	@rm ___FINAL
+copy_instance: clean
+	@make module_header RTL=$(RTL)
+	@make module_param
+	@make module_port
+	@make module_raw_param
+	@make module_raw_port
+	@make module_raw_inst
+	@make module_inst
+	@echo "" > ___TO_COPY
+	@cat ___module_param >> ___TO_COPY
+	@echo "" >> ___TO_COPY
+	@cat ___module_port >> ___TO_COPY
+	@echo "" >> ___TO_COPY
+	@cat ___module_inst >> ___TO_COPY
+	@echo "" >> ___TO_COPY
+	@make clean
+	@cat ___TO_COPY | $(CLIP)
+	@rm ___TO_COPY
 	@echo -e "\033[2;35m$(RTL) instance copied to clipboard\033[0m"
+
+.PHONY: module_header
+module_header:
+	@sed -n '/^module /,/);$$/p' $(RTL_FILE) \
+		| sed "s/\/\/.*//g" \
+		| sed "s/  *$$//g" \
+		| sed -z "s/\n\n/\n/g" \
+		| sed -z "s/\n\n/\n/g" \
+		> ___module_header
+
+.PHONY: module_param
+module_param:
+	@cat ___module_header \
+		| grep -E -w "parameter" \
+		| sed "s/,//g" \
+		| sed "s/$$/;/g" \
+		| sed "s/ *parameter */localparam /g" \
+		> ___module_param
+
+.PHONY: module_port
+module_port:
+	@cat ___module_header \
+		| grep -E -w "input|output" \
+		| sed "s/,//g" \
+		| sed "s/$$/;/g" \
+		| sed "s/ *input *\| *output *//g" \
+		| sed "s/_ni;/_ni = '1;/g" \
+		| sed "s/_i;/_i = '0;/g" \
+		>___module_port
+
+.PHONY: module_raw_param
+module_raw_param:
+	@cat ___module_param \
+		| sed "s/;//g" \
+		| sed "s/  *=.*//g" \
+		| sed "s/localparam.* //g" \
+		> ___module_raw_param
+
+.PHONY: module_raw_port
+module_raw_port:
+	@cat ___module_port \
+		| sed "s/;//g" \
+		| sed "s/  *=.*//g" \
+		| sed "s/^.* //g" \
+		> ___module_raw_port
+
+.PHONY: module_raw_inst
+module_raw_inst:
+	@echo "$(RTL) #(" > ___module_raw_inst
+	@$(foreach word, $(shell cat ___module_raw_param), echo "  .$(word)($(word))," >> ___module_raw_inst;)
+	@echo ") u_$(RTL) (" >> ___module_raw_inst
+	@$(foreach word, $(shell cat ___module_raw_port), echo "  .$(word)($(word))," >> ___module_raw_inst;)
+	@echo ");" >> ___module_raw_inst
+	
+.PHONY: module_inst
+module_inst:
+	@cat ___module_raw_inst \
+		| sed -z "s/,\n  )/\n  )/g" > ___module_inst
