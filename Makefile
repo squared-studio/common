@@ -309,6 +309,7 @@ module_port:
 .PHONY: module_raw_param
 module_raw_param:
 	@cat ___module_param \
+		| sed "s/\[.*\]//g" \
 		| sed "s/;//g" \
 		| sed "s/  *=.*//g" \
 		| sed "s/localparam.* //g" \
@@ -317,6 +318,7 @@ module_raw_param:
 .PHONY: module_raw_port
 module_raw_port:
 	@cat ___module_port \
+		| sed "s/\[.*\]//g" \
 		| sed "s/;//g" \
 		| sed "s/  *=.*//g" \
 		| sed "s/^.* //g" \
