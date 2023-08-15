@@ -2,19 +2,9 @@
 // ### Author : name (email)
 
 module rtl_model #(
-    parameter int DATA_WIDTH = 8,
-    parameter int DEPTH = 5
+    //-PARAMETERS
 ) (
-    input logic clk_i,
-    input logic arst_ni,
-
-    input  logic [DATA_WIDTH-1:0] data_in_i,
-    input  logic                  data_in_valid_i,
-    output logic                  data_in_ready_o,
-
-    output logic [DATA_WIDTH-1:0] data_out_o,
-    output logic                  data_out_valid_o,
-    input  logic                  data_out_ready_i
+    //-PORTS
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

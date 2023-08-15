@@ -274,26 +274,6 @@ vwave:
 # Copy Instance
 ####################################################################################################
 
-.PHONY: copy_instance
-copy_instance: clean
-	@make module_header RTL=$(RTL)
-	@make module_param
-	@make module_port
-	@make module_raw_param
-	@make module_raw_port
-	@make module_raw_inst
-	@make module_inst
-	@echo "" > ___TO_COPY
-	@cat ___module_param >> ___TO_COPY
-	@echo "" >> ___TO_COPY
-	@cat ___module_port >> ___TO_COPY
-	@echo "" >> ___TO_COPY
-	@cat ___module_inst >> ___TO_COPY
-	@echo "" >> ___TO_COPY
-	@cat ___TO_COPY | $(CLIP)
-	@make clean
-	@echo -e "\033[2;35m$(RTL) instance copied to clipboard\033[0m"
-
 .PHONY: module_header
 module_header:
 	@sed -n '/^module /,/);$$/p' $(RTL_FILE) \
@@ -351,3 +331,46 @@ module_raw_inst:
 module_inst:
 	@cat ___module_raw_inst \
 		| sed -z "s/,\n)/\n)/g" > ___module_inst
+		
+.PHONY: copy_instance
+copy_instance:
+	@make clean
+	@make module_header RTL=$(RTL)
+	@make module_param
+	@make module_port
+	@make module_raw_param
+	@make module_raw_port
+	@make module_raw_inst
+	@make module_inst
+	@echo "" > ___TO_COPY
+	@cat ___module_param >> ___TO_COPY
+	@echo "" >> ___TO_COPY
+	@cat ___module_port >> ___TO_COPY
+	@echo "" >> ___TO_COPY
+	@cat ___module_inst >> ___TO_COPY
+	@echo "" >> ___TO_COPY
+	@cat ___TO_COPY | $(CLIP)
+	@make clean
+	@echo -e "\033[2;35m$(RTL) instance copied to clipboard\033[0m"
+
+.PHONY: create_tb
+create_tb:
+	@test -e ./tb/$(TOP)/$(TOP).sv && \
+		(echo -e "\033[1;31m$(TOP) already exists\033[0m") || \
+		(	\
+			mkdir -p ./tb/$(TOP) && cat tb_model.sv	\
+			  | sed "s/^module tb_model;$$/module $(TOP);/g" \
+				> ./tb/$(TOP)/$(TOP).sv \
+		)
+	@code ./tb/$(TOP)/$(TOP).sv
+
+.PHONY: create_rtl
+create_rtl:
+	@test -e ./rtl/$(RTL).sv && \
+		(echo -e "\033[1;31m$(RTL) already exists\033[0m") || \
+		(	\
+			cat rtl_model.sv	\
+			  | sed "s/^module rtl_model #($$/module $(RTL) #(/g" \
+				> ./rtl/$(RTL).sv \
+		)
+	@code ./rtl/$(RTL).sv
