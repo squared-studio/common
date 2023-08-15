@@ -48,6 +48,12 @@ CI_LIST  = $(shell cat CI_LIST)
 .PHONY: help
 help:
 	@echo -e ""
+	@echo -e "\033[3;30mTo create a testbench, type:\033[0m"
+	@echo -e "\033[1;38mmake create_tb TOP=<tb_top>\033[0m"
+	@echo -e ""
+	@echo -e "\033[3;30mTo create a rtl, type:\033[0m"
+	@echo -e "\033[1;38mmake create_rtl RTL=<tb_top>\033[0m"
+	@echo -e ""
 	@echo -e "\033[3;30mTo run a test with vivado, type:\033[0m"
 	@echo -e "\033[1;38mmake simulate TOP=<tb_top>\033[0m"
 	@echo -e ""
@@ -355,8 +361,7 @@ copy_instance:
 
 .PHONY: create_tb
 create_tb:
-	@test -e ./tb/$(TOP)/$(TOP).sv && \
-		(echo -e "\033[1;31m$(TOP) already exists\033[0m") || \
+	@test -e ./tb/$(TOP)/$(TOP).sv || \
 		(	\
 			mkdir -p ./tb/$(TOP) && cat tb_model.sv	\
 			  | sed "s/^module tb_model;$$/module $(TOP);/g" \
@@ -366,8 +371,7 @@ create_tb:
 
 .PHONY: create_rtl
 create_rtl:
-	@test -e ./rtl/$(RTL).sv && \
-		(echo -e "\033[1;31m$(RTL) already exists\033[0m") || \
+	@test -e ./rtl/$(RTL).sv || \
 		(	\
 			cat rtl_model.sv	\
 			  | sed "s/^module rtl_model #($$/module $(RTL) #(/g" \
