@@ -59,11 +59,15 @@ module cdc_fifo #(
   assign wr_addr_p1 = wr_addr + 1;
   assign rd_addr_p1 = rd_addr + 1;
 
-  assign elem_in_ready_o = !(
-                              (wr_addr[FIFO_SIZE] != rd_addr_[FIFO_SIZE])
-                              &&
-                              (wr_addr[FIFO_SIZE-1:0] == rd_addr_[FIFO_SIZE-1:0])
-                            );
+  if (FIFO_SIZE > 0) begin : g_elem_in_ready_o
+    assign elem_in_ready_o = !(
+                                (wr_addr[FIFO_SIZE] != rd_addr_[FIFO_SIZE])
+                                &&
+                                (wr_addr[FIFO_SIZE-1:0] == rd_addr_[FIFO_SIZE-1:0])
+                              );
+  end else begin : g_elem_in_ready_o
+    assign elem_in_ready_o = (wr_addr_ == rd_addr);
+  end
 
   assign elem_out_valid_o = (wr_addr_ != rd_addr);
 
@@ -157,18 +161,31 @@ module cdc_fifo #(
       .q_o    (rd_ptr_pass)
   );
 
-  mem #(
-      .ELEM_WIDTH(ELEM_WIDTH),
-      .DEPTH(2 ** FIFO_SIZE)
-  ) u_mem (
-      .clk_i  (elem_in_clk_i),
-      .arst_ni(arst_ni),
-      .we_i   (hsi),
-      .waddr_i(wr_addr),
-      .wdata_i(elem_in_i),
-      .raddr_i(rd_addr),
-      .rdata_o(elem_out_o)
-  );
+  if (FIFO_SIZE > 0) begin : g_mem
+    mem #(
+        .ELEM_WIDTH(ELEM_WIDTH),
+        .DEPTH(2 ** FIFO_SIZE)
+    ) u_mem (
+        .clk_i  (elem_in_clk_i),
+        .arst_ni(arst_ni),
+        .we_i   (hsi),
+        .waddr_i(wr_addr[FIFO_SIZE-1:0]),
+        .wdata_i(elem_in_i),
+        .raddr_i(rd_addr[FIFO_SIZE-1:0]),
+        .rdata_o(elem_out_o)
+    );
+  end else begin : g_mem
+    register #(
+        .ELEM_WIDTH (ELEM_WIDTH),
+        .RESET_VALUE('0)
+    ) u_mem (
+        .clk_i  (elem_in_clk_i),
+        .arst_ni(arst_ni),
+        .en_i   (hsi),
+        .d_i    (elem_in_i),
+        .q_o    (elem_out_o)
+    );
+  end
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-INITIAL CHECKS
