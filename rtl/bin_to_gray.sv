@@ -1,3 +1,4 @@
+// Binary to Gray converter
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
 module bin_to_gray #(

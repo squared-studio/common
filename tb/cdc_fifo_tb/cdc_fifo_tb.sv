@@ -9,7 +9,7 @@
 
 //`include "vip/string_ops_pkg.sv"
 
-module cdc_pipeline_tb;
+module cdc_fifo_tb;
 
   `define ENABLE_DUMPFILE
 
@@ -24,7 +24,8 @@ module cdc_pipeline_tb;
   //-LOCALPARAMS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  localparam int ElemWidth = 32;
+  localparam int ElemWidth = 4;
+  localparam int FifoSize = 2;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-TYPEDEFS
@@ -77,8 +78,9 @@ module cdc_pipeline_tb;
   //-RTLS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  cdc_pipeline #(
-      .ELEM_WIDTH(ElemWidth)
+  cdc_fifo #(
+      .ELEM_WIDTH(ElemWidth),
+      .FIFO_SIZE (FifoSize)
   ) cdc_pipeline_dut (
       .arst_ni(arst_ni),
       .elem_in_clk_i(elem_in_clk_i),
