@@ -179,7 +179,8 @@ schematic: locate_files
 ####################################################################################################
 
 .PHONY: simulate
-simulate: clean vivado
+simulate: 
+	make clean vivado TOP=$(TOP) CONFIG=$(CONFIG)
 
 .PHONY: vivado
 vivado:
