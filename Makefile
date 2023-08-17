@@ -4,14 +4,16 @@
 ##
 ####################################################################################################
 
-ROOT     = $(shell pwd)
-TOP      = $(shell cat ___TOP)
-TOP_DIR  = $(shell find $(realpath ./tb/) -wholename "*$(TOP)/$(TOP).sv" | sed "s/$(TOP).sv//g")
-TBF_LIB  = $(shell find $(TOP_DIR) -name "*.v" -o -name "*.sv")
-DES_LIB  = $(shell find $(realpath ./rtl/) -name "*.v" -o -name "*.sv")
-INTF_LIB = $(shell find $(realpath ./intf/) -name "*.sv")
-INC_DIR  = $(realpath ./include)
-RTL_FILE = $(shell find $(realpath ./rtl/) -name "$(RTL).sv")
+ROOT        = $(shell pwd)
+TOP         = $(shell cat ___TOP)
+TOP_DIR     = $(shell find $(realpath ./tb/) -wholename "*$(TOP)/$(TOP).sv" | sed "s/\/$(TOP).sv//g")
+TBF_LIB     = $(shell find $(TOP_DIR) -name "*.v" -o -name "*.sv")
+DES_LIB     = $(shell find $(realpath ./rtl/) -name "*.v" -o -name "*.sv")
+INTF_LIB    = $(shell find $(realpath ./intf/) -name "*.sv")
+INC_DIR     = $(realpath ./include)
+RTL_FILE    = $(shell find $(realpath ./rtl/) -name "$(RTL).sv")
+CONFIG      = default
+CONFIG_PATH = $(TOP_DIR)/config/$(CONFIG)
 
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.out")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.vcd")
@@ -21,7 +23,7 @@ CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.jou")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.pb")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name ".Xil")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "xsim.dir")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "CI_REPORT_TEMP")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "___CI_REPORT_TEMP")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "___list")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "___flist")
 CLEAN_TARGETS += ___module_header
@@ -39,6 +41,7 @@ ifeq ($(OS),Linux)
 else
 	CLIP = clip
 endif
+
 CI_LIST  = $(shell cat CI_LIST)
 
 ####################################################################################################
@@ -104,15 +107,6 @@ print_vars:
 	@echo ""
 	@echo "TOP_DIR:"
 	@echo "$(TOP_DIR)";
-	@echo ""
-	@echo "vivado_compile:"
-	@echo "$(shell cat $(TOP_DIR)vivado_compile_extra_command_line_options)";
-	@echo ""
-	@echo "vivado_elaborate:"
-	@echo "$(shell cat $(TOP_DIR)vivado_elaborate_extra_command_line_options)";
-	@echo ""
-	@echo "vivado_stimulate:"
-	@echo "$(shell cat $(TOP_DIR)vivado_stimulate_extra_command_line_options)";
 	@echo ""
 	@echo "DES_LIB:"
 	@echo "$(DES_LIB)";
@@ -190,12 +184,26 @@ simulate: clean vivado
 .PHONY: vivado
 vivado:
 	@echo "$(TOP)" > ___TOP
-	@touch $(TOP_DIR)vivado_compile_extra_command_line_options
-	@touch $(TOP_DIR)vivado_elaborate_extra_command_line_options
-	@touch $(TOP_DIR)vivado_stimulate_extra_command_line_options
-	@cd $(TOP_DIR); xvlog -f $(TOP_DIR)vivado_compile_extra_command_line_options -d SIMULATION -i $(INC_DIR) -sv $(TOP_DIR)$(TOP).sv -L UVM -L TBF=$(TBF_LIB) -L RTL=$(DES_LIB) -L INTF=$(INTF_LIB)
-	@cd $(TOP_DIR); xelab -f $(TOP_DIR)vivado_elaborate_extra_command_line_options $(TOP) -s top
-	@cd $(TOP_DIR); xsim top -f $(TOP_DIR)vivado_stimulate_extra_command_line_options -runall
+	@mkdir -p $(CONFIG_PATH)
+	@touch $(CONFIG_PATH)/xvlog
+	@touch $(CONFIG_PATH)/xelab
+	@touch $(CONFIG_PATH)/xsim
+	@cd $(TOP_DIR); xvlog \
+		-f $(CONFIG_PATH)/xvlog \
+		-d SIMULATION \
+		--define CONFIG=\"$(CONFIG)\" \
+		-i $(INC_DIR) \
+		-sv $(TOP_DIR)/$(TOP).sv \
+		-L UVM \
+		-L TBF=$(TBF_LIB) \
+		-L RTL=$(DES_LIB) \
+		-L INTF=$(INTF_LIB)
+	@cd $(TOP_DIR); xelab \
+		-f $(CONFIG_PATH)/xelab \
+		$(TOP) -s top
+	@cd $(TOP_DIR); xsim \
+		top -f $(CONFIG_PATH)/xsim \
+		-runall
 
 ####################################################################################################
 # CI (Vivado)
@@ -204,35 +212,32 @@ vivado:
 .PHONY: CI
 CI: clean ci_vivado_run ci_vivado_collect ci_print
 
-.PHONY: ci_vivado_run
-ci_vivado_run:
-	@> CI_REPORT;
-	@$(foreach word, $(CI_LIST), make vivado TOP=$(word);)
+include ci_run
 
 .PHONY: ci_vivado_collect
 ci_vivado_collect:
 	@$(eval _TMP := $(shell find -name "*.log"))
-	@$(foreach word,$(_TMP), cat $(word) >> CI_REPORT_TEMP;)
-	@cat CI_REPORT_TEMP | grep -E "ERROR: |\[PASS\]|\[FAIL\]" >> CI_REPORT;
+	@$(foreach word,$(_TMP), cat $(word) >> ___CI_REPORT_TEMP;)
+	@cat ___CI_REPORT_TEMP | grep -E "ERROR: |\[PASS\]|\[FAIL\]" >> ___CI_REPORT;
 
 .PHONY: ci_print
 ci_print:
-	@$(eval _PASS := $(shell grep -c "1;32m\[PASS\]" CI_REPORT))
-	@$(eval _FAIL := $(shell grep -c "1;31m\[FAIL\]" CI_REPORT))
+	@$(eval _PASS := $(shell grep -c "1;32m\[PASS\]" ___CI_REPORT))
+	@$(eval _FAIL := $(shell grep -c "1;31m\[FAIL\]" ___CI_REPORT))
 	@if [ "$(_FAIL)" = "0" ]; then \
-		echo -e "\033[1;32m" >> CI_REPORT;\
+		echo -e "\033[1;32m" >> ___CI_REPORT;\
 	else\
-		echo -e "\033[1;31m" >> CI_REPORT;\
+		echo -e "\033[1;31m" >> ___CI_REPORT;\
 	fi
-	@echo ">>>>>>>>>>>>>>>>>>>> $(_PASS)/$(shell expr $(_FAIL) + $(_PASS)) PASSED <<<<<<<<<<<<<<<<<<<<" >> CI_REPORT;
-	@echo -e "\033[0m" >> CI_REPORT;
-	@git log -1 >> CI_REPORT;
+	@echo ">>>>>>>>>>>>>>>>>>>> $(_PASS)/$(shell expr $(_FAIL) + $(_PASS)) PASSED <<<<<<<<<<<<<<<<<<<<" >> ___CI_REPORT;
+	@echo -e "\033[0m" >> ___CI_REPORT;
+	@git log -1 >> ___CI_REPORT;
 	@make clean
 	@echo " "
 	@echo " "
 	@echo " "
 	@echo -e "\033[1;32mCONTINUOUS INTEGRATION SUCCESSFULLY COMPLETE\033[0m";
-	@cat CI_REPORT
+	@cat ___CI_REPORT
 
 ####################################################################################################
 # Lint (Verilator)
@@ -271,7 +276,7 @@ gwave:
 
 .PHONY: vwave
 vwave:
-	@cd $(TOP_DIR); xsim top -f $(TOP_DIR)vivado_stimulate_extra_command_line_options -gui
+	@cd $(TOP_DIR); xsim top -f $(CONFIG_PATH)/xsim -gui
 
 ####################################################################################################
 # Copy Instance
