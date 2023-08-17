@@ -11,7 +11,7 @@
     join_none                                                                                      \
   endtask                                                                                          \
 
-string top_module_name = $sformatf("%m config:%s", `CONFIG);
+string top_module_name = $sformatf("%m %s", `CONFIG);
 
 initial begin
   $display("\033[7;38m####################### TEST STARTED #######################\033[0m");
