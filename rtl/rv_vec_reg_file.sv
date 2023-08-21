@@ -1,8 +1,8 @@
-// Register file for floating point
+// Register file for vector
 // ### Author : Md. Mohiuddin Reyad (mreyad30207@gmail.com)
 
-module rv_float_reg_file #(
-    parameter int FLEN = 32
+module rv_vec_reg_file #(
+    parameter int FLEN = 2048
 ) (
     input logic clk_i,   // Global clock
     input logic arst_ni, // Asynchronous reset
@@ -15,10 +15,7 @@ module rv_float_reg_file #(
     output logic [FLEN -1:0] rs1_data_o,  // source register 1 data
 
     input  logic [     31:0] rs2_addr_i,  // source register 2 address
-    output logic [FLEN -1:0] rs2_data_o,  // source register 2 data
-
-    input  logic [     31:0] rs3_addr_i,  // source register 3 address
-    output logic [FLEN -1:0] rs3_data_o   // source register 3 data
+    output logic [FLEN -1:0] rs2_data_o   // source register 2 data
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -69,15 +66,6 @@ module rv_float_reg_file #(
       .s_i(rs2_addr_i),
       .i_i(mux_in),
       .o_o(rs2_data_o)
-  );
-
-  mux #(
-      .ELEM_WIDTH(FLEN),
-      .NUM_ELEM  (32)
-  ) u_mux_rs3 (
-      .s_i(rs3_addr_i),
-      .i_i(mux_in),
-      .o_o(rs3_data_o)
   );
 
 endmodule
