@@ -3,7 +3,7 @@
 
 module reg_file #(
     parameter int NUM_RS = 3,     // number of source register
-    parameter int ZERO_REG = 1,   // hardcoded zero(0) to first register
+    parameter bit ZERO_REG = 1,   // hardcoded zero(0) to first register
     parameter int NUM_REG = 32,   // number of registers
     parameter int REG_WIDTH = 32  // width of each register
 ) (
@@ -14,8 +14,8 @@ module reg_file #(
     input logic [      REG_WIDTH-1:0] rd_data_i,  // read data
     input logic                       rd_en_i,    // read enable
 
-    input  logic [$clog2(NUM_REG)-1:0] rs_addr_i[NUM_RS],  // array of source register address
-    output logic [      REG_WIDTH-1:0] rs_data_o[NUM_RS]   // array of source register data
+    input  logic [NUM_RS-1:0][$clog2(NUM_REG)-1:0] rs_addr_i,  // array of source register address
+    output logic [NUM_RS-1:0][      REG_WIDTH-1:0] rs_data_o   // array of source register data
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -58,7 +58,7 @@ module reg_file #(
     );
   end
 
-  for (genvar i = 0; i<NUM_RS; i++) begin:g_mux_array
+  for (genvar i = 0; i < NUM_RS; i++) begin : g_mux_array
     mux #(
         .ELEM_WIDTH(REG_WIDTH),
         .NUM_ELEM  (NUM_REG)

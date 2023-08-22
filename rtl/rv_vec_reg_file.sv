@@ -25,59 +25,37 @@ module rv_vec_reg_file #(
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  logic [31:0]           demux_en;  // connected with the register enable
-  logic [31:0][VLEN-1:0] mux_in;  // input for mux
+  logic [2:0][     4:0] rs_addr_i;  // address array to the reg file
+  logic [2:0][VLEN-1:0] rs_data_o;  // data array from the reg file
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //-ASSIGNMENTS
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+
+  assign rs_addr_i[0] = rs1_addr_i;
+  assign rs1_data_o   = rs_data_o[0];
+  assign rs_addr_i[1] = rs1_addr_i;
+  assign rs1_data_o   = rs_data_o[1];
+  assign rs_addr_i[2] = rs1_addr_i;
+  assign rs1_data_o   = rs_data_o[2];
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-RTLS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  demux #(
-      .NUM_ELEM(32)
-  ) u_demux_reg (
-      .s_i(rd_addr_i),
-      .i_i(rd_en_i),
-      .o_o(demux_en)
-  );
-
-  for (genvar i = 0; i < VLEN; i++) begin : g_reg_array
-    register #(
-        .ELEM_WIDTH (VLEN),
-        .RESET_VALUE('0)
-    ) register_dut (
-        .clk_i  (clk_i),
-        .arst_ni(arst_ni),
-        .en_i   (demux_en[i]),
-        .d_i    (rd_data_i),
-        .q_o    (mux_in[i])
-    );
-  end
-
-  mux #(
-      .ELEM_WIDTH(VLEN),
-      .NUM_ELEM  (32)
-  ) u_mux_rs1 (
-      .s_i(rs1_addr_i),
-      .i_i(mux_in),
-      .o_o(rs1_data_o)
-  );
-
-  mux #(
-      .ELEM_WIDTH(VLEN),
-      .NUM_ELEM  (32)
-  ) u_mux_rs2 (
-      .s_i(rs2_addr_i),
-      .i_i(mux_in),
-      .o_o(rs2_data_o)
-  );
-
-  mux #(
-      .ELEM_WIDTH(VLEN),
-      .NUM_ELEM  (32)
-  ) u_mux_rs3 (
-      .s_i(rs3_addr_i),
-      .i_i(mux_in),
-      .o_o(rs3_data_o)
+  reg_file #(
+      .NUM_RS(3),
+      .ZERO_REG(0),
+      .NUM_REG(32),
+      .REG_WIDTH(VLEN)
+  ) u_reg_file (
+      .clk_i(clk_i),
+      .arst_ni(arst_ni),
+      .rd_addr_i(rd_addr_i),
+      .rd_data_i(rd_data_i),
+      .rd_en_i(rd_en_i),
+      .rs_addr_i(rs_addr_i),
+      .rs_data_o(rs_data_o)
   );
 
 endmodule
