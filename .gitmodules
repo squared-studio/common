@@ -22,3 +22,6 @@
 [submodule "sub/riscv/riscv-v-spec"]
 	path = sub/riscv/riscv-v-spec
 	url = https://github.com/riscv/riscv-v-spec.git
+[submodule "sub/lowRISC/ariane"]
+	path = sub/lowRISC/ariane
+	url = https://github.com/lowRISC/ariane.git
