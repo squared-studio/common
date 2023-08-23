@@ -1,5 +1,5 @@
-// Description
-// ### Author : name (email)
+// combined register file for int,vec and reg
+// ### Author : Md. Mohiuddin Reyad (mreyad30207@gmail.com)
 
 module reg_file #(
     parameter int NUM_RS = 3,     // number of source register
