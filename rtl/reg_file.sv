@@ -1,4 +1,4 @@
-// combined register file for int,vec and reg
+// combined register file for integer, vector and float
 // ### Author : Md. Mohiuddin Reyad (mreyad30207@gmail.com)
 
 module reg_file #(
