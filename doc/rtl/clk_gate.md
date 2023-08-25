@@ -1,1 +1,1 @@
-<img src=./doc/diagrams/clk_gate.svg>
+<img src=../diagrams/clk_gate.svg>
