@@ -2,10 +2,10 @@
 // ### Author : Razu Ahamed(en.razu.ahamed@gmail.com)
 
 module clk_gate (
-  input  logic cp ,
-  input  logic e  ,
-  input  logic te ,
-  output logic q
+    input  logic cp_i,
+    input  logic e_i,
+    input  logic te_i,
+    output logic q_o
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -18,7 +18,8 @@ module clk_gate (
   //-ASSIGNMENTS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  assign q = te?cp:temp;
-  and(temp,cp,e);
+  assign q_o = te_i ? cp_i : temp;
+
+  and (temp, cp_i, e_i);
 
 endmodule
