@@ -26,14 +26,20 @@ CLEAN_TARGETS += $(shell find $(realpath ./) -name "xsim.dir")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "___CI_REPORT_TEMP")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "___list")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "___flist")
-CLEAN_TARGETS += ___module_header
-CLEAN_TARGETS += ___module_param
-CLEAN_TARGETS += ___module_raw_param
-CLEAN_TARGETS += ___module_port
-CLEAN_TARGETS += ___module_raw_port
-CLEAN_TARGETS += ___module_inst
-CLEAN_TARGETS += ___module_raw_inst
-CLEAN_TARGETS += ___TO_COPY
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "___module_header")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "___module_param")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "___module_raw_param")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "___module_port")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "___module_raw_port")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "___module_inst")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "___module_raw_inst")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "___TO_COPY")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "top.cache")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "top.hw")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "top.ip_user_files")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "top.sim")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "top.xpr")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "top.tcl")
 
 OS = $(shell uname)
 ifeq ($(OS),Linux)
@@ -125,7 +131,7 @@ print_vars:
 
 .PHONY: clean
 clean:
-	@rm -rf top.cache top.hw top.ip_user_files top.sim top.xpr top.tcl
+	@$(foreach word, $(CLEAN_TARGETS), echo "removing $(word)";)
 	@rm -rf $(CLEAN_TARGETS)
 
 ####################################################################################################
