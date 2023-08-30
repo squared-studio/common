@@ -36,8 +36,8 @@ module tb_model;
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  // generates static task start_clk_i with tHigh:3 tLow:7
-  `CREATE_CLK(clk_i, 3, 7)
+  // generates static task start_clk_i with tHigh:4ns tLow:6ns
+  `CREATE_CLK(clk_i, 4ns, 6ns)
 
   bit arst_ni = 1;
 
