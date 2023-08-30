@@ -6,6 +6,7 @@
 
 ROOT        = $(shell pwd)
 TOP         = $(shell cat ___TOP)
+RTL         = $(shell cat ___RTL)
 TOP_DIR     = $(shell find $(realpath ./tb/) -wholename "*$(TOP)/$(TOP).sv" | sed "s/\/$(TOP).sv//g")
 TBF_LIB     = $(shell find $(TOP_DIR) -name "*.v" -o -name "*.sv")
 DES_LIB     = $(shell find $(realpath ./rtl/) -name "*.v" -o -name "*.sv")
@@ -57,10 +58,10 @@ CI_LIST  = $(shell cat CI_LIST)
 .PHONY: help
 help:
 	@echo -e ""
-	@echo -e "\033[3;30mTo create a testbench, type:\033[0m"
+	@echo -e "\033[3;30mTo create or open a testbench, type:\033[0m"
 	@echo -e "\033[1;38mmake create_tb TOP=<tb_top>\033[0m"
 	@echo -e ""
-	@echo -e "\033[3;30mTo create a rtl, type:\033[0m"
+	@echo -e "\033[3;30mTo create or open a rtl, type:\033[0m"
 	@echo -e "\033[1;38mmake create_rtl RTL=<tb_top>\033[0m"
 	@echo -e ""
 	@echo -e "\033[3;30mTo run a test with vivado, type:\033[0m"
@@ -106,29 +107,6 @@ gen_check_list:
 	@($(foreach word, $(CHECK_LIST), echo "[](./$(word))";)) | $(CLIP)
 	@echo -e "\033[2;35mList copied to clipboard\033[0m"
 
-.PHONY: print_vars
-print_vars:
-	@echo "TOP:"
-	@echo "$(TOP)";
-	@echo ""
-	@echo "TOP_DIR:"
-	@echo "$(TOP_DIR)";
-	@echo ""
-	@echo "DES_LIB:"
-	@echo "$(DES_LIB)";
-	@echo ""
-	@echo "INTF_LIB:"
-	@echo "$(INTF_LIB)";
-	@echo ""
-	@echo "TBF_LIB:"
-	@echo "$(TBF_LIB)";
-	@echo ""
-	@echo "INC_DIR:"
-	@echo "$(INC_DIR)";
-	@echo ""
-	@echo "CI_LIST:"
-	@echo "$(CI_LIST)";
-
 .PHONY: clean
 clean:
 	@$(foreach word, $(CLEAN_TARGETS), echo "removing $(word)";)
@@ -170,6 +148,7 @@ flist: locate_files
 
 .PHONY: schematic
 schematic: locate_files
+	@echo "$(RTL)" > ___RTL
 	@echo "create_project top" > top.tcl
 	@echo "set_property include_dirs ./include [current_fileset]" >> top.tcl
 	@$(foreach word, $(shell cat ___flist), echo "add_files $(word)" >> top.tcl;)
@@ -186,11 +165,11 @@ schematic: locate_files
 
 .PHONY: simulate
 simulate: 
+	@echo "$(TOP)" > ___TOP
 	make clean vivado TOP=$(TOP) CONFIG=$(CONFIG)
 
 .PHONY: vivado
 vivado:
-	@echo "$(TOP)" > ___TOP
 	@mkdir -p $(CONFIG_PATH)
 	@touch $(CONFIG_PATH)/xvlog
 	@touch $(CONFIG_PATH)/xelab
@@ -376,6 +355,7 @@ copy_instance:
 
 .PHONY: create_tb
 create_tb:
+	@echo "$(TOP)" > ___TOP
 	@test -e ./tb/$(TOP)/$(TOP).sv || \
 		(	\
 			mkdir -p ./tb/$(TOP) && cat tb_model.sv	\
@@ -390,6 +370,7 @@ create_tb:
 
 .PHONY: create_rtl
 create_rtl:
+	@echo "$(RTL)" > ___RTL
 	@test -e ./rtl/$(RTL).sv || \
 		(	\
 			cat rtl_model.sv	\
