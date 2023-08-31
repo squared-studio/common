@@ -13,8 +13,8 @@ module pll (
     output logic       fout_o
 );
 
-  realtime old_fref_tick = 0;
-  realtime new_fref_tick = 0;
+  realtime old_fref_tick = 0ns;
+  realtime new_fref_tick = 100ns;
   realtime fref_time_period = 0;
   realtime fvco_time_period = 1us;
 
@@ -25,14 +25,17 @@ module pll (
   end
 
   always @(posedge fref_i) begin
+    int rpt;
+    rpt = (refdiv_i > 0) ? (refdiv_i - 1) : 1;
+    repeat (rpt) @(posedge fref_i);
     new_fref_tick = $realtime;
     fref_time_period = (new_fref_tick - old_fref_tick);
-    fvco_time_period = fvco_time_period * 0.99 + 0.01 * ((fref_time_period * refdiv_i) / fbdiv_i);
+    fvco_time_period = fvco_time_period * 0.99 + 0.01 * (fref_time_period / fbdiv_i);
     old_fref_tick = new_fref_tick;
   end
 
   always @(posedge fvco_o) begin
-    lock_o <= (fref_time_period / fvco_time_period * refdiv_i / fbdiv_i) inside {[0.999 : 1.001]};
+    lock_o <= (fref_time_period / (fvco_time_period * fbdiv_i)) inside {[0.999 : 1.001]};
   end
 
   always begin
@@ -55,7 +58,7 @@ module pll (
 
 `ifdef DEBUG
   always #1us begin
-    $display("I:%t O:%t", fref_time_period, fvco_time_period);
+    $display("I:%t O:%t", (fref_time_period / fref_i), fvco_time_period);
   end
 `endif  // DEBUG
 
