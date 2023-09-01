@@ -7,63 +7,61 @@ module tb_clk_gate;
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  logic cp_i;//Clock pulse
-  logic e_i;//Enable
-  logic te_i;//Test enable
-  logic q_o;//Output
+  logic cp_i;  //Clock pulse
+  logic e_i;  //Enable
+  logic te_i;  //Test enable
+  logic q_o;  //Output
   logic q_model;
-  int pass=0;
-  int fail=0;
+  int   pass = 0;
+  int   fail = 0;
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-RTL
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  clk_gate u_clk_gate(
-    .cp_i  (cp_i),
-    .e_i   (e_i ),
-    .te_i  (te_i),
-    .q_o   (q_o )
+  clk_gate u_clk_gate (
+      .cp_i(cp_i),
+      .e_i (e_i),
+      .te_i(te_i),
+      .q_o (q_o)
   );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-Method
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
+  // make a reference Model using function
   function automatic logic q_out(logic cp_i, logic e_i, logic te_i);
     logic temp;
     temp = cp_i & e_i;
-    if(te_i==1)
-      q_out =cp_i;
-    else
-      q_out =temp;
+    if (te_i == 1) q_out = cp_i;
+    else q_out = temp;
   endfunction
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-Procedural
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  initial
-  begin
+  //Generate dump.vcd file for waveform
+  initial begin
     $dumpfile("dump.vcd");
     $dumpvars;
   end
 
-  initial
-  begin
-    repeat(200)
-    begin
-      cp_i=$urandom;
-      te_i=$urandom;
-      e_i =$urandom;
-      q_model = q_out(cp_i,e_i,te_i);
+  initial begin
+    repeat (200) begin
+      // Randomize data and call reference model function
+      cp_i = $urandom;
+      te_i = $urandom;
+      e_i = $urandom;
+      q_model = q_out(cp_i, e_i, te_i);
       #2;
-      if(q_o==q_model)
-        pass++;
-      else
-        fail++;
+      // Compare actual data with expected data that come from reference model
+      if (q_o == q_model) pass++;  // counting match time
+      else fail++;
     end
-    $display("%d Time Passed",pass);
-    $display("%d Time Failed",fail);
+    // Dispaly data to know how many time data is passed and failed 
+    $display("%d Time Passed", pass);
+    $display("%d Time Failed", fail);
     #100 $finish;
   end
 endmodule
