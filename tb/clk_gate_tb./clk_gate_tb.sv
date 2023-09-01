@@ -12,12 +12,13 @@ module tb_clk_gate;
   logic te_i;  //Test enable
   logic q_o;  //Output
   logic q_model;
-  int   pass = 0;
-  int   fail = 0;
+  int   pass = 0;//Declear a signal and initializing with 0
+  int   fail = 0;//Declear a signal and initializing with 0
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-RTL
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
+  //Dut instantiation
   clk_gate u_clk_gate (
       .cp_i(cp_i),
       .e_i (e_i),
@@ -29,7 +30,7 @@ module tb_clk_gate;
   //-Method
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  // make a reference Model using function
+  //Make a reference Model using function
   function automatic logic q_out(logic cp_i, logic e_i, logic te_i);
     logic temp;
     temp = cp_i & e_i;
