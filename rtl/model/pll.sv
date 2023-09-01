@@ -1,6 +1,3 @@
-// Phase Lock Loop circuit model
-// ### Author : Foez Ahmed (foez.official@gmail.com)
-
 module pll (
     input logic bypass_i,
 
@@ -9,8 +6,8 @@ module pll (
 
     output logic lock_o,
 
-    input  logic [7:0] fbdiv_i,
-    output logic       fvco_o,
+    input  logic [15:0] fbdiv_i,
+    output logic        fvco_o,
 
     input  logic [7:0] fdiv_i,
     output logic       fout_o
@@ -19,7 +16,7 @@ module pll (
   realtime old_fref_tick = 0ns;
   realtime new_fref_tick = 100ns;
   realtime fref_time_period = 0;
-  realtime fvco_time_period = 0;
+  realtime fvco_time_period = 1us;
 
   logic fout_ff;
 
@@ -33,32 +30,19 @@ module pll (
     repeat (rpt) @(posedge fref_i);
     new_fref_tick = $realtime;
     fref_time_period = (new_fref_tick - old_fref_tick);
-    if (fvco_time_period == 0) begin
-      fvco_time_period <= (fref_time_period / refdiv_i);
-    end else begin
-      fvco_time_period = fvco_time_period * 0.99 + 0.01 * (fref_time_period / fbdiv_i);
-    end
+    fvco_time_period = fvco_time_period * 0.9 + 0.1 * (fref_time_period / fbdiv_i);
     old_fref_tick = new_fref_tick;
   end
 
   always @(posedge fvco_o) begin
-    if (fvco_time_period == 0) begin
-      lock_o <= '0;
-    end else begin
-      lock_o <= (fref_time_period / (fvco_time_period * fbdiv_i)) inside {[0.999 : 1.001]};
-    end
+    lock_o <= (fref_time_period / (fvco_time_period * fbdiv_i)) inside {[0.999 : 1.001]};
   end
 
   always begin
-    if (fvco_time_period == 0) begin
-      @(fref_i);
-      fvco_o <= fref_i;
-    end else begin
-      fvco_o <= '1;
-      #(fvco_time_period / 2);
-      fvco_o <= '0;
-      #(fvco_time_period / 2);
-    end
+    fvco_o <= '1;
+    #(fvco_time_period / 2);
+    fvco_o <= '0;
+    #(fvco_time_period / 2);
   end
 
   always begin
@@ -72,12 +56,6 @@ module pll (
     repeat (lc) @(posedge fvco_o);
   end
 
-`ifdef DEBUG
-  always #1us begin
-    $display("I:%t O:%t", (fref_time_period / fref_i), fvco_time_period);
-  end
-`endif  // DEBUG
-
-  assign fout_o = bypass_i ? (fref_i) : ((fdiv_i == 1) ? fvco_o : fout_ff);
+  assign fout_o = (fdiv_i == 1) ? fvco_o : fout_ff;
 
 endmodule

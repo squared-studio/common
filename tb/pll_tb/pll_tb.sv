@@ -42,9 +42,9 @@ module pll_tb;
   logic       bypass_i = 0;
   logic [7:0] refdiv_i = 1;
   logic       lock_o;
-  logic [7:0] fbdiv_i = 32;
+  logic [15:0] fbdiv_i = 1;
   logic       fvco_o;
-  logic [7:0] fdiv_i = 32;
+  logic [7:0] fdiv_i = 1;
   logic       fout_o;
 
 
@@ -73,7 +73,9 @@ module pll_tb;
 
   initial begin
     start_fref_i();
-    #100us;
+
+    wait(lock_o == 1);
+    #10us;
     $finish;
   end
 
