@@ -1,6 +1,3 @@
-// Phase Lock Loop circuit model
-// ### Author : Foez Ahmed (foez.official@gmail.com)
-
 module pll (
     input logic bypass_i,
 
@@ -19,7 +16,7 @@ module pll (
   realtime old_fref_tick = 0ns;
   realtime new_fref_tick = 100ns;
   realtime fref_time_period = 0;
-  realtime fvco_time_period = 0;
+  realtime fvco_time_period = 1us;
 
   logic fout_ff;
 
@@ -38,23 +35,14 @@ module pll (
   end
 
   always @(posedge fvco_o) begin
-    if (fvco_time_period == 0) begin
-      lock_o <= '0;
-    end else begin
-      lock_o <= (fref_time_period / (fvco_time_period * fbdiv_i)) inside {[0.999 : 1.001]};
-    end
+    lock_o <= (fref_time_period / (fvco_time_period * fbdiv_i)) inside {[0.999 : 1.001]};
   end
 
   always begin
-    if (fvco_time_period == 0) begin
-      @(fref_i);
-      fvco_o <= fref_i;
-    end else begin
-      fvco_o <= '1;
-      #(fvco_time_period / 2);
-      fvco_o <= '0;
-      #(fvco_time_period / 2);
-    end
+    fvco_o <= '1;
+    #(fvco_time_period / 2);
+    fvco_o <= '0;
+    #(fvco_time_period / 2);
   end
 
   always begin
