@@ -1,3 +1,6 @@
+// Phase Lock Loop circuit model
+// ### Author : Foez Ahmed (foez.official@gmail.com)
+
 module pll (
     input logic bypass_i,
 
@@ -16,7 +19,7 @@ module pll (
   realtime old_fref_tick = 0ns;
   realtime new_fref_tick = 100ns;
   realtime fref_time_period = 0;
-  realtime fvco_time_period = 1us;
+  realtime fvco_time_period = 0;
 
   logic fout_ff;
 
@@ -30,19 +33,32 @@ module pll (
     repeat (rpt) @(posedge fref_i);
     new_fref_tick = $realtime;
     fref_time_period = (new_fref_tick - old_fref_tick);
-    fvco_time_period = fvco_time_period * 0.99 + 0.01 * (fref_time_period / fbdiv_i);
+    if (fvco_time_period == 0) begin
+      fvco_time_period <= (fref_time_period / refdiv_i);
+    end else begin
+      fvco_time_period = fvco_time_period * 0.99 + 0.01 * (fref_time_period / fbdiv_i);
+    end
     old_fref_tick = new_fref_tick;
   end
 
   always @(posedge fvco_o) begin
-    lock_o <= (fref_time_period / (fvco_time_period * fbdiv_i)) inside {[0.999 : 1.001]};
+    if (fvco_time_period == 0) begin
+      lock_o <= '0;
+    end else begin
+      lock_o <= (fref_time_period / (fvco_time_period * fbdiv_i)) inside {[0.999 : 1.001]};
+    end
   end
 
   always begin
-    fvco_o <= '1;
-    #(fvco_time_period / 2);
-    fvco_o <= '0;
-    #(fvco_time_period / 2);
+    if (fvco_time_period == 0) begin
+      @(fref_i);
+      fvco_o <= fref_i;
+    end else begin
+      fvco_o <= '1;
+      #(fvco_time_period / 2);
+      fvco_o <= '0;
+      #(fvco_time_period / 2);
+    end
   end
 
   always begin
@@ -62,6 +78,6 @@ module pll (
   end
 `endif  // DEBUG
 
-  assign fout_o = (fdiv_i == 1) ? fvco_o : fout_ff;
+  assign fout_o = bypass_i ? (fref_i) : ((fdiv_i == 1) ? fvco_o : fout_ff);
 
 endmodule
