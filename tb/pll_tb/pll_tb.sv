@@ -40,11 +40,11 @@ module pll_tb;
   `CREATE_CLK(fref_i, 5ns, 5ns)
 
   logic       bypass_i = 0;
-  logic [7:0] refdiv_i = 1;
+  logic [7:0] refdiv_i = 2;
   logic       lock_o;
-  logic [15:0] fbdiv_i = 1;
+  logic [15:0] fbdiv_i = 60;
   logic       fvco_o;
-  logic [7:0] fdiv_i = 1;
+  logic [7:0] fdiv_i = 3;
   logic       fout_o;
 
 

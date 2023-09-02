@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
-[*] Fri Sep 01 13:02:01 2023
+[*] Sat Sep 02 06:06:58 2023
 [*]
 [dumpfile] "C:\Users\foeza\Documents\SystemVerilog\tb\pll_tb\dump.vcd"
-[dumpfile_mtime] "Fri Sep 01 13:01:00 2023"
-[dumpfile_size] 32005305
+[dumpfile_mtime] "Sat Sep 02 06:06:16 2023"
+[dumpfile_size] 1214230
 [savefile] "C:\Users\foeza\Documents\SystemVerilog\tb\pll_tb\wave.gtkw"
 [timestart] 0
 [size] 1920 1009
 [pos] -9 -9
-*-24.477358 108700000 51350691 160390062 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-20.746098 10745000 51350691 160390062 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [sst_width] 197
 [signals_width] 212
 [sst_expanded] 1
