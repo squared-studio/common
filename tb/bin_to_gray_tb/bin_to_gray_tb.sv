@@ -54,7 +54,6 @@ module bin_to_gray_tb;
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   initial begin
-
     static int fail = 0;  // Deleare a signal for counting how many time data are matching
     static int pass = 0;  // Declare a signal for counting how many time data are mismatching
 
