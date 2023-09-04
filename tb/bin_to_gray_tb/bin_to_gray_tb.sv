@@ -21,7 +21,7 @@ module bin_to_gray_tb;
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  // decleare two singals for input and output
+  // Decleare two singals for input and output
   logic [DataWidth-1:0] data_in_i;
   logic [DataWidth-1:0] data_out_o;
 
