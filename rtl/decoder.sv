@@ -16,9 +16,9 @@ module decoder #(
   demux #(
       .NUM_ELEM  (NUM_WIRE)
   ) u_demux (
-      .sel_i(a_i),
-      .input_i(a_valid_i),
-      .outputs_o(d_o)
+      .s_i(a_i),
+      .i_i(a_valid_i),
+      .o_o(d_o)
   );
 
 endmodule
