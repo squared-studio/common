@@ -5,6 +5,7 @@ A Gray to Binary code converter is a logical circuit that is used to convert gra
 
 [more info](https://www.geeksforgeeks.org/code-converters-binary-to-from-gray-code/)
 
+### Signal Description
 | Signal  |  Direction  | Width  | Description |
 | --- | ----------- |----------- |----------- |
 |data_in_i[0] | input| 1 |1st bit of data_in_i
