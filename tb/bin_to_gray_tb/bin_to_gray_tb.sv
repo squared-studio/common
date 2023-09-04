@@ -14,7 +14,7 @@ module bin_to_gray_tb;
   //-LOCALPARAMS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  //Declare a local parameter that defines the depth of input and output data
+  // Declare a local parameter that defines the depth of input and output data
   localparam int DataWidth = 11;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,7 +41,7 @@ module bin_to_gray_tb;
   //-METHODS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  // Make reference model
+  // Make reference model using function
   function automatic logic [DataWidth:0] dout_bin2gray(logic [DataWidth-1:0] data_in);
     dout_bin2gray[DataWidth-1] = data_in[DataWidth-1];
     for (int i = 0; i < DataWidth - 1; i++) begin
@@ -55,21 +55,21 @@ module bin_to_gray_tb;
 
   initial begin
 
-    static int fail = 0;
-    static int pass = 0;
+    static int fail = 0;  // Deleare a signal for counting how many time data are matching
+    static int pass = 0;  // Declare a signal for counting how many time data are mismatching
 
     for (int i = 0; i < 2 ** DataWidth; i++) begin
-      data_in_i <= $urandom;
-      #1;
-      // Calling the function and compare actual data with expected data
+      data_in_i <= $urandom;  //Randomizing the input data
+      #1;                     // added 1 time unit delay
+                              // Calling the function and compare actual data with expected data
       if (data_out_o != dout_bin2gray(data_in_i)) fail++;
       else pass++;
     end
-
+    // Display passed and failed ratio
     result_print(!fail, $sformatf("data conversion %0d/%0d", pass, pass + fail));
 
     #100;
-    $finish;
+    $finish;  // Terminate the simulation
   end
 
 endmodule
