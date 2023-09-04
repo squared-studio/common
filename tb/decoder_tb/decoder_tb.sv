@@ -6,93 +6,108 @@
 
 module decoder_tb;
 
-////////////////////////////////////////////////////////////////////////////////////////////
-//-INCLUDE
-////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////
+  //-INCLUDE
+  ////////////////////////////////////////////////////////////////////////////////////////////
 
-`include "../../include/vip/tb_ess.sv"
+  `include "vip/tb_ess.sv"
 
-///////////////////////////////////////////////////////////////////////////////////////////
-//-LOCALPARAMS
-///////////////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////////////
+  //-LOCALPARAMS
+  ///////////////////////////////////////////////////////////////////////////////////////////
 
-localparam int NUM_WIRE = 4;
+  localparam int NumWire = 5;
 
-//////////////////////////////////////////////////////////////////////////////////////////
-//-SIGNALS
-//////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////
+  //-SIGNALS
+  //////////////////////////////////////////////////////////////////////////////////////////
 
-logic [$clog2(NUM_WIRE)-1:0] a_i;
-logic                        a_valid_i;
-logic [        NUM_WIRE-1:0] d_o;
+  `CREATE_CLK(clk_i, 2ns, 2ns)
+  logic [$clog2(NumWire)-1:0] a_i = '0;
+  logic                       a_valid_i = '0;
+  logic [        NumWire-1:0] d_o;
 
-/////////////////////////////////////////////////////////////////////////////////////////
-//-VARIABLES
-/////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////
+  //-VARIABLES
+  /////////////////////////////////////////////////////////////////////////////////////////
 
-logic [$clog2(NUM_WIRE)-1:0] a_i_m;         // Input Port for Ref. Model
-logic                        a_valid_i_m;   // Enable/Valid Port for Ref. Model
-logic [        NUM_WIRE-1:0] d_o_m;         // Output Port for Ref. Model
-int                          error = 0;     // Error Indicator
+  logic [        NumWire-1:0] d_o_m;      // Output Port for Ref. Model
+  int                         error = 0;  // Error Indicator
 
-////////////////////////////////////////////////////////////////////////////////////////
-//-RTLS
-////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////
+  //-RTLS
+  ////////////////////////////////////////////////////////////////////////////////////////
 
-decoder #(
-    .NUM_WIRE(NUM_WIRE)
-) u_decoder (
-    .a_i      (       a_i),
-    .a_valid_i( a_valid_i),
-    .d_o      (       d_o)
-);
+  decoder #(
+      .NUM_WIRE(NumWire)
+  ) u_decoder (
+      .a_i      (a_i),
+      .a_valid_i(a_valid_i),
+      .d_o      (d_o)
+  );
 
-///////////////////////////////////////////////////////////////////////////////////////
-//-PROCEDURALS
-///////////////////////////////////////////////////////////////////////////////////////
-
-initial begin : decoder_test
-
-  for (int k = 0; k <= 10; k++) begin
-    $display("Test ------------------------------------- %d", k);
-
-    // Generate Random Test Values
-    a_i <= $urandom_range(0, $clog2(NUM_WIRE));
-    a_valid_i <= $urandom_range(0, 1);
-    #20;
-
-    // Drive the Randomly Generated Values into Ref. Model
-    a_i_m <= a_i;
-    a_valid_i_m <= a_valid_i;
-    d_o_m <= 0;
-    #20;
-    $display("a_i = %b\n", a_i);
-    $display("a_valid_i = %b\n", a_valid_i);
-    $display("a_i_m = %b\n", a_i_m);
-    $display("a_valid_i_m = %b\n", a_valid_i_m);
-
-    // Ref. Model
-    d_o_m[a_i_m] <= a_valid_i_m;
-    #20;
-
-    $display("d_o = %b\n", d_o);
-    $display("d_o_m = %b\n", d_o_m);
-
-    // Compare Outputs from DUT with Outputs from Ref. Model
-    for (int i = 0; i < NUM_WIRE; i++) begin
-      if (d_o[i] != d_o_m[i]) begin
-        error++;
-      end
-    end
-    $display("Error = %d", error);
-    #20;
-
+  // Reference Model for Decoder
+  always_comb begin : ref_decoder
+    d_o_m = '0;
+    d_o_m[a_i] = a_valid_i;
   end
 
-  // Display Whether the Test passes or not
-  result_print(error == 0, "decoder is passed");
-  #20;
-  $finish;
-end
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //-METHODS
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+
+  // Driver for randomized stimuluses
+  task static drive();
+    fork
+      forever
+      @(posedge clk_i) begin
+        a_i <= $urandom_range(0, $clog2(NumWire));
+        a_valid_i <= $urandom_range(0, 1);
+      end
+    join_none
+  endtask
+
+  // Monitoring and Scoreboard
+  task static monitor_scoreboard();
+    fork
+      forever
+      @(posedge clk_i) begin
+        for (int i = 0; i < NumWire; i++) begin
+          if (d_o[i] !== d_o_m[i]) begin
+            error++;
+          end
+        end
+      end
+    join_none
+  endtask
+
+  ///////////////////////////////////////////////////////////////////////////////////////
+  //-PROCEDURALS
+  ///////////////////////////////////////////////////////////////////////////////////////
+
+  initial begin : decoder_test
+    start_clk_i();
+    drive();
+    monitor_scoreboard();
+
+    // Repeating the Test for N number of test cases - - - - > N = 32
+    for (int k = 0; k <= 50; k++) begin
+      @(posedge clk_i);
+
+      // For Debugging purpose
+`ifdef DEBUG
+      $display("Test ------------------------------------- %d", k);
+      $display("a_i = %b\n", a_i);
+      $display("a_valid_i = %b\n", a_valid_i);
+      $display("d_o = %b\n", d_o);
+      $display("d_o_m = %b\n", d_o_m);
+      $display("Error = %d", error);
+`endif  // DEBUG
+    end
+
+    // Display Whether the Test passes or not
+    result_print(error == 0, "decoder is passed");
+    $finish;
+  end
 
 endmodule
