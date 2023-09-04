@@ -7,13 +7,13 @@ module clk_gate_tb;
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  logic cp_i;  // Clock pulse
-  logic e_i;  // Enable
-  logic te_i;  // Test enable
-  logic q_o;  // Output
+  logic cp_i;     // Clock pulse
+  logic e_i;      // Enable
+  logic te_i;     // Test enable
+  logic q_o;      // Output
   logic q_model;  // Store the reference model data
-  int   pass = 0;  // Declare a signal and initializing with 0
-  int   fail = 0;  // Declare a signal and initializing with 0
+  int   pass = 0; // Declare a signal and initializing with 0
+  int   fail = 0; // Declare a signal and initializing with 0
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-RTL
