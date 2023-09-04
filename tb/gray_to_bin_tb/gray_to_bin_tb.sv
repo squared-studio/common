@@ -1,3 +1,4 @@
+// Simple testbench for Gray to Binary code converter
 // ### Author : Razu Ahamed (engr.razu.ahamed@gmail.com)
 
 module gray_to_bin_tb;
