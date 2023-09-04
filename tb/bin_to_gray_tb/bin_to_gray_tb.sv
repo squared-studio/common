@@ -21,7 +21,7 @@ module bin_to_gray_tb;
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  // decleare two singals for input and output
+  // Decleare two singals for input and output
   logic [DataWidth-1:0] data_in_i;
   logic [DataWidth-1:0] data_out_o;
 
@@ -60,8 +60,8 @@ module bin_to_gray_tb;
 
     for (int i = 0; i < 2 ** DataWidth; i++) begin
       data_in_i <= $urandom;  //Randomizing the input data
-      #1;                     // added 1 time unit delay
-                              // Calling the function and compare actual data with expected data
+      #1;  // added 1 time unit delay
+           // Calling the function and compare actual data with expected data
       if (data_out_o != dout_bin2gray(data_in_i)) fail++;
       else pass++;
     end
