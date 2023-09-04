@@ -7,20 +7,21 @@ module gray_to_bin_tb;
   //-IMPORTS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
+  // include tb_ess.sv file
   `include "vip/tb_ess.sv"
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-LOCALPARAMS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  //declear a local parameter that define depth of input and output data
+  // Declare a local parameter that defines the depth of input and output data
   localparam int DataWidth = 11;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  // decleare two singals for input and output
+  // Decleare two singals for input and output
   logic [DataWidth-1:0] data_in_i;
   logic [DataWidth-1:0] data_out_o;
 
@@ -53,18 +54,18 @@ module gray_to_bin_tb;
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   initial begin
-    static int fail = 0;
-    static int pass = 0;
+    static int fail = 0;  // Deleare a signal for counting how many time data are matching
+    static int pass = 0;  // Declare a signal for counting how many time data are mismatching
 
     for (int i = 0; i < 2 ** DataWidth; i++) begin
-      data_in_i <= $urandom;
-      #1;
+      data_in_i <= $urandom;  //Randomizing the input data
+      #1;                     // added 1 time unit delay
       // Calling the function and compare actual data with expected data
       if (data_out_o !== data_out_gray_to_bin(data_in_i)) fail++;
       else pass++;
     end
-
+    // Display passed and failed ratio
     result_print(!fail, $sformatf("data conversion %0d/%0d", pass, pass + fail));
-    $finish;
+    $finish;  // Terminate the simulation
   end
 endmodule
