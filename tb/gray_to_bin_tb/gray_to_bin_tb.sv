@@ -12,13 +12,14 @@ module gray_to_bin_tb;
   //-LOCALPARAMS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
+  //declear a local parameter that define depth of input and output data
   localparam int DataWidth = 11;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+  // decleare two singals for input and output
   logic [DataWidth-1:0] data_in_i;
   logic [DataWidth-1:0] data_out_o;
 
@@ -26,6 +27,7 @@ module gray_to_bin_tb;
   //-RTLS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
+  // Instantiate the DUT
   gray_to_bin #(
       .DATA_WIDTH(DataWidth)
   ) gray_to_bin_dut (
@@ -37,6 +39,7 @@ module gray_to_bin_tb;
   //-METHODS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
+  // Make reference model
   function automatic logic [DataWidth-1:0] data_out_gray_to_bin(logic [DataWidth-1:0] data_in);
     data_out_gray_to_bin[DataWidth-1] = data_in[DataWidth-1];
     for (int i = DataWidth - 2; i >= 0; i--) begin
@@ -49,21 +52,18 @@ module gray_to_bin_tb;
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   initial begin
-
     static int fail = 0;
     static int pass = 0;
 
     for (int i = 0; i < 2 ** DataWidth; i++) begin
       data_in_i <= $urandom;
       #1;
+      // Calling the function and compare actual data with expected data
       if (data_out_o !== data_out_gray_to_bin(data_in_i)) fail++;
       else pass++;
     end
 
     result_print(!fail, $sformatf("data conversion %0d/%0d", pass, pass + fail));
-
     $finish;
-
   end
-
 endmodule
