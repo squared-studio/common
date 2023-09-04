@@ -1,3 +1,4 @@
+// Simple testbench for Binary to Gray code converter
 // ### Author : Khadija Yeasmin Fariya (fariya.khadijayeasmin@gmail.com)
 
 module bin_to_gray_tb;
