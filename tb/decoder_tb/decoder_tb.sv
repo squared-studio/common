@@ -31,7 +31,7 @@ module decoder_tb;
   //-VARIABLES
   /////////////////////////////////////////////////////////////////////////////////////////
 
-  logic [        NumWire-1:0] d_o_m;      // Output Port for Ref. Model
+  logic [        NumWire-1:0] d_o_m;  // Output Port for Ref. Model
   int                         error = 0;  // Error Indicator
 
   ////////////////////////////////////////////////////////////////////////////////////////
@@ -86,6 +86,7 @@ module decoder_tb;
   ///////////////////////////////////////////////////////////////////////////////////////
 
   initial begin : decoder_test
+
     start_clk_i();
     drive();
     monitor_scoreboard();
@@ -97,10 +98,10 @@ module decoder_tb;
       // For Debugging purpose
 `ifdef DEBUG
       $display("Test ------------------------------------- %d", k);
-      $display("a_i = %b\n", a_i);
-      $display("a_valid_i = %b\n", a_valid_i);
-      $display("d_o = %b\n", d_o);
-      $display("d_o_m = %b\n", d_o_m);
+      $display("a_i = 0b%b", a_i);
+      $display("a_valid_i = 0b%b", a_valid_i);
+      $display("d_o = 0b%b", d_o);
+      $display("d_o_m = 0b%b", d_o_m);
       $display("Error = %d", error);
 `endif  // DEBUG
     end
