@@ -378,3 +378,20 @@ create_rtl:
 				> ./rtl/$(RTL).sv \
 		)
 	@code ./rtl/$(RTL).sv
+
+####################################################################################################
+# Update Doc List
+####################################################################################################
+
+update_doc_list:
+	@cat readme_base.md > readme.md
+	@echo "" >> readme.md
+	@echo "" >> readme.md
+	@echo "" >> readme.md
+	@echo "## RTL" >> readme.md
+	@$(foreach file, $(shell find ./docs -name "*.md"), make get_doc_header FILE=$(file);)
+	@echo "" >> readme.md
+  
+get_doc_header:
+	@$(eval HEADER := $(shell cat $(FILE) | grep -E "# " | sed "s/^# //g"))
+	@echo "[$(HEADER)]($(FILE))<br>" >> readme.md
