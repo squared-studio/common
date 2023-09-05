@@ -23,7 +23,7 @@ make simulate TOP=fifo_tb
 
 ## RTL
 [Binary to Gray Code Converter](./docs/rtl/bin_to_gray.md)<br>
-[](./docs/rtl/clk_gate.md)<br>
+[Clock Gate ](./docs/rtl/clk_gate.md)<br>
 [Gray to Binary Code Converter](./docs/rtl/gray_to_bin.md)<br>
 [Phase Lock Loop (PLL)](./docs/rtl/pll.md)<br>
 

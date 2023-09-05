@@ -2,6 +2,7 @@
 ci_vivado_run:
 	@> ___CI_REPORT;
 	@make vivado TOP=bin_to_gray_tb CONFIG=default
+	@make vivado TOP=clk_gate_tb CONFIG=default	
 	@make vivado TOP=decoder_tb CONFIG=default
 	@make vivado TOP=encoder_tb CONFIG=default
 	@make vivado TOP=fifo_tb CONFIG=default
