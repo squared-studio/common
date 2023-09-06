@@ -387,9 +387,17 @@ update_doc_list:
 	@cat readme_base.md > readme.md
 	@echo "" >> readme.md
 	@echo "## RTL" >> readme.md
-	@$(foreach file, $(shell find ./docs/rtl -name "*.md"), make get_doc_header FILE=$(file);)
+	@$(foreach file, $(shell find ./docs/rtl -name "*.md"), make get_rtl_doc_header FILE=$(file);)
+	@echo "" >> readme.md
+	@echo "## INCLUDE" >> readme.md
+	@$(foreach file, $(shell find ./docs/include -name "*.md"), make get_inc_doc_header FILE=$(file);)
 	@echo "" >> readme.md
   
-get_doc_header:
+get_rtl_doc_header:
 	@$(eval HEADER := $(shell cat $(FILE) | grep -E "# " | sed "s/^# //g"))
 	@echo "[$(HEADER)]($(FILE))<br>" >> readme.md
+  
+get_inc_doc_header:
+	@$(eval HEADER := $(shell echo $(FILE) | sed "s/\.\/docs\/include\///g" | sed "s/\.md$$//g"))
+	@echo "[$(HEADER)]($(FILE))<br>" >> readme.md
+
