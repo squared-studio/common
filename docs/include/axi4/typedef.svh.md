@@ -7,7 +7,7 @@ Suppose we want to define an AXI4 typedef, calling it `my_axi`. Here:
 |ADDR_WIDTH     |32         |Width of Address bus in AW & AR channels
 |DATA_WIDTH     |512        |Width of Data bus in W & R channels
 |ID_R_WIDTH     |5          |Width of ID bus in AR & R channels
-|ID_W_WIDTH     |4          |Width of ID bus in Aw & B channels
+|ID_W_WIDTH     |4          |Width of ID bus in AW & B channels
 |USER_REQ_WIDTH |10         |Width of User Defined signals for Request
 |USER_DATA_WIDTH|11         |Width of User Defined signals for Data
 |USER_RESP_WIDTH|12         |Width of User Defined signals for Response
