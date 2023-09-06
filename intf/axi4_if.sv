@@ -4,18 +4,18 @@
 `include "vip/bus_dvr_mon.svh"
 
 interface axi4_if #(
-    parameter type req_t = logic,
-    parameter type rsp_t = logic
+    parameter type req_t  = logic,
+    parameter type resp_t = logic
 ) (
     input logic clk_i,
     input logic arst_ni
 );
 
-  req_t req;
-  rsp_t rsp;
+  req_t  req;
+  resp_t resp;
 
-  `AXI4_T(axi, $bits(req.ar.addr), $bits(rsp.r.data), $bits(req.ar.id), $bits(req.aw.id),
-          $bits(req.aw.user), $bits(req.w.user), $bits(rsp.b.user))
+  `AXI4_T(axi, $bits(req.ar.addr), $bits(resp.r.data), $bits(req.ar.id), $bits(req.aw.id),
+          $bits(req.aw.user), $bits(req.w.user), $bits(resp.b.user))
 
   logic                          ACLK;
   logic                          ARESETn;
@@ -41,9 +41,9 @@ interface axi4_if #(
   logic [                   0:0] WVALID;
   logic [                   0:0] WREADY;
 
-  logic [   $bits(rsp.b.id)-1:0] BID;
+  logic [  $bits(resp.b.id)-1:0] BID;
   logic [                   1:0] BRESP;
-  logic [ $bits(rsp.b.user)-1:0] BUSER;
+  logic [$bits(resp.b.user)-1:0] BUSER;
   logic [                   0:0] BVALID;
   logic [                   0:0] BREADY;
 
@@ -61,11 +61,11 @@ interface axi4_if #(
   logic [                   0:0] ARVALID;
   logic [                   0:0] ARREADY;
 
-  logic [   $bits(rsp.r.id)-1:0] RID;
-  logic [ $bits(rsp.r.data)-1:0] RDATA;
+  logic [  $bits(resp.r.id)-1:0] RID;
+  logic [$bits(resp.r.data)-1:0] RDATA;
   logic [                   1:0] RRESP;
   logic [                   0:0] RLAST;
-  logic [ $bits(rsp.r.user)-1:0] RUSER;
+  logic [$bits(resp.r.user)-1:0] RUSER;
   logic [                   0:0] RVALID;
   logic [                   0:0] RREADY;
 
@@ -84,19 +84,19 @@ interface axi4_if #(
   assign AWREGION = req.aw.region;
   assign AWUSER   = req.aw.user;
   assign AWVALID  = req.aw_valid;
-  assign AWREADY  = rsp.aw_ready;
+  assign AWREADY  = resp.aw_ready;
 
   assign WDATA    = req.w.data;
   assign WSTRB    = req.w.strb;
   assign WLAST    = req.w.last;
   assign WUSER    = req.w.user;
   assign WVALID   = req.w_valid;
-  assign WREADY   = rsp.w_ready;
+  assign WREADY   = resp.w_ready;
 
-  assign BID      = rsp.b.id;
-  assign BRESP    = rsp.b.resp;
-  assign BUSER    = rsp.b.user;
-  assign BVALID   = rsp.b_valid;
+  assign BID      = resp.b.id;
+  assign BRESP    = resp.b.resp;
+  assign BUSER    = resp.b.user;
+  assign BVALID   = resp.b_valid;
   assign BREADY   = req.b_ready;
 
   assign ARID     = req.ar.id;
@@ -111,20 +111,50 @@ interface axi4_if #(
   assign ARREGION = req.ar.region;
   assign ARUSER   = req.ar.user;
   assign ARVALID  = req.ar_valid;
-  assign ARREADY  = rsp.ar_ready;
+  assign ARREADY  = resp.ar_ready;
 
-  assign RID      = rsp.r.id;
-  assign RDATA    = rsp.r.data;
-  assign RRESP    = rsp.r.resp;
-  assign RLAST    = rsp.r.last;
-  assign RUSER    = rsp.r.user;
-  assign RVALID   = rsp.r_valid;
+  assign RID      = resp.r.id;
+  assign RDATA    = resp.r.data;
+  assign RRESP    = resp.r.resp;
+  assign RLAST    = resp.r.last;
+  assign RUSER    = resp.r.user;
+  assign RVALID   = resp.r_valid;
   assign RREADY   = req.r_ready;
 
-  `HANDSHAKE_SEND_RECV_LOOK(aw, axi_aw_chan_t, clk_i, req.aw, req.aw_valid, rsp.aw_ready)
-  `HANDSHAKE_SEND_RECV_LOOK(w, axi_w_chan_t, clk_i, req.w, req.w_valid, rsp.w_ready)
-  `HANDSHAKE_SEND_RECV_LOOK(b, axi_b_chan_t, clk_i, rsp.b, rsp.b_valid, req.b_ready)
-  `HANDSHAKE_SEND_RECV_LOOK(ar, axi_ar_chan_t, clk_i, req.ar, req.ar_valid, rsp.ar_ready)
-  `HANDSHAKE_SEND_RECV_LOOK(r, axi_r_chan_t, clk_i, rsp.r, rsp.r_valid, req.r_ready)
+  `HANDSHAKE_SEND_RECV_LOOK(aw, axi_aw_chan_t, clk_i, req.aw, req.aw_valid, resp.aw_ready)
+  `HANDSHAKE_SEND_RECV_LOOK(w, axi_w_chan_t, clk_i, req.w, req.w_valid, resp.w_ready)
+  `HANDSHAKE_SEND_RECV_LOOK(b, axi_b_chan_t, clk_i, resp.b, resp.b_valid, req.b_ready)
+  `HANDSHAKE_SEND_RECV_LOOK(ar, axi_ar_chan_t, clk_i, req.ar, req.ar_valid, resp.ar_ready)
+  `HANDSHAKE_SEND_RECV_LOOK(r, axi_r_chan_t, clk_i, resp.r, resp.r_valid, req.r_ready)
+
+  task automatic manager_reset();
+    disable send_aw;
+    disable send_w;
+    disable recv_b;
+    disable send_ar;
+    disable recv_r;
+    req <= '0;
+  endtask
+
+  task automatic subordinate_reset();
+    disable recv_aw;
+    disable recv_w;
+    disable send_b;
+    disable recv_ar;
+    disable send_r;
+    resp <= '0;
+  endtask
+
+  task automatic monitor_reset();
+    disable look_aw;
+    disable look_w;
+    disable look_b;
+    disable look_ar;
+    disable look_r;
+  endtask
+
+  task automatic clk_delay();
+    @(posedge clk_i);
+  endtask
 
 endinterface

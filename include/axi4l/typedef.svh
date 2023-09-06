@@ -36,7 +36,7 @@
     logic             r_ready  ;                                                                   \
   } ``__NM__``;                                                                                    \
 
-`define AXI4L_RSP_T(__NM__, __B_CHAN_T__, __R_CHAN_T__)                                            \
+`define AXI4L_RESP_T(__NM__, __B_CHAN_T__, __R_CHAN_T__)                                           \
   typedef struct packed {                                                                          \
     logic            aw_ready ;                                                                    \
     logic            w_ready  ;                                                                    \
@@ -54,7 +54,7 @@
 // *_ar_chan_t
 // *_r_chan_t
 // *_req_t
-// *_rsp_t
+// *_resp_t
 // see doc for more details
 `define AXI4L_T(__NM__, __AW__, __DW__)                                                            \
   `AXI4L_AX_CHAN_T(``__NM__``_aw_chan_t, ``__AW__``)                                               \
@@ -63,5 +63,5 @@
   `AXI4L_AX_CHAN_T(``__NM__``_ar_chan_t, ``__AW__``)                                               \
   `AXI4L_R_CHAN_T(``__NM__``_r_chan_t, ``__DW__``)                                                 \
   `AXI4L_REQ_T(``__NM__``_req_t, ``__NM__``_aw_chan_t, ``__NM__``_w_chan_t, ``__NM__``_ar_chan_t)  \
-  `AXI4L_RSP_T(``__NM__``_rsp_t, ``__NM__``_b_chan_t, ``__NM__``_r_chan_t)                         \
+  `AXI4L_RESP_T(``__NM__``_resp_t, ``__NM__``_b_chan_t, ``__NM__``_r_chan_t)                       \
 

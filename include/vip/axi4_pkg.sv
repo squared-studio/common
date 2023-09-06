@@ -62,7 +62,7 @@ package axi4_pkg;
 
   endclass
 
-  class axi4_rsp_item #(
+  class axi4_resp_item #(
       parameter int ADDR_WIDTH = 0,
       parameter int DATA_WIDTH = 0,
       parameter int ID_R_WIDTH = 0,

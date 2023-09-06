@@ -57,5 +57,5 @@ typedef struct packed {
   logic            ar_ready  ;
   my_axi_r_chan_t  r         ;  // 'my_axi_r_chan_t' is from previous typedef
   logic            r_valid   ;
-} my_axi_rsp_t;  // 'my_axi_rsp_t' is derived from 'NAME'
+} my_axi_resp_t;  // 'my_axi_resp_t' is derived from 'NAME'
 ```
