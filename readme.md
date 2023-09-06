@@ -27,3 +27,7 @@ make simulate TOP=fifo_tb
 [Gray to Binary Code Converter](./docs/rtl/gray_to_bin.md)<br>
 [Phase Lock Loop (PLL)](./docs/rtl/pll.md)<br>
 
+## INCLUDE
+[axi4/typedef.svh](./docs/include/axi4/typedef.svh.md)<br>
+[axi4l/typedef.svh](./docs/include/axi4l/typedef.svh.md)<br>
+

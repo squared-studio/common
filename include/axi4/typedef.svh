@@ -1,14 +1,12 @@
+// TYPE DEFINIATION FOR AXI4 LITE CHANNELS AND REQUEST-RESPONSE STRUCTURE
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
-// INTERNAL MACRO FOR THIS FILE
 `define AXI4_R_USER_T(__NM__, __UDTAW__, __URSPW__)                                                \
   typedef struct packed {                                                                          \
     logic [``__UDTAW__``-1:0] data ;                                                               \
     logic [``__URSPW__``-1:0] resp ;                                                               \
   } ``__NM__``;                                                                                    \
 
-
-// INTERNAL MACRO FOR THIS FILE
 `define AXI4_AX_CHAN_T(__NM__, __IW__, __AW__, __UW__)                                             \
   typedef struct packed {                                                                          \
     logic [``__IW__``-1:0] id     ;                                                                \
@@ -24,8 +22,6 @@
     logic [``__UW__``-1:0] user   ;                                                                \
   } ``__NM__``;                                                                                    \
 
-
-// INTERNAL MACRO FOR THIS FILE
 `define AXI4_W_CHAN_T(__NM__, __DW__, __UW__)                                                      \
   typedef struct packed {                                                                          \
     logic [``__DW__``-1:0]   data ;                                                                \
@@ -34,8 +30,6 @@
     logic [``__UW__``-1:0]   user ;                                                                \
   } ``__NM__``;                                                                                    \
 
-
-// INTERNAL MACRO FOR THIS FILE
 `define AXI4_B_CHAN_T(__NM__, __IW__, __UW__)                                                      \
   typedef struct packed {                                                                          \
     logic [``__IW__``-1:0] id   ;                                                                  \
@@ -43,8 +37,6 @@
     logic [``__UW__``-1:0] user ;                                                                  \
   } ``__NM__``;                                                                                    \
 
-
-// INTERNAL MACRO FOR THIS FILE
 `define AXI4_R_CHAN_T(__NM__, __IW__, __DW__, __USER_T__)                                          \
   typedef struct packed {                                                                          \
     logic [``__IW__``-1:0] id   ;                                                                  \
@@ -54,8 +46,6 @@
     ``__USER_T__``         user ;                                                                  \
   } ``__NM__``;                                                                                    \
 
-
-// INTERNAL MACRO FOR THIS FILE
 `define AXI4_REQ_T(__NM__, __AW_CHAN_T__, __W_CHAN_T__, __AR_CHAN_T__)                             \
   typedef struct packed {                                                                          \
     ``__AW_CHAN_T__`` aw       ;                                                                   \
@@ -68,8 +58,6 @@
     logic             r_ready  ;                                                                   \
   } ``__NM__``;                                                                                    \
 
-
-// INTERNAL MACRO FOR THIS FILE
 `define AXI4_RSP_T(__NM__, __B_CHAN_T__, __R_CHAN_T__)                                             \
   typedef struct packed {                                                                          \
     logic            aw_ready ;                                                                    \
@@ -81,7 +69,15 @@
     logic            r_valid  ;                                                                    \
   } ``__NM__``;                                                                                    \
 
-
+// THIS MACROS EXPANDS TO DECLARING THE FOLLOWING TYPEDEF:
+// *_aw_chan_t
+// *_w_chan_t
+// *_b_chan_t
+// *_ar_chan_t
+// *_r_chan_t
+// *_req_t
+// *_rsp_t
+// see doc for more details
 `define AXI4_T(__NM__, __AW__, __DW__, __IRW__, __IWW__, __UREQW__, __UDTAW__, __URSPW__)          \
   `AXI4_R_USER_T(``__NM__``_r_user_t,``__UDTAW__``, ``__URSPW__``)                                 \
   `AXI4_AX_CHAN_T(``__NM__``_aw_chan_t, ``__IWW__``, ``__AW__``, ``__UREQW__``)                    \
