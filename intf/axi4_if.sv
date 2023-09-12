@@ -127,12 +127,76 @@ interface axi4_if #(
   `HANDSHAKE_SEND_RECV_LOOK(ar, axi_ar_chan_t, clk_i, req.ar, req.ar_valid, resp.ar_ready)
   `HANDSHAKE_SEND_RECV_LOOK(r, axi_r_chan_t, clk_i, resp.r, resp.r_valid, req.r_ready)
 
+  `define BUS_RESET_AXI4_IF(__SIGNAL__)                                                            \
+    if (``__SIGNAL__`` !== '0) begin                                                               \
+      $display(`"%m applying autoreset for ``__SIGNAL__``    `");                                  \
+      ``__SIGNAL__`` <= '0;                                                                        \
+    end                                                                                            \
+
+  always @(negedge arst_ni) begin
+    #1;
+    `BUS_RESET_AXI4_IF(req.aw.id)
+    `BUS_RESET_AXI4_IF(req.aw.addr)
+    `BUS_RESET_AXI4_IF(req.aw.len)
+    `BUS_RESET_AXI4_IF(req.aw.size)
+    `BUS_RESET_AXI4_IF(req.aw.burst)
+    `BUS_RESET_AXI4_IF(req.aw.lock)
+    `BUS_RESET_AXI4_IF(req.aw.cache)
+    `BUS_RESET_AXI4_IF(req.aw.prot)
+    `BUS_RESET_AXI4_IF(req.aw.qos)
+    `BUS_RESET_AXI4_IF(req.aw.region)
+    `BUS_RESET_AXI4_IF(req.aw.user)
+    `BUS_RESET_AXI4_IF(req.aw_valid)
+    `BUS_RESET_AXI4_IF(resp.aw_ready)
+    `BUS_RESET_AXI4_IF(req.w.data)
+    `BUS_RESET_AXI4_IF(req.w.strb)
+    `BUS_RESET_AXI4_IF(req.w.last)
+    `BUS_RESET_AXI4_IF(req.w.user)
+    `BUS_RESET_AXI4_IF(req.w_valid)
+    `BUS_RESET_AXI4_IF(resp.w_ready)
+    `BUS_RESET_AXI4_IF(resp.b.id)
+    `BUS_RESET_AXI4_IF(resp.b.resp)
+    `BUS_RESET_AXI4_IF(resp.b.user)
+    `BUS_RESET_AXI4_IF(resp.b_valid)
+    `BUS_RESET_AXI4_IF(req.b_ready)
+    `BUS_RESET_AXI4_IF(req.ar.id)
+    `BUS_RESET_AXI4_IF(req.ar.addr)
+    `BUS_RESET_AXI4_IF(req.ar.len)
+    `BUS_RESET_AXI4_IF(req.ar.size)
+    `BUS_RESET_AXI4_IF(req.ar.burst)
+    `BUS_RESET_AXI4_IF(req.ar.lock)
+    `BUS_RESET_AXI4_IF(req.ar.cache)
+    `BUS_RESET_AXI4_IF(req.ar.prot)
+    `BUS_RESET_AXI4_IF(req.ar.qos)
+    `BUS_RESET_AXI4_IF(req.ar.region)
+    `BUS_RESET_AXI4_IF(req.ar.user)
+    `BUS_RESET_AXI4_IF(req.ar_valid)
+    `BUS_RESET_AXI4_IF(resp.ar_ready)
+    `BUS_RESET_AXI4_IF(resp.r.id)
+    `BUS_RESET_AXI4_IF(resp.r.data)
+    `BUS_RESET_AXI4_IF(resp.r.resp)
+    `BUS_RESET_AXI4_IF(resp.r.last)
+    `BUS_RESET_AXI4_IF(resp.r.user)
+    `BUS_RESET_AXI4_IF(resp.r_valid)
+    `BUS_RESET_AXI4_IF(req.r_ready)
+  end
+
   task automatic manager_reset();
     disable send_aw;
     disable send_w;
     disable recv_b;
     disable send_ar;
     disable recv_r;
+    aw_send_id = '0;
+    aw_send_queue.delete();
+    w_send_id = '0;
+    w_send_queue.delete();
+    b_recv_id = '0;
+    b_recv_queue.delete();
+    ar_send_id = '0;
+    ar_send_queue.delete();
+    r_recv_id = '0;
+    r_recv_queue.delete();
     req <= '0;
   endtask
 
@@ -142,6 +206,16 @@ interface axi4_if #(
     disable send_b;
     disable recv_ar;
     disable send_r;
+    aw_recv_id = '0;
+    aw_recv_queue.delete();
+    w_recv_id = '0;
+    w_recv_queue.delete();
+    b_send_id = '0;
+    b_send_queue.delete();
+    ar_recv_id = '0;
+    ar_recv_queue.delete();
+    r_send_id = '0;
+    r_send_queue.delete();
     resp <= '0;
   endtask
 
@@ -151,6 +225,16 @@ interface axi4_if #(
     disable look_b;
     disable look_ar;
     disable look_r;
+    aw_look_id = '0;
+    aw_look_queue.delete();
+    w_look_id = '0;
+    w_look_queue.delete();
+    b_look_id = '0;
+    b_look_queue.delete();
+    ar_look_id = '0;
+    ar_look_queue.delete();
+    r_look_id = '0;
+    r_look_queue.delete();
   endtask
 
   task automatic clk_delay();
