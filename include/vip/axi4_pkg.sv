@@ -2,7 +2,7 @@
 
 package axi4_pkg;
 
-  `include "axi4/typedef.svh"
+  `include "axi4_typedef.svh"
 
   parameter bit [1:0] FIXED = 0;
   parameter bit [1:0] INCR = 1;

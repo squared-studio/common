@@ -1,6 +1,6 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com))
 
-`include "axi4/typedef.svh"
+`include "axi4_typedef.svh"
 `include "vip/bus_dvr_mon.svh"
 
 interface axi4_if #(

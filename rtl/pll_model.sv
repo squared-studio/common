@@ -1,7 +1,7 @@
 // This is a non-synthesizable model of the PLL circuit, designed for verification purpose only.
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
-module pll (
+module pll_model (
     input logic bypass_i,  // bypass the reference frequency to fout_o
 
     input logic       fref_i,   // reference frequency

@@ -25,7 +25,7 @@ make simulate TOP=fifo_tb
 [Binary to Gray Code Converter](./docs/rtl/bin_to_gray.md)<br>
 [Clock Gate ](./docs/rtl/clk_gate.md)<br>
 [Gray to Binary Code Converter](./docs/rtl/gray_to_bin.md)<br>
-[Phase Lock Loop (PLL)](./docs/rtl/pll.md)<br>
+[Phase Lock Loop (PLL) Model](./docs/rtl/pll_model.md)<br>
 
 ## INCLUDE
 [axi4/typedef.svh](./docs/include/axi4/typedef.svh.md)<br>

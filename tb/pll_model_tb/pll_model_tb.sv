@@ -1,15 +1,9 @@
 // Description here
 // ### Author : name (email)
 
-//`include "axi4/typedef.svh"
-//`include "axi4/assign.svh"
-//`include "axi4l/typedef.svh"
-//`include "axi4l/assign.svh"
-//`include "vip/bus_dvr_mon.svh"
-
 //`include "vip/string_ops_pkg.sv"
 
-module pll_tb;
+module pll_model_tb;
 
   `define ENABLE_DUMPFILE
 
@@ -52,7 +46,7 @@ module pll_tb;
   //-RTLS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  pll #() u_pll (
+  pll_model #() u_pll (
       .bypass_i(bypass_i),
       .fref_i  (fref_i),
       .refdiv_i(refdiv_i),

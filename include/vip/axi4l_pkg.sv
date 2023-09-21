@@ -2,7 +2,7 @@
 
 package axi4l_pkg;
 
-  `include "axi4l/typedef.svh"
+  `include "axi4l_typedef.svh"
 
   class axi4_seq_item #(  //{{{
       parameter int ADDR_WIDTH = 32,
