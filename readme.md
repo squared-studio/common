@@ -30,4 +30,5 @@ make simulate TOP=fifo_tb
 ## INCLUDE
 [axi4/typedef.svh](./docs/include/axi4/typedef.svh.md)<br>
 [axi4l/typedef.svh](./docs/include/axi4l/typedef.svh.md)<br>
+[vip/axi4l_pkg.sv](./docs/include/vip/axi4l_pkg.sv.md)<br>
 
