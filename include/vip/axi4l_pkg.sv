@@ -54,11 +54,11 @@ package axi4l_pkg;
     //-SIGNALS{{{
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
-    bit    [ 1:0] _resp;
-    bit    [63:0] _ax_clk;
-    bit    [63:0] _x_clk;
-    bit    [63:0] _resp_clk;
-    string        _notes;
+    bit      [1:0] _resp;
+    realtime       _ax_clk;
+    realtime       _x_clk;
+    realtime       _resp_clk;
+    string         _notes;
 
     //}}}
 
@@ -397,6 +397,12 @@ package axi4l_pkg;
     axi_ar_chan_t  ar_queue[$];
     axi_r_chan_t    r_queue[$];
 
+    realtime aw_time[$];
+    realtime  w_time[$];
+    realtime  b_time[$];
+    realtime ar_time[$];
+    realtime  r_time[$];
+
     //}}}
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -428,6 +434,11 @@ package axi4l_pkg;
       b_queue.delete();
       ar_queue.delete();
       r_queue.delete();
+      aw_time.delete();
+      w_time.delete();
+      b_time.delete();
+      ar_time.delete();
+      r_time.delete();
       intf.monitor_reset();
     endtask  //}}}
 
@@ -441,6 +452,82 @@ package axi4l_pkg;
       while (mbx == null) begin
         intf.clk_delay();
       end
+      fork
+        forever begin  // aw_channel record{{{
+          axi_aw_chan_t aw_beat;
+          intf.look_aw(aw_beat);
+          aw_queue.push_back(aw_beat);
+          aw_time.push_back($realtime);
+        end  //}}}
+        forever begin  // w_channel record{{{
+          axi_w_chan_t w_beat;
+          intf.look_w(w_beat);
+          w_queue.push_back(w_beat);
+          w_time.push_back($realtime);
+        end  //}}}
+        forever begin  // b_channel record{{{
+          axi_b_chan_t b_beat;
+          intf.look_b(b_beat);
+          b_queue.push_back(b_beat);
+          b_time.push_back($realtime);
+        end  //}}}
+        forever begin  // ar_channel record{{{
+          axi_ar_chan_t ar_beat;
+          intf.look_ar(ar_beat);
+          ar_queue.push_back(ar_beat);
+          ar_time.push_back($realtime);
+        end  //}}}
+        forever begin  // r_channel record{{{
+          axi_r_chan_t r_beat;
+          intf.look_r(r_beat);
+          r_queue.push_back(r_beat);
+          r_time.push_back($realtime);
+        end  //}}}
+        forever begin  // generate response beat{{{
+          while (aw_time.size() && w_time.size() && b_time.size()) begin
+            axi4_resp_item_t item;
+            item = new();
+            item._type = 1;
+            item._addr = aw_queue[0].addr;
+            item._prot = aw_queue[0].prot;
+            for (int i = (aw_queue[0].addr % (DATA_WIDTH / 8)); i < (DATA_WIDTH / 8); i++) begin
+              item._data.push_back(w_beat.data[i]);
+              item._strb.push_back(w_beat.strb[i]);
+            end
+            item._resp     = b_beat.resp;
+            item._ax_clk   = aw_time[0];
+            item._x_clk    = w_time[0];
+            item._resp_clk = b_time[0];
+            mbx.put(item);
+            aw_queue.delete(0);
+            w_queue.delete(0);
+            b_queue.delete(0);
+            aw_time.delete(0);
+            w_time.delete(0);
+            b_time.delete(0);
+          end
+          while (ar_time.size() && r_time.size()) begin
+            axi4_resp_item_t item;
+            item = new();
+            item._type = 0;
+            item._addr = ar_queue[0].addr;
+            item._prot = ar_queue[0].prot;
+            for (int i = (ar_queue[0].addr % (DATA_WIDTH / 8)); i < (DATA_WIDTH / 8); i++) begin
+              item._data.push_back(r_beat.data[i]);
+            end
+            item._resp     = r_beat.resp;
+            item._ax_clk   = ar_time[0];
+            item._x_clk    = r_time[0];
+            item._resp_clk = r_time[0];
+            mbx.put(item);
+            ar_queue.delete(0);
+            r_queue.delete(0);
+            ar_time.delete(0);
+            r_time.delete(0);
+          end
+          intf.clk_delay();
+        end  //}}}
+      join_none
     endtask  //}}}
 
     //}}}
