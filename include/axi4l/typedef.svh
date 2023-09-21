@@ -9,8 +9,8 @@
 
 `define AXI4L_W_CHAN_T(__NM__, __DW__)                                                             \
   typedef struct packed {                                                                          \
-    logic [``__DW__``-1:0]   data ;                                                                \
-    logic [``__DW__``/8-1:0] strb ;                                                                \
+    logic [``__DW__``/8-1:0][7:0] data ;                                                           \
+    logic [``__DW__``/8-1:0]      strb ;                                                           \
   } ``__NM__``;                                                                                    \
 
 `define AXI4L_B_CHAN_T(__NM__)                                                                     \
@@ -20,8 +20,8 @@
 
 `define AXI4L_R_CHAN_T(__NM__, __DW__)                                                             \
   typedef struct packed {                                                                          \
-    logic [``__DW__``-1:0] data ;                                                                  \
-    logic [1:0]            resp ;                                                                  \
+    logic [``__DW__``/8-1:0][7:0] data ;                                                           \
+    logic [1:0]                   resp ;                                                           \
   } ``__NM__``;                                                                                    \
 
 `define AXI4L_REQ_T(__NM__, __AW_CHAN_T__, __W_CHAN_T__, __AR_CHAN_T__)                            \

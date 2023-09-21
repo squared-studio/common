@@ -24,10 +24,10 @@
 
 `define AXI4_W_CHAN_T(__NM__, __DW__, __UW__)                                                      \
   typedef struct packed {                                                                          \
-    logic [``__DW__``-1:0]   data ;                                                                \
-    logic [``__DW__``/8-1:0] strb ;                                                                \
-    logic [0:0]              last ;                                                                \
-    logic [``__UW__``-1:0]   user ;                                                                \
+    logic [``__DW__``/8-1:0][7:0] data ;                                                           \
+    logic [``__DW__``/8-1:0]      strb ;                                                           \
+    logic [0:0]                   last ;                                                           \
+    logic [``__UW__``-1:0]        user ;                                                           \
   } ``__NM__``;                                                                                    \
 
 `define AXI4_B_CHAN_T(__NM__, __IW__, __UW__)                                                      \
@@ -39,11 +39,11 @@
 
 `define AXI4_R_CHAN_T(__NM__, __IW__, __DW__, __USER_T__)                                          \
   typedef struct packed {                                                                          \
-    logic [``__IW__``-1:0] id   ;                                                                  \
-    logic [``__DW__``-1:0] data ;                                                                  \
-    logic [1:0]            resp ;                                                                  \
-    logic [0:0]            last ;                                                                  \
-    ``__USER_T__``         user ;                                                                  \
+    logic [``__IW__``-1:0] id        ;                                                             \
+    logic [``__DW__``-1:0][7:0] data ;                                                             \
+    logic [1:0]                 resp ;                                                             \
+    logic [0:0]                 last ;                                                             \
+    ``__USER_T__``              user ;                                                             \
   } ``__NM__``;                                                                                    \
 
 `define AXI4_REQ_T(__NM__, __AW_CHAN_T__, __W_CHAN_T__, __AR_CHAN_T__)                             \
