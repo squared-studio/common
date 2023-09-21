@@ -10,6 +10,14 @@ package axi4l_pkg;
   );
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
+    //-LOCALPARAMS{{{
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+
+    localparam int DataBytes = (DATA_WIDTH / 8);
+
+    //}}}
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
     //-SIGNALS{{{
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -28,7 +36,7 @@ package axi4l_pkg;
     function void post_randomize();
       _data.delete();
       _strb.delete();
-      for (int i = (_addr % (DATA_WIDTH / 8)); i < DATA_WIDTH / 8; i++) begin
+      for (int i = (_addr % DataBytes); i < DataBytes; i++) begin
         _data.push_back($urandom);
         _strb.push_back($urandom);
       end
@@ -72,16 +80,24 @@ package axi4l_pkg;
 
   endclass  //}}}
 
-  class slave_memory;  //{{{
+  class axi4l_mem;  //{{{
     bit [7:0] mem[2][longint];
   endclass  //}}}
 
   class axi4_driver #(  //{{{
-      parameter  int ADDR_WIDTH = 32,
-      parameter  int DATA_WIDTH = 64,
-      parameter  bit ROLE       = 0,
-      localparam int AXSIZE     = $clog2(DATA_WIDTH / 8)
+      parameter int ADDR_WIDTH = 32,
+      parameter int DATA_WIDTH = 64,
+      parameter bit ROLE       = 0
   );
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    //-LOCALPARAMS{{{
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+
+    localparam int DataBytes = (DATA_WIDTH / 8);
+    localparam int DataSize = $clog2(DataBytes);
+
+    //}}}
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //-TYPEDEFS{{{
@@ -147,7 +163,7 @@ package axi4l_pkg;
     //-CLASSES{{{
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
-    slave_memory mem_obj;
+    axi4l_mem mem_obj;
 
     //}}}
 
@@ -204,9 +220,9 @@ package axi4l_pkg;
               aw_beat.prot = item.prot;
               aw_queue.push_back(aw_beat);
 
-              for (int i = (aw_beat.addr % (DATA_WIDTH / 8)); i < DATA_WIDTH / 8; i++) begin
-                w_beat.data[i] = item.data[i-(aw_beat.addr%(DATA_WIDTH/8))];
-                w_beat.strb[i] = item.strb[i-(aw_beat.addr%(DATA_WIDTH/8))];
+              for (int i = (aw_beat.addr % DataBytes); i < DataBytes; i++) begin
+                w_beat.data[i] = item.data[i-(aw_beat.addr%DataBytes)];
+                w_beat.strb[i] = item.strb[i-(aw_beat.addr%DataBytes)];
               end
               w_queue.push_back(w_beat);
 
@@ -323,7 +339,7 @@ package axi4l_pkg;
               if (b_beat.resp == 0) begin
                 bit [63:0] raw_aligned_addr;
                 raw_aligned_addr = '0;
-                raw_aligned_addr[63:AXSIZE] = aw_beat.addr[63:AXSIZE];
+                raw_aligned_addr[63:DataSize] = aw_beat.addr[63:DataSize];
                 foreach (w_beat.data[i]) begin
                   if (w_beat.strb[i]) begin
                     mem_obj.mem[aw_beat.prot[1]][raw_aligned_addr+i] = w_beat.data[i];
@@ -344,7 +360,7 @@ package axi4l_pkg;
               if (r_beat.resp == 0) begin
                 bit [63:0] raw_aligned_addr;
                 raw_aligned_addr = '0;
-                raw_aligned_addr[63:AXSIZE] = ar_beat.addr[63:AXSIZE];
+                raw_aligned_addr[63:DataSize] = ar_beat.addr[63:DataSize];
                 foreach (r_beat.data[i]) begin
                   r_beat.data[i] = mem_obj.mem[aw_beat.prot[1]][raw_aligned_addr+i];
                 end
@@ -362,9 +378,17 @@ package axi4l_pkg;
 
   class axi4_monitor #(  //{{{
       parameter int ADDR_WIDTH = 32,
-      parameter int DATA_WIDTH = 64,
-      localparam int AXSIZE    = $clog2(DATA_WIDTH/8)
+      parameter int DATA_WIDTH = 64
   );
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    //-LOCALPARAMS{{{
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+
+    localparam int DataBytes = (DATA_WIDTH / 8);
+    localparam int DataSize = $clog2(DataBytes);
+
+    //}}}
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //-TYPEDEFS{{{
@@ -490,7 +514,7 @@ package axi4l_pkg;
             item._type = 1;
             item._addr = aw_queue[0].addr;
             item._prot = aw_queue[0].prot;
-            for (int i = (aw_queue[0].addr % (DATA_WIDTH / 8)); i < (DATA_WIDTH / 8); i++) begin
+            for (int i = (aw_queue[0].addr % DataBytes); i < DataBytes; i++) begin
               item._data.push_back(w_beat.data[i]);
               item._strb.push_back(w_beat.strb[i]);
             end
@@ -512,7 +536,7 @@ package axi4l_pkg;
             item._type = 0;
             item._addr = ar_queue[0].addr;
             item._prot = ar_queue[0].prot;
-            for (int i = (ar_queue[0].addr % (DATA_WIDTH / 8)); i < (DATA_WIDTH / 8); i++) begin
+            for (int i = (ar_queue[0].addr % DataBytes); i < DataBytes; i++) begin
               item._data.push_back(r_beat.data[i]);
             end
             item._resp     = r_beat.resp;
