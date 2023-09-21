@@ -16,7 +16,7 @@
 
 
 // macro for setting or assigning axi4l req to req
-`define AXI4L_RSP_TO_RSP(__MODE__, __SRC__, __DST__)                                               \
+`define AXI4L_RESP_TO_RESP(__MODE__, __SRC__, __DST__)                                             \
   ``__MODE__`` ``__DST__``.aw_ready = ``__SRC__``.aw_ready ;                                       \
   ``__MODE__`` ``__DST__``.w_ready  = ``__SRC__``.w_ready  ;                                       \
   ``__MODE__`` ``__DST__``.b.resp   = ``__SRC__``.b.resp   ;                                       \

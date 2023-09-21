@@ -24,10 +24,10 @@
 
 `define AXI4_W_CHAN_T(__NM__, __DW__, __UW__)                                                      \
   typedef struct packed {                                                                          \
-    logic [``__DW__``-1:0]   data ;                                                                \
-    logic [``__DW__``/8-1:0] strb ;                                                                \
-    logic [0:0]              last ;                                                                \
-    logic [``__UW__``-1:0]   user ;                                                                \
+    logic [``__DW__``/8-1:0][7:0] data ;                                                           \
+    logic [``__DW__``/8-1:0]      strb ;                                                           \
+    logic [0:0]                   last ;                                                           \
+    logic [``__UW__``-1:0]        user ;                                                           \
   } ``__NM__``;                                                                                    \
 
 `define AXI4_B_CHAN_T(__NM__, __IW__, __UW__)                                                      \
@@ -39,11 +39,11 @@
 
 `define AXI4_R_CHAN_T(__NM__, __IW__, __DW__, __USER_T__)                                          \
   typedef struct packed {                                                                          \
-    logic [``__IW__``-1:0] id   ;                                                                  \
-    logic [``__DW__``-1:0] data ;                                                                  \
-    logic [1:0]            resp ;                                                                  \
-    logic [0:0]            last ;                                                                  \
-    ``__USER_T__``         user ;                                                                  \
+    logic [``__IW__``-1:0] id        ;                                                             \
+    logic [``__DW__``-1:0][7:0] data ;                                                             \
+    logic [1:0]                 resp ;                                                             \
+    logic [0:0]                 last ;                                                             \
+    ``__USER_T__``              user ;                                                             \
   } ``__NM__``;                                                                                    \
 
 `define AXI4_REQ_T(__NM__, __AW_CHAN_T__, __W_CHAN_T__, __AR_CHAN_T__)                             \
@@ -58,7 +58,7 @@
     logic             r_ready  ;                                                                   \
   } ``__NM__``;                                                                                    \
 
-`define AXI4_RSP_T(__NM__, __B_CHAN_T__, __R_CHAN_T__)                                             \
+`define AXI4_RESP_T(__NM__, __B_CHAN_T__, __R_CHAN_T__)                                            \
   typedef struct packed {                                                                          \
     logic            aw_ready ;                                                                    \
     logic            w_ready  ;                                                                    \
@@ -76,7 +76,7 @@
 // *_ar_chan_t
 // *_r_chan_t
 // *_req_t
-// *_rsp_t
+// *_resp_t
 // see doc for more details
 `define AXI4_T(__NM__, __AW__, __DW__, __IRW__, __IWW__, __UREQW__, __UDTAW__, __URSPW__)          \
   `AXI4_R_USER_T(``__NM__``_r_user_t,``__UDTAW__``, ``__URSPW__``)                                 \
@@ -86,5 +86,5 @@
   `AXI4_AX_CHAN_T(``__NM__``_ar_chan_t, ``__IRW__``, ``__AW__``, ``__UREQW__``)                    \
   `AXI4_R_CHAN_T(``__NM__``_r_chan_t, ``__IRW__``, ``__DW__``, ``__NM__``_r_user_t)                \
   `AXI4_REQ_T(``__NM__``_req_t, ``__NM__``_aw_chan_t, ``__NM__``_w_chan_t, ``__NM__``_ar_chan_t)   \
-  `AXI4_RSP_T(``__NM__``_rsp_t, ``__NM__``_b_chan_t, ``__NM__``_r_chan_t)                          \
+  `AXI4_RESP_T(``__NM__``_resp_t, ``__NM__``_b_chan_t, ``__NM__``_r_chan_t)                        \
 
