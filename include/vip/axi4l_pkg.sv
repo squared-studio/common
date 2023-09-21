@@ -175,11 +175,11 @@ package axi4l_pkg;
         virtual axi4l_if #(
         .ADDR_WIDTH(ADDR_WIDTH),
         .DATA_WIDTH(DATA_WIDTH)
-        ) _intf);
+        ) intf);
       if (!ROLE) begin
         mem_obj = new();
       end
-      intf = _intf;
+      this.intf = intf;
     endfunction  //}}}
 
     task automatic reset();  //{{{
