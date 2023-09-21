@@ -20,8 +20,8 @@ typedef struct packed {
 } my_axi_aw_chan_t;  // 'my_axi_aw_chan_t' is derived from 'NAME'
 
 typedef struct packed {
-  logic [64-1:0]   data  ;  // '64' is from 'DATA_WIDTH'
-  logic [64/8-1:0] strb  ;  // '64' is from 'DATA_WIDTH'
+  logic [64/8-1:0][7:0] data  ;  // '64' is from 'DATA_WIDTH'
+  logic [64/8-1:0]      strb  ;  // '64' is from 'DATA_WIDTH'
 } my_axi_w_chan_t;  // 'my_axi_w_chan_t' is derived from 'NAME'
 
 typedef struct packed {
@@ -34,8 +34,8 @@ typedef struct packed {
 } my_axi_ar_chan_t;  // 'my_axi_ar_chan_t' is derived from 'NAME'
 
 typedef struct packed {
-  logic [64-1:0]  data  ;  // '64' is from 'DATA_WIDTH'
-  logic [1:0]     resp  ;
+  logic [64/8-1:0][7:0]  data  ;  // '64' is from 'DATA_WIDTH'
+  logic [1:0]            resp  ;
 } my_axi_r_chan_t;  // 'my_axi_r_chan_t' is derived from 'NAME'
 
 typedef struct packed {

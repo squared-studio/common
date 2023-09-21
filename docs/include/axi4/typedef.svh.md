@@ -39,10 +39,10 @@ typedef struct packed {
 } my_axi_aw_chan_t;  // 'my_axi_aw_chan_t' is derived from 'NAME'
 
 typedef struct packed {
-  logic [512-1:0]   data  ;  // '512' is from 'DATA_WIDTH'
-  logic [512/8-1:0] strb  ;  // '512' is from 'DATA_WIDTH'
-  logic [0:0]       last  ;
-  logic [11-1:0]    user  ;  // '11' is from 'USER_DATA_WIDTH'
+  logic [512/8-1:0][7:0] data  ;  // '512' is from 'DATA_WIDTH'
+  logic [512/8-1:0]      strb  ;  // '512' is from 'DATA_WIDTH'
+  logic [0:0]            last  ;
+  logic [11-1:0]         user  ;  // '11' is from 'USER_DATA_WIDTH'
 } my_axi_w_chan_t;  // 'my_axi_w_chan_t' is derived from 'NAME'
 
 typedef struct packed {
@@ -66,11 +66,11 @@ typedef struct packed {
 } my_axi_ar_chan_t;  // 'my_axi_ar_chan_t' is derived from 'NAME'
 
 typedef struct packed {
-  logic [5-1:0]   id    ;  // '5' is from 'ID_R_WIDTH'
-  logic [512-1:0] data  ;  // '512' is from 'DATA_WIDTH'
-  logic [1:0]     resp  ;
-  logic [0:0]     last  ;
-  my_axi_r_user_t user  ;  // 'my_axi_r_user_t' is from previous typedef
+  logic [5-1:0]          id    ;  // '5' is from 'ID_R_WIDTH'
+  logic [512/8-1:0][7:0] data  ;  // '512' is from 'DATA_WIDTH'
+  logic [1:0]            resp  ;
+  logic [0:0]            last  ;
+  my_axi_r_user_t        user  ;  // 'my_axi_r_user_t' is from previous typedef
 } my_axi_r_chan_t;  // 'my_axi_r_chan_t' is derived from 'NAME'
 
 typedef struct packed {

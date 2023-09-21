@@ -167,6 +167,11 @@ package axi4l_pkg;
     endfunction  //}}}
 
     task automatic reset();  //{{{
+      aw_queue.delete();
+      w_queue.delete();
+      b_queue.delete();
+      ar_queue.delete();
+      r_queue.delete();
       if (ROLE) begin
         intf.manager_reset();
       end else begin
@@ -383,6 +388,18 @@ package axi4l_pkg;
     //}}}
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
+    //-VARIABLES{{{
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+
+    axi_aw_chan_t  aw_queue[$];
+    axi_w_chan_t    w_queue[$];
+    axi_b_chan_t    b_queue[$];
+    axi_ar_chan_t  ar_queue[$];
+    axi_r_chan_t    r_queue[$];
+
+    //}}}
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
     //-INTERFACES{{{
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -406,6 +423,11 @@ package axi4l_pkg;
     endfunction  //}}}
 
     task automatic reset();  //{{{
+      aw_queue.delete();
+      w_queue.delete();
+      b_queue.delete();
+      ar_queue.delete();
+      r_queue.delete();
       intf.monitor_reset();
     endtask  //}}}
 
