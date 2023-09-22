@@ -28,7 +28,7 @@ make simulate TOP=fifo_tb
 [Phase Lock Loop (PLL) Model](./docs/rtl/pll_model.md)<br>
 
 ## INCLUDE
-[axi4/typedef.svh](./docs/include/axi4/typedef.svh.md)<br>
-[axi4l/typedef.svh](./docs/include/axi4l/typedef.svh.md)<br>
+[axi4l_typedef.svh](./docs/include/axi4l_typedef.svh.md)<br>
+[axi4_typedef.svh](./docs/include/axi4_typedef.svh.md)<br>
 [vip/axi4l_pkg.sv](./docs/include/vip/axi4l_pkg.sv.md)<br>
 
