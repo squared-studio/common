@@ -146,23 +146,35 @@ module axi4l_pkg_tb;
     subordinate.start();
     monitor.start();
 
-    begin
+    repeat (1) begin
       main_seq_item_t item;
       item = new();
       item.randomize();
+      item._type = 1;
+      $display("%s", item.to_string());
+      dvr_mbx.put(item);
+      item = new item;
+      item._type = 0;
+      $display("%s", item.to_string());
       dvr_mbx.put(item);
     end
 
     repeat (20) @(posedge clk_i);
 
+    while (mon_mbx.num()) begin
+      main_resp_item_t item;
+      mon_mbx.get(item);
+      $display("%s", item.to_string());
+    end
+
     $finish;
 
   end  //}}}
 
-  initial begin
+  initial begin // timeout{{{
     #1us;
     $finish;
-  end
+  end //}}}
 
   //}}}
 

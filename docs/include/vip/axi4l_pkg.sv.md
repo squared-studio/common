@@ -19,13 +19,13 @@ Sequence Item for the driver class
 |`ADDR_WIDTH`|Width of the AW/AR address bus
 |`DATA_WIDTH`|Width of the W/R data bus
 
-|Signal |Type                  |Description
-|-      |-                     |-
-|`_type`|`bit [0:0]           `|Transaction Type. `0` mean Read & `1` means Write Transaction
-|`_addr`|`bit [ADDR_WIDTH-1:0]`|Transaction Address (`AXADDR`)
-|`_prot`|`bit [2:0]           `|Transaction Access Persmissions (`AXPROT`)
-|`_data`|`bit [$:127][7:0]    `|Transaction Data. Remains unused for read transaction
-|`_strb`|`bit [$:127][0:0]    `|Transaction Data Strobe. Remains unused for read transaction
+|Signal                      |Description
+|-                           |-
+|`bit [0:0]            _type`|Transaction Type. `0` mean Read & `1` means Write Transaction
+|`bit [ADDR_WIDTH-1:0] _addr`|Transaction Address (`AXADDR`)
+|`bit [2:0]            _prot`|Transaction Access Persmissions (`AXPROT`)
+|`bit [$:127][7:0]     _data`|Transaction Data. Remains unused for read transaction
+|`bit [$:127][0:0]     _strb`|Transaction Data Strobe. Remains unused for read transaction
 
 <table>
 <tr>
@@ -59,6 +59,19 @@ Randomizes the previously mentioned signals. Returns `1` for successful randomiz
 </td>
 </tr>
 
+<tr>
+<td>
+
+```SV
+function string to_string();
+```
+</td>
+<td>
+
+Returns a string of the packet in user friendly manner
+</td>
+</tr>
+
 </table>
 
 ## axi4l_resp_item
@@ -68,18 +81,39 @@ Response Item for the scoreboard
 |`ADDR_WIDTH`|Width of the AW/AR address bus
 |`DATA_WIDTH`|Width of the W/R data bus
 
-|Signal     |Type                  |Description
-|-          |-                     |-
-|`_type    `|`bit [0:0]           `|Transaction Type. `0` mean Read & `1` means Write Transaction
-|`_addr    `|`bit [ADDR_WIDTH-1:0]`|Transaction Address (`AXADDR`)
-|`_prot    `|`bit [2:0]           `|Transaction Access Persmissions (`AXPROT`)
-|`_data    `|`bit [$:127][7:0]    `|Transaction Data
-|`_strb    `|`bit [$:127][0:0]    `|Transaction Data Strobe
-|`_resp    `|`bit [1:0]           `|Transaction Response
-|`_ax_clk  `|`realtime            `|Time of address handshake
-|`_x_clk   `|`realtime            `|Time of data handshake
-|`_resp_clk`|`realtime            `|Time of final respose handshake
-|`_notes   `|`bit [1:0]           `|Transactions notes. Optional string filed for scoreboarding
+|Signal                          |Description
+|-                               |-
+|`bit [0:0]            _type    `|Transaction Type. `0` mean Read & `1` means Write Transaction
+|`bit [ADDR_WIDTH-1:0] _addr    `|Transaction Address (`AXADDR`)
+|`bit [2:0]            _prot    `|Transaction Access Persmissions (`AXPROT`)
+|`bit [7:0][$:127]     _data    `|Transaction Data
+|`bit [0:0][$:127]     _strb    `|Transaction Data Strobe
+|`bit [1:0]            _resp    `|Transaction Response
+|`realtime             _ax_clk  `|Time of address handshake
+|`realtime             _x_clk   `|Time of data handshake
+|`realtime             _resp_clk`|Time of final respose handshake
+|`bit [1:0]            _notes   `|Transactions notes. Optional string filed for scoreboarding
+
+<table>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>
+
+```SV
+function string to_string();
+```
+</td>
+<td>
+
+Returns a string of the packet in user friendly manner
+</td>
+</tr>
+
+</table>
 
 ## axi4l_mem
 Linkable subordinate memory. This is an internally used class. The handle of this class can point to a single memory instance, allowing multiple drivers use the exact same shared memory even though data widths and address range are different. For example:
@@ -101,6 +135,58 @@ initial begin
   dvr_1.mem_inst = dvr_2.mem_inst;
 end
 ```
+
+|Parameter   |Description
+|-           |-
+|`ADDR_WIDTH`|Width of the AW/AR address bus
+|`DATA_WIDTH`|Width of the W/R data bus
+
+|Signal                     |Description
+|-                          |-
+|`bit [7:0] mem[2][longint]`|Unpacked multi-dimentional byte arrray
+
+<table>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>
+
+```SV
+task automatic load_image(
+  input string file,
+  input bit non_secure = 1
+);
+```
+</td>
+<td>
+
+Load a `.hex` file in the subordinate memory. The file path as string is provided as the first argument. The last optional argument defines whether to write in non_secure address space
+</td>
+</tr>
+
+<tr>
+<td>
+
+```SV
+task automatic save_image(
+  input string file,
+  input bit [ADDR_WIDTH-1:0] starting_addr,
+  input bit [ADDR_WIDTH-1:0] ending_addr,
+  input bit non_secure = 1
+);
+```
+</td>
+<td>
+
+Write a `.hex` file taking data from the subordinate memory. The file path as string is provided as the first argument. The starting and ending address is provided after words. The last optional argument defines whether to read from non_secure address space
+
+</td>
+</tr>
+
+</table>
 
 ## axi4l_driver
 Driver class for AXI4. In manager role, drives the provided AXI4 Lite interface according to the provided sequence item. In subordinate role, reacts to the priveded AXI4 Lite interface
@@ -189,7 +275,6 @@ Initiates the driver for transactions
 
 </table>
 
-
 ## axi4l_monitor
 Monitor Class for AXI4. Generates Response Item for the scoreboard by obeserving the provided AXI4 Lite interface
 |Parameter   |Description
@@ -218,6 +303,19 @@ function new(
 <td>
 
 Class constructor. Requires an AXI4 Lite interface
+</td>
+</tr>
+
+<tr>
+<td>
+
+```SV
+task automatic wait_cooldown(input int n);
+```
+</td>
+<td>
+
+Wait additional `n` clock cycles after all ongoing transactions seem to get over
 </td>
 </tr>
 

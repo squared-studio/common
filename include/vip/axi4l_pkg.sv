@@ -33,16 +33,26 @@ package axi4l_pkg;
     //-METHODS{{{
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
-    function void post_randomize();
+    function void post_randomize();  //{{{
       _data.delete();
       _strb.delete();
       for (int i = (_addr % DataBytes); i < DataBytes; i++) begin
         _data.push_back($urandom);
         _strb.push_back($urandom);
       end
-    endfunction
+    endfunction  //}}}
 
-    // FUNCTION TO STRING TODO
+    function string to_string();  //{{{
+      $sformat(to_string, "AXI4L %s Transaction:", (_type ? "Write" : "Read"));
+      $sformat(to_string, "%s\nADDR: 0x%h", to_string, _addr);
+      $sformat(to_string, "%s\nPROT: 0x%h", to_string, _prot);
+      if (_type) begin
+        $sformat(to_string, "%s\nDATA (STRB):", to_string);
+        foreach (_data[i]) begin
+          $sformat(to_string, "%s\n%3d - 0x%h (%0d)", to_string, i, _data[i], _strb[i]);
+        end
+      end
+    endfunction  //}}}
 
     // FUNCTION GEN TX TODO
 
@@ -74,14 +84,57 @@ package axi4l_pkg;
     //-METHODS{{{
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // FUNCTION TO STRING TODO
+    function string to_string();  //{{{
+      to_string = super.to_string();
+      if (!_type) begin
+        $sformat(to_string, "%s\nDATA:", to_string);
+        foreach (_data[i]) begin
+          $sformat(to_string, "%s\n%3d - 0x%h", to_string, i, _data[i]);
+        end
+      end
+      $sformat(to_string, "%s\nRESP: ", to_string);
+      case (_resp)
+        3:       $sformat(to_string, "%sDECERR", to_string);
+        2:       $sformat(to_string, "%sSLVERR", to_string);
+        1:       $sformat(to_string, "%sEXOKAY", to_string);
+        default: $sformat(to_string, "%sOKAY", to_string);
+      endcase
+      $sformat(to_string, "%s\nA%s at: %0t", to_string, (_type ? "W" : "R"), _ax_clk);
+      $sformat(to_string, "%s\n%s at: %0t", to_string, (_type ? "W" : "R"), _x_clk);
+      if (_type) $sformat(to_string, "%s\nB at: %0t", to_string, _resp_clk);
+    endfunction  //}}}
 
     //}}}
 
   endclass  //}}}
 
-  class axi4l_mem;  //{{{
+  class axi4l_mem #(  //{{{
+      parameter int ADDR_WIDTH = 64
+  );
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    //-SIGNALS{{{
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+
     bit [7:0] mem[2][longint];
+
+    //}}}
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    //-METHODS{{{
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+
+    task automatic load_image(input string file, input bit non_secure = 1);  //{{{
+      // TODO
+    endtask  //}}}
+
+    task automatic save_image(input string file, input bit [ADDR_WIDTH-1:0] starting_addr,  //{{{
+                              input bit [ADDR_WIDTH-1:0] ending_addr, input bit non_secure = 1);
+      // TODO
+    endtask  //}}}
+
+    //}}}
+
   endclass  //}}}
 
   class axi4l_driver #(  //{{{
@@ -302,11 +355,10 @@ package axi4l_pkg;
             w_queue.push_back(w_beat);
           end  //}}}
           forever begin  // b_channel drive{{{
+            @(b_queue.size());
             if (b_queue.size()) begin
               repeat ($urandom_range(b_delay_min, b_delay_max)) intf.clk_delay();
               intf.send_b(b_queue.pop_front());
-            end else begin
-              intf.clk_delay();
             end
           end  //}}}
           forever begin  // ar_channel drive{{{
@@ -316,11 +368,10 @@ package axi4l_pkg;
             ar_queue.push_back(ar_beat);
           end  //}}}
           forever begin  // r_channel drive{{{
+            @(r_queue.size());
             if (r_queue.size()) begin
               repeat ($urandom_range(r_delay_min, r_delay_max)) intf.clk_delay();
-              intf.send_b(r_queue.pop_front());
-            end else begin
-              intf.clk_delay();
+              intf.send_r(r_queue.pop_front());
             end
           end  //}}}
           forever begin  // generate beats{{{
@@ -354,7 +405,7 @@ package axi4l_pkg;
                 end
               end
 
-              intf.send_b(b_beat);
+              b_queue.push_back(b_beat);
             end  //}}}
             if (ar_queue.size()) begin  // read{{{
               axi_ar_chan_t ar_beat;
@@ -381,7 +432,7 @@ package axi4l_pkg;
                 end
               end
 
-              intf.send_r(r_beat);
+              r_queue.push_back(r_beat);
             end  //}}}
           end  //}}}
         join_none
@@ -467,6 +518,10 @@ package axi4l_pkg;
         ) _intf);
       intf = _intf;
     endfunction  //}}}
+
+    task automatic wait_cooldown(input int n);  //{{{
+      // TODO
+    endtask  //}}}
 
     task automatic reset();  //{{{
       aw_queue.delete();

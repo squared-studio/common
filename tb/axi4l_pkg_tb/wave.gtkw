@@ -1,28 +1,26 @@
 [*]
 [*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
-[*] Sat Sep 23 10:21:17 2023
+[*] Sat Sep 23 12:15:29 2023
 [*]
 [dumpfile] "C:\Users\foeza\Documents\SystemVerilog\tb\axi4l_pkg_tb\dump.vcd"
-[dumpfile_mtime] "Sat Sep 23 10:20:48 2023"
-[dumpfile_size] 4498
+[dumpfile_mtime] "Sat Sep 23 12:14:10 2023"
+[dumpfile_size] 6069
 [savefile] "C:\Users\foeza\Documents\SystemVerilog\tb\axi4l_pkg_tb\wave.gtkw"
 [timestart] 0
 [size] 1920 1009
-[pos] -9 -9
-*-15.982037 40700 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] -1 -1
+*-15.982037 254600 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] axi4l_pkg_tb.
 [sst_width] 197
-[signals_width] 126
+[signals_width] 213
 [sst_expanded] 1
 [sst_vpaned_height] 297
-@28
+@23
 [color] 3
 axi4l_pkg_tb.u_axi4l_if.ARESETn
 [color] 3
 axi4l_pkg_tb.u_axi4l_if.ACLK
-@22
 axi4l_pkg_tb.u_axi4l_if.AWADDR[31:0]
-@28
 axi4l_pkg_tb.u_axi4l_if.AWPROT[2:0]
 [color] 2
 axi4l_pkg_tb.u_axi4l_if.AWVALID[0]
@@ -30,10 +28,8 @@ axi4l_pkg_tb.u_axi4l_if.AWVALID[0]
 axi4l_pkg_tb.u_axi4l_if.AWREADY[0]
 [color] 3
 axi4l_pkg_tb.u_axi4l_if.ACLK
-@22
 axi4l_pkg_tb.u_axi4l_if.WDATA[63:0]
 axi4l_pkg_tb.u_axi4l_if.WSTRB[7:0]
-@28
 [color] 2
 axi4l_pkg_tb.u_axi4l_if.WVALID[0]
 [color] 2
@@ -47,9 +43,7 @@ axi4l_pkg_tb.u_axi4l_if.BVALID[0]
 axi4l_pkg_tb.u_axi4l_if.BREADY[0]
 [color] 3
 axi4l_pkg_tb.u_axi4l_if.ACLK
-@22
 axi4l_pkg_tb.u_axi4l_if.ARADDR[31:0]
-@28
 axi4l_pkg_tb.u_axi4l_if.ARPROT[2:0]
 [color] 2
 axi4l_pkg_tb.u_axi4l_if.ARVALID[0]
@@ -57,9 +51,7 @@ axi4l_pkg_tb.u_axi4l_if.ARVALID[0]
 axi4l_pkg_tb.u_axi4l_if.ARREADY[0]
 [color] 3
 axi4l_pkg_tb.u_axi4l_if.ACLK
-@22
 axi4l_pkg_tb.u_axi4l_if.RDATA[63:0]
-@28
 axi4l_pkg_tb.u_axi4l_if.RRESP[1:0]
 [color] 2
 axi4l_pkg_tb.u_axi4l_if.RVALID[0]
