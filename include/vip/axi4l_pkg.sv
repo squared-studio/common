@@ -84,7 +84,7 @@ package axi4l_pkg;
     bit [7:0] mem[2][longint];
   endclass  //}}}
 
-  class axi4_driver #(  //{{{
+  class axi4l_driver #(  //{{{
       parameter int ADDR_WIDTH = 32,
       parameter int DATA_WIDTH = 64,
       parameter bit ROLE       = 0
@@ -376,7 +376,7 @@ package axi4l_pkg;
 
   endclass  //}}}
 
-  class axi4_monitor #(  //{{{
+  class axi4l_monitor #(  //{{{
       parameter int ADDR_WIDTH = 32,
       parameter int DATA_WIDTH = 64
   );
@@ -396,10 +396,10 @@ package axi4l_pkg;
 
     `AXI4L_T(axi, ADDR_WIDTH, DATA_WIDTH)
 
-    typedef axi4_resp_item#(
+    typedef axi4l_resp_item#(
         .ADDR_WIDTH(ADDR_WIDTH),
         .DATA_WIDTH(DATA_WIDTH)
-    ) axi4_resp_item_t;
+    ) axi4l_resp_item_t;
 
     //}}}
 
@@ -407,7 +407,7 @@ package axi4l_pkg;
     //-SIGNALS{{{
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
-    mailbox #(axi4_resp_item_t) mbx;
+    mailbox #(axi4l_resp_item_t) mbx;
 
     //}}}
 
@@ -509,7 +509,7 @@ package axi4l_pkg;
         end  //}}}
         forever begin  // generate response beat{{{
           while (aw_time.size() && w_time.size() && b_time.size()) begin
-            axi4_resp_item_t item;
+            axi4l_resp_item_t item;
             item = new();
             item._type = 1;
             item._addr = aw_queue[0].addr;
@@ -531,7 +531,7 @@ package axi4l_pkg;
             b_time.delete(0);
           end
           while (ar_time.size() && r_time.size()) begin
-            axi4_resp_item_t item;
+            axi4l_resp_item_t item;
             item = new();
             item._type = 0;
             item._addr = ar_queue[0].addr;
