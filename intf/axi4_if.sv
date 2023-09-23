@@ -242,8 +242,9 @@ interface axi4_if #(
     r_look_queue.delete();
   endtask
 
-  task automatic clk_delay();
-    @(posedge clk_i);
+  task automatic clk_edge(bit invert = 0);
+    if (invert) @(negedge clk_i);
+    else @(posedge clk_i);
   endtask
 
 endinterface
