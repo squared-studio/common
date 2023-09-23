@@ -4,7 +4,7 @@ package axi4l_pkg;
 
   `include "axi4l_typedef.svh"
 
-  class axi4_seq_item #(  //{{{
+  class axi4l_seq_item #(  //{{{
       parameter int ADDR_WIDTH = 32,
       parameter int DATA_WIDTH = 64
   );
@@ -53,7 +53,7 @@ package axi4l_pkg;
   class axi4l_resp_item #(  //{{{
       parameter int ADDR_WIDTH = 32,
       parameter int DATA_WIDTH = 64
-  ) extends axi4_seq_item #(
+  ) extends axi4l_seq_item #(
       .ADDR_WIDTH(ADDR_WIDTH),
       .DATA_WIDTH(DATA_WIDTH)
   );
@@ -105,10 +105,10 @@ package axi4l_pkg;
 
     `AXI4L_T(axi, ADDR_WIDTH, DATA_WIDTH)
 
-    typedef axi4_seq_item#(
+    typedef axi4l_seq_item#(
         .ADDR_WIDTH(ADDR_WIDTH),
         .DATA_WIDTH(DATA_WIDTH)
-    ) axi4_seq_item_t;
+    ) axi4l_seq_item_t;
 
     //}}}
 
@@ -116,9 +116,9 @@ package axi4l_pkg;
     //-SIGNALS{{{
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
-    mailbox #(axi4_seq_item_t) mbx;
-    mailbox #(axi4_seq_item_t) wr_mbx = new(1);
-    mailbox #(axi4_seq_item_t) rd_mbx = new(1);
+    mailbox #(axi4l_seq_item_t) mbx;
+    mailbox #(axi4l_seq_item_t) wr_mbx = new(1);
+    mailbox #(axi4l_seq_item_t) rd_mbx = new(1);
 
     //}}}
 
@@ -208,7 +208,7 @@ package axi4l_pkg;
       if (ROLE) begin  // is manager{{{
         fork
           forever begin  // generate beats{{{
-            axi4_seq_item_t item;
+            axi4l_seq_item_t item;
             mbx.get(item);
             if (item._type) begin  // generate write beats{{{
 
