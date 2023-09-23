@@ -1,4 +1,4 @@
-# SystemVerilog RTL Design & Verification
+# SystemVerilog IP Design & Verification
 
 ## Directory structure
 This section describes the purpose of individual folders in this repository
