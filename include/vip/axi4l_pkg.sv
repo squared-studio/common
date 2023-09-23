@@ -519,8 +519,18 @@ package axi4l_pkg;
       intf = _intf;
     endfunction  //}}}
 
-    task automatic wait_cooldown(input int n);  //{{{
-      // TODO
+    task automatic wait_cooldown(input int n = 10);  //{{{
+      int k;
+      k = 0;
+      while (k < n) begin
+        k++;
+        if (aw_queue.size()) k = 0;
+        if (w_queue.size()) k = 0;
+        if (b_queue.size()) k = 0;
+        if (ar_queue.size()) k = 0;
+        if (r_queue.size()) k = 0;
+        intf.clk_delay();
+      end
     endtask  //}}}
 
     task automatic reset();  //{{{
