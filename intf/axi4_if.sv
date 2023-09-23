@@ -4,70 +4,75 @@
 `include "vip/bus_dvr_mon.svh"
 
 interface axi4_if #(
-    parameter type req_t  = logic,
-    parameter type resp_t = logic
+    parameter int ADDR_WIDTH      = 64,
+    parameter int DATA_WIDTH      = 1024,
+    parameter int ID_R_WIDTH      = 3,
+    parameter int ID_W_WIDTH      = 2,
+    parameter int USER_REQ_WIDTH  = 8,
+    parameter int USER_DATA_WIDTH = 4,
+    parameter int USER_RESP_WIDTH = 2
 ) (
     input logic clk_i,
     input logic arst_ni
 );
 
-  req_t  req;
-  resp_t resp;
+  `AXI4_T(axi, ADDR_WIDTH, DATA_WIDTH, ID_R_WIDTH, ID_W_WIDTH, USER_REQ_WIDTH, USER_DATA_WIDTH,
+          USER_RESP_WIDTH)
 
-  `AXI4_T(axi, $bits(req.ar.addr), $bits(resp.r.data), $bits(req.ar.id), $bits(req.aw.id),
-          $bits(req.aw.user), $bits(req.w.user), $bits(resp.b.user))
+  axi_req_t                                          req;
+  axi_resp_t                                         resp;
 
-  logic                          ACLK;
-  logic                          ARESETn;
+  logic                                              ACLK;
+  logic                                              ARESETn;
 
-  logic [  $bits(req.aw.id)-1:0] AWID;
-  logic [$bits(req.aw.addr)-1:0] AWADDR;
-  logic [                   7:0] AWLEN;
-  logic [                   2:0] AWSIZE;
-  logic [                   1:0] AWBURST;
-  logic [                   0:0] AWLOCK;
-  logic [                   3:0] AWCACHE;
-  logic [                   2:0] AWPROT;
-  logic [                   3:0] AWQOS;
-  logic [                   3:0] AWREGION;
-  logic [$bits(req.aw.user)-1:0] AWUSER;
-  logic [                   0:0] AWVALID;
-  logic [                   0:0] AWREADY;
+  logic      [                       ID_W_WIDTH-1:0] AWID;
+  logic      [                       ADDR_WIDTH-1:0] AWADDR;
+  logic      [                                  7:0] AWLEN;
+  logic      [                                  2:0] AWSIZE;
+  logic      [                                  1:0] AWBURST;
+  logic      [                                  0:0] AWLOCK;
+  logic      [                                  3:0] AWCACHE;
+  logic      [                                  2:0] AWPROT;
+  logic      [                                  3:0] AWQOS;
+  logic      [                                  3:0] AWREGION;
+  logic      [                   USER_REQ_WIDTH-1:0] AWUSER;
+  logic      [                                  0:0] AWVALID;
+  logic      [                                  0:0] AWREADY;
 
-  logic [ $bits(req.w.data)-1:0] WDATA;
-  logic [ $bits(req.w.strb)-1:0] WSTRB;
-  logic [                   0:0] WLAST;
-  logic [ $bits(req.w.user)-1:0] WUSER;
-  logic [                   0:0] WVALID;
-  logic [                   0:0] WREADY;
+  logic      [                       DATA_WIDTH-1:0] WDATA;
+  logic      [                     DATA_WIDTH/8-1:0] WSTRB;
+  logic      [                                  0:0] WLAST;
+  logic      [                  USER_DATA_WIDTH-1:0] WUSER;
+  logic      [                                  0:0] WVALID;
+  logic      [                                  0:0] WREADY;
 
-  logic [  $bits(resp.b.id)-1:0] BID;
-  logic [                   1:0] BRESP;
-  logic [$bits(resp.b.user)-1:0] BUSER;
-  logic [                   0:0] BVALID;
-  logic [                   0:0] BREADY;
+  logic      [                       ID_W_WIDTH-1:0] BID;
+  logic      [                                  1:0] BRESP;
+  logic      [                  USER_RESP_WIDTH-1:0] BUSER;
+  logic      [                                  0:0] BVALID;
+  logic      [                                  0:0] BREADY;
 
-  logic [  $bits(req.ar.id)-1:0] ARID;
-  logic [$bits(req.ar.addr)-1:0] ARADDR;
-  logic [                   7:0] ARLEN;
-  logic [                   2:0] ARSIZE;
-  logic [                   1:0] ARBURST;
-  logic [                   0:0] ARLOCK;
-  logic [                   3:0] ARCACHE;
-  logic [                   2:0] ARPROT;
-  logic [                   3:0] ARQOS;
-  logic [                   3:0] ARREGION;
-  logic [$bits(req.ar.user)-1:0] ARUSER;
-  logic [                   0:0] ARVALID;
-  logic [                   0:0] ARREADY;
+  logic      [                       ID_R_WIDTH-1:0] ARID;
+  logic      [                       ADDR_WIDTH-1:0] ARADDR;
+  logic      [                                  7:0] ARLEN;
+  logic      [                                  2:0] ARSIZE;
+  logic      [                                  1:0] ARBURST;
+  logic      [                                  0:0] ARLOCK;
+  logic      [                                  3:0] ARCACHE;
+  logic      [                                  2:0] ARPROT;
+  logic      [                                  3:0] ARQOS;
+  logic      [                                  3:0] ARREGION;
+  logic      [                   USER_REQ_WIDTH-1:0] ARUSER;
+  logic      [                                  0:0] ARVALID;
+  logic      [                                  0:0] ARREADY;
 
-  logic [  $bits(resp.r.id)-1:0] RID;
-  logic [$bits(resp.r.data)-1:0] RDATA;
-  logic [                   1:0] RRESP;
-  logic [                   0:0] RLAST;
-  logic [$bits(resp.r.user)-1:0] RUSER;
-  logic [                   0:0] RVALID;
-  logic [                   0:0] RREADY;
+  logic      [                       ID_R_WIDTH-1:0] RID;
+  logic      [                       DATA_WIDTH-1:0] RDATA;
+  logic      [                                  1:0] RRESP;
+  logic      [                                  0:0] RLAST;
+  logic      [(USER_DATA_WIDTH+USER_RESP_WIDTH)-1:0] RUSER;
+  logic      [                                  0:0] RVALID;
+  logic      [                                  0:0] RREADY;
 
   assign ACLK     = clk_i;
   assign ARESETn  = arst_ni;

@@ -4,44 +4,45 @@
 `include "vip/bus_dvr_mon.svh"
 
 interface axi4l_if #(
-    parameter type req_t  = logic,
-    parameter type resp_t = logic
+    parameter int ADDR_WIDTH = 32,
+    parameter int DATA_WIDTH = 32
 ) (
     input logic clk_i,
     input logic arst_ni
 );
 
-  req_t  req;
-  resp_t resp;
+  `AXI4L_T(axi, ADDR_WIDTH, DATA_WIDTH)
 
-  `AXI4L_T(axi, $bits(req.ar.addr), $bits(resp.r.data))
+  axi_req_t                     req;
+  axi_resp_t                    resp;
 
-  logic                          ACLK;
-  logic                          ARESETn;
 
-  logic [$bits(req.aw.addr)-1:0] AWADDR;
-  logic [                   2:0] AWPROT;
-  logic [                   0:0] AWVALID;
-  logic [                   0:0] AWREADY;
+  logic                         ACLK;
+  logic                         ARESETn;
 
-  logic [ $bits(req.w.data)-1:0] WDATA;
-  logic [ $bits(req.w.strb)-1:0] WSTRB;
-  logic [                   0:0] WVALID;
-  logic [                   0:0] WREADY;
+  logic      [  ADDR_WIDTH-1:0] AWADDR;
+  logic      [             2:0] AWPROT;
+  logic      [             0:0] AWVALID;
+  logic      [             0:0] AWREADY;
 
-  logic [                   1:0] BRESP;
-  logic [                   0:0] BVALID;
-  logic [                   0:0] BREADY;
+  logic      [  DATA_WIDTH-1:0] WDATA;
+  logic      [DATA_WIDTH/8-1:0] WSTRB;
+  logic      [             0:0] WVALID;
+  logic      [             0:0] WREADY;
 
-  logic [$bits(req.ar.addr)-1:0] ARADDR;
-  logic [                   2:0] ARPROT;
-  logic [                   0:0] ARVALID;
-  logic [                   0:0] ARREADY;
+  logic      [             1:0] BRESP;
+  logic      [             0:0] BVALID;
+  logic      [             0:0] BREADY;
 
-  logic [$bits(resp.r.data)-1:0] RDATA;
-  logic [                   1:0] RRESP;
-  logic [                   0:0] RVALID;
-  logic [                   0:0] RREADY;
+  logic      [  ADDR_WIDTH-1:0] ARADDR;
+  logic      [             2:0] ARPROT;
+  logic      [             0:0] ARVALID;
+  logic      [             0:0] ARREADY;
+
+  logic      [  DATA_WIDTH-1:0] RDATA;
+  logic      [             1:0] RRESP;
+  logic      [             0:0] RVALID;
+  logic      [             0:0] RREADY;
 
   assign ACLK    = clk_i;
   assign ARESETn = arst_ni;

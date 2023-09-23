@@ -113,16 +113,6 @@ package axi4l_pkg;
     //}}}
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    //-SIGNALS{{{
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-
-    mailbox #(axi4l_seq_item_t) mbx;
-    mailbox #(axi4l_seq_item_t) wr_mbx = new(1);
-    mailbox #(axi4l_seq_item_t) rd_mbx = new(1);
-
-    //}}}
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////
     //-VARIABLES{{{
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -153,8 +143,8 @@ package axi4l_pkg;
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
     virtual axi4l_if #(
-        .ADDR_WIDTH(ADDR_WIDTH),
-        .DATA_WIDTH(DATA_WIDTH)
+      .ADDR_WIDTH(ADDR_WIDTH),
+      .DATA_WIDTH(DATA_WIDTH)
     ) intf;
 
     //}}}
@@ -162,6 +152,8 @@ package axi4l_pkg;
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //-CLASSES{{{
     //////////////////////////////////////////////////////////////////////////////////////////////////
+
+    mailbox #(axi4l_seq_item_t) mbx;
 
     axi4l_mem mem_obj;
 
@@ -202,10 +194,10 @@ package axi4l_pkg;
 
     task automatic start();  //{{{
       reset();
-      while (mbx == null) begin
-        intf.clk_delay();
-      end
       if (ROLE) begin  // is manager{{{
+        while (mbx == null) begin
+          intf.clk_delay();
+        end
         fork
           forever begin  // generate beats{{{
             axi4l_seq_item_t item;
@@ -216,13 +208,17 @@ package axi4l_pkg;
               axi_w_chan_t  w_beat;
               axi_b_chan_t  b_beat;
 
-              aw_beat.addr = item.addr;
-              aw_beat.prot = item.prot;
+              aw_beat = '0;
+              w_beat = '0;
+              b_beat = '0;
+
+              aw_beat.addr = item._addr;
+              aw_beat.prot = item._prot;
               aw_queue.push_back(aw_beat);
 
               for (int i = (aw_beat.addr % DataBytes); i < DataBytes; i++) begin
-                w_beat.data[i] = item.data[i-(aw_beat.addr%DataBytes)];
-                w_beat.strb[i] = item.strb[i-(aw_beat.addr%DataBytes)];
+                w_beat.data[i] = item._data[i-(aw_beat.addr%DataBytes)];
+                w_beat.strb[i] = item._strb[i-(aw_beat.addr%DataBytes)];
               end
               w_queue.push_back(w_beat);
 
@@ -234,8 +230,11 @@ package axi4l_pkg;
               axi_ar_chan_t ar_beat;
               axi_r_chan_t  r_beat;
 
-              ar_beat.addr = item.addr;
-              ar_beat.prot = item.prot;
+              ar_beat = '0;
+              r_beat = '0;
+
+              ar_beat.addr = item._addr;
+              ar_beat.prot = item._prot;
               ar_queue.push_back(ar_beat);
 
               r_queue.push_back(r_beat);
@@ -325,46 +324,63 @@ package axi4l_pkg;
             end
           end  //}}}
           forever begin  // generate beats{{{
+            @(aw_queue.size() or w_queue.size() or aw_queue.size());
             if (aw_queue.size() && w_queue.size()) begin  // write{{{
               axi_aw_chan_t aw_beat;
               axi_w_chan_t  w_beat;
               axi_b_chan_t  b_beat;
+
+              b_beat  = '0;
+
               aw_beat = aw_queue.pop_front();
               w_beat  = w_queue.pop_front();
+
               if (failure_odds > 0) begin
                 if ($urandom_range(0, 99) inside {[0 : (failure_odds - 1)]}) begin
                   b_beat.resp = 2;
+                end else begin
+                  b_beat.resp = 0;
                 end
               end
+
               if (b_beat.resp == 0) begin
-                bit [63:0] raw_aligned_addr;
+                bit [ADDR_WIDTH-1:0] raw_aligned_addr;
                 raw_aligned_addr = '0;
-                raw_aligned_addr[63:DataSize] = aw_beat.addr[63:DataSize];
+                raw_aligned_addr[ADDR_WIDTH-1:DataSize] = aw_beat.addr[ADDR_WIDTH-1:DataSize];
                 foreach (w_beat.data[i]) begin
                   if (w_beat.strb[i]) begin
                     mem_obj.mem[aw_beat.prot[1]][raw_aligned_addr+i] = w_beat.data[i];
                   end
                 end
               end
+
               intf.send_b(b_beat);
             end  //}}}
             if (ar_queue.size()) begin  // read{{{
               axi_ar_chan_t ar_beat;
               axi_r_chan_t  r_beat;
+
+              r_beat  = '0;
+
               ar_beat = ar_queue.pop_front();
+
               if (failure_odds > 0) begin
                 if ($urandom_range(0, 99) inside {[0 : (failure_odds - 1)]}) begin
                   r_beat.resp = 2;
+                end else begin
+                  r_beat.resp = 0;
                 end
               end
+
               if (r_beat.resp == 0) begin
-                bit [63:0] raw_aligned_addr;
+                bit [ADDR_WIDTH-1:0] raw_aligned_addr;
                 raw_aligned_addr = '0;
-                raw_aligned_addr[63:DataSize] = ar_beat.addr[63:DataSize];
+                raw_aligned_addr[ADDR_WIDTH-1:DataSize] = ar_beat.addr[ADDR_WIDTH-1:DataSize];
                 foreach (r_beat.data[i]) begin
-                  r_beat.data[i] = mem_obj.mem[aw_beat.prot[1]][raw_aligned_addr+i];
+                  r_beat.data[i] = mem_obj.mem[ar_beat.prot[1]][raw_aligned_addr+i];
                 end
               end
+
               intf.send_r(r_beat);
             end  //}}}
           end  //}}}
@@ -434,8 +450,8 @@ package axi4l_pkg;
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
     virtual axi4l_if #(
-        .ADDR_WIDTH(ADDR_WIDTH),
-        .DATA_WIDTH(DATA_WIDTH)
+      .ADDR_WIDTH(ADDR_WIDTH),
+      .DATA_WIDTH(DATA_WIDTH)
     ) intf;
 
     //}}}
@@ -515,10 +531,10 @@ package axi4l_pkg;
             item._addr = aw_queue[0].addr;
             item._prot = aw_queue[0].prot;
             for (int i = (aw_queue[0].addr % DataBytes); i < DataBytes; i++) begin
-              item._data.push_back(w_beat.data[i]);
-              item._strb.push_back(w_beat.strb[i]);
+              item._data.push_back(w_queue[0].data[i]);
+              item._strb.push_back(w_queue[0].strb[i]);
             end
-            item._resp     = b_beat.resp;
+            item._resp     = b_queue[0].resp;
             item._ax_clk   = aw_time[0];
             item._x_clk    = w_time[0];
             item._resp_clk = b_time[0];
@@ -537,9 +553,9 @@ package axi4l_pkg;
             item._addr = ar_queue[0].addr;
             item._prot = ar_queue[0].prot;
             for (int i = (ar_queue[0].addr % DataBytes); i < DataBytes; i++) begin
-              item._data.push_back(r_beat.data[i]);
+              item._data.push_back(r_queue[0].data[i]);
             end
-            item._resp     = r_beat.resp;
+            item._resp     = r_queue[0].resp;
             item._ax_clk   = ar_time[0];
             item._x_clk    = r_time[0];
             item._resp_clk = r_time[0];
