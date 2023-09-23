@@ -142,11 +142,13 @@ module axi4l_pkg_tb;
     manager.mbx = dvr_mbx;
     monitor.mbx = mon_mbx;
 
+    subordinate.failure_odds = 10;
+
     manager.start();
     subordinate.start();
     monitor.start();
 
-    repeat (1) begin
+    repeat (25) begin
       main_seq_item_t item;
       item = new();
       item.randomize();
@@ -159,7 +161,7 @@ module axi4l_pkg_tb;
       dvr_mbx.put(item);
     end
 
-    repeat (20) @(posedge clk_i);
+    monitor.wait_cooldown();
 
     while (mon_mbx.num()) begin
       main_resp_item_t item;
@@ -170,11 +172,6 @@ module axi4l_pkg_tb;
     $finish;
 
   end  //}}}
-
-  initial begin // timeout{{{
-    #1us;
-    $finish;
-  end //}}}
 
   //}}}
 

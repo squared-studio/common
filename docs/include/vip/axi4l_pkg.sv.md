@@ -310,7 +310,7 @@ Class constructor. Requires an AXI4 Lite interface
 <td>
 
 ```SV
-task automatic wait_cooldown(input int n);
+task automatic wait_cooldown(input int n = 10);
 ```
 </td>
 <td>
