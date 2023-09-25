@@ -78,3 +78,16 @@
     $fclose(file_descriptor);                                                                      \
   end                                                                                              \
 
+
+`define STORE_HEX(__FILE_PATH__, __MEM__)                                                          \
+  begin                                                                                            \
+    int file_descriptor;                                                                           \
+    bit put_addr;                                                                                  \
+    file_descriptor = $fopen(``__FILE_PATH__``, "w");                                              \
+    put_addr = 0;                                                                                  \
+    foreach (``__MEM__``[i]) begin                                                                 \
+        $fdisplay(file_descriptor, "@%h\n%h", i, ``__MEM__``[i]);                                  \
+    end                                                                                            \
+    $fclose(file_descriptor);                                                                      \
+  end                                                                                              \
+
