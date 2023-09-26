@@ -79,7 +79,7 @@
   end                                                                                              \
 
 
-`define STORE_HEX(__FILE_PATH__, __MEM__)                                                          \
+`define SAVE_HEX(__FILE_PATH__, __MEM__)                                                           \
   begin                                                                                            \
     int file_descriptor;                                                                           \
     bit put_addr;                                                                                  \

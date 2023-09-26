@@ -3,7 +3,6 @@
 ## Package Contents
 [`axi4l_seq_item`](#axi4l_seq_item)<br>
 [`axi4l_resp_item`](#axi4l_resp_item)<br>
-[`axi4l_mem`](#axi4l_mem)<br>
 [`axi4l_driver`](#axi4l_driver)<br>
 [`axi4l_monitor`](#axi4l_monitor)<br>
 
@@ -115,79 +114,6 @@ Returns a string of the packet in user friendly manner
 
 </table>
 
-## axi4l_mem
-Linkable subordinate memory. This is an internally used class. The handle of this class can point to a single memory instance, allowing multiple drivers use the exact same shared memory even though data widths and address range are different. For example:
-```SV
-axi4l_driver #(
-  .ADDR_WIDTH(32),
-  .DATA_WIDTH(32),
-  .ROLE(0)
-) dvr_1 = new();
-
-axi4l_driver #(
-  .ADDR_WIDTH(64),
-  .DATA_WIDTH(64),
-  .ROLE(0)
-) dvr_2 = new();
-
-initial begin
-  // at some point, preferably at time `0` after allocating memory to driver class instances
-  dvr_1.mem_inst = dvr_2.mem_inst;
-end
-```
-
-|Parameter   |Description
-|-           |-
-|`ADDR_WIDTH`|Width of the AW/AR address bus
-|`DATA_WIDTH`|Width of the W/R data bus
-
-|Signal                     |Description
-|-                          |-
-|`bit [7:0] mem[2][longint]`|Unpacked multi-dimentional byte arrray
-
-<table>
-<tr>
-<th>Method</th>
-<th>Description</th>
-</tr>
-
-<tr>
-<td>
-
-```SV
-task automatic load_image(
-  input string file,
-  input bit non_secure = 1
-);
-```
-</td>
-<td>
-
-Load a `.hex` file in the subordinate memory. The file path as string is provided as the first argument. The last optional argument defines whether to write in non_secure address space
-</td>
-</tr>
-
-<tr>
-<td>
-
-```SV
-task automatic save_image(
-  input string file,
-  input bit [ADDR_WIDTH-1:0] starting_addr,
-  input bit [ADDR_WIDTH-1:0] ending_addr,
-  input bit non_secure = 1
-);
-```
-</td>
-<td>
-
-Write a `.hex` file taking data from the subordinate memory. The file path as string is provided as the first argument. The starting and ending address is provided after words. The last optional argument defines whether to read from non_secure address space
-
-</td>
-</tr>
-
-</table>
-
 ## axi4l_driver
 Driver class for AXI4. In manager role, drives the provided AXI4 Lite interface according to the provided sequence item. In subordinate role, reacts to the priveded AXI4 Lite interface
 |Parameter   |Description
@@ -196,19 +122,24 @@ Driver class for AXI4. In manager role, drives the provided AXI4 Lite interface 
 |`DATA_WIDTH`|Width of the W/R data bus
 |`ROLE      `|Role of the driver. `0` means subordinate & `1` means manager
 
-|Variable      |Description
-|-             |-
-|`failure_odds`|Chances of intensional failure in 100 transaction
-|`aw_delay_min`|Minimum delay in AW channel
-|`w_delay_min `|Minimum delay in W channel
-|`b_delay_min `|Minimum delay in B channel
-|`ar_delay_min`|Minimum delay in AR channel
-|`r_delay_min `|Minimum delay in R channel
-|`aw_delay_max`|Maximum delay in AW channel
-|`w_delay_max `|Maximum delay in W channel
-|`b_delay_max `|Maximum delay in B channel
-|`ar_delay_max`|Maximum delay in AR channel
-|`r_delay_max `|Maximum delay in R channel
+|Variable        |Type |Description
+|-               |-    |-
+|`failure_odds  `|int  |Chances of intensional failure in 100 transaction
+|`aw_delay_min  `|int  |Minimum delay in AW channel
+|`w_delay_min   `|int  |Minimum delay in W channel
+|`b_delay_min   `|int  |Minimum delay in B channel
+|`ar_delay_min  `|int  |Minimum delay in AR channel
+|`r_delay_min   `|int  |Minimum delay in R channel
+|`aw_delay_max  `|int  |Maximum delay in AW channel
+|`w_delay_max   `|int  |Maximum delay in W channel
+|`b_delay_max   `|int  |Maximum delay in B channel
+|`ar_delay_max  `|int  |Maximum delay in AR channel
+|`r_delay_max   `|int  |Maximum delay in R channel
+|`secure_mem    `|class|[byte_memory](../../../include/vip/memory_pkg.sv) class for axi secured memory
+|`non_secure_mem`|class|[byte_memory](../../../include/vip/memory_pkg.sv) class for axi secured memory
+
+    byte_memory secure_mem;
+    byte_memory non_secure_mem;
 
 <table>
 <tr>

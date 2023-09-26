@@ -1,8 +1,10 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com))
 
+`include "axi4l_typedef.svh"
+`include "vip/memory_pkg.sv"
+
 package axi4l_pkg;
 
-  `include "axi4l_typedef.svh"
 
   class axi4l_seq_item #(  //{{{
       parameter int ADDR_WIDTH = 32,
@@ -108,40 +110,19 @@ package axi4l_pkg;
 
   endclass  //}}}
 
-  class axi4l_mem #(  //{{{
-      parameter int ADDR_WIDTH = 64
-  );
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //-SIGNALS{{{
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-
-    bit [7:0] mem[2][longint];
-
-    //}}}
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //-METHODS{{{
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-
-    task automatic load_image(input string file, input bit non_secure = 1);  //{{{
-      // TODO
-    endtask  //}}}
-
-    task automatic save_image(input string file, input bit [ADDR_WIDTH-1:0] starting_addr,  //{{{
-                              input bit [ADDR_WIDTH-1:0] ending_addr, input bit non_secure = 1);
-      // TODO
-    endtask  //}}}
-
-    //}}}
-
-  endclass  //}}}
-
   class axi4l_driver #(  //{{{
       parameter int ADDR_WIDTH = 32,
       parameter int DATA_WIDTH = 64,
       parameter bit ROLE       = 0
   );
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    //-IMPORTS{{{
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+
+    import memory_pkg::byte_memory;
+
+    //}}}
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //-LOCALPARAMS{{{
@@ -208,7 +189,8 @@ package axi4l_pkg;
 
     mailbox #(axi4l_seq_item_t) mbx;
 
-    axi4l_mem mem_obj;
+    byte_memory secure_mem;
+    byte_memory non_secure_mem;
 
     //}}}
 
@@ -222,7 +204,8 @@ package axi4l_pkg;
         .DATA_WIDTH(DATA_WIDTH)
         ) intf);
       if (!ROLE) begin
-        mem_obj = new();
+        secure_mem     = new();
+        non_secure_mem = new();
       end
       this.intf = intf;
     endfunction  //}}}
@@ -396,7 +379,11 @@ package axi4l_pkg;
                 raw_aligned_addr = '0;
                 raw_aligned_addr[ADDR_WIDTH-1:DataSize] = ar_beat.addr[ADDR_WIDTH-1:DataSize];
                 foreach (r_beat.data[i]) begin
-                  r_beat.data[i] = mem_obj.mem[ar_beat.prot[1]][raw_aligned_addr+i];
+                  if (ar_beat.prot[1]) begin
+                    r_beat.data[i] = non_secure_mem.mem[raw_aligned_addr+i];
+                  end else begin
+                    r_beat.data[i] = secure_mem.mem[raw_aligned_addr+i];
+                  end
                 end
               end
 
@@ -426,7 +413,11 @@ package axi4l_pkg;
                 raw_aligned_addr[ADDR_WIDTH-1:DataSize] = aw_beat.addr[ADDR_WIDTH-1:DataSize];
                 foreach (w_beat.data[i]) begin
                   if (w_beat.strb[i]) begin
-                    mem_obj.mem[aw_beat.prot[1]][raw_aligned_addr+i] = w_beat.data[i];
+                    if (aw_beat.prot[1]) begin
+                      non_secure_mem.mem[raw_aligned_addr+i] = w_beat.data[i];
+                    end else begin
+                      secure_mem.mem[raw_aligned_addr+i] = w_beat.data[i];
+                    end
                   end
                 end
               end
