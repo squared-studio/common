@@ -5,7 +5,6 @@
 
 package axi4l_pkg;
 
-
   class axi4l_seq_item #(  //{{{
       parameter int ADDR_WIDTH = 32,
       parameter int DATA_WIDTH = 64
