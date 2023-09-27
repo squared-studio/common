@@ -1,7 +1,8 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
 // macro for setting or assigning axi4l req to req
-`define AXI4_REQ_TO_REQ(__MODE__, __SRC__, __DST__)                                                \
+`ifndef AXI4_REQ_TO_REQ
+`define AXI4_REQ_TO_REQ(__MODE__, __DST__, __SRC__)                                                \
   ``__MODE__`` ``__DST__``.aw.id     = ``__SRC__``.aw.id     ;                                     \
   ``__MODE__`` ``__DST__``.aw.addr   = ``__SRC__``.aw.addr   ;                                     \
   ``__MODE__`` ``__DST__``.aw.len    = ``__SRC__``.aw.len    ;                                     \
@@ -34,9 +35,11 @@
   ``__MODE__`` ``__DST__``.ar_valid  = ``__SRC__``.ar_valid  ;                                     \
   ``__MODE__`` ``__DST__``.r_ready   = ``__SRC__``.r_ready   ;                                     \
 
+`endif  //AXI4_REQ_TO_REQ
 
 // macro for setting or assigning axi4l req to req
-`define AXI4_RESP_TO_RESP(__MODE__, __SRC__, __DST__)                                              \
+`ifndef AXI4_RESP_TO_RESP
+`define AXI4_RESP_TO_RESP(__MODE__, __DST__, __SRC__)                                              \
   ``__MODE__`` ``__DST__``.aw_ready    = ``__SRC__``.aw_ready    ;                                 \
   ``__MODE__`` ``__DST__``.w_ready     = ``__SRC__``.w_ready     ;                                 \
   ``__MODE__`` ``__DST__``.b.id        = ``__SRC__``.b.id        ;                                 \
@@ -51,4 +54,6 @@
   ``__MODE__`` ``__DST__``.r.user.data = ``__SRC__``.r.user.data ;                                 \
   ``__MODE__`` ``__DST__``.r.user.resp = ``__SRC__``.r.user.resp ;                                 \
   ``__MODE__`` ``__DST__``.r_valid     = ``__SRC__``.r_valid     ;                                 \
+
+`endif  //AXI4_RESP_TO_RESP
 

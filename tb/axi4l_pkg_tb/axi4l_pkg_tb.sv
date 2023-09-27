@@ -8,6 +8,7 @@
 //`include "axi4_typedef.svh"
 //`include "default_param_pkg.sv"
 `include "vip/axi4l_pkg.sv"
+`include "vip/axi4l_pkg_macros.svh"
 //`include "vip/axi4_pkg.sv"
 //`include "vip/bus_dvr_mon.svh"
 //`include "vip/string_ops_pkg.sv"
@@ -23,10 +24,8 @@ module axi4l_pkg_tb;
   // bring in the testbench essentials functions and macros
   `include "vip/tb_ess.sv"
 
-  import axi4l_pkg::axi4l_seq_item;
-  import axi4l_pkg::axi4l_resp_item;
-  import axi4l_pkg::axi4l_driver;
-  import axi4l_pkg::axi4l_monitor;
+  // AXI4L VIP CLASSES IMPORT
+  `IMPORT_AXI4L_PKG_CLASSES
 
   //}}}
 
@@ -42,16 +41,6 @@ module axi4l_pkg_tb;
 
   `AXI4L_T(main, 32, 64)
 
-  typedef axi4l_seq_item#(
-      .ADDR_WIDTH(32),
-      .DATA_WIDTH(64)
-  ) main_seq_item_t;
-
-  typedef axi4l_resp_item#(
-      .ADDR_WIDTH(32),
-      .DATA_WIDTH(64)
-  ) main_resp_item_t;
-
   //}}}
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -62,6 +51,9 @@ module axi4l_pkg_tb;
   `CREATE_CLK(clk_i, 5ns, 5ns)
 
   logic arst_ni = 1;
+
+  main_req_t req;
+  main_resp_t resp;
 
   //}}}
 
@@ -77,13 +69,8 @@ module axi4l_pkg_tb;
   //-INTERFACES{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  axi4l_if #(
-      .ADDR_WIDTH(32),
-      .DATA_WIDTH(64)
-  ) u_axi4l_if (
-      .clk_i  (clk_i),
-      .arst_ni(arst_ni)
-  );
+  `AXI4L_VIP(man, 1, clk_i, arst_ni, req, resp)
+  `AXI4L_VIP(sub, 0, clk_i, arst_ni, req, resp)
 
   //}}}
 
@@ -91,12 +78,7 @@ module axi4l_pkg_tb;
   //-CLASSES{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  axi4l_driver #(.ADDR_WIDTH(32), .DATA_WIDTH(64), .ROLE(1)) manager = new(u_axi4l_if);
-  axi4l_driver #(.ADDR_WIDTH(32), .DATA_WIDTH(64), .ROLE(0)) subordinate = new(u_axi4l_if);
-  axi4l_monitor #(.ADDR_WIDTH(32), .DATA_WIDTH(64))          monitor = new(u_axi4l_if);
 
-  mailbox #(main_seq_item_t)                                 dvr_mbx = new();
-  mailbox #(main_resp_item_t)                                mon_mbx = new();
 
   //}}}
 
@@ -139,33 +121,34 @@ module axi4l_pkg_tb;
     apply_reset();
     start_clk_i();
 
-    manager.mbx = dvr_mbx;
-    monitor.mbx = mon_mbx;
+    sub_dvr.failure_odds = 10;
 
-    subordinate.failure_odds = 10;
-
-    manager.start();
-    subordinate.start();
-    monitor.start();
+    man_dvr.start();
+    sub_dvr.start();
+    man_mon.start();
 
     repeat (25) begin
-      main_seq_item_t item;
+      man_seq_item_t item;
       item = new();
       item.randomize();
       item._type = 1;
       $display("%s", item.to_string());
-      dvr_mbx.put(item);
+      man_dvr_mbx.put(item);
+      repeat (2) @(posedge clk_i);
       item = new item;
       item._type = 0;
       $display("%s", item.to_string());
-      dvr_mbx.put(item);
+      man_dvr_mbx.put(item);
     end
 
-    monitor.wait_cooldown();
+    fork
+      man_mon.wait_cooldown();
+      sub_mon.wait_cooldown();
+    join
 
-    while (mon_mbx.num()) begin
-      main_resp_item_t item;
-      mon_mbx.get(item);
+    while (man_mon_mbx.num()) begin
+      man_resp_item_t item;
+      man_mon_mbx.get(item);
       $display("%s", item.to_string());
     end
 
