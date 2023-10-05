@@ -1,0 +1,32 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Thu Oct 05 18:45:25 2023
+[*]
+[dumpfile] "C:\Users\foeza\Documents\SystemVerilog\tb\io_pad_tb\dump.vcd"
+[dumpfile_mtime] "Thu Oct 05 18:44:25 2023"
+[dumpfile_size] 5966
+[savefile] "C:\Users\foeza\Documents\SystemVerilog\tb\io_pad_tb\wave.gtkw"
+[timestart] 0
+[size] 1920 1009
+[pos] -1 -1
+*-16.323669 205000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 197
+[signals_width] 111
+[sst_expanded] 1
+[sst_vpaned_height] 297
+@28
+io_pad_tb.clk_i
+@68
+io_pad_tb.pu_ni
+@28
+io_pad_tb.pd_i
+[color] 3
+io_pad_tb.wen_i
+io_pad_tb.wdata_i
+io_pad_tb.pin_io
+io_pad_tb.rdata_o
+io_pad_tb.pin_drv
+@69
+io_pad_tb.wen_i
+[pattern_trace] 1
+[pattern_trace] 0

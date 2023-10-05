@@ -289,10 +289,10 @@ module_param:
 .PHONY: module_port
 module_port:
 	@cat ___module_header \
-		| grep -E -w "input|output" \
+		| grep -E -w "input|output|inout" \
 		| sed "s/,//g" \
 		| sed "s/$$/;/g" \
-		| sed "s/ *input *\| *output *//g" \
+		| sed "s/ *input *\| *output *\| *inout *//g" \
 		| sed "s/_ni;/_ni = '1;/g" \
 		| sed "s/_i;/_i = '0;/g" \
 		>___module_port

@@ -16,10 +16,10 @@ module io_pad #(
   //-ASSIGNMENTS{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  buf (weak1, highz0) pull_up (pin_io, !pu_ni);
-  buf (highz1, weak0) pull_down (pin_io, pd_i);
+  buf (pull1, highz0) pull_up (pin_io, !pu_ni);
+  buf (highz1, pull0) pull_down (pin_io, !pd_i);
   bufif1 (strong1, strong0) wdata_drive (pin_io, wdata_i, wen_i);
-  buf read_data (rdata_o, pin_io);
+  buf (strong1, strong0) read_data (rdata_o, pin_io);
 
   //}}}
 
