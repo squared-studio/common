@@ -7,6 +7,7 @@ ci_vivado_run:
 	@make vivado TOP=encoder_tb CONFIG=default
 	@make vivado TOP=fifo_tb CONFIG=default
 	@make vivado TOP=gray_to_bin_tb CONFIG=default
+	@make vivado TOP=io_pad_tb CONFIG=default
 	@make vivado TOP=mem_bank_tb CONFIG=default
 	@make vivado TOP=mux_tb CONFIG=default
 	@make vivado TOP=string_ops_pkg_tb CONFIG=default

@@ -109,7 +109,7 @@ gen_check_list:
 
 .PHONY: clean
 clean:
-	@$(foreach word, $(CLEAN_TARGETS), echo "removing $(word)";)
+	@echo -e "$(CLEAN_TARGETS)" | sed "s/  //g" | sed "s/ /\nremoving /g"
 	@rm -rf $(CLEAN_TARGETS)
 
 ####################################################################################################
