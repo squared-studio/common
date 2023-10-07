@@ -8,12 +8,21 @@
 //`include "axi4_typedef.svh"
 //`include "default_param_pkg.sv"
 
-module gpio_core #(
-    parameter int PORT_SIZE = 2,
-    parameter int NUM_PORT  = 2
+module axi_gpio #(
+    parameter  type axil4_req_t  = default_param_pkg::axi4l_req_t,
+    parameter  type axil4_resp_t = default_param_pkg::axi4l_resp_t,
+    localparam int  AW           = 0
 ) (
     //-PORTS
 );
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //-LOCALPARAMS GENERATED{{{
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+  //}}}
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-SIGNALS{{{
