@@ -1,5 +1,5 @@
 // Description
-// ### Author : name (email)
+// ### Author : Foez Ahmed (foez.official@gmail.com)
 
 //`include "addr_map.svh"
 //`include "axi4l_assign.svh"
@@ -8,9 +8,9 @@
 //`include "axi4_typedef.svh"
 //`include "default_param_pkg.sv"
 
-module rtl_model #(
-    //-PARAMETERS
-    //-LOCALPARAMS
+module gpio_core #(
+    parameter int PORT_SIZE = 2,
+    parameter int NUM_PORT  = 2
 ) (
     //-PORTS
 );

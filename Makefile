@@ -49,6 +49,9 @@ else
 	CLIP = clip
 endif
 
+GIT_UNAME = $(shell git config user.name)
+GIT_UMAIL = $(shell git config user.email)
+
 CI_LIST  = $(shell cat CI_LIST)
 
 ####################################################################################################
@@ -360,6 +363,7 @@ create_tb:
 		(	\
 			mkdir -p ./tb/$(TOP) && cat tb_model.sv	\
 			  | sed "s/^module tb_model;$$/module $(TOP);/g" \
+			  | sed "s/.*### Author :.*/\/\/ ### Author : $(GIT_UNAME) ($(GIT_UMAIL))/g" \
 				> ./tb/$(TOP)/$(TOP).sv \
 		)
 	@code ./tb/$(TOP)/$(TOP).sv
@@ -375,6 +379,7 @@ create_rtl:
 		(	\
 			cat rtl_model.sv	\
 			  | sed "s/^module rtl_model #($$/module $(RTL) #(/g" \
+			  | sed "s/.*### Author :.*/\/\/ ### Author : $(GIT_UNAME) ($(GIT_UMAIL))/g" \
 				> ./rtl/$(RTL).sv \
 		)
 	@code ./rtl/$(RTL).sv

@@ -4,8 +4,11 @@
 //`define SIMULATION
 
 module mem_bank #(
-    parameter int ADDR_WIDTH = 8,  // Memory bank address width
-    parameter int DATA_SIZE  = 2   // log2(bytes_in_databus)
+    parameter  int ADDR_WIDTH = 8,               // Memory bank address width
+    parameter  int DATA_SIZE  = 2,               // log2(bytes_in_databus)
+    localparam int DataBytes  = 2 ** DATA_SIZE,  // Bytes in the data bus
+    localparam int DataBits   = 8 * DATA_SIZE    // Bits in the data bus
+
 ) (
     input  logic                          clk_i,    // Global clock
     input  logic                          cs_i,     // Asynchronous reset
@@ -14,13 +17,6 @@ module mem_bank #(
     input  logic [    (2**DATA_SIZE)-1:0] wstrb_i,  // Aligned write strobe
     output logic [(8*(2**DATA_SIZE))-1:0] rdata_o   // Aligned read data
 );
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-LOCALPARAMS
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-
-  localparam int DataBytes = 2 ** DATA_SIZE;  // Bytes in the data bus
-  localparam int DataBits = 8 * DATA_SIZE;  // Bits in the data bus
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-SIGNALS

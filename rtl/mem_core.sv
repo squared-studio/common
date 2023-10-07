@@ -2,8 +2,9 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
 module mem_core #(
-    parameter int ELEM_WIDTH = 8,  // Width of each memory data element
-    parameter int ADDR_WIDTH = 8   // Width of the address bus
+    parameter  int ELEM_WIDTH = 8,                 // Width of each memory data element
+    parameter  int ADDR_WIDTH = 8,                 // Width of the address bus
+    localparam int Depth      = (2 ** ADDR_WIDTH)  // Depth of the memory
 ) (
     input  logic                  clk_i,    // Global clock
     input  logic                  we_i,     // Write enable
@@ -11,12 +12,6 @@ module mem_core #(
     input  logic [ELEM_WIDTH-1:0] wdata_i,  // Write data
     output logic [ELEM_WIDTH-1:0] rdata_o   // Read data
 );
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-LOCALPARAMS
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-
-  localparam int Depth = (2 ** ADDR_WIDTH);  // Depth of the memory
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-SIGNALS
