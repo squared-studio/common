@@ -9,18 +9,20 @@
 //`include "default_param_pkg.sv"
 
 module axi_gpio #(
-    parameter  type axil4_req_t  = default_param_pkg::axi4l_req_t,
-    parameter  type axil4_resp_t = default_param_pkg::axi4l_resp_t,
-    localparam int  AW           = 0
+    parameter type axi4l_req_t  = default_param_pkg::axi4l_req_t,
+    parameter type axi4l_resp_t = default_param_pkg::axi4l_resp_t
 ) (
-    //-PORTS
+    input  axi4l_req_t  req_i,
+    output axi4l_resp_t resp_o
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-LOCALPARAMS GENERATED{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+  localparam int AddrWidth = $bit(req_i.aw.addr);
+  localparam int DataWidth = $bit(req_i.w.data);
+  localparam int AXSIZE    = $clog2(DataWidth/8);
 
   //}}}
 
