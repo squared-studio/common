@@ -194,6 +194,13 @@ vivado:
 		top -f $(CONFIG_PATH)/xsim \
 		-runall
 
+.PHONY: rtl_init_sim
+rtl_init_sim: clean
+	@echo "$(RTL)" > ___RTL
+	@xvlog -d SIMULATION -i $(INC_DIR) -sv -L RTL=$(DES_LIB)
+	@xelab $(RTL) -s top
+	@xsim top -runall
+
 ####################################################################################################
 # CI (Vivado)
 ####################################################################################################
