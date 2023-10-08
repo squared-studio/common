@@ -2,38 +2,28 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
 module demux #(
-    parameter int NUM_ELEM = 7  // Number of elements in the demux
+    parameter int NUM_ELEM   = 6,  // Number of elements in the demux
+    parameter int ELEM_WIDTH = 8   // Width of each element
 ) (
-    input  logic [$clog2(NUM_ELEM)-1:0] s_i,  // Output select
-    input  logic                        i_i,  // input
-    output logic [        NUM_ELEM-1:0] o_o   // Array of Output
+    input  logic [$clog2(NUM_ELEM)-1:0]                 s_i,  // Output select
+    input  logic [      ELEM_WIDTH-1:0]                 i_i,  // input
+    output logic [        NUM_ELEM-1:0][ELEM_WIDTH-1:0] o_o   // Array of Output
 );
 
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-SIGNALS
-  //////////////////////////////////////////////////////////////////////////////////////////////////
+  logic [NUM_ELEM-1:0] valid_out;
 
-  logic [$clog2(NUM_ELEM)-1:0] s_n;  // Invited select
-
-  logic [$clog2(NUM_ELEM):0] output_and_red[NUM_ELEM];  // Output and reduction
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-ASSIGNMENTS
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-
-  assign s_n = ~s_i;
-
-  always_comb begin
-    for (bit [$clog2(NUM_ELEM):0] i = 0; i < NUM_ELEM; i++) begin
-      for (int j = 0; j < $clog2(NUM_ELEM); j++) begin
-        output_and_red[i][j] = i[j] ? s_i[j] : s_n[j];
-      end
-      output_and_red[i][$clog2(NUM_ELEM)] = i_i;
+  for (genvar i = 0; i < NUM_ELEM; i++) begin : g_elem
+    for (genvar j = 0; j < ELEM_WIDTH; j++) begin : g_bits
+      assign o_o[i][j] = i_i[j] & valid_out[i];
     end
   end
 
-  for (genvar i = 0; i < NUM_ELEM; i++) begin : g_output_and_red
-    assign o_o[i] = &output_and_red[i];
-  end
+  decoder #(
+      .NUM_WIRE(NUM_ELEM)
+  ) u_decoder (
+      .a_i(s_i),
+      .a_valid_i('1),
+      .d_o(valid_out)
+  );
 
 endmodule

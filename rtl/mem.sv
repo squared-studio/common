@@ -28,7 +28,8 @@ module mem #(
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   demux #(
-      .NUM_ELEM(DEPTH)
+      .NUM_ELEM(DEPTH),
+      .ELEM_WIDTH(1)
   ) u_demux (
       .s_i(waddr_i),
       .i_i(we_i),

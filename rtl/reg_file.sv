@@ -38,7 +38,8 @@ module reg_file #(
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   demux #(
-      .NUM_ELEM(NUM_REG)
+      .NUM_ELEM(NUM_REG),
+      .ELEM_WIDTH(1)
   ) u_demux_reg (
       .s_i(rd_addr_i),
       .i_i(rd_en_i),
