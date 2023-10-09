@@ -83,8 +83,8 @@ module axi_gpio #(
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   axi_fifo #(
-      .axi4l_req_t  (axi4l_req_t),
-      .axi4l_resp_t (axi4l_resp_t),
+      .axi_req_t    (axi4l_req_t),
+      .axi_resp_t   (axi4l_resp_t),
       .AW_FIFO_DEPTH(4),
       .W_FIFO_DEPTH (4),
       .B_FIFO_DEPTH (4),

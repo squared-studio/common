@@ -9,22 +9,22 @@
 //`include "default_param_pkg.sv"
 
 module axi_fifo #(
-    parameter type axi4l_req_t   = default_param_pkg::axi4l_req_t,
-    parameter type axi4l_resp_t  = default_param_pkg::axi4l_resp_t,
-    parameter int  AW_FIFO_DEPTH = 4,
-    parameter int  W_FIFO_DEPTH  = 4,
-    parameter int  B_FIFO_DEPTH  = 4,
-    parameter int  AR_FIFO_DEPTH = 4,
-    parameter int  R_FIFO_DEPTH  = 4
+    parameter type axi_req_t    = default_param_pkg::axi4l_req_t,
+    parameter type axi_resp_t   = default_param_pkg::axi4l_resp_t,
+    parameter int AW_FIFO_DEPTH = 4,
+    parameter int W_FIFO_DEPTH  = 4,
+    parameter int B_FIFO_DEPTH  = 4,
+    parameter int AR_FIFO_DEPTH = 4,
+    parameter int R_FIFO_DEPTH  = 4
 ) (
     input logic clk_i,
     input logic arst_ni,
 
-    input  axi4l_req_t  req_i,
-    output axi4l_resp_t resp_o,
+    input  axi_req_t  req_i,
+    output axi_resp_t resp_o,
 
-    output axi4l_req_t  req_o,
-    input  axi4l_resp_t resp_i
+    output axi_req_t  req_o,
+    input  axi_resp_t resp_i
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
