@@ -6,7 +6,7 @@
 //`include "axi4l_typedef.svh"
 //`include "axi4_assign.svh"
 //`include "axi4_typedef.svh"
-//`include "default_param_pkg.sv"
+`include "default_param_pkg.sv"
 
 module axi_fifo #(
     parameter type axi_req_t    = default_param_pkg::axi4l_req_t,
