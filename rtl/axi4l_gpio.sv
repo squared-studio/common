@@ -8,7 +8,7 @@
 //`include "axi4_typedef.svh"
 `include "default_param_pkg.sv"
 
-module axi_gpio #(
+module axi4l_gpio #(
     parameter  type axi4l_req_t  = default_param_pkg::axi4l_req_t,
     parameter  type axi4l_resp_t = default_param_pkg::axi4l_resp_t,
     parameter  int  PORT_SIZE    = 5,
@@ -31,15 +31,15 @@ module axi_gpio #(
   localparam int DataBytes = DataWidth / 8;
   localparam int DataSize = $clog2(DataBytes);
 
-  localparam int DivSize = (DataSize > PORT_SIZE) ? DataSize : PORT_SIZE;
+  localparam int BlockSize = (DataSize > PORT_SIZE) ? DataSize : PORT_SIZE;
   localparam int MinBytes = (DataBytes > PortBytes) ? PortBytes : DataBytes;
 
-  localparam int RdataBase = (2 ** DivSize) / DataBytes * 0;
-  localparam int WdataBase = (2 ** DivSize) / DataBytes * 1;
-  localparam int WenBase = (2 ** DivSize) / DataBytes * 2;
-  localparam int PullBase = (2 ** DivSize) / DataBytes * 3;
-  localparam int NumRows = (2 ** DivSize) / DataBytes * 4;
-  localparam int RowPerType = (2 ** DivSize) / DataBytes * 1;
+  localparam int RdataBase = (2 ** BlockSize) / DataBytes * 0;
+  localparam int WdataBase = (2 ** BlockSize) / DataBytes * 1;
+  localparam int WenBase = (2 ** BlockSize) / DataBytes * 2;
+  localparam int PullBase = (2 ** BlockSize) / DataBytes * 3;
+  localparam int NumRows = (2 ** BlockSize) / DataBytes * 4;
+  localparam int RowPerType = (2 ** BlockSize) / DataBytes * 1;
 
   //}}}
 

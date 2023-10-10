@@ -1,4 +1,4 @@
-# SystemVerilog IP Design & Verification
+# SystemVerilog RTL Design & Verification
 
 ## Directory structure
 This section describes the purpose of individual folders in this repository
@@ -22,6 +22,8 @@ make simulate TOP=fifo_tb
 ```
 
 ## RTL
+[AXI4L GPIO](./docs/rtl/axi4l_gpio.md)<br>
+[AXI FIFO](./docs/rtl/axi_fifo.md)<br>
 [Binary to Gray Code Converter](./docs/rtl/bin_to_gray.md)<br>
 [Clock Gate ](./docs/rtl/clk_gate.md)<br>
 [Gray to Binary Code Converter](./docs/rtl/gray_to_bin.md)<br>
