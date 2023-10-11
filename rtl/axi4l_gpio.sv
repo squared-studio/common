@@ -12,8 +12,7 @@ module axi4l_gpio #(
     parameter  type axi4l_req_t  = default_param_pkg::axi4l_req_t,
     parameter  type axi4l_resp_t = default_param_pkg::axi4l_resp_t,
     parameter  int  PORT_SIZE    = 5,
-    localparam int  PortBytes    = (2 ** PORT_SIZE),
-    localparam int  PortWidth    = (PortBytes * 8)
+    localparam int  PortBytes    = (2 ** PORT_SIZE)
 ) (
     input  logic                             clk_i,
     input  logic                             arst_ni,
