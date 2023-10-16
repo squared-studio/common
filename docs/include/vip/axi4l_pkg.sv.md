@@ -136,10 +136,7 @@ Driver class for AXI4. In manager role, drives the provided AXI4 Lite interface 
 |`ar_delay_max  `|int  |Maximum delay in AR channel
 |`r_delay_max   `|int  |Maximum delay in R channel
 |`secure_mem    `|class|[byte_memory](../../../include/vip/memory_pkg.sv) class for axi secured memory
-|`non_secure_mem`|class|[byte_memory](../../../include/vip/memory_pkg.sv) class for axi secured memory
-
-    byte_memory secure_mem;
-    byte_memory non_secure_mem;
+|`non_secure_mem`|class|[byte_memory](../../../include/vip/memory_pkg.sv) class for axi non-secured memory
 
 <table>
 <tr>
