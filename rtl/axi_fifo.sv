@@ -1,11 +1,6 @@
 // Description
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
-//`include "addr_map.svh"
-//`include "axi4l_assign.svh"
-//`include "axi4l_typedef.svh"
-//`include "axi4_assign.svh"
-//`include "axi4_typedef.svh"
 `include "default_param_pkg.sv"
 
 module axi_fifo #(
