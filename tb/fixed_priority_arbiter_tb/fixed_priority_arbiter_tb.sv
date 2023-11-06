@@ -33,7 +33,6 @@ module fixed_priority_arbiter_tb;
   logic                       ref_gnt_addr_valid_o;  // signal for store reference output
   int                         pass = 0;
   int                         fail = 0;
-  //logic [      NUM_REQ-1:0] temp;
 
   //}}}
 
@@ -88,16 +87,13 @@ module fixed_priority_arbiter_tb;
   task automatic ref_model(input logic allow_req_i, input logic [NUM_REQ-1:0] req_i,
                            output logic [$clog2(NUM_REQ)-1:0] gnt_addr_o,
                            output logic gnt_addr_valid_o);
-    //temp  = '0;
     gnt_addr_valid_o = allow_req_i & (|req_i);
-    //$display(gnt_addr_valid_o);
     if (req_i == 0) begin
       gnt_addr_o = '0;
     end else begin
       for (int i = 0; i < NUM_REQ; i++) begin
         if (req_i[i] == 1) begin
           gnt_addr_o = i;
-          //gnt_addr_o = temp;
           break;
         end
         //temp++;
