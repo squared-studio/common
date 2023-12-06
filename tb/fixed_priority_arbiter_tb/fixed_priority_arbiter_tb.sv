@@ -1,3 +1,7 @@
+// ### memory column for storing rd_data
+// ### Author : Razu Ahamed (en.razu.ahamed@gmail.com)
+
+
 module fixed_priority_arbiter_tb;
 
   //`define ENABLE_DUMPFILE
@@ -73,8 +77,8 @@ module fixed_priority_arbiter_tb;
       if (ref_gnt_addr_o == gnt_addr_o && ref_gnt_addr_valid_o == gnt_addr_valid_o) begin
         pass++;
         $display(
-            "passed: ref_gnt_addr_o=%b, gnt_addr_o=%b,ref_gnt_addr_valid_o =%b,gnt_addr_valid_o=%b",
-             ref_gnt_addr_o, gnt_addr_o, ref_gnt_addr_valid_o, gnt_addr_valid_o);
+            "Req_i=%b passed: ref_gnt_addr_o=%b, gnt_addr_o=%b,ref_gnt_addr_valid_o =%b,gnt_addr_valid_o=%b",
+             req_i,ref_gnt_addr_o, gnt_addr_o, ref_gnt_addr_valid_o, gnt_addr_valid_o);
       end else begin
         fail++;
         $display(
