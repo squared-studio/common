@@ -1,4 +1,4 @@
-// ### Basic tb for memory page
+// ### Basic tb for register_page
 // ### Author : Razu Ahamed (en.razu.ahamed@gmail.com)
 
 module register_page_tb;
@@ -48,7 +48,8 @@ begin
   $dumpfile("dump.vcd"); 
   $dumpvars;
 end
-
+int pass =0;
+int fail =0; 
 initial
 begin
   apply_reset ();
@@ -59,9 +60,14 @@ begin
     in   <= $urandom;
     addr <= $urandom;
     en_i <= $urandom;
-    repeat(3) @(posedge clk_i);
+    repeat(2) @(posedge clk_i);
+    if((en_i==1 & in==out) | (en_i==0 & out==0))
+      pass++;
+    else
+      fail++;
     $display("write_data=%d, en=%d, read_data=%d,address =%0d",in,en_i,out,addr);
   end
+  $display("pass=%0d and fail = %0d",pass,fail);
   $finish;
 end
 endmodule

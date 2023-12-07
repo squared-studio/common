@@ -16,36 +16,16 @@ module register_page #(
 );
   logic [          18:0]      demux_in;
   logic [ELEM_WIDTH-1:0] [          18:0]demux_out;
-  logic [ELEM_WIDTH-1:0][2:0] mux_in;
+  logic [ELEM_WIDTH-1:0][7:0] mux_in;
   assign demux_in = {addr[12:3], en_i, in};
 
-  for (genvar i = 0; i < ELEM_WIDTH; i++) begin : g_col_num
+  for (genvar i = 0; i < 8; i++) begin : g_col_num
     register_column #(
         .ELEM_WIDTH (8),
         .RESET_VALUE('0)
     ) u_register_column (
-        .in({
-          demux_out[i][7],
-          demux_out[i][6],
-          demux_out[i][5],
-          demux_out[i][4],
-          demux_out[i][3],
-          demux_out[i][2],
-          demux_out[i][1],
-          demux_out[i][0]
-        }),
-        .addr({
-          demux_out[i][18],
-          demux_out[i][17],
-          demux_out[i][16],
-          demux_out[i][15],
-          demux_out[i][14],
-          demux_out[i][13],
-          demux_out[i][12],
-          demux_out[i][11],
-          demux_out[i][10],
-          demux_out[i][9] 
-        }),
+        .in(demux_out[i][7:0]),
+        .addr(demux_out[i][18:9]),
         .clk_i(clk_i),
         .arst_ni(arst_ni),
         .en_i(demux_out[i][8]),
@@ -54,7 +34,7 @@ module register_page #(
   end
 
   mux #(
-      .ELEM_WIDTH(10),    // Width of each mux input element
+      .ELEM_WIDTH(8),    // Width of each mux input element
       .NUM_ELEM  (8)  // Number of elements in the mux
   ) u_mux (
       .s_i(addr[2:0]),  // select
