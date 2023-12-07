@@ -16,8 +16,8 @@ module register_column#(
   output logic[ELEM_WIDTH-1:0]         out
 );
 
-  logic [1023:0]                mux_en_i;
-  logic[1023:0] [ELEM_WIDTH-1:0] mem;
+  logic [1023:0]                demux_en_i;
+  logic [1023:0][ELEM_WIDTH-1:0] mem;
 
   for (genvar i = 0; i < 1024; i++)
   begin : g_row_num
@@ -27,16 +27,16 @@ module register_column#(
     ) u_register (
       .clk_i  (clk_i),
       .arst_ni(arst_ni),
-      .en_i   (mux_en_i[i]),
+      .en_i   (demux_en_i[i]),
       .d_i    (in),
-      .q_o    (mem[i])
+      .q_o    ({mem[i][7],mem[i][6],mem[i][5],mem[i][4],mem[i][3],mem[i][2],mem[i][1],mem[i][0]})
     );
   end
 
   mux #(
-      .ELEM_WIDTH(1),    // Width of each mux input element
+      .ELEM_WIDTH(8),    // Width of each mux input element
       .NUM_ELEM (1024)   // Number of elements in the mux
-  ) u_mux(
+  ) u_1_mux(
       .s_i(addr),  // select
       .i_i(mem),   // Array of input bus
       .o_o(out)    // Output bus
@@ -44,11 +44,11 @@ module register_column#(
 
   demux #(
       .NUM_ELEM(1024),  // Number of elements in the demux
-      .ELEM_WIDTH(8)    // Width of each element
-  ) u_demux (
+      .ELEM_WIDTH(1)    // Width of each element
+  ) u_1_demux (
       .s_i(addr),       // Output select
       .i_i(en_i),       // input
-      .o_o(tem_en_i)    // Array of Output
+      .o_o(demux_en_i)    // Array of Output
   );
 
 endmodule
