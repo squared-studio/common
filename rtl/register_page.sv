@@ -1,3 +1,6 @@
+// ### memory page for storing data
+// ### Author : Razu Ahamed (en.razu.ahamed@gmail.com)
+
 `include "./register_column.sv"
 `include "./mux.sv"
 `include "./demux.sv"
@@ -12,41 +15,40 @@ module register_page #(
     output logic [ELEM_WIDTH-1:0] out
 );
   logic [          18:0]      demux_in;
-  logic [          18:0][2:0] demux_out;
+  logic [ELEM_WIDTH-1:0] [          18:0]demux_out;
   logic [ELEM_WIDTH-1:0][2:0] mux_in;
   assign demux_in = {addr[12:3], en_i, in};
 
-  for (genvar i = 0; i < 8; i++) begin : g_col_num
+  for (genvar i = 0; i < ELEM_WIDTH; i++) begin : g_col_num
     register_column #(
         .ELEM_WIDTH (8),
         .RESET_VALUE('0)
     ) u_register_column (
         .in({
-          demux_out[7][i],
-          demux_out[6][i],
-          demux_out[5][i],
-          demux_out[4][i],
-          demux_out[3][i],
-          demux_out[2][i],
-          demux_out[1][i],
-          demux_out[0][i]
+          demux_out[i][7],
+          demux_out[i][6],
+          demux_out[i][5],
+          demux_out[i][4],
+          demux_out[i][3],
+          demux_out[i][2],
+          demux_out[i][1],
+          demux_out[i][0]
         }),
         .addr({
-          demux_out[19][i],
-          demux_out[18][i],
-          demux_out[17][i],
-          demux_out[16][i],
-          demux_out[15][i],
-          demux_out[14][i],
-          demux_out[13][i],
-          demux_out[12][i],
-          demux_out[11][i],
-          demux_out[10][i],
-          demux_out[9][i]
+          demux_out[i][18],
+          demux_out[i][17],
+          demux_out[i][16],
+          demux_out[i][15],
+          demux_out[i][14],
+          demux_out[i][13],
+          demux_out[i][12],
+          demux_out[i][11],
+          demux_out[i][10],
+          demux_out[i][9] 
         }),
         .clk_i(clk_i),
         .arst_ni(arst_ni),
-        .en_i(demux_out[8][i]),
+        .en_i(demux_out[i][8]),
         .out(mux_in[i])
     );
   end

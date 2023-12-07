@@ -1,6 +1,9 @@
 // ### memory column for storing data
 // ### Author : Razu Ahamed (en.razu.ahamed@gmail.com)
 
+`include "./register.sv"
+`include "./mux.sv"
+`include "./demux.sv"
 module register_column#(
   parameter int                  ELEM_WIDTH  = 8,
   parameter bit [ELEM_WIDTH-1:0] RESET_VALUE = '0
@@ -14,7 +17,7 @@ module register_column#(
 );
 
   logic [1023:0]                mux_en_i;
-  logic[ELEM_WIDTH-1:0][1023:0] mem;
+  logic[1023:0] [ELEM_WIDTH-1:0] mem;
 
   for (genvar i = 0; i < 1024; i++)
   begin : g_row_num
