@@ -1,3 +1,6 @@
+`include "./register_column.sv"
+`include "./mux.sv"
+`include "./demux.sv"
 module register_page #(
     parameter int ELEM_WIDTH = 8
 ) (
@@ -8,8 +11,8 @@ module register_page #(
     input  logic                  en_i,
     output logic [ELEM_WIDTH-1:0] out
 );
-  logic [          19:0]      demux_in;
-  logic [          19:0][2:0] demux_out;
+  logic [          18:0]      demux_in;
+  logic [          18:0][2:0] demux_out;
   logic [ELEM_WIDTH-1:0][2:0] mux_in;
   assign demux_in = {addr[12:3], en_i, in};
 
@@ -44,7 +47,7 @@ module register_page #(
         .clk_i(clk_i),
         .arst_ni(arst_ni),
         .en_i(demux_out[8][i]),
-        .out(out)
+        .out(mux_in[i])
     );
   end
 
@@ -59,7 +62,7 @@ module register_page #(
 
   demux #(
       .NUM_ELEM  (8),  // Number of elements in the demux
-      .ELEM_WIDTH(12)  // Width of each element
+      .ELEM_WIDTH(19)  // Width of each element
   ) u_demux (
       .s_i(addr[2:0]),  // Output select
       .i_i(demux_in),   // input
