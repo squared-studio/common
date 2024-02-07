@@ -24,7 +24,7 @@ initial begin
   $dumpvars;
 `endif  // ENABLE_DUMPFILE
   $timeformat(-6, 3, "us");
-  repeat (1000) repeat (1000) repeat (1000) #1000;
+  #1s;
   result_print(0, $sformatf("\033[1;31m[FATAL][TIMEOUT]\033[0m"));
   $finish;
 end
