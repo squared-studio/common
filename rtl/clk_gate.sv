@@ -1,25 +1,38 @@
 // Clock gate
-// ### Author : Razu Ahamed(en.razu.ahamed@gmail.com)
+// ### Author : Foez Ahmed (foez.official@gmail.com)
 
 module clk_gate (
-    input  logic cp_i,
-    input  logic e_i,
-    input  logic te_i,
-    output logic q_o
+    input  logic arst_ni,
+    input  logic clk_i,
+    input  logic en_i,
+    input  logic test_en_i,
+    output logic clk_o
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  logic temp;
+  logic clk_inv;
+  logic gated_clk;
+  logic dff_o;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-ASSIGNMENTS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  assign q_o = te_i ? cp_i : temp;
+  assign clk_inv = ~clk_i;
 
-  and (temp, cp_i, e_i);
+  assign clk_o = test_en_i ? clk_i : gated_clk;
+
+  assign gated_clk = clk_i & dff_o;
+
+  always_ff @ (posedge clk_inv or negedge arst_ni) begin
+    if (~arst_ni) begin
+      dff_o <= '0;
+    end else begin
+      dff_o <= en_i;
+    end
+  end
 
 endmodule
