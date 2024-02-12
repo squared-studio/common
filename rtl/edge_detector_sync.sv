@@ -1,7 +1,7 @@
-// Edge Detector Module
+// Edge Detector Module Sync
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
-module edge_detector #(
+module edge_detector_sync #(
     parameter bit POSEDGE = 1,  // detect positive edge
     parameter bit NEGEDGE = 1   // detect negative edge
 ) (
@@ -13,37 +13,46 @@ module edge_detector #(
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-SIGNALS
+  //-SIGNALS{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  logic q;  // previous d_i
+  logic posedge_buff;
+  logic negedge_buff;
+
+  //}}}
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-ASSIGNMENTS
+  //-RTLS{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  if (POSEDGE) begin : g_pos_assign
-    assign posedge_o = d_i & ~q;
-  end else begin : g_pos_default
-    assign posedge_o = '0;
-  end
+  edge_detector_async #(
+      .POSEDGE(POSEDGE),
+      .NEGEDGE(NEGEDGE)
+  ) u_edge_detector_async (
+      .arst_ni  (arst_ni),
+      .clk_i    (clk_i),
+      .d_i      (d_i),
+      .posedge_o(posedge_buff),
+      .negedge_o(negedge_buff)
+  );
 
-  if (NEGEDGE) begin : g_neg_assign
-    assign negedge_o = ~d_i & q;
-  end else begin : g_neg_default
-    assign negedge_o = '0;
-  end
+  //}}}
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-SEQUENTIAL
+  //-SEQUENTIAL{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   always_ff @(posedge clk_i or negedge arst_ni) begin
     if (~arst_ni) begin
-      q <= '0;
+      posedge_o <= '0;
+      negedge_o <= '0;
     end else begin
-      q <= d_i;
+      posedge_o <= posedge_buff;
+      negedge_o <= negedge_buff;
     end
+
   end
+
+  //}}}
 
 endmodule
