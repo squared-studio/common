@@ -41,7 +41,7 @@
     #1fs;                                                                                          \
     if (``__EN__``) begin                                                                          \
       if (``__DEST_CLK__`` !== ``__SRC_CLK__``) begin                                              \
-        $warning(`"``__DEST_CLK__`` does not match with ``__DEST_CLK__```");                       \
+        $warning(`"``__DEST_CLK__`` does not match with ``__SRC_CLK__```");                        \
         ``__SRC_CLK__``_``__DEST_CLK__``_sync_fail = 1;                                            \
       end                                                                                          \
     end                                                                                            \

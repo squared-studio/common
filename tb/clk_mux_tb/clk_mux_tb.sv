@@ -21,7 +21,6 @@ module clk_mux_tb;
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   localparam int SyncStages = 2;
-  localparam realtime DeadTime = 48ns;
 
   //}}}
 
@@ -111,7 +110,10 @@ module clk_mux_tb;
   always @ (arst_ni or sel_i) begin
     en_src_0 = 0;
     en_src_1 = 0;
-    #(DeadTime);
+    fork
+      repeat (SyncStages) @ (posedge clk0_i);
+      repeat (SyncStages) @ (posedge clk1_i);
+    join
     if (sel_i) en_src_1 = 1;
     else       en_src_0 = 1;
   end
