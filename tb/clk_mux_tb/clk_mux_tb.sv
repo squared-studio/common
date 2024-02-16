@@ -20,7 +20,7 @@ module clk_mux_tb;
   //-LOCALPARAMS{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  localparam int SyncStages = 2;
+  localparam int SyncStages = 5;
 
   //}}}
 
@@ -50,8 +50,8 @@ module clk_mux_tb;
   //-VARIABLES{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  bit en_src_0 = 0;
-  bit en_src_1 = 0;
+  bit   en_src_0 = 0;
+  bit   en_src_1 = 0;
 
   //}}}
 
@@ -107,15 +107,20 @@ module clk_mux_tb;
   //-PROCEDURALS{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  always @ (arst_ni or sel_i) begin
+  always @(arst_ni or sel_i) begin
     en_src_0 = 0;
     en_src_1 = 0;
     fork
-      repeat (SyncStages) @ (posedge clk0_i);
-      repeat (SyncStages) @ (posedge clk1_i);
+      repeat (SyncStages * 2) @(posedge clk0_i);
+      repeat (SyncStages * 2) @(posedge clk1_i);
     join
-    if (sel_i) en_src_1 = 1;
-    else       en_src_0 = 1;
+    if (sel_i) begin
+      repeat (2) @(posedge clk1_i);
+      en_src_1 = 1;
+    end else begin
+      repeat (2) @(posedge clk0_i);
+      en_src_0 = 1;
+    end
   end
 
   `CLOCK_GLITCH_MONITOR(clk0_i, arst_ni, 5ns, 5ns)
