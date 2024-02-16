@@ -39,11 +39,9 @@
   bit ``__SRC_CLK__``_``__DEST_CLK__``_sync_fail = 0;                                              \
   always @ (``__SRC_CLK__``) begin                                                                 \
     #1fs;                                                                                          \
-    if (``__EN__``) begin                                                                          \
-      if (``__DEST_CLK__`` !== ``__SRC_CLK__``) begin                                              \
+    if ((``__EN__``) && (``__DEST_CLK__`` !== ``__SRC_CLK__``)) begin                              \
         $warning(`"``__DEST_CLK__`` does not match with ``__SRC_CLK__```");                        \
         ``__SRC_CLK__``_``__DEST_CLK__``_sync_fail = 1;                                            \
-      end                                                                                          \
     end                                                                                            \
   end                                                                                              \
 /*-----------------------------------------------------------------------------------------------*/\

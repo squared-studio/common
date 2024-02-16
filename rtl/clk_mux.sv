@@ -44,8 +44,9 @@ module clk_mux #(
   //-RTLS{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  ff_back_to_back #(
-      .NUM_STAGES(SYNC_STAGES)
+  dual_synchronizer #(
+    .FIRST_FF_EDGE_POSEDGED (1),
+    .LAST_FF_EDGE_POSEDGED  (0)
   ) clk0_ffb2b (
       .clk_i  (clk0_i),
       .arst_ni(arst_ni),
@@ -54,8 +55,9 @@ module clk_mux #(
       .q_o    (clk0_ffb2b_out)
   );
 
-  ff_back_to_back #(
-      .NUM_STAGES(SYNC_STAGES)
+  dual_synchronizer #(
+    .FIRST_FF_EDGE_POSEDGED (1),
+    .LAST_FF_EDGE_POSEDGED  (0)
   ) clk1_ffb2b (
       .clk_i  (clk1_i),
       .arst_ni(arst_ni),
