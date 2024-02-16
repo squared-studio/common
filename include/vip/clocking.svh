@@ -37,7 +37,7 @@
 
 `define CLK_MATCHING(__EN__, __SRC_CLK__, __DEST_CLK__)                                            \
   bit ``__SRC_CLK__``_``__DEST_CLK__``_sync_fail = 0;                                              \
-  always @ (``__DEST_CLK__``) begin                                                                \
+  always @ (``__SRC_CLK__``) begin                                                                 \
     #1fs;                                                                                          \
     if (``__EN__``) begin                                                                          \
       if (``__DEST_CLK__`` !== ``__SRC_CLK__``) begin                                              \
