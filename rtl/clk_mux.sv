@@ -2,7 +2,6 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
 module clk_mux #(
-    parameter int SYNC_STAGES = 2
 ) (
     input  logic arst_ni,
     input  logic clk0_i,

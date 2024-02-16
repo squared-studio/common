@@ -1,11 +1,11 @@
 // Clock gate
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
-module clk_gate (
+module clk_gate #(
+) (
     input  logic arst_ni,
     input  logic clk_i,
     input  logic en_i,
-    input  logic test_en_i,
     output logic clk_o
 );
 
@@ -13,26 +13,22 @@ module clk_gate (
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  logic clk_inv;
-  logic gated_clk;
-  logic dff_o;
+  logic dff_out;
+  assign clk_o = clk_i & dff_out;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-ASSIGNMENTS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  assign clk_inv = ~clk_i;
-
-  assign clk_o = test_en_i ? clk_i : gated_clk;
-
-  assign gated_clk = clk_i & dff_o;
-
-  always_ff @ (posedge clk_inv or negedge arst_ni) begin
-    if (~arst_ni) begin
-      dff_o <= '0;
-    end else begin
-      dff_o <= en_i;
-    end
-  end
+  dual_synchronizer #(
+      .FIRST_FF_EDGE_POSEDGED(1),
+      .LAST_FF_EDGE_POSEDGED (0)
+  ) clk1_ffb2b (
+      .clk_i  (clk_i),
+      .arst_ni(arst_ni),
+      .en_i   ('1),
+      .d_i    (en_i),
+      .q_o    (dff_out)
+  );
 
 endmodule

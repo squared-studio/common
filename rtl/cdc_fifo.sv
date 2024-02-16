@@ -122,9 +122,11 @@ module cdc_fifo #(
       .q_o    (wr_ptr_pass)
   );
 
-  register #(
-      .ELEM_WIDTH (FIFO_SIZE + 1),
-      .RESET_VALUE('0)
+  register_dual_flop #(
+      .ELEM_WIDTH(FIFO_SIZE + 1),
+      .RESET_VALUE('0),
+      .FIRST_FF_EDGE_POSEDGED(1),
+      .LAST_FF_EDGE_POSEDGED(0)
   ) rd_ptr_ic (
       .clk_i  (elem_in_clk_i),
       .arst_ni(arst_ni),
@@ -133,9 +135,11 @@ module cdc_fifo #(
       .q_o    (rpgo)
   );
 
-  register #(
-      .ELEM_WIDTH (FIFO_SIZE + 1),
-      .RESET_VALUE('0)
+  register_dual_flop #(
+      .ELEM_WIDTH(FIFO_SIZE + 1),
+      .RESET_VALUE('0),
+      .FIRST_FF_EDGE_POSEDGED(1),
+      .LAST_FF_EDGE_POSEDGED(0)
   ) wr_ptr_oc (
       .clk_i  (elem_out_clk_i),
       .arst_ni(arst_ni),
