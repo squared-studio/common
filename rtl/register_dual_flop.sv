@@ -25,8 +25,10 @@ module register_dual_flop #(
   always_ff @(posedge first_clk_in or negedge arst_ni) begin
     if (~arst_ni) begin
       q_intermediate <= RESET_VALUE;
+      en_intermediate <= '0;
     end else begin
-      if (en_i) q_intermediate <= d_i;
+      q_intermediate <= d_i;
+      en_intermediate <= en_i;
     end
   end
 
@@ -34,7 +36,7 @@ module register_dual_flop #(
     if (~arst_ni) begin
       q_o <= RESET_VALUE;
     end else begin
-      if (en_i) q_o <= q_intermediate;
+      if (en_intermediate) q_o <= q_intermediate;
     end
   end
 
