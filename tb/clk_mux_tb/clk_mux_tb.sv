@@ -5,7 +5,7 @@
 
 module clk_mux_tb;
 
-  `define ENABLE_DUMPFILE
+  //`define ENABLE_DUMPFILE
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-IMPORTS{{{
@@ -65,7 +65,7 @@ module clk_mux_tb;
     #100ns;
   endtask  //}}}
 
-  task static rand_switch(realtime unit_time = 1ns, int unsigned min = 100,
+  task static rand_switch(realtime unit_time = 5ns, int unsigned min = 100,
                           int unsigned max = 1000);
     fork
       forever begin
@@ -109,7 +109,7 @@ module clk_mux_tb;
     start_clk1_i();
     rand_switch();
 
-    #0.5ms;
+    #10ms;
 
     // result_print(1, "This is a PASS");
     // result_print(0, "And this is a FAIL");

@@ -30,8 +30,8 @@ module clk_mux #(
   //-ASSIGNMENTS{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  assign clk0_ffb2b_in = ~sel_i & ~clk1_ffb2b_out;
-  assign clk1_ffb2b_in = sel_i & ~clk0_ffb2b_out;
+  assign clk0_ffb2b_in = ~( sel_i | clk1_ffb2b_out);
+  assign clk1_ffb2b_in = ~(~sel_i | clk0_ffb2b_out);
 
   assign clk0_and = clk0_ffb2b_out & clk0_i;
   assign clk1_and = clk1_ffb2b_out & clk1_i;
