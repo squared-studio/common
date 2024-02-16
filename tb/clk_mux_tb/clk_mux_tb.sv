@@ -1,22 +1,11 @@
-// Description here
-// ### Author : name (email)
+// A testbench for Clock MUX
+// ### Author : Foez Ahmed (foez.official@gmail.com)
 
-//`include "addr_map.svh"
-//`include "axi4_assign.svh"
-//`include "axi4_typedef.svh"
-//`include "axi4l_assign.svh"
-//`include "axi4l_typedef.svh"
-//`include "default_param_pkg.sv"
-//`include "vip/axi4_pkg.sv"
-//`include "vip/axi4l_pkg.sv"
-//`include "vip/bus_dvr_mon.svh"
-//`include "vip/clocking.svh"
-//`include "vip/memory_ops.svh"
-//`include "vip/string_ops_pkg.sv"
+`include "vip/clocking.svh"
 
-module tb_model;
+module clk_mux_tb;
 
-  //`define ENABLE_DUMPFILE
+  `define ENABLE_DUMPFILE
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-IMPORTS{{{
@@ -31,7 +20,8 @@ module tb_model;
   //-LOCALPARAMS{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+  localparam int SyncStages = 2;
+  localparam realtime DeadTime = 48ns;
 
   //}}}
 
@@ -48,9 +38,12 @@ module tb_model;
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   // generates static task start_clk_i with tHigh:4ns tLow:6ns
-  `CREATE_CLK(clk_i, 4ns, 6ns)
+  `CREATE_CLK(clk0_i, 5ns, 5ns)
+  `CREATE_CLK(clk1_i, 7ns, 7ns)
 
   logic arst_ni = 1;
+  logic sel_i = '0;
+  logic clk_o;
 
   //}}}
 
@@ -58,23 +51,8 @@ module tb_model;
   //-VARIABLES{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-  //}}}
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-INTERFACES{{{
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-  //}}}
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-CLASSES{{{
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-
-
+  bit en_src_0 = 0;
+  bit en_src_1 = 0;
 
   //}}}
 
@@ -90,7 +68,15 @@ module tb_model;
   //-RTLS{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+  clk_mux #(
+      .SYNC_STAGES(SyncStages)
+  ) u_clk_mux (
+      .arst_ni(arst_ni),
+      .clk0_i (clk0_i),
+      .clk1_i (clk1_i),
+      .sel_i  (sel_i),
+      .clk_o  (clk_o)
+  );
 
   //}}}
 
@@ -106,21 +92,46 @@ module tb_model;
     #100ns;
   endtask  //}}}
 
+  task static rand_switch(realtime unit_time = 1ns, int unsigned min = 100,
+                          int unsigned max = 1000);
+    fork
+      forever begin
+        #(unit_time * $urandom_range(min, max));
+        sel_i <= $urandom;
+      end
+    join_none
+  endtask
+
   //}}}
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-PROCEDURALS{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
+  always @ (arst_ni or sel_i) begin
+    en_src_0 = 0;
+    en_src_1 = 0;
+    #(DeadTime);
+    if (sel_i) en_src_1 = 1;
+    else       en_src_0 = 1;
+  end
+
+  `CLOCK_GLITCH_MONITOR(clk0_i, arst_ni, 5ns, 5ns)
+  `CLOCK_GLITCH_MONITOR(clk1_i, arst_ni, 5ns, 5ns)
+  `CLK_MATCHING(en_src_0, clk0_i, clk_o)
+  `CLK_MATCHING(en_src_1, clk1_i, clk_o)
+
   initial begin  // main initial{{{
 
     apply_reset();
-    start_clk_i();
+    start_clk0_i();
+    start_clk1_i();
+    rand_switch();
 
-    @(posedge clk_i);
-    result_print(1, "This is a PASS");
-    @(posedge clk_i);
-    result_print(0, "And this is a FAIL");
+    #0.5ms;
+
+    // result_print(1, "This is a PASS");
+    // result_print(0, "And this is a FAIL");
 
     $finish;
 
