@@ -66,7 +66,7 @@ module clk_mux_tb;
   endtask  //}}}
 
   task static rand_switch(realtime unit_time = 1ns, int unsigned min = 100,
-                          int unsigned max = 1000);
+                          int unsigned max = 10000);
     fork
       forever begin
         #(unit_time * $urandom_range(min, max));
@@ -82,26 +82,32 @@ module clk_mux_tb;
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   initial begin
-    fork : clk_en_block
-      begin
-        en_src_0 <= 0;
-        en_src_1 <= 0;
-        if (sel_i) begin
-          repeat (1) @(posedge clk0_i);
-          repeat (2) @(posedge clk1_i);
-          en_src_1 <= 1;
-        end else begin
-          repeat (1) @(posedge clk1_i);
-          repeat (2) @(posedge clk0_i);
-          en_src_0 <= 1;
+    forever begin
+      fork : clk_en_block
+        begin
+          en_src_0 <= 0;
+          en_src_1 <= 0;
+          if (sel_i) begin
+            @(posedge clk0_i);
+            @(negedge clk0_i);
+            @(posedge clk1_i);
+            @(negedge clk1_i);
+            en_src_1 <= 1;
+          end else begin
+            @(posedge clk1_i);
+            @(negedge clk1_i);
+            @(posedge clk0_i);
+            @(negedge clk0_i);
+            en_src_0 <= 1;
+          end
+          @(arst_ni or sel_i);
         end
-        @(arst_ni or sel_i);
-      end
-      begin
-        @(arst_ni or sel_i);
-      end
-    join_any
-    disable fork;
+        begin
+          @(arst_ni or sel_i);
+        end
+      join_any
+      disable fork;
+    end
   end
 
   `CLOCK_GLITCH_MONITOR(clk0_i, arst_ni, 5ns, 5ns)
