@@ -5,7 +5,7 @@
 `endif  // CONGIF
 
 `define CREATE_CLK(__CLK__, __HIGH__, __LOW__)                                                     \
-  bit ``__CLK__`` = '1;                                                                            \
+  bit ``__CLK__`` = '0;                                                                            \
   task static start_``__CLK__``();                                                                 \
     fork                                                                                           \
       forever begin                                                                                \

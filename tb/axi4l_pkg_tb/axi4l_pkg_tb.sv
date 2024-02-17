@@ -104,9 +104,9 @@ module axi4l_pkg_tb;
 
   task static apply_reset();  //{{{
     #100;
-    arst_ni = 0;
+    arst_ni <= 0;
     #100;
-    arst_ni = 1;
+    arst_ni <= 1;
     #100;
   endtask  //}}}
 
@@ -127,17 +127,19 @@ module axi4l_pkg_tb;
     sub_dvr.start();
     man_mon.start();
 
-    repeat (25) begin
+    @ (posedge clk_i);
+
+    repeat (10) begin
       man_seq_item_t item;
       item = new();
       item.randomize();
       item._type = 1;
-      $display("%s", item.to_string());
+      // $display("\n%s\n", item.to_string());
       man_dvr_mbx.put(item);
-      repeat (2) @(posedge clk_i);
+      repeat (1) @(posedge clk_i);
       item = new item;
       item._type = 0;
-      $display("%s", item.to_string());
+      // $display("\n%s\n", item.to_string());
       man_dvr_mbx.put(item);
     end
 
@@ -149,7 +151,7 @@ module axi4l_pkg_tb;
     while (man_mon_mbx.num()) begin
       man_resp_item_t item;
       man_mon_mbx.get(item);
-      $display("%s", item.to_string());
+      $display("\n%s\n", item.to_string());
     end
 
     $finish;

@@ -231,7 +231,7 @@ package axi4l_pkg;
       reset();
       if (ROLE) begin  // is manager{{{
         while (mbx == null) begin
-          intf.clk_edge(1);
+          intf.clk_edge(0);
         end
         fork
           forever begin  // generate beats{{{
@@ -423,7 +423,7 @@ package axi4l_pkg;
 
               b_queue.push_back(b_beat);
             end  //}}}
-            intf.clk_edge(1);
+            intf.clk_edge(0);
           end  //}}}
         join_none
       end  //}}}
@@ -623,7 +623,7 @@ package axi4l_pkg;
               b_time.delete(0);
             end  //}}}
           end
-          intf.clk_edge(1);
+          intf.clk_edge(0);
         end  //}}}
       join_none
     endtask  //}}}
