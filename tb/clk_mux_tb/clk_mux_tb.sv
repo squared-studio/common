@@ -106,7 +106,7 @@ module clk_mux_tb;
           @(arst_ni or sel_i);
         end
       join_any
-      disable fork;
+      disable clk_en_block;
     end
   end
 
