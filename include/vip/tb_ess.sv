@@ -1,7 +1,7 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
 `ifndef CONGIF
-`define CONFIG "default"
+  `define CONFIG "default"
 `endif  // CONGIF
 
 `define CREATE_CLK(__CLK__, __HIGH__, __LOW__)                                                     \
@@ -9,8 +9,8 @@
   task static start_``__CLK__``();                                                                 \
     fork                                                                                           \
       forever begin                                                                                \
-        ``__CLK__`` = 1; #``__HIGH__``;                                                            \
-        ``__CLK__`` = 0; #``__LOW__``;                                                             \
+        ``__CLK__`` <= 1; #``__HIGH__``;                                                           \
+        ``__CLK__`` <= 0; #``__LOW__``;                                                            \
       end                                                                                          \
     join_none                                                                                      \
   endtask                                                                                          \

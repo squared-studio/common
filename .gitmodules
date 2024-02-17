@@ -1,27 +1,27 @@
-[submodule "sub/pulp-platform/axi"]
-	path = sub/pulp-platform/axi
+[submodule "submodules/pulp-platform/axi"]
+	path = submodules/pulp-platform/axi
 	url = https://github.com/pulp-platform/axi.git
-[submodule "sub/pulp-platform/common_cells"]
-	path = sub/pulp-platform/common_cells
+[submodule "submodules/pulp-platform/common_cells"]
+	path = submodules/pulp-platform/common_cells
 	url = https://github.com/pulp-platform/common_cells.git
-[submodule "sub/pulp-platform/iDMA"]
-	path = sub/pulp-platform/iDMA
+[submodule "submodules/pulp-platform/iDMA"]
+	path = submodules/pulp-platform/iDMA
 	url = https://github.com/pulp-platform/iDMA.git
-[submodule "sub/pulp-platform/apb"]
-	path = sub/pulp-platform/apb
+[submodule "submodules/pulp-platform/apb"]
+	path = submodules/pulp-platform/apb
 	url = https://github.com/pulp-platform/apb.git
-[submodule "sub/pulp-platform/axi_mem_if"]
-	path = sub/pulp-platform/axi_mem_if
+[submodule "submodules/pulp-platform/axi_mem_if"]
+	path = submodules/pulp-platform/axi_mem_if
 	url = https://github.com/pulp-platform/axi_mem_if.git
-[submodule "sub/mortbopet/Ripes"]
-	path = sub/mortbopet/Ripes
+[submodule "submodules/mortbopet/Ripes"]
+	path = submodules/mortbopet/Ripes
 	url = https://github.com/mortbopet/Ripes.git
-[submodule "sub/pulp-platform/boot-code"]
-	path = sub/pulp-platform/boot-code
+[submodule "submodules/pulp-platform/boot-code"]
+	path = submodules/pulp-platform/boot-code
 	url = https://github.com/pulp-platform/boot-code.git
-[submodule "sub/riscv/riscv-v-spec"]
-	path = sub/riscv/riscv-v-spec
+[submodule "submodules/riscv/riscv-v-spec"]
+	path = submodules/riscv/riscv-v-spec
 	url = https://github.com/riscv/riscv-v-spec.git
-[submodule "sub/lowRISC/ariane"]
-	path = sub/lowRISC/ariane
+[submodule "submodules/lowRISC/ariane"]
+	path = submodules/lowRISC/ariane
 	url = https://github.com/lowRISC/ariane.git
