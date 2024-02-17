@@ -22,7 +22,7 @@ module clk_mux_tb;
 
   // generates static task start_clk_i with tHigh:4ns tLow:6ns
   `CREATE_CLK(clk0_i, 5ns, 5ns)
-  `CREATE_CLK(clk1_i, 7ns, 7ns)
+  `CREATE_CLK(clk1_i, 70ns, 70ns)
 
   logic arst_ni = 1;
   logic sel_i = '0;
@@ -65,7 +65,7 @@ module clk_mux_tb;
     #100ns;
   endtask  //}}}
 
-  task static rand_switch(realtime unit_time = 5ns, int unsigned min = 100,
+  task static rand_switch(realtime unit_time = 1ns, int unsigned min = 100,
                           int unsigned max = 1000);
     fork
       forever begin
@@ -81,20 +81,27 @@ module clk_mux_tb;
   //-PROCEDURALS{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  always @(arst_ni or sel_i) begin
-    en_src_0 <= 0;
-    en_src_1 <= 0;
-    fork
-      repeat (2) @(posedge clk0_i);
-      repeat (2) @(posedge clk1_i);
-    join
-    if (sel_i) begin
-      @(negedge clk1_i);
-      en_src_1 <= 1;
-    end else begin
-      @(negedge clk1_i);
-      en_src_0 <= 1;
-    end
+  initial begin
+    fork : clk_en_block
+      begin
+        en_src_0 <= 0;
+        en_src_1 <= 0;
+        if (sel_i) begin
+          repeat (1) @(posedge clk0_i);
+          repeat (2) @(posedge clk1_i);
+          en_src_1 <= 1;
+        end else begin
+          repeat (1) @(posedge clk1_i);
+          repeat (2) @(posedge clk0_i);
+          en_src_0 <= 1;
+        end
+        @(arst_ni or sel_i);
+      end
+      begin
+        @(arst_ni or sel_i);
+      end
+    join_any
+    disable fork;
   end
 
   `CLOCK_GLITCH_MONITOR(clk0_i, arst_ni, 5ns, 5ns)
