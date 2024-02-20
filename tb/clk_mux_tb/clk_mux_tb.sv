@@ -5,7 +5,7 @@
 
 module clk_mux_tb;
 
-  `define ENABLE_DUMPFILE
+  //`define ENABLE_DUMPFILE
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-IMPORTS{{{
@@ -36,6 +36,11 @@ module clk_mux_tb;
 
   bit   en_src_0 = 0;
   bit   en_src_1 = 0;
+  bit   en_src_0_rst;
+  bit   en_src_1_rst;
+
+  assign en_src_0_rst = en_src_0 & arst_ni;
+  assign en_src_1_rst = en_src_1 & arst_ni;
 
   //}}}
 
@@ -57,19 +62,23 @@ module clk_mux_tb;
   //-METHODS{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  task static rand_reset(realtime unit_time = 1ns, int unsigned min = 100,
-                         int unsigned max = 10000);
-
-    arst_ni <= '0;
-    #10ns;
-    arst_ni <= '1;
-    fork
-      forever begin
-        #(unit_time * $urandom_range(min, max));
-        arst_ni <= $urandom;
-      end
-    join_none
+  task static rand_reset(realtime unit_time = 1ns, int unsigned min = 200,
+                         int unsigned max = 500);
+    //fork
+    //  forever begin
+    //    #(unit_time * $urandom_range(min, max));
+    //    arst_ni <= $urandom;
+    //  end
+    //join_none
   endtask
+
+  task static apply_reset();  //{{{
+    #100ns;
+    arst_ni <= 0;
+    #100ns;
+    arst_ni <= 1;
+    #100ns;
+  endtask  //}}}
 
   task static rand_switch(realtime unit_time = 1ns, int unsigned min = 100,
                           int unsigned max = 10000);
@@ -98,13 +107,13 @@ module clk_mux_tb;
             @(negedge clk0_i);
             @(posedge clk1_i);
             @(negedge clk1_i);
-            en_src_1 <= 1;
+            en_src_1 <= arst_ni;
           end else begin
             @(posedge clk1_i);
             @(negedge clk1_i);
             @(posedge clk0_i);
             @(negedge clk0_i);
-            en_src_0 <= 1;
+            en_src_0 <= arst_ni;
           end
           @(arst_ni or sel_i);
         end
@@ -116,13 +125,14 @@ module clk_mux_tb;
     end
   end
 
-  `CLOCK_GLITCH_MONITOR(clk0_i, arst_ni, 5ns, 5ns)
-  `CLOCK_GLITCH_MONITOR(clk1_i, arst_ni, 5ns, 5ns)
-  `CLOCK_MATCHING(arst_ni, en_src_0, clk0_i, clk_o)
-  `CLOCK_MATCHING(arst_ni, en_src_1, clk1_i, clk_o)
+  `CLOCK_GLITCH_MONITOR(clk_o, arst_ni, 5ns, 5ns)
+  `CLOCK_MATCHING(en_src_0_rst, clk0_i, clk_o)
+  `CLOCK_MATCHING(en_src_1_rst, clk1_i, clk_o)
 
   initial begin  // main initial{{{
-    rand_reset();
+
+    apply_reset();
+    // rand_reset();
     start_clk0_i();
     start_clk1_i();
     rand_switch();
