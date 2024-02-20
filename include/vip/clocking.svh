@@ -35,18 +35,18 @@
   end                                                                                              \
 
 
-`define CLK_MATCHING(__EN__, __SRC_CLK__, __DEST_CLK__)                                            \
-  bit ``__SRC_CLK__``_``__DEST_CLK__``_sync_fail = 0;                                              \
+`define CLOCK_MATCHING(__ARST_N__, __EN__, __SRC_CLK__, __DEST_CLK__)                              \
+  bit ``__SRC_CLK__``_``__DEST_CLK__``_matching_fail = 0;                                          \
   always @ (``__SRC_CLK__``) begin                                                                 \
     #1fs;                                                                                          \
-    if ((``__EN__``) && (``__DEST_CLK__`` !== ``__SRC_CLK__``)) begin                              \
+    if (``__ARST_N__`` && ``__EN__`` && (``__DEST_CLK__`` !== ``__SRC_CLK__``)) begin              \
         $warning(`"``__DEST_CLK__`` does not match with ``__SRC_CLK__```");                        \
-        ``__SRC_CLK__``_``__DEST_CLK__``_sync_fail = 1;                                            \
+        ``__SRC_CLK__``_``__DEST_CLK__``_matching_fail = 1;                                        \
     end                                                                                            \
   end                                                                                              \
 /*-----------------------------------------------------------------------------------------------*/\
   final begin                                                                                      \
-    result_print(!``__SRC_CLK__``_``__DEST_CLK__``_sync_fail,                                      \
+    result_print(!``__SRC_CLK__``_``__DEST_CLK__``_matching_fail,                                  \
       `"``__SRC_CLK__`` & ``__DEST_CLK__`` sync`");                                                \
   end                                                                                              \
 

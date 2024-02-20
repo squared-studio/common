@@ -5,7 +5,7 @@
 
 module clk_mux_tb;
 
-  //`define ENABLE_DUMPFILE
+  `define ENABLE_DUMPFILE
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-IMPORTS{{{
@@ -57,13 +57,19 @@ module clk_mux_tb;
   //-METHODS{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  task static apply_reset();  //{{{
-    #100ns;
-    arst_ni <= 0;
-    #100ns;
-    arst_ni <= 1;
-    #100ns;
-  endtask  //}}}
+  task static rand_reset(realtime unit_time = 1ns, int unsigned min = 100,
+                         int unsigned max = 10000);
+
+    arst_ni <= '0;
+    #10ns;
+    arst_ni <= '1;
+    fork
+      forever begin
+        #(unit_time * $urandom_range(min, max));
+        arst_ni <= $urandom;
+      end
+    join_none
+  endtask
 
   task static rand_switch(realtime unit_time = 1ns, int unsigned min = 100,
                           int unsigned max = 10000);
@@ -112,17 +118,16 @@ module clk_mux_tb;
 
   `CLOCK_GLITCH_MONITOR(clk0_i, arst_ni, 5ns, 5ns)
   `CLOCK_GLITCH_MONITOR(clk1_i, arst_ni, 5ns, 5ns)
-  `CLK_MATCHING(en_src_0, clk0_i, clk_o)
-  `CLK_MATCHING(en_src_1, clk1_i, clk_o)
+  `CLOCK_MATCHING(arst_ni, en_src_0, clk0_i, clk_o)
+  `CLOCK_MATCHING(arst_ni, en_src_1, clk1_i, clk_o)
 
   initial begin  // main initial{{{
-
-    apply_reset();
+    rand_reset();
     start_clk0_i();
     start_clk1_i();
     rand_switch();
 
-    #10ms;
+    #10us;
 
     // result_print(1, "This is a PASS");
     // result_print(0, "And this is a FAIL");
