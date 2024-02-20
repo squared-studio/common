@@ -5,7 +5,7 @@
 
 module clk_mux_tb;
 
-  //`define ENABLE_DUMPFILE
+  // `define ENABLE_DUMPFILE
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-IMPORTS{{{
@@ -62,16 +62,6 @@ module clk_mux_tb;
   //-METHODS{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  task static rand_reset(realtime unit_time = 1ns, int unsigned min = 200,
-                         int unsigned max = 500);
-    //fork
-    //  forever begin
-    //    #(unit_time * $urandom_range(min, max));
-    //    arst_ni <= $urandom;
-    //  end
-    //join_none
-  endtask
-
   task static apply_reset();  //{{{
     #100ns;
     arst_ni <= 0;
@@ -79,6 +69,15 @@ module clk_mux_tb;
     arst_ni <= 1;
     #100ns;
   endtask  //}}}
+
+  task static rand_reset(realtime unit_time = 1ns, int unsigned min = 200, int unsigned max = 500);
+    fork
+      forever begin
+        #(unit_time * $urandom_range(min, max));
+        arst_ni <= $urandom;
+      end
+    join_none
+  endtask
 
   task static rand_switch(realtime unit_time = 1ns, int unsigned min = 100,
                           int unsigned max = 10000);
@@ -98,8 +97,11 @@ module clk_mux_tb;
 
   initial begin
     forever begin
-      fork : clk_en_block
-        begin
+      fork
+        begin : disable_A
+          @(arst_ni or sel_i);
+        end
+        begin : disable_B
           en_src_0 <= 0;
           en_src_1 <= 0;
           if (sel_i) begin
@@ -117,11 +119,9 @@ module clk_mux_tb;
           end
           @(arst_ni or sel_i);
         end
-        begin
-          @(arst_ni or sel_i);
-        end
       join_any
-      disable clk_en_block;
+      disable disable_A;
+      disable disable_B;
     end
   end
 
@@ -132,9 +132,9 @@ module clk_mux_tb;
   initial begin  // main initial{{{
 
     apply_reset();
-    // rand_reset();
     start_clk0_i();
     start_clk1_i();
+    rand_reset();
     rand_switch();
 
     #10us;

@@ -8,21 +8,26 @@
       if (~``__ARST_N__``) begin                                                                   \
         last_edge = 0;                                                                             \
         this_edge = 0;                                                                             \
+        @(posedge ``__ARST_N__``);                                                                 \
       end else begin                                                                               \
         if (``__CLK__``) @(negedge ``__CLK__``);                                                   \
         else @(posedge ``__CLK__``);                                                               \
         this_edge = $realtime;                                                                     \
         edge_duration = this_edge - last_edge;                                                     \
         last_edge = this_edge;                                                                     \
-        if (``__CLK__``) begin                                                                     \
-          if (edge_duration < ``__TIME_PERIOD_LOW__``) begin                                       \
-            $warning(`"``__CLK__`` low duration is less than %0f`", ``__TIME_PERIOD_LOW__``);      \
-            ``__CLK__``_``__TIME_PERIOD_HIGH__``_``__TIME_PERIOD_LOW__``_fail = 1;                 \
-          end                                                                                      \
-        end else begin                                                                             \
-          if (edge_duration < ``__TIME_PERIOD_HIGH__``) begin                                      \
-            $warning(`"``__CLK__`` high duration is less than %0f`", ``__TIME_PERIOD_HIGH__``);    \
-            ``__CLK__``_``__TIME_PERIOD_HIGH__``_``__TIME_PERIOD_LOW__``_fail = 1;                 \
+        if (``__ARST_N__``) begin                                                                  \
+          if (``__CLK__``) begin                                                                   \
+            if (edge_duration < ``__TIME_PERIOD_LOW__``) begin                                     \
+              $warning(`"``__CLK__`` low duration %0t is less than %0t`",                          \
+                edge_duration, ``__TIME_PERIOD_LOW__``);                                           \
+              ``__CLK__``_``__TIME_PERIOD_HIGH__``_``__TIME_PERIOD_LOW__``_fail = 1;               \
+            end                                                                                    \
+          end else begin                                                                           \
+            if (edge_duration < ``__TIME_PERIOD_HIGH__``) begin                                    \
+              $warning(`"``__CLK__`` high duration %0t is less than %0t`",                         \
+                edge_duration, ``__TIME_PERIOD_HIGH__``);                                          \
+              ``__CLK__``_``__TIME_PERIOD_HIGH__``_``__TIME_PERIOD_LOW__``_fail = 1;               \
+            end                                                                                    \
           end                                                                                      \
         end                                                                                        \
       end                                                                                          \
