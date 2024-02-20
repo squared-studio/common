@@ -1,11 +1,11 @@
-// A testbench for Clock MUX
+// Description here
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
 `include "vip/clocking.svh"
 
-module clk_mux_tb;
+module clk_gate_tb;
 
-  // `define ENABLE_DUMPFILE
+  `define ENABLE_DUMPFILE
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-IMPORTS{{{
@@ -17,15 +17,31 @@ module clk_mux_tb;
   //}}}
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
+  //-LOCALPARAMS{{{
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+  //}}}
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //-TYPEDEFS{{{
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+  //}}}
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
   //-SIGNALS{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   // generates static task start_clk_i with tHigh:4ns tLow:6ns
-  `CREATE_CLK(clk0_i, 5ns, 5ns)
-  `CREATE_CLK(clk1_i, 70ns, 70ns)
+  `CREATE_CLK(clk_i, 5ns, 5ns)
 
   logic arst_ni = 1;
-  logic sel_i = '0;
+
+  logic en_i = '0;
   logic clk_o;
 
   //}}}
@@ -34,13 +50,31 @@ module clk_mux_tb;
   //-VARIABLES{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  bit   en_src_0 = 0;
-  bit   en_src_1 = 0;
-  bit   en_src_0_rst;
-  bit   en_src_1_rst;
 
-  assign en_src_0_rst = en_src_0 & arst_ni;
-  assign en_src_1_rst = en_src_1 & arst_ni;
+
+  //}}}
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //-INTERFACES{{{
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+  //}}}
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //-CLASSES{{{
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+  //}}}
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //-ASSIGNMENTS{{{
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
   //}}}
 
@@ -48,12 +82,12 @@ module clk_mux_tb;
   //-RTLS{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  clk_mux #() u_clk_mux (
+
+  clk_gate #() u_clk_gate (
       .arst_ni(arst_ni),
-      .clk0_i (clk0_i),
-      .clk1_i (clk1_i),
-      .sel_i  (sel_i),
-      .clk_o  (clk_o)
+      .clk_i(clk_i),
+      .en_i(en_i),
+      .clk_o(clk_o)
   );
 
   //}}}
@@ -62,13 +96,13 @@ module clk_mux_tb;
   //-METHODS{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  task static apply_reset();  //{{{
+  task static apply_reset();
     #100ns;
     arst_ni <= 0;
     #100ns;
     arst_ni <= 1;
     #100ns;
-  endtask  //}}}
+  endtask
 
   task static rand_reset(realtime unit_time = 1ns, int unsigned min = 500, int unsigned max = 5000);
     fork
@@ -79,12 +113,11 @@ module clk_mux_tb;
     join_none
   endtask
 
-  task static rand_switch(realtime unit_time = 1ns, int unsigned min = 100,
-                          int unsigned max = 1000);
+  task static rand_en(realtime unit_time = 1ns, int unsigned min = 100, int unsigned max = 1000);
     fork
       forever begin
         #(unit_time * $urandom_range(min, max));
-        sel_i <= $urandom;
+        en_i <= $urandom;
       end
     join_none
   endtask
@@ -95,52 +128,17 @@ module clk_mux_tb;
   //-PROCEDURALS{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  initial begin
-    forever begin
-      fork
-        begin : disable_A
-          @(arst_ni or sel_i);
-        end
-        begin : disable_B
-          en_src_0 <= 0;
-          en_src_1 <= 0;
-          if (sel_i) begin
-            @(posedge clk0_i);
-            @(negedge clk0_i);
-            @(posedge clk1_i);
-            @(negedge clk1_i);
-            en_src_1 <= arst_ni;
-          end else begin
-            @(posedge clk1_i);
-            @(negedge clk1_i);
-            @(posedge clk0_i);
-            @(negedge clk0_i);
-            en_src_0 <= arst_ni;
-          end
-          @(arst_ni or sel_i);
-        end
-      join_any
-      disable disable_A;
-      disable disable_B;
-    end
-  end
-
   `CLK_GLITCH_MON(arst_ni, clk_o, 5ns, 5ns)
-  `CLK_MATCH_MON(en_src_0_rst, clk0_i, clk_o)
-  `CLK_MATCH_MON(en_src_1_rst, clk1_i, clk_o)
+  `CLK_GATE_MON(arst_ni, en_i, clk_i, clk_o)
 
   initial begin  // main initial{{{
 
     apply_reset();
-    start_clk0_i();
-    start_clk1_i();
+    start_clk_i();
     rand_reset();
-    rand_switch();
+    rand_en();
 
-    #10us;
-
-    // result_print(1, "This is a PASS");
-    // result_print(0, "And this is a FAIL");
+    #10ms;
 
     $finish;
 

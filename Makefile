@@ -54,6 +54,8 @@ GIT_UMAIL = $(shell git config user.email)
 
 CI_LIST  = $(shell cat CI_LIST)
 
+MAKE = make --no-print-directory
+
 ####################################################################################################
 # General
 ####################################################################################################
@@ -144,7 +146,7 @@ locate_files: list_modules
 .PHONY: flist
 flist: locate_files
 	@cat ___flist | $(CLIP)
-	@make clean
+	@$(MAKE) clean
 	@clear
 	@echo -e "\033[2;35m$(RTL) flist copied to clipboard\033[0m"
 
@@ -163,7 +165,7 @@ schematic: locate_files
 	@echo "synth_design -top $(RTL) -lint" >> top.tcl
 	@echo "synth_design -rtl -rtl_skip_mlo -name rtl_1" >> top.tcl
 	@vivado -mode tcl -source top.tcl
-	@make clean
+	@$(MAKE) clean
 
 ####################################################################################################
 # Simulate (Vivado)
@@ -172,7 +174,7 @@ schematic: locate_files
 .PHONY: simulate
 simulate: 
 	@echo "$(TOP)" > ___TOP
-	make clean vivado TOP=$(TOP) CONFIG=$(CONFIG)
+	$(MAKE) clean vivado TOP=$(TOP) CONFIG=$(CONFIG)
 
 .PHONY: vivado
 vivado:
@@ -231,7 +233,7 @@ ci_print:
 	@echo ">>>>>>>>>>>>>>>>>>>> $(_PASS)/$(shell expr $(_FAIL) + $(_PASS)) PASSED <<<<<<<<<<<<<<<<<<<<" >> ___CI_REPORT;
 	@echo -e "\033[0m" >> ___CI_REPORT;
 	@git log -1 >> ___CI_REPORT;
-	@make clean
+	@$(MAKE) clean
 	@echo " "
 	@echo " "
 	@echo " "
@@ -267,7 +269,7 @@ rawVCD:
 
 .PHONY: gwave
 gwave:
-	@cd $(TOP_DIR); test -e *.gtkw && gtkwave *.gtkw || cd $(ROOT); make rawVCD
+	@cd $(TOP_DIR); test -e *.gtkw && gtkwave *.gtkw || cd $(ROOT); $(MAKE) rawVCD
 
 ####################################################################################################
 # Waveform (Vivado)
@@ -343,14 +345,14 @@ module_inst:
 		
 .PHONY: copy_instance
 copy_instance:
-	@make clean
-	@make module_header RTL=$(RTL)
-	@make module_param
-	@make module_port
-	@make module_raw_param
-	@make module_raw_port
-	@make module_raw_inst
-	@make module_inst
+	@$(MAKE) clean
+	@$(MAKE) module_header RTL=$(RTL)
+	@$(MAKE) module_param
+	@$(MAKE) module_port
+	@$(MAKE) module_raw_param
+	@$(MAKE) module_raw_port
+	@$(MAKE) module_raw_inst
+	@$(MAKE) module_inst
 	@echo "" > ___TO_COPY
 	@cat ___module_param >> ___TO_COPY
 	@echo "" >> ___TO_COPY
@@ -359,7 +361,7 @@ copy_instance:
 	@cat ___module_inst >> ___TO_COPY
 	@echo "" >> ___TO_COPY
 	@cat ___TO_COPY | $(CLIP)
-	@make clean
+	@$(MAKE) clean
 	@echo -e "\033[2;35m$(RTL) instance copied to clipboard\033[0m"
 
 ####################################################################################################
@@ -402,10 +404,10 @@ update_doc_list:
 	@cat readme_base.md > readme.md
 	@echo "" >> readme.md
 	@echo "## RTL" >> readme.md
-	@$(foreach file, $(shell find ./docs/rtl -name "*.md"), make get_rtl_doc_header FILE=$(file);)
+	@$(foreach file, $(shell find ./docs/rtl -name "*.md"), $(MAKE) get_rtl_doc_header FILE=$(file);)
 	@echo "" >> readme.md
 	@echo "## INCLUDE" >> readme.md
-	@$(foreach file, $(shell find ./docs/include -name "*.md"), make get_inc_doc_header FILE=$(file);)
+	@$(foreach file, $(shell find ./docs/include -name "*.md"), $(MAKE) get_inc_doc_header FILE=$(file);)
 	@echo "" >> readme.md
   
 get_rtl_doc_header:
