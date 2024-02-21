@@ -16,14 +16,14 @@ RTL_FILE    = $(shell find $(realpath ./rtl/) -name "$(RTL).sv")
 CONFIG      = default
 CONFIG_PATH = $(TOP_DIR)/config/$(CONFIG)
 
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "xsim.dir")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name ".Xil")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.out")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.vcd")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.log")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.wdb")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.jou")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.pb")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name ".Xil")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "xsim.dir")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "___CI_REPORT_TEMP")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "___list")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "___flist")
@@ -117,7 +117,7 @@ gen_check_list:
 
 .PHONY: clean
 clean:
-	@echo -e "$(CLEAN_TARGETS)" | sed "s/  //g" | sed "s/ /\nremoving /g"
+	@- echo -e "$(CLEAN_TARGETS)" | sed "s/  //g" | sed "s/ /\nremoving /g"
 	@rm -rf $(CLEAN_TARGETS)
 
 ####################################################################################################
