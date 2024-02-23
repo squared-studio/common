@@ -56,6 +56,12 @@ CI_LIST  = $(shell cat CI_LIST)
 
 MAKE = make --no-print-directory
 
+ifeq ($(CFG),$(CONFIG)) 
+	COLOR = \033[1;33m
+else 
+	COLOR = \033[1;37m
+endif
+
 ####################################################################################################
 # General
 ####################################################################################################
@@ -171,17 +177,36 @@ schematic: locate_files
 # Simulate (Vivado)
 ####################################################################################################
 
-.PHONY: simulate
-simulate: 
-	@echo "$(TOP)" > ___TOP
-	$(MAKE) clean vivado TOP=$(TOP) CONFIG=$(CONFIG)
-
-.PHONY: vivado
-vivado:
+.PHONY: config_touch
+config_touch:
 	@mkdir -p $(CONFIG_PATH)
 	@touch $(CONFIG_PATH)/xvlog
 	@touch $(CONFIG_PATH)/xelab
 	@touch $(CONFIG_PATH)/xsim
+
+.PHONY: config_list
+config_list: config_touch
+	@echo ""
+	@$(foreach cfg, $(shell ls -d $(TOP_DIR)/config/*/), \
+		$(MAKE) config_print CFG=$(shell basename $(cfg));)
+
+.PHONY: config_print
+config_print:
+	@echo -e "$(COLOR)$(CFG)\033[0m"
+	@echo -e "\033[0;36mxvlog:\033[0m $(shell cat $(TOP_DIR)/config/$(CFG)/xvlog)"
+	@echo -e "\033[0;36mxelab:\033[0m $(shell cat $(TOP_DIR)/config/$(CFG)/xelab)"
+	@echo -e "\033[0;36mxsim :\033[0m $(shell cat $(TOP_DIR)/config/$(CFG)/xsim) "
+	@echo ""
+
+.PHONY: simulate
+simulate: clean
+	@echo "$(TOP)" > ___TOP
+	@$(MAKE) config_list
+	$(MAKE) vivado TOP=$(TOP) CONFIG=$(CONFIG)
+
+.PHONY: vivado
+vivado:
+	@$(MAKE) config_touch
 	@cd $(TOP_DIR); xvlog \
 		-f $(CONFIG_PATH)/xvlog \
 		-d SIMULATION \

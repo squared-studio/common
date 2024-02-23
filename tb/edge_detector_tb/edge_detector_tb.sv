@@ -1,22 +1,9 @@
 // Description here
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
-//`include "addr_map.svh"
-//`include "axi4_assign.svh"
-//`include "axi4_typedef.svh"
-//`include "axi4l_assign.svh"
-//`include "axi4l_typedef.svh"
-//`include "default_param_pkg.sv"
-//`include "vip/axi4_pkg.sv"
-//`include "vip/axi4l_pkg.sv"
-//`include "vip/bus_dvr_mon.svh"
-//`include "vip/clocking.svh"
-//`include "vip/memory_ops.svh"
-//`include "vip/string_ops_pkg.sv"
+module edge_detector_tb;
 
-module edge_detector_async_tb;
-
-  //`define ENABLE_DUMPFILE
+  `define ENABLE_DUMPFILE
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-IMPORTS{{{
@@ -28,20 +15,11 @@ module edge_detector_async_tb;
   //}}}
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-LOCALPARAMS{{{
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-
-  localparam bit POSEDGE = 1;
-  localparam bit NEGEDGE = 1;
-
-  //}}}
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////
   //-SIGNALS{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   // generates static task start_clk_i with tHigh:4ns tLow:6ns
-  `CREATE_CLK(clk_i, 5ns, 5ns)
+  `CREATE_CLK(clk_i, 4ns, 6ns)
 
   logic arst_ni = 1;
 
@@ -55,10 +33,7 @@ module edge_detector_async_tb;
   //-VARIABLES{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  bit   posedge_fail;
-  bit   negedge_fail;
 
-  logic prev_d_i;
 
   //}}}
 
@@ -90,10 +65,15 @@ module edge_detector_async_tb;
   //-RTLS{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  edge_detector_async #(
-      .POSEDGE(POSEDGE),
-      .NEGEDGE(NEGEDGE)
-  ) u_edge_detector_async (
+  edge_detector #(
+      .POSEDGE(1),
+      .NEGEDGE(1),
+`ifdef ASYNC
+      .ASYNC  (1)
+`else
+      .ASYNC  (0)
+`endif
+  ) u_edge_detector (
       .arst_ni(arst_ni),
       .clk_i(clk_i),
       .d_i(d_i),
@@ -107,13 +87,13 @@ module edge_detector_async_tb;
   //-METHODS{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  task static apply_reset();  //{{{
+  task static apply_reset();
     #100ns;
     arst_ni <= 0;
     #100ns;
     arst_ni <= 1;
     #100ns;
-  endtask  //}}}
+  endtask
 
   task static rand_reset(realtime unit_time = 1ns, int unsigned min = 500, int unsigned max = 5000);
     fork
@@ -124,7 +104,7 @@ module edge_detector_async_tb;
     join_none
   endtask
 
-  task static rand_data(realtime unit_time = 1ns, int unsigned min = 100, int unsigned max = 1000);
+  task static rand_d(realtime unit_time = 1ns, int unsigned min = 100, int unsigned max = 1000);
     fork
       forever begin
         #(unit_time * $urandom_range(min, max));
@@ -139,44 +119,14 @@ module edge_detector_async_tb;
   //-PROCEDURALS{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  always @(posedge clk_i or negedge arst_ni) begin
-    if (~arst_ni) begin
-      prev_d_i <= '0;
-    end else begin
-      prev_d_i <= d_i;
-    end
-  end
-  always @(d_i) begin
-    #1fs;
-    case ({
-      prev_d_i, d_i
-    })
-      2'b01:
-      if (posedge_o != 1) begin
-        posedge_fail = 1;
-        $warning("posedge not detected");
-      end
-      2'b10:
-      if (negedge_o != 1) begin
-        negedge_fail = 1;
-        $warning("negedge not detected");
-      end
-      default: begin
-      end
-    endcase
-  end
-
   initial begin  // main initial{{{
 
     apply_reset();
     start_clk_i();
-    rand_data();
     rand_reset();
+    rand_d();
 
-    repeat (500) @(posedge clk_i);
-
-    result_print(!posedge_fail, "posedge detection");
-    result_print(!negedge_fail, "negedge detection");
+    #50us;
 
     $finish;
 

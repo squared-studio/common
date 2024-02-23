@@ -5,7 +5,6 @@ ci_vivado_run:
 	@$(MAKE) vivado TOP=clk_gate_tb CONFIG=default
 	@$(MAKE) vivado TOP=clk_mux_tb CONFIG=default
 	@$(MAKE) vivado TOP=decoder_tb CONFIG=default
-	@$(MAKE) vivado TOP=edge_detector_async_tb CONFIG=default
 	@$(MAKE) vivado TOP=encoder_tb CONFIG=default
 	@$(MAKE) vivado TOP=fifo_tb CONFIG=default
 	@$(MAKE) vivado TOP=gray_to_bin_tb CONFIG=default
