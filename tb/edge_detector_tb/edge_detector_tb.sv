@@ -34,6 +34,7 @@ module edge_detector_tb;
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   bit   chech_en = 0;
+  bit   allow_check;
   bit   posedge_fail = 0;
   bit   negedge_fail = 0;
 
@@ -97,31 +98,24 @@ module edge_detector_tb;
   //-PROCEDURALS{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
+  assign allow_check = arst_ni & chech_en;
 
 `ifdef ASYNC
-  assert property (@(posedge clk_i) if (arst_ni & chech_en) $rose(d_i) |-> ##[1:2] posedge_o)
+  assert property (@(posedge clk_i) if (allow_check) $rose(d_i) |-> ##[1:2] posedge_o)
   else posedge_fail = 1;
-  assert property (@(posedge clk_i) if (arst_ni & chech_en) $fell(d_i) |-> ##[1:2] negedge_o)
+  assert property (@(posedge clk_i) if (allow_check) $fell(d_i) |-> ##[1:2] negedge_o)
   else negedge_fail = 1;
 `else
-  assert property (@(posedge clk_i) if (arst_ni & chech_en) $rose(d_i) |-> ##[0:1] posedge_o)
+  assert property (@(posedge clk_i) if (allow_check) $rose(d_i) |-> ##[0:1] posedge_o)
   else posedge_fail = 1;
-  assert property (@(posedge clk_i) if (arst_ni & chech_en) $fell(d_i) |-> ##[0:1] negedge_o)
+  assert property (@(posedge clk_i) if (allow_check) $fell(d_i) |-> ##[0:1] negedge_o)
   else negedge_fail = 1;
 `endif
 
-  assert property (@(posedge clk_i) if (arst_ni & chech_en) $rose(
-      posedge_o
-  ) |-> ##1 $fell(
-      posedge_o
-  ))
+  assert property (@(posedge clk_i) if (allow_check) $rose(posedge_o) |-> ##1 $fell(posedge_o))
   else posedge_fail = 1;
 
-  assert property (@(posedge clk_i) if (arst_ni & chech_en) $rose(
-      negedge_o
-  ) |-> ##1 $fell(
-      negedge_o
-  ))
+  assert property (@(posedge clk_i) if (allow_check) $rose(negedge_o) |-> ##1 $fell(negedge_o))
   else negedge_fail = 1;
 
   initial begin  // main initial{{{
@@ -135,7 +129,7 @@ module edge_detector_tb;
     rand_reset();
     rand_d();
 
-    #50us;
+    #100us;
 
     result_print(!posedge_fail, "posedge detection");
     result_print(!negedge_fail, "negedge detection");
