@@ -110,6 +110,20 @@ module edge_detector_tb;
   else negedge_fail = 1;
 `endif
 
+  assert property (@(posedge clk_i) if (arst_ni & chech_en) $rose(
+      posedge_o
+  ) |-> ##1 $fell(
+      posedge_o
+  ))
+  else posedge_fail = 1;
+
+  assert property (@(posedge clk_i) if (arst_ni & chech_en) $rose(
+      negedge_o
+  ) |-> ##1 $fell(
+      negedge_o
+  ))
+  else negedge_fail = 1;
+
   initial begin  // main initial{{{
 
     apply_reset();
