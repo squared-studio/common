@@ -183,6 +183,7 @@ config_touch:
 	@touch $(CONFIG_PATH)/xvlog
 	@touch $(CONFIG_PATH)/xelab
 	@touch $(CONFIG_PATH)/xsim
+	@touch $(CONFIG_PATH)/des
 
 .PHONY: config_list
 config_list: config_touch
@@ -192,10 +193,10 @@ config_list: config_touch
 
 .PHONY: config_print
 config_print:
-	@echo -e "$(COLOR)$(CFG)\033[0m"
-	@echo -e "\033[0;36mxvlog:\033[0m $(shell cat $(TOP_DIR)/config/$(CFG)/xvlog)"
-	@echo -e "\033[0;36mxelab:\033[0m $(shell cat $(TOP_DIR)/config/$(CFG)/xelab)"
-	@echo -e "\033[0;36mxsim :\033[0m $(shell cat $(TOP_DIR)/config/$(CFG)/xsim) "
+	@echo -e "$(COLOR)$(CFG)\033[0m $(shell cat $(TOP_DIR)/config/$(CFG)/des)"
+	@$(if $(shell cat  $(TOP_DIR)/config/$(CFG)/xvlog), echo -e "\033[0;36mxvlog:\033[0m $(shell cat $(TOP_DIR)/config/$(CFG)/xvlog)")
+	@$(if $(shell cat  $(TOP_DIR)/config/$(CFG)/xelab), echo -e "\033[0;36mxelab:\033[0m $(shell cat $(TOP_DIR)/config/$(CFG)/xelab)")
+	@$(if $(shell cat  $(TOP_DIR)/config/$(CFG)/xsim ), echo -e "\033[0;36mxsim :\033[0m $(shell cat $(TOP_DIR)/config/$(CFG)/xsim) ")
 	@echo ""
 
 .PHONY: simulate
