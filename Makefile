@@ -443,4 +443,3 @@ get_rtl_doc_header:
 get_inc_doc_header:
 	@$(eval HEADER := $(shell echo $(FILE) | sed "s/\.\/docs\/include\///g" | sed "s/\.md$$//g"))
 	@echo "[$(HEADER)]($(FILE))<br>" >> readme.md
-
