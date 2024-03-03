@@ -78,7 +78,7 @@ module rtl_model #(
 `ifdef SIMULATION
   initial begin
     if (DATA_WIDTH > 2) begin
-      $display("\033[7;31m%m DATA_WIDTH\033[0m");
+      $display("\033[1;33m%m DATA_WIDTH\033[0m");
     end
   end
 `endif  // SIMULATION

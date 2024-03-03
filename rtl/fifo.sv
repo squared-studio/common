@@ -123,8 +123,8 @@ module fifo #(
 
 `ifdef SIMULATION
   initial begin
-    if (FIFO_SIZE > 3) begin
-      $display("\033[7;31m%m FIFO_SIZE=%0d is quite big\033[0m", FIFO_SIZE);
+    if (((2 ** FIFO_SIZE) * ELEM_WIDTH) >= 1024) begin
+      $warning("\033[1;33m%m%0d bit FIFO is quite big\033[0m", ((2 ** FIFO_SIZE) * ELEM_WIDTH));
     end
   end
 `endif  // SIMULATION
