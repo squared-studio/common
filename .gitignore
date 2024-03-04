@@ -9,8 +9,11 @@ __no_upload__
 *.vcd
 *.vvp
 *.wdb
-top.cache/
+top.cache
 top.hw
+top.ip_user_files
+top.runs
+top.sim
 top.tcl
 top.xpr
 vivado_pid*.str

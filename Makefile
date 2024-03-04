@@ -42,6 +42,7 @@ CLEAN_TARGETS += $(shell find $(realpath ./) -name "top.ip_user_files")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "top.sim")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "top.xpr")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "top.tcl")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "top.runs")
 
 OS = $(shell uname)
 ifeq ($(OS),Linux)
