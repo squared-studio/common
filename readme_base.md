@@ -18,19 +18,11 @@ This section describes the purpose of individual folders in this repository
 <table>
 
 <tr>
-<th>
-To
-</th>
-<th>
-Makefile command
-</th>
-</tr>
-
-<tr>
 <td>
 To create or open a testbench, type:
 </td>
 <td>
+
 ```bash
 make create_tb TOP={tb}
 ```
@@ -42,6 +34,7 @@ make create_tb TOP={tb}
 To create or open a rtl, type:
 </td>
 <td>
+
 ```bash
 make create_rtl RTL={tb}
 ```
@@ -53,6 +46,7 @@ make create_rtl RTL={tb}
 To run a test with vivado, type:
 </td>
 <td>
+
 ```bash
 make simulate TOP={tb}
 ```
@@ -64,6 +58,7 @@ make simulate TOP={tb}
 To clean all temps, type:
 </td>
 <td>
+
 ```bash
 make clean
 ```
@@ -75,6 +70,7 @@ make clean
 To open wavedump using gtkwave, type:
 </td>
 <td>
+
 ```bash
 make gwave TOP={tb}
 ```
@@ -86,6 +82,7 @@ make gwave TOP={tb}
 To open wave using vivado, type:
 </td>
 <td>
+
 ```bash
 make vwave TOP={tb}
 ```
@@ -97,6 +94,7 @@ make vwave TOP={tb}
 To run simulation on the initial block of an RTL, type:
 </td>
 <td>
+
 ```bash
 make rtl_init_sim RTL={rtl}
 ```
@@ -108,6 +106,7 @@ make rtl_init_sim RTL={rtl}
 To copy an instance of any rtl, type:
 </td>
 <td>
+
 ```bash
 make copy_instance RTL={rtl}
 ```
@@ -119,6 +118,7 @@ make copy_instance RTL={rtl}
 To open schematic using vivado, type:
 </td>
 <td>
+
 ```bash
 make schematic RTL={rtl}
 ```
@@ -130,6 +130,7 @@ make schematic RTL={rtl}
 To find any rtl, type:
 </td>
 <td>
+
 ```bash
 make find_rtl RTL={tb}
 ```
@@ -141,6 +142,7 @@ make find_rtl RTL={tb}
 To run CI check, type:
 </td>
 <td>
+
 ```bash
 make CI
 ```
@@ -152,6 +154,7 @@ make CI
 To run a test with iverilog, type:
 </td>
 <td>
+
 ```bash
 make iverilog TOP={tb}
 ```
@@ -163,6 +166,7 @@ make iverilog TOP={tb}
 To generate a list of all Verilog/SystemVerilog files, type:
 </td>
 <td>
+
 ```bash
 make gen_check_list
 ```
@@ -174,6 +178,7 @@ make gen_check_list
 To generate flist of an RTL, type:
 </td>
 <td>
+
 ```bash
 make flist RTL={rtl}
 ```
@@ -185,6 +190,7 @@ make flist RTL={rtl}
 To update documents, type:
 </td>
 <td>
+
 ```bash
 make update_doc_list
 ```
