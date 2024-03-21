@@ -22,53 +22,53 @@ make simulate TOP=fifo_tb
 ```
 
 ## RTL
-[addr_decoder (module) ](./docs/rtl/addr_decoder.md)<br>
-[axi4l_gpio (module) ](./docs/rtl/axi4l_gpio.md)<br>
-[axi_fifo (module) ](./docs/rtl/axi_fifo.md)<br>
-[bin_to_gray (module) ](./docs/rtl/bin_to_gray.md)<br>
-[cdc_fifo (module) ](./docs/rtl/cdc_fifo.md)<br>
-[circular_xbar (module) ](./docs/rtl/circular_xbar.md)<br>
-[clk_div (module) ](./docs/rtl/clk_div.md)<br>
-[clk_gate (module) ](./docs/rtl/clk_gate.md)<br>
-[clk_mux (module) ](./docs/rtl/clk_mux.md)<br>
-[counter (module) ](./docs/rtl/counter.md)<br>
-[decoder (module) ](./docs/rtl/decoder.md)<br>
-[demux (module) ](./docs/rtl/demux.md)<br>
-[dff (module) ](./docs/rtl/dff.md)<br>
-[dual_synchronizer (module) ](./docs/rtl/dual_synchronizer.md)<br>
-[edge_detector (module) ](./docs/rtl/edge_detector.md)<br>
-[encoder (module) ](./docs/rtl/encoder.md)<br>
-[fifo (module) ](./docs/rtl/fifo.md)<br>
-[fixed_priority_arbiter (module) ](./docs/rtl/fixed_priority_arbiter.md)<br>
-[freq_div (module) ](./docs/rtl/freq_div.md)<br>
-[gray_to_bin (module) ](./docs/rtl/gray_to_bin.md)<br>
-[handshake_combiner (module) ](./docs/rtl/handshake_combiner.md)<br>
-[handshake_counter (module) ](./docs/rtl/handshake_counter.md)<br>
-[io_pad (module) ](./docs/rtl/io_pad.md)<br>
-[jk_ff (module) ](./docs/rtl/jk_ff.md)<br>
-[latch (module) ](./docs/rtl/latch.md)<br>
-[mem (module) ](./docs/rtl/mem.md)<br>
-[mem_bank (module) ](./docs/rtl/mem_bank.md)<br>
-[mem_core (module) ](./docs/rtl/mem_core.md)<br>
-[mux (module) ](./docs/rtl/mux.md)<br>
-[mux_primitive (module) ](./docs/rtl/mux_primitive.md)<br>
-[pipeline (module) ](./docs/rtl/pipeline.md)<br>
-[pipeline_branch (module) ](./docs/rtl/pipeline_branch.md)<br>
-[pipeline_core (module) ](./docs/rtl/pipeline_core.md)<br>
-[pll_model (module) ](./docs/rtl/pll_model.md)<br>
-[priority_encoder (module) ](./docs/rtl/priority_encoder.md)<br>
-[register (module) ](./docs/rtl/register.md)<br>
-[register_dual_flop (module) ](./docs/rtl/register_dual_flop.md)<br>
-[reg_file (module) ](./docs/rtl/reg_file.md)<br>
-[round_robin_arbiter (module) ](./docs/rtl/round_robin_arbiter.md)<br>
-[rv_float_reg_file (module) ](./docs/rtl/rv_float_reg_file.md)<br>
-[rv_int_reg_file (module) ](./docs/rtl/rv_int_reg_file.md)<br>
-[rv_vec_reg_file (module) ](./docs/rtl/rv_vec_reg_file.md)<br>
-[shift_register (module) ](./docs/rtl/shift_register.md)<br>
-[sr_latch_arstn (module) ](./docs/rtl/sr_latch_arstn.md)<br>
-[uart_parity_checker (module) ](./docs/rtl/uart_parity_checker.md)<br>
-[var_fifo (module) ](./docs/rtl/var_fifo.md)<br>
-[xbar (module) ](./docs/rtl/xbar.md)<br>
+[addr_decoder ](./docs/rtl/addr_decoder.md)<br>
+[axi4l_gpio ](./docs/rtl/axi4l_gpio.md)<br>
+[axi_fifo ](./docs/rtl/axi_fifo.md)<br>
+[bin_to_gray ](./docs/rtl/bin_to_gray.md)<br>
+[cdc_fifo ](./docs/rtl/cdc_fifo.md)<br>
+[circular_xbar ](./docs/rtl/circular_xbar.md)<br>
+[clk_div ](./docs/rtl/clk_div.md)<br>
+[clk_gate ](./docs/rtl/clk_gate.md)<br>
+[clk_mux ](./docs/rtl/clk_mux.md)<br>
+[counter ](./docs/rtl/counter.md)<br>
+[decoder ](./docs/rtl/decoder.md)<br>
+[demux ](./docs/rtl/demux.md)<br>
+[dff ](./docs/rtl/dff.md)<br>
+[dual_synchronizer ](./docs/rtl/dual_synchronizer.md)<br>
+[edge_detector ](./docs/rtl/edge_detector.md)<br>
+[encoder ](./docs/rtl/encoder.md)<br>
+[fifo ](./docs/rtl/fifo.md)<br>
+[fixed_priority_arbiter ](./docs/rtl/fixed_priority_arbiter.md)<br>
+[freq_div ](./docs/rtl/freq_div.md)<br>
+[gray_to_bin ](./docs/rtl/gray_to_bin.md)<br>
+[handshake_combiner ](./docs/rtl/handshake_combiner.md)<br>
+[handshake_counter ](./docs/rtl/handshake_counter.md)<br>
+[io_pad ](./docs/rtl/io_pad.md)<br>
+[jk_ff ](./docs/rtl/jk_ff.md)<br>
+[latch ](./docs/rtl/latch.md)<br>
+[mem ](./docs/rtl/mem.md)<br>
+[mem_bank ](./docs/rtl/mem_bank.md)<br>
+[mem_core ](./docs/rtl/mem_core.md)<br>
+[mux ](./docs/rtl/mux.md)<br>
+[mux_primitive ](./docs/rtl/mux_primitive.md)<br>
+[pipeline ](./docs/rtl/pipeline.md)<br>
+[pipeline_branch ](./docs/rtl/pipeline_branch.md)<br>
+[pipeline_core ](./docs/rtl/pipeline_core.md)<br>
+[pll_model ](./docs/rtl/pll_model.md)<br>
+[priority_encoder ](./docs/rtl/priority_encoder.md)<br>
+[register ](./docs/rtl/register.md)<br>
+[register_dual_flop ](./docs/rtl/register_dual_flop.md)<br>
+[reg_file ](./docs/rtl/reg_file.md)<br>
+[round_robin_arbiter ](./docs/rtl/round_robin_arbiter.md)<br>
+[rv_float_reg_file ](./docs/rtl/rv_float_reg_file.md)<br>
+[rv_int_reg_file ](./docs/rtl/rv_int_reg_file.md)<br>
+[rv_vec_reg_file ](./docs/rtl/rv_vec_reg_file.md)<br>
+[shift_register ](./docs/rtl/shift_register.md)<br>
+[sr_latch_arstn ](./docs/rtl/sr_latch_arstn.md)<br>
+[uart_parity_checker ](./docs/rtl/uart_parity_checker.md)<br>
+[var_fifo ](./docs/rtl/var_fifo.md)<br>
+[xbar ](./docs/rtl/xbar.md)<br>
 
 ## INCLUDE
 [axi4l_typedef.svh](./docs/include/axi4l_typedef.svh.md)<br>

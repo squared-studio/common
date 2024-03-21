@@ -442,7 +442,7 @@ update_doc_list:
 
 .PHONY: get_rtl_doc_header
 get_rtl_doc_header:
-	@$(eval HEADER := $(shell cat $(FILE) | grep -E "# " | sed "s/^# //g"))
+	@$(eval HEADER := $(shell cat $(FILE) | grep -E "# " | sed "s/^# //g" | sed "s/ .*//g"))
 	@echo "[$(HEADER)]($(FILE))<br>" >> readme.md
 
 .PHONY: get_inc_doc_header
@@ -453,5 +453,5 @@ get_inc_doc_header:
 #	@git submodule update --init ./submodules/documenter
 .PHONY: gen_doc
 gen_doc:
-	@echo "Creating Doc for $(FILE)"
+	@echo "Creating document for $(FILE)"
 	@./submodules/documenter/sv_documenter.py $(FILE) ./docs/rtl
