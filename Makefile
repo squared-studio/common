@@ -113,6 +113,9 @@ help:
 	@echo -e "\033[3;30mTo generate flist of an RTL, type:\033[0m"
 	@echo -e "\033[1;38mmake flist RTL=<rtl>\033[0m"
 	@echo -e ""
+	@echo -e "\033[3;30mTo update documents, type:\033[0m"
+	@echo -e "\033[1;38mmake update_doc_list\033[0m"
+	@echo -e ""
 
 .PHONY: gen_check_list
 gen_check_list:

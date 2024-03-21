@@ -7,7 +7,6 @@ module dff #(
     input logic clk_i,
 
     input logic en_i,
-
     input logic d_i,
 
     output logic q_o

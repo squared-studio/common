@@ -8,8 +8,8 @@ module register_dual_flop #(
 ) (
     input logic clk_i,
     input logic arst_ni,
-    input logic en_i,
 
+    input logic en_i,
     input logic [ELEM_WIDTH-1:0] d_i,
 
     output logic [ELEM_WIDTH-1:0] q_o

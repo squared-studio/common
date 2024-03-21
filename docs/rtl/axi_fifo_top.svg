@@ -10,9 +10,9 @@
 <text x="65" y="235" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">req_i</text>
 <polygon points="10,295 20,285 40,285 40,295 60,295 40,295 40,305 20,305 10,295"/>
 <text x="65" y="285" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">resp_o</text>
-<polygon points="335,195 355,195 355,185 375,185 385,195 375,205 355,205 355,195 335,195"/>
-<text x="330" y="185" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">req_o</text>
-<polygon points="335,245 355,245 365,235 385,235 385,245 385,255 365,255 355,245 335,245"/>
-<text x="330" y="235" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">resp_i</text>
+<polygon points="335,245 355,245 355,235 375,235 385,245 375,255 355,255 355,245 335,245"/>
+<text x="330" y="235" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">req_o</text>
+<polygon points="335,295 355,295 365,285 385,285 385,295 385,305 365,305 355,295 335,295"/>
+<text x="330" y="285" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">resp_i</text>
 </g>
 </svg>

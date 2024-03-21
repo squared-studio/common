@@ -14,8 +14,9 @@ module reg_file #(
     input logic [      REG_WIDTH-1:0] rd_data_i,  // read data
     input logic                       rd_en_i,    // read enable
 
-    input  logic [NUM_RS-1:0][$clog2(NUM_REG)-1:0] rs_addr_i,  // array of source register address
-    output logic [NUM_RS-1:0][      REG_WIDTH-1:0] rs_data_o   // array of source register data
+    input logic [NUM_RS-1:0][$clog2(NUM_REG)-1:0] rs_addr_i,  // array of source register address
+
+    output logic [NUM_RS-1:0][REG_WIDTH-1:0] rs_data_o  // array of source register data
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -38,7 +39,7 @@ module reg_file #(
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   demux #(
-      .NUM_ELEM(NUM_REG),
+      .NUM_ELEM  (NUM_REG),
       .ELEM_WIDTH(1)
   ) u_demux_reg (
       .s_i(rd_addr_i),

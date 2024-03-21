@@ -71,3 +71,7 @@ make simulate TOP=fifo_tb
 [xbar ](./docs/rtl/xbar.md)<br>
 
 ## INCLUDE
+[axi4l_typedef.svh](./docs/include/axi4l_typedef.svh.md)<br>
+[axi4_typedef.svh](./docs/include/axi4_typedef.svh.md)<br>
+[vip/axi4l_pkg.sv](./docs/include/vip/axi4l_pkg.sv.md)<br>
+

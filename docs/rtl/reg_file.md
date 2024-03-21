@@ -25,4 +25,4 @@
 |rd_data_i|input|logic [ REG_WIDTH-1:0]||read data|
 |rd_en_i|input|logic||read enable|
 |rs_addr_i|input|logic [NUM_RS-1:0][$clog2(NUM_REG)-1:0]||array of source register address|
-|rs_data_o|output|logic [NUM_RS-1:0][ REG_WIDTH-1:0]||array of source register data|
+|rs_data_o|output|logic [NUM_RS-1:0][REG_WIDTH-1:0]||array of source register data|
