@@ -4,9 +4,9 @@
 <rect width="275" height="275" x="60" y="60"/>
 <polygon points="10,195 10,185 30,185 40,195 60,195 40,195 30,205 10,205 10,195"/>
 <text x="65" y="185" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">d_i</text>
-<polygon points="335,145 355,145 355,135 375,135 385,145 375,155 355,155 355,145 335,145"/>
-<text x="330" y="135" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">addr_o</text>
 <polygon points="335,195 355,195 355,185 375,185 385,195 375,205 355,205 355,195 335,195"/>
-<text x="330" y="185" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">addr_valid_o</text>
+<text x="330" y="185" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">addr_o</text>
+<polygon points="335,245 355,245 355,235 375,235 385,245 375,255 355,255 355,245 335,245"/>
+<text x="330" y="235" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">addr_valid_o</text>
 </g>
 </svg>
