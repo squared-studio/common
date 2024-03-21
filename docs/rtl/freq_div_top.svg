@@ -8,7 +8,7 @@
 <text x="65" y="185" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">divisor_i</text>
 <polygon points="10,295 10,285 30,285 40,295 60,295 40,295 30,305 10,305 10,295"/>
 <text x="65" y="285" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">clk_i</text>
-<polygon points="335,195 355,195 355,185 375,185 385,195 375,205 355,205 355,195 335,195"/>
-<text x="330" y="185" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">clk_o</text>
+<polygon points="335,295 355,295 355,285 375,285 385,295 375,305 355,305 355,295 335,295"/>
+<text x="330" y="285" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">clk_o</text>
 </g>
 </svg>

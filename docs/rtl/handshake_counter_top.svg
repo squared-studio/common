@@ -10,11 +10,11 @@
 <text x="65" y="235" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">in_valid_i</text>
 <polygon points="10,295 20,285 40,285 40,295 60,295 40,295 40,305 20,305 10,295"/>
 <text x="65" y="285" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">in_ready_o</text>
-<polygon points="335,95 355,95 355,85 375,85 385,95 375,105 355,105 355,95 335,95"/>
-<text x="330" y="85" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">out_valid_o</text>
-<polygon points="335,145 355,145 365,135 385,135 385,145 385,155 365,155 355,145 335,145"/>
-<text x="330" y="135" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">out_ready_i</text>
-<polygon points="335,245 355,245 355,235 375,235 385,245 375,255 355,255 355,245 335,245"/>
-<text x="330" y="235" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">cnt_o</text>
+<polygon points="335,145 355,145 355,135 375,135 385,145 375,155 355,155 355,145 335,145"/>
+<text x="330" y="135" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">out_valid_o</text>
+<polygon points="335,195 355,195 365,185 385,185 385,195 385,205 365,205 355,195 335,195"/>
+<text x="330" y="185" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">out_ready_i</text>
+<polygon points="335,295 355,295 355,285 375,285 385,295 375,305 355,305 355,295 335,295"/>
+<text x="330" y="285" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">cnt_o</text>
 </g>
 </svg>

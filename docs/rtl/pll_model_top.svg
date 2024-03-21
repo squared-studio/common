@@ -14,9 +14,9 @@
 <text x="65" y="385" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">fvco_o</text>
 <polygon points="10,495 10,485 30,485 40,495 60,495 40,495 30,505 10,505 10,495"/>
 <text x="65" y="485" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">fdiv_i</text>
-<polygon points="535,345 555,345 555,335 575,335 585,345 575,355 555,355 555,345 535,345"/>
-<text x="530" y="335" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">lock_o</text>
-<polygon points="535,445 555,445 555,435 575,435 585,445 575,455 555,455 555,445 535,445"/>
-<text x="530" y="435" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">fout_o</text>
+<polygon points="535,395 555,395 555,385 575,385 585,395 575,405 555,405 555,395 535,395"/>
+<text x="530" y="385" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">lock_o</text>
+<polygon points="535,495 555,495 555,485 575,485 585,495 575,505 555,505 555,495 535,495"/>
+<text x="530" y="485" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">fout_o</text>
 </g>
 </svg>
