@@ -16,6 +16,16 @@ This section describes the purpose of individual folders in this repository
 ## How-to
 
 <table>
+
+<tr>
+<th>
+To
+</th>
+<th>
+Makefile command
+</th>
+</tr>
+
 <tr>
 <td>
 To create or open a testbench, type:
