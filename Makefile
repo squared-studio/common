@@ -430,15 +430,15 @@ create_rtl:
 
 .PHONY: update_doc_list
 update_doc_list:
-	@$(foreach file, $(RTL_FILE), echo "$(file)")
-#	@cat readme_base.md > readme.md
-#	@echo "" >> readme.md
-#	@echo "## RTL" >> readme.md
-#	@$(foreach file, $(shell find ./docs/rtl -name "*.md"), $(MAKE) get_rtl_doc_header FILE=$(file);)
-#	@echo "" >> readme.md
-#	@echo "## INCLUDE" >> readme.md
-#	@$(foreach file, $(shell find ./docs/include -name "*.md"), $(MAKE) get_inc_doc_header FILE=$(file);)
-#	@echo "" >> readme.md
+	@$(foreach file, $(DES_LIB), $(MAKE) gen_doc FILE=$(file);)
+	@cat readme_base.md > readme.md
+	@echo "" >> readme.md
+	@echo "## RTL" >> readme.md
+	@$(foreach file, $(shell find ./docs/rtl -name "*.md"), $(MAKE) get_rtl_doc_header FILE=$(file);)
+	@echo "" >> readme.md
+	@echo "## INCLUDE" >> readme.md
+	@$(foreach file, $(shell find ./docs/include -name "*.md"), $(MAKE) get_inc_doc_header FILE=$(file);)
+	@echo "" >> readme.md
 
 .PHONY: get_rtl_doc_header
 get_rtl_doc_header:
@@ -454,4 +454,4 @@ get_inc_doc_header:
 .PHONY: gen_doc
 gen_doc:
 	@echo "Creating Doc for $(FILE)"
-	@./submodules/documenter/sv_documenter.py $(FILE) ./docs/rtl/
+	@./submodules/documenter/sv_documenter.py $(FILE) ./docs/rtl
