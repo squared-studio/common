@@ -18,4 +18,4 @@
 |-|-|-|-|-|
 |a_i|input|logic [$clog2(NUM_WIRE)-1:0]||Address input|
 |a_valid_i|input|logic||Address Valid input|
-|d_o|output|logic [ NUM_WIRE-1:0]||data output|
+|d_o|output|logic [NUM_WIRE-1:0]||data output|

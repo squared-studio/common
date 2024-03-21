@@ -3,10 +3,13 @@
 
 module clk_mux #(
 ) (
-    input  logic arst_ni,
-    input  logic clk0_i,
-    input  logic clk1_i,
-    input  logic sel_i,
+    input logic arst_ni,
+
+    input logic sel_i,
+
+    input logic clk0_i,
+    input logic clk1_i,
+
     output logic clk_o
 );
 
@@ -29,7 +32,7 @@ module clk_mux #(
   //-ASSIGNMENTS{{{
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  assign clk0_ffb2b_in = ~( sel_i | clk1_ffb2b_out);
+  assign clk0_ffb2b_in = ~(sel_i | clk1_ffb2b_out);
   assign clk1_ffb2b_in = ~(~sel_i | clk0_ffb2b_out);
 
   assign clk0_and = clk0_ffb2b_out & clk0_i;
@@ -44,8 +47,8 @@ module clk_mux #(
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   dual_synchronizer #(
-    .FIRST_FF_EDGE_POSEDGED (1),
-    .LAST_FF_EDGE_POSEDGED  (0)
+      .FIRST_FF_EDGE_POSEDGED(1),
+      .LAST_FF_EDGE_POSEDGED (0)
   ) clk0_ffb2b (
       .clk_i  (clk0_i),
       .arst_ni(arst_ni),
@@ -55,8 +58,8 @@ module clk_mux #(
   );
 
   dual_synchronizer #(
-    .FIRST_FF_EDGE_POSEDGED (1),
-    .LAST_FF_EDGE_POSEDGED  (0)
+      .FIRST_FF_EDGE_POSEDGED(1),
+      .LAST_FF_EDGE_POSEDGED (0)
   ) clk1_ffb2b (
       .clk_i  (clk1_i),
       .arst_ni(arst_ni),

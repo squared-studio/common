@@ -6,10 +6,12 @@ module register_dual_flop #(
     parameter bit                  FIRST_FF_EDGE_POSEDGED = 1,
     parameter bit                  LAST_FF_EDGE_POSEDGED  = 0
 ) (
-    input  logic                  clk_i,
-    input  logic                  arst_ni,
-    input  logic                  en_i,
-    input  logic [ELEM_WIDTH-1:0] d_i,
+    input logic clk_i,
+    input logic arst_ni,
+    input logic en_i,
+
+    input logic [ELEM_WIDTH-1:0] d_i,
+
     output logic [ELEM_WIDTH-1:0] q_o
 );
 
@@ -24,10 +26,10 @@ module register_dual_flop #(
 
   always_ff @(posedge first_clk_in or negedge arst_ni) begin
     if (~arst_ni) begin
-      q_intermediate <= RESET_VALUE;
+      q_intermediate  <= RESET_VALUE;
       en_intermediate <= '0;
     end else begin
-      q_intermediate <= d_i;
+      q_intermediate  <= d_i;
       en_intermediate <= en_i;
     end
   end

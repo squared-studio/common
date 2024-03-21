@@ -4,12 +4,15 @@
 module handshake_counter #(
     parameter int DEPTH = 4
 ) (
-    input  logic                       clk_i,
-    input  logic                       arst_ni,
-    input  logic                       in_valid_i,
-    output logic                       in_ready_o,
-    output logic                       out_valid_o,
-    input  logic                       out_ready_i,
+    input logic clk_i,
+    input logic arst_ni,
+
+    input  logic in_valid_i,
+    output logic in_ready_o,
+
+    output logic out_valid_o,
+    input  logic out_ready_i,
+
     output logic [$clog2(DEPTH+1)-1:0] cnt_o
 );
 

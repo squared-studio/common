@@ -10,12 +10,14 @@ module mem_bank #(
     localparam int DataBits   = 8 * DATA_SIZE    // Bits in the data bus
 
 ) (
-    input  logic                          clk_i,    // Global clock
-    input  logic                          cs_i,     // Asynchronous reset
-    input  logic [        ADDR_WIDTH-1:0] addr_i,   // Aligned byte address
-    input  logic [(8*(2**DATA_SIZE))-1:0] wdata_i,  // Aligned write data
-    input  logic [    (2**DATA_SIZE)-1:0] wstrb_i,  // Aligned write strobe
-    output logic [(8*(2**DATA_SIZE))-1:0] rdata_o   // Aligned read data
+    input logic clk_i,  // Global clock
+    input logic cs_i,   // Asynchronous reset
+
+    input logic [        ADDR_WIDTH-1:0] addr_i,   // Aligned byte address
+    input logic [(8*(2**DATA_SIZE))-1:0] wdata_i,  // Aligned write data
+    input logic [    (2**DATA_SIZE)-1:0] wstrb_i,  // Aligned write strobe
+
+    output logic [(8*(2**DATA_SIZE))-1:0] rdata_o  // Aligned read data
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

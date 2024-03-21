@@ -4,9 +4,11 @@
 module clk_gate #(
     parameter bit USE_DUAL_SYNC = 1
 ) (
-    input  logic arst_ni,
-    input  logic clk_i,
-    input  logic en_i,
+    input logic arst_ni,
+    input logic en_i,
+
+    input logic clk_i,
+
     output logic clk_o
 );
 

@@ -4,10 +4,12 @@
 module latch #(
     parameter int DATA_WIDTH = 8  // Data Width
 ) (
-    input  logic                  arst_ni,  // Asynchronous reset
-    input  logic                  en_i,     // Latch enable
-    input  logic [DATA_WIDTH-1:0] d_i,      // Latch data in
-    output logic [DATA_WIDTH-1:0] q_o       // Latch data out
+    input logic arst_ni,  // Asynchronous reset
+    input logic en_i,     // Latch enable
+
+    input logic [DATA_WIDTH-1:0] d_i,  // Latch data in
+
+    output logic [DATA_WIDTH-1:0] q_o  // Latch data out
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

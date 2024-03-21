@@ -17,6 +17,6 @@
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
 |arst_ni|input|logic|||
-|clk_i|input|logic|||
 |en_i|input|logic|||
+|clk_i|input|logic|||
 |clk_o|output|logic|||

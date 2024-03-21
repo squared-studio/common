@@ -6,9 +6,11 @@ module edge_detector #(
     parameter bit NEGEDGE = 1,  // detect negative edge
     parameter bit ASYNC   = 0
 ) (
-    input  logic arst_ni,    // Asynchronous reset
-    input  logic clk_i,      // Global clock
-    input  logic d_i,        // Data in
+    input logic arst_ni,  // Asynchronous reset
+    input logic clk_i,    // Global clock
+
+    input logic d_i,  // Data in
+
     output logic posedge_o,  // posedge detected
     output logic negedge_o   // negedge detected
 );

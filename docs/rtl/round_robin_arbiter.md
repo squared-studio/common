@@ -19,6 +19,6 @@
 |clk_i|input|logic||Global clock|
 |arst_ni|input|logic||Asynchronous resent|
 |allow_req_i|input|logic||Allow requests|
-|req_i|input|logic [ NUM_REQ-1:0]||Allow requests|
+|req_i|input|logic [NUM_REQ-1:0]||Allow requests|
 |gnt_addr_o|output|logic [$clog2(NUM_REQ)-1:0]||Grant Address|
 |gnt_addr_valid_o|output|logic||Grant Valid|

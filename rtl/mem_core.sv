@@ -6,11 +6,13 @@ module mem_core #(
     parameter  int ADDR_WIDTH = 8,                 // Width of the address bus
     localparam int Depth      = (2 ** ADDR_WIDTH)  // Depth of the memory
 ) (
-    input  logic                  clk_i,    // Global clock
-    input  logic                  we_i,     // Write enable
-    input  logic [ADDR_WIDTH-1:0] addr_i,   // Address bus input
-    input  logic [ELEM_WIDTH-1:0] wdata_i,  // Write data
-    output logic [ELEM_WIDTH-1:0] rdata_o   // Read data
+    input logic clk_i,  // Global clock
+
+    input logic                  we_i,    // Write enable
+    input logic [ADDR_WIDTH-1:0] addr_i,  // Address bus input
+    input logic [ELEM_WIDTH-1:0] wdata_i, // Write data
+
+    output logic [ELEM_WIDTH-1:0] rdata_o  // Read data
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

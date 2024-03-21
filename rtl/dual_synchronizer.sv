@@ -4,10 +4,13 @@ module dual_synchronizer #(
     parameter bit FIRST_FF_EDGE_POSEDGED = 0,
     parameter bit LAST_FF_EDGE_POSEDGED  = 0
 ) (
-    input  logic arst_ni,
-    input  logic clk_i,
-    input  logic en_i,
-    input  logic d_i,
+    input logic arst_ni,
+    input logic clk_i,
+
+    input logic en_i,
+
+    input logic d_i,
+
     output logic q_o
 );
 

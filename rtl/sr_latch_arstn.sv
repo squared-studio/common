@@ -2,11 +2,13 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
 module sr_latch_arstn (
-    input  logic arst_ni,  // asynchronous reset
-    input  logic s_i,      // set
-    input  logic r_i,      // reset
-    output logic q_o,      // q
-    output logic q_no      // ~q
+    input logic arst_ni,  // asynchronous reset
+
+    input logic s_i,  // set
+    input logic r_i,  // reset
+
+    output logic q_o,  // q
+    output logic q_no  // ~q
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

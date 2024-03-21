@@ -3,10 +3,13 @@
 module dff #(
     parameter bit RESET_VALUE = '0
 ) (
-    input  logic arst_ni,
-    input  logic clk_i,
-    input  logic en_i,
-    input  logic d_i,
+    input logic arst_ni,
+    input logic clk_i,
+
+    input logic en_i,
+
+    input logic d_i,
+
     output logic q_o
 );
 

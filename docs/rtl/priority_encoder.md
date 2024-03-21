@@ -17,6 +17,6 @@
 ## Ports
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
-|d_i|input|logic [ NUM_WIRE-1:0]||Wire input|
+|d_i|input|logic [NUM_WIRE-1:0]||Wire input|
 |addr_o|output|logic [$clog2(NUM_WIRE)-1:0]||Address output|
 |addr_valid_o|output|logic||Address Valid output|

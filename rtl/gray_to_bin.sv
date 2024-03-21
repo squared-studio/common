@@ -2,9 +2,10 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
 module gray_to_bin #(
-    parameter int DATA_WIDTH = 4 // Data Width
+    parameter int DATA_WIDTH = 4  // Data Width
 ) (
-    input  logic [DATA_WIDTH-1:0] data_in_i,  // gray code in
+    input logic [DATA_WIDTH-1:0] data_in_i,  // gray code in
+
     output logic [DATA_WIDTH-1:0] data_out_o  // binary code out
 );
 

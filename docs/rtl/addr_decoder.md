@@ -20,6 +20,6 @@
 ## Ports
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
-|addr_i|input|logic [ ADDR_WIDTH-1:0]||address input|
+|addr_i|input|logic [ADDR_WIDTH-1:0]||address input|
 |slave_index_o|output|logic [$clog2(NUM_SLV)-1:0]||slave index output|
 |addr_found_o|output|logic||slave index valid|

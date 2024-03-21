@@ -4,10 +4,13 @@
 module freq_div #(
     parameter int DIVISOR_SIZE = 9  // divisor register size
 ) (
-    input  logic                    arst_ni,    // Asynchronous Global Reset
-    input  logic [DIVISOR_SIZE-1:0] divisor_i,  // clock divisor
-    input  logic                    clk_i,      // clock in
-    output logic                    clk_o       // clock out
+    input logic arst_ni,  // Asynchronous Global Reset
+
+    input logic [DIVISOR_SIZE-1:0] divisor_i,  // clock divisor
+
+    input logic clk_i,  // clock in
+
+    output logic clk_o  // clock out
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

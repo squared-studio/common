@@ -18,5 +18,5 @@
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
 |s_i|input|logic [$clog2(NUM_ELEM)-1:0]||Output select|
-|i_i|input|logic [ ELEM_WIDTH-1:0]||input|
-|o_o|output|logic [ NUM_ELEM-1:0][ELEM_WIDTH-1:0]||Array of Output|
+|i_i|input|logic [ELEM_WIDTH-1:0]||input|
+|o_o|output|logic [NUM_ELEM-1:0][ELEM_WIDTH-1:0]||Array of Output|

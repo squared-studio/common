@@ -5,9 +5,11 @@ module demux #(
     parameter int NUM_ELEM   = 6,  // Number of elements in the demux
     parameter int ELEM_WIDTH = 8   // Width of each element
 ) (
-    input  logic [$clog2(NUM_ELEM)-1:0]                 s_i,  // Output select
-    input  logic [      ELEM_WIDTH-1:0]                 i_i,  // input
-    output logic [        NUM_ELEM-1:0][ELEM_WIDTH-1:0] o_o   // Array of Output
+    input logic [$clog2(NUM_ELEM)-1:0] s_i,  // Output select
+
+    input logic [ELEM_WIDTH-1:0] i_i,  // input
+
+    output logic [NUM_ELEM-1:0][ELEM_WIDTH-1:0] o_o  // Array of Output
 );
 
   logic [NUM_ELEM-1:0] valid_out;

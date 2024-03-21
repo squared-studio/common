@@ -7,10 +7,12 @@ module counter #(
     parameter bit                           UP_COUNT    = 1,
     parameter bit                           DOWN_COUNT  = 1
 ) (
-    input  logic                           clk_i,
-    input  logic                           arst_ni,
-    input  logic                           up_i,
-    input  logic                           down_i,
+    input logic clk_i,
+    input logic arst_ni,
+
+    input logic up_i,
+    input logic down_i,
+
     output logic [$clog2(MAX_COUNT+1)-1:0] count_o
 );
 

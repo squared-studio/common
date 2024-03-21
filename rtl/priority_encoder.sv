@@ -5,7 +5,8 @@ module priority_encoder #(
     parameter int NUM_WIRE            = 4,  // Number of output wires
     parameter bit HIGH_INDEX_PRIORITY = 0   // Prioritize Higher index
 ) (
-    input  logic [        NUM_WIRE-1:0] d_i,          // Wire input
+    input logic [NUM_WIRE-1:0] d_i,  // Wire input
+
     output logic [$clog2(NUM_WIRE)-1:0] addr_o,       // Address output
     output logic                        addr_valid_o  // Address Valid output
 );

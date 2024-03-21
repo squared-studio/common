@@ -13,7 +13,9 @@ module clk_div #(
 ) (
     input logic arst_ni,
     input logic clk_i,
+
     input logic [DIV_WIDTH-1:0] div_i,
+
     output logic clk_o
 );
 

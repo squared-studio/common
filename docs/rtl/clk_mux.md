@@ -16,7 +16,7 @@
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
 |arst_ni|input|logic|||
+|sel_i|input|logic|||
 |clk0_i|input|logic|||
 |clk1_i|input|logic|||
-|sel_i|input|logic|||
 |clk_o|output|logic|||

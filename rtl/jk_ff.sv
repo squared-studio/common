@@ -1,10 +1,12 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
 module jk_ff (
-    input  logic clk_i,
-    input  logic arst_ni,
-    input  logic j_i,
-    input  logic k_i,
+    input logic clk_i,
+    input logic arst_ni,
+
+    input logic j_i,
+    input logic k_i,
+
     output logic q_o,
     output logic q_no
 );

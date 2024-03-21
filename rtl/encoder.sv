@@ -4,7 +4,8 @@
 module encoder #(
     parameter int NUM_WIRE = 16  // Number of output wires
 ) (
-    input  logic [        NUM_WIRE-1:0] d_i,          // Wire input
+    input logic [NUM_WIRE-1:0] d_i,  // Wire input
+
     output logic [$clog2(NUM_WIRE)-1:0] addr_o,       // Address output
     output logic                        addr_valid_o  // Address Valid output
 );
@@ -13,7 +14,7 @@ module encoder #(
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  logic [NUM_WIRE/2-1:0] addr_or_red[$clog2(NUM_WIRE)]; // addr or reduction array
+  logic [NUM_WIRE/2-1:0] addr_or_red[$clog2(NUM_WIRE)];  // addr or reduction array
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-ASSIGNMENTS

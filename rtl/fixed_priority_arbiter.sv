@@ -3,8 +3,9 @@
 module fixed_priority_arbiter #(
     parameter int NUM_REQ = 4
 ) (
-    input  logic                       allow_req_i,      // Allow requests
-    input  logic [        NUM_REQ-1:0] req_i,            // Requests
+    input logic               allow_req_i,  // Allow requests
+    input logic [NUM_REQ-1:0] req_i,        // Requests
+
     output logic [$clog2(NUM_REQ)-1:0] gnt_addr_o,       // Grant Address
     output logic                       gnt_addr_valid_o  // Grant Valid
 );

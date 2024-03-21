@@ -9,11 +9,14 @@ module axi4l_gpio #(
     parameter  int  PORT_SIZE    = 5,
     localparam int  PortBytes    = (2 ** PORT_SIZE)
 ) (
-    input  logic                             clk_i,
-    input  logic                             arst_ni,
-    input  axi4l_req_t                       req_i,
-    output axi4l_resp_t                      resp_o,
-    inout  wire         [PortBytes-1:0][7:0] port_io
+    input logic clk_i,
+    input logic arst_ni,
+
+    input axi4l_req_t req_i,
+
+    output axi4l_resp_t resp_o,
+
+    inout wire [PortBytes-1:0][7:0] port_io
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

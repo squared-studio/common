@@ -4,9 +4,10 @@
 module decoder #(
     parameter int NUM_WIRE = 4  // Number of output wires
 ) (
-    input  logic [$clog2(NUM_WIRE)-1:0] a_i,        // Address input
-    input  logic                        a_valid_i,  // Address Valid input
-    output logic [        NUM_WIRE-1:0] d_o         // data output
+    input logic [$clog2(NUM_WIRE)-1:0] a_i,       // Address input
+    input logic                        a_valid_i, // Address Valid input
+
+    output logic [NUM_WIRE-1:0] d_o  // data output
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

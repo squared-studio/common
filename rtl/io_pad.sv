@@ -4,11 +4,13 @@
 module io_pad #(
     //-PARAMETERS
 ) (
-    input  wire pull_i,
-    input  wire wdata_i,
-    input  wire wen_i,
+    input wire pull_i,
+    input wire wdata_i,
+    input wire wen_i,
+
     output wire rdata_o,
-    inout  wire pin_io
+
+    inout wire pin_io
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

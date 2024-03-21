@@ -14,6 +14,7 @@ module uart_parity_checker #(
 ) (
     input logic [1:0] data_size,
     input logic [7:0] data,
+
     output logic even_parity,
     output logic odd_parity
 );
