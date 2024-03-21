@@ -12,11 +12,11 @@
 <text x="65" y="285" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">elem_in_valid_i</text>
 <polygon points="10,345 20,335 40,335 40,345 60,345 40,345 40,355 20,355 10,345"/>
 <text x="65" y="335" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">elem_in_ready_o</text>
+<polygon points="385,195 405,195 405,185 425,185 435,195 425,205 405,205 405,195 385,195"/>
+<text x="380" y="185" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">elem_out_o</text>
 <polygon points="385,245 405,245 405,235 425,235 435,245 425,255 405,255 405,245 385,245"/>
-<text x="380" y="235" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">elem_out_o</text>
-<polygon points="385,295 405,295 405,285 425,285 435,295 425,305 405,305 405,295 385,295"/>
-<text x="380" y="285" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">elem_out_valid_o</text>
-<polygon points="385,345 405,345 415,335 435,335 435,345 435,355 415,355 405,345 385,345"/>
-<text x="380" y="335" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">elem_out_ready_i</text>
+<text x="380" y="235" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">elem_out_valid_o</text>
+<polygon points="385,295 405,295 415,285 435,285 435,295 435,305 415,305 405,295 385,295"/>
+<text x="380" y="285" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">elem_out_ready_i</text>
 </g>
 </svg>

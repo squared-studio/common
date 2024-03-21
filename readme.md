@@ -67,11 +67,3 @@ make simulate TOP=fifo_tb
 [shift_register ](./docs/rtl/shift_register.md)<br>
 [sr_latch_arstn ](./docs/rtl/sr_latch_arstn.md)<br>
 [uart_parity_checker ](./docs/rtl/uart_parity_checker.md)<br>
-[var_fifo ](./docs/rtl/var_fifo.md)<br>
-[xbar ](./docs/rtl/xbar.md)<br>
-
-## INCLUDE
-[axi4l_typedef.svh](./docs/include/axi4l_typedef.svh.md)<br>
-[axi4_typedef.svh](./docs/include/axi4_typedef.svh.md)<br>
-[vip/axi4l_pkg.sv](./docs/include/vip/axi4l_pkg.sv.md)<br>
-
