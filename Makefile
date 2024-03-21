@@ -428,20 +428,30 @@ create_rtl:
 # Update Doc List
 ####################################################################################################
 
+.PHONY: update_doc_list
 update_doc_list:
-	@cat readme_base.md > readme.md
-	@echo "" >> readme.md
-	@echo "## RTL" >> readme.md
-	@$(foreach file, $(shell find ./docs/rtl -name "*.md"), $(MAKE) get_rtl_doc_header FILE=$(file);)
-	@echo "" >> readme.md
-	@echo "## INCLUDE" >> readme.md
-	@$(foreach file, $(shell find ./docs/include -name "*.md"), $(MAKE) get_inc_doc_header FILE=$(file);)
-	@echo "" >> readme.md
-  
+	@$(foreach file, $(RTL_FILE), echo "$(file)")
+#	@cat readme_base.md > readme.md
+#	@echo "" >> readme.md
+#	@echo "## RTL" >> readme.md
+#	@$(foreach file, $(shell find ./docs/rtl -name "*.md"), $(MAKE) get_rtl_doc_header FILE=$(file);)
+#	@echo "" >> readme.md
+#	@echo "## INCLUDE" >> readme.md
+#	@$(foreach file, $(shell find ./docs/include -name "*.md"), $(MAKE) get_inc_doc_header FILE=$(file);)
+#	@echo "" >> readme.md
+
+.PHONY: get_rtl_doc_header
 get_rtl_doc_header:
 	@$(eval HEADER := $(shell cat $(FILE) | grep -E "# " | sed "s/^# //g"))
 	@echo "[$(HEADER)]($(FILE))<br>" >> readme.md
-  
+
+.PHONY: get_inc_doc_header
 get_inc_doc_header:
 	@$(eval HEADER := $(shell echo $(FILE) | sed "s/\.\/docs\/include\///g" | sed "s/\.md$$//g"))
 	@echo "[$(HEADER)]($(FILE))<br>" >> readme.md
+
+#	@git submodule update --init ./submodules/documenter
+.PHONY: gen_doc
+gen_doc:
+	@echo "Creating Doc for $(FILE)"
+	@./submodules/documenter/sv_documenter.py $(FILE) ./docs/rtl/

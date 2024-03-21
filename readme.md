@@ -22,13 +22,7 @@ make simulate TOP=fifo_tb
 ```
 
 ## RTL
-[AXI4L GPIO](./docs/rtl/axi4l_gpio.md)<br>
-[AXI FIFO](./docs/rtl/axi_fifo.md)<br>
-[Binary to Gray Code Converter](./docs/rtl/bin_to_gray.md)<br>
-[Clock Gate ](./docs/rtl/clk_gate.md)<br>
-[Gray to Binary Code Converter](./docs/rtl/gray_to_bin.md)<br>
-[IO Pad](./docs/rtl/io_pad.md)<br>
-[Phase Lock Loop (PLL) Model](./docs/rtl/pll_model.md)<br>
+[fifo (module) ](./docs/rtl/fifo.md)<br>
 
 ## INCLUDE
 [axi4l_typedef.svh](./docs/include/axi4l_typedef.svh.md)<br>
