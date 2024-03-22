@@ -47,8 +47,10 @@ CLEAN_TARGETS += $(shell find $(realpath ./) -name "top.runs")
 OS = $(shell uname)
 ifeq ($(OS),Linux)
   CLIP = xclip -sel clip
+	PYTHON = python3
 else
 	CLIP = clip
+	PYTHON = python
 endif
 
 GIT_UNAME = $(shell git config user.name)
@@ -457,4 +459,4 @@ get_inc_doc_header:
 .PHONY: gen_doc
 gen_doc:
 	@echo "Creating document for $(FILE)"
-	@./submodules/documenter/sv_documenter.py $(FILE) ./docs/rtl
+	@$(PYTHON) ./submodules/documenter/sv_documenter.py $(FILE) ./docs/rtl
