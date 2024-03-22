@@ -153,14 +153,19 @@ list_modules: clean
 
 .PHONY: locate_files
 locate_files: list_modules
-	@$(eval _TMP := $(shell cat ___list))
-	@$(foreach word,$(_TMP), find -name "$(word).sv" >> ___flist;)
+	@$(eval _TMP := )
+	@$(foreach word,$(shell cat ___list), 		\
+		$(if $(findstring $(word),$(_TMP)), 		\
+			echo "", 															\
+			$(eval _TMP += $(word))								\
+				find -name "$(word).sv" >> ___flist	\
+		);																			\
+	)
 
 .PHONY: flist
 flist: locate_files
 	@cat ___flist | $(CLIP)
 	@$(MAKE) clean
-	@clear
 	@echo -e "\033[2;35m$(RTL) flist copied to clipboard\033[0m"
 
 ####################################################################################################
