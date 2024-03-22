@@ -8,6 +8,8 @@
 ## Description
  Description
 
+<img src="./axi_fifo_des.svg">
+
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|
 |-|-|-|-|-|

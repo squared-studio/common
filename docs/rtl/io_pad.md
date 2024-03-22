@@ -8,6 +8,8 @@
 ## Description
  IO pad for GPIO and similar pins
 
+<img src="./io_pad_des.svg">
+
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|
 |-|-|-|-|-|

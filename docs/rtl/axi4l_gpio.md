@@ -8,6 +8,8 @@
 ## Description
  Description
 
+<img src="./axi4l_gpio_des.svg">
+
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|
 |-|-|-|-|-|

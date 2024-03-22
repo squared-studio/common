@@ -8,6 +8,8 @@
 ## Description
  This is a non-synthesizable model of the PLL circuit, designed for verification purpose only.
 
+<img src="./pll_model_des.svg">
+
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|
 |-|-|-|-|-|

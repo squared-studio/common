@@ -8,6 +8,8 @@
 ## Description
  Clock Domain Crossing FIFO
 
+<img src="./cdc_fifo_des.svg">
+
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|
 |-|-|-|-|-|

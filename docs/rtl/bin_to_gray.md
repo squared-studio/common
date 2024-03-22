@@ -8,6 +8,8 @@
 ## Description
  Binary to Gray converter
 
+<img src="./bin_to_gray_des.svg">
+
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|
 |-|-|-|-|-|
