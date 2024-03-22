@@ -1,5 +1,7 @@
-// Description
-// ### Author : Foez Ahmed (foez.official@gmail.com)
+/*
+The AXI Protocol specifies 5 independent valid-ready handshake transfer. Therefore, it requires 5 FIFO modules to buff that as shown in the following figure.
+Author : Foez Ahmed (foez.official@gmail.com)
+*/
 
 `include "default_param_pkg.sv"
 

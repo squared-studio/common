@@ -6,7 +6,10 @@
 <img src="./gray_to_bin_top.svg">
 
 ## Description
- Gray to Binary converter
+
+A Gray to Binary code converter is a logical circuit that is used to convert gray code
+into its equivalent Binary code
+[more info](https://www.geeksforgeeks.org/code-converters-binary-to-from-gray-code/)
 
 <img src="./gray_to_bin_des.svg">
 

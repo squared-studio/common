@@ -6,7 +6,7 @@
 <img src="./pll_model_top.svg">
 
 ## Description
- This is a non-synthesizable model of the PLL circuit, designed for verification purpose only.
+ A PLL is a control system that generates an output signal whose phase is related to the phase of an input signal
 
 <img src="./pll_model_des.svg">
 

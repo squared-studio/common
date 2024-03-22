@@ -1,5 +1,10 @@
-// Binary to Gray converter
-// ### Author : Foez Ahmed (foez.official@gmail.com)
+/*
+A Binary to Gray code converter is a logical circuit that is used to convert binary code
+into its equivalent Gray code
+[more info](https://www.geeksforgeeks.org/code-converters-binary-to-from-gray-code/)
+Author : Foez Ahmed (foez.official@gmail.com)
+*/
+
 
 module bin_to_gray #(
     parameter int DATA_WIDTH = 4  // Data Width
