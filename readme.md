@@ -18,8 +18,11 @@ To know how to use different commands on this repo, type `make help` or just `ma
 ## RTL
 [addr_decoder ](./docs/rtl/addr_decoder.md)<br>
 [axi4l_gpio ](./docs/rtl/axi4l_gpio.md)<br>
+[AXI4L](./docs/rtl/axi4l_gpio_des.md)<br>
 [axi_fifo ](./docs/rtl/axi_fifo.md)<br>
+[AXI](./docs/rtl/axi_fifo_des.md)<br>
 [bin_to_gray ](./docs/rtl/bin_to_gray.md)<br>
+[Binary](./docs/rtl/bin_to_gray_des.md)<br>
 [cdc_fifo ](./docs/rtl/cdc_fifo.md)<br>
 [circular_xbar ](./docs/rtl/circular_xbar.md)<br>
 [clk_div ](./docs/rtl/clk_div.md)<br>
@@ -36,9 +39,11 @@ To know how to use different commands on this repo, type `make help` or just `ma
 [fixed_priority_arbiter ](./docs/rtl/fixed_priority_arbiter.md)<br>
 [freq_div ](./docs/rtl/freq_div.md)<br>
 [gray_to_bin ](./docs/rtl/gray_to_bin.md)<br>
+[Gray](./docs/rtl/gray_to_bin_des.md)<br>
 [handshake_combiner ](./docs/rtl/handshake_combiner.md)<br>
 [handshake_counter ](./docs/rtl/handshake_counter.md)<br>
 [io_pad ](./docs/rtl/io_pad.md)<br>
+[IO](./docs/rtl/io_pad_des.md)<br>
 [jk_ff ](./docs/rtl/jk_ff.md)<br>
 [latch ](./docs/rtl/latch.md)<br>
 [mem ](./docs/rtl/mem.md)<br>
@@ -50,6 +55,7 @@ To know how to use different commands on this repo, type `make help` or just `ma
 [pipeline_branch ](./docs/rtl/pipeline_branch.md)<br>
 [pipeline_core ](./docs/rtl/pipeline_core.md)<br>
 [pll_model ](./docs/rtl/pll_model.md)<br>
+[Phase](./docs/rtl/pll_model_des.md)<br>
 [priority_encoder ](./docs/rtl/priority_encoder.md)<br>
 [register ](./docs/rtl/register.md)<br>
 [register_dual_flop ](./docs/rtl/register_dual_flop.md)<br>
