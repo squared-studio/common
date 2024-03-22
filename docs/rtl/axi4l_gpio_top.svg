@@ -12,5 +12,6 @@
 <text x="280" y="135" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">resp_o</text>
 <polygon points="285,245 305,245 315,235 325,235 335,245 325,255 315,255 305,245 285,245"/>
 <text x="280" y="235" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">port_io</text>
+<text x="170" y="300" dominant-baseline="hanging" text-anchor="middle" font-size="30" style="fill:black;stroke:black;stroke-width:0">axi4l_gpio</text>
 </g>
 </svg>

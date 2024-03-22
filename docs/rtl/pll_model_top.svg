@@ -18,5 +18,6 @@
 <text x="530" y="385" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">lock_o</text>
 <polygon points="535,495 555,495 555,485 575,485 585,495 575,505 555,505 555,495 535,495"/>
 <text x="530" y="485" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">fout_o</text>
+<text x="295" y="550" dominant-baseline="hanging" text-anchor="middle" font-size="30" style="fill:black;stroke:black;stroke-width:0">pll_model</text>
 </g>
 </svg>

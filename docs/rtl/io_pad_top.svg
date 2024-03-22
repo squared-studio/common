@@ -12,5 +12,6 @@
 <text x="330" y="135" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">rdata_o</text>
 <polygon points="335,245 355,245 365,235 375,235 385,245 375,255 365,255 355,245 335,245"/>
 <text x="330" y="235" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">pin_io</text>
+<text x="195" y="350" dominant-baseline="hanging" text-anchor="middle" font-size="30" style="fill:black;stroke:black;stroke-width:0">io_pad</text>
 </g>
 </svg>

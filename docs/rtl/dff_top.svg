@@ -12,5 +12,6 @@
 <text x="65" y="285" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">d_i</text>
 <polygon points="335,295 355,295 355,285 375,285 385,295 375,305 355,305 355,295 335,295"/>
 <text x="330" y="285" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">q_o</text>
+<text x="195" y="350" dominant-baseline="hanging" text-anchor="middle" font-size="30" style="fill:black;stroke:black;stroke-width:0">dff</text>
 </g>
 </svg>

@@ -20,5 +20,6 @@
 <text x="65" y="585" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">p_i</text>
 <polygon points="10,645 20,635 40,635 40,645 60,645 40,645 40,655 20,655 10,645"/>
 <text x="65" y="635" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">p_o</text>
+<text x="370" y="700" dominant-baseline="hanging" text-anchor="middle" font-size="30" style="fill:black;stroke:black;stroke-width:0">shift_register</text>
 </g>
 </svg>

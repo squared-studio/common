@@ -16,5 +16,6 @@
 <text x="65" y="435" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">rs_addr_i</text>
 <polygon points="485,445 505,445 505,435 525,435 535,445 525,455 505,455 505,445 485,445"/>
 <text x="480" y="435" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">rs_data_o</text>
+<text x="270" y="500" dominant-baseline="hanging" text-anchor="middle" font-size="30" style="fill:black;stroke:black;stroke-width:0">reg_file</text>
 </g>
 </svg>

@@ -20,5 +20,6 @@
 <text x="65" y="535" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">elem_out_valid_o</text>
 <polygon points="10,595 10,585 30,585 40,595 60,595 40,595 30,605 10,605 10,595"/>
 <text x="65" y="585" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">elem_out_ready_i</text>
+<text x="345" y="650" dominant-baseline="hanging" text-anchor="middle" font-size="30" style="fill:black;stroke:black;stroke-width:0">cdc_fifo</text>
 </g>
 </svg>

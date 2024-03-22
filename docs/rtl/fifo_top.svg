@@ -18,5 +18,6 @@
 <text x="380" y="285" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">elem_out_valid_o</text>
 <polygon points="385,345 405,345 415,335 435,335 435,345 435,355 415,355 405,345 385,345"/>
 <text x="380" y="335" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">elem_out_ready_i</text>
+<text x="220" y="400" dominant-baseline="hanging" text-anchor="middle" font-size="30" style="fill:black;stroke:black;stroke-width:0">fifo</text>
 </g>
 </svg>

@@ -34,5 +34,6 @@
 <text x="780" y="685" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">space_available_o</text>
 <polygon points="785,745 805,745 805,735 825,735 835,745 825,755 805,755 805,745 785,745"/>
 <text x="780" y="735" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">elem_available_o</text>
+<text x="420" y="800" dominant-baseline="hanging" text-anchor="middle" font-size="30" style="fill:black;stroke:black;stroke-width:0">var_fifo</text>
 </g>
 </svg>

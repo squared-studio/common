@@ -16,5 +16,6 @@
 <text x="65" y="435" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">raddr_i</text>
 <polygon points="10,495 20,485 40,485 40,495 60,495 40,495 40,505 20,505 10,495"/>
 <text x="65" y="485" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">rdata_o</text>
+<text x="295" y="550" dominant-baseline="hanging" text-anchor="middle" font-size="30" style="fill:black;stroke:black;stroke-width:0">mem</text>
 </g>
 </svg>

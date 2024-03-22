@@ -8,5 +8,6 @@
 <text x="280" y="135" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">addr_o</text>
 <polygon points="285,195 305,195 305,185 325,185 335,195 325,205 305,205 305,195 285,195"/>
 <text x="280" y="185" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">addr_valid_o</text>
+<text x="170" y="300" dominant-baseline="hanging" text-anchor="middle" font-size="30" style="fill:black;stroke:black;stroke-width:0">priority_encoder</text>
 </g>
 </svg>

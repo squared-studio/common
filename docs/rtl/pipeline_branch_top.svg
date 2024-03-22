@@ -24,5 +24,6 @@
 <text x="430" y="335" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">elem_out_scnd_valid_o</text>
 <polygon points="435,395 455,395 465,385 485,385 485,395 485,405 465,405 455,395 435,395"/>
 <text x="430" y="385" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">elem_out_scnd_ready_i</text>
+<text x="245" y="450" dominant-baseline="hanging" text-anchor="middle" font-size="30" style="fill:black;stroke:black;stroke-width:0">pipeline_branch</text>
 </g>
 </svg>

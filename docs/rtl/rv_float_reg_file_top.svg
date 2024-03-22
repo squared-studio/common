@@ -24,5 +24,6 @@
 <text x="65" y="735" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">rs3_addr_i</text>
 <polygon points="10,795 20,785 40,785 40,795 60,795 40,795 40,805 20,805 10,795"/>
 <text x="65" y="785" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">rs3_data_o</text>
+<text x="445" y="850" dominant-baseline="hanging" text-anchor="middle" font-size="30" style="fill:black;stroke:black;stroke-width:0">rv_float_reg_file</text>
 </g>
 </svg>

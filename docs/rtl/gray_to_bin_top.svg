@@ -6,5 +6,6 @@
 <text x="65" y="185" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">data_in_i</text>
 <polygon points="335,195 355,195 355,185 375,185 385,195 375,205 355,205 355,195 335,195"/>
 <text x="330" y="185" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">data_out_o</text>
+<text x="195" y="350" dominant-baseline="hanging" text-anchor="middle" font-size="30" style="fill:black;stroke:black;stroke-width:0">gray_to_bin</text>
 </g>
 </svg>

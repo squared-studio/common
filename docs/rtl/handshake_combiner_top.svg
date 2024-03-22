@@ -10,5 +10,6 @@
 <text x="280" y="135" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">rx_valid</text>
 <polygon points="285,195 305,195 315,185 335,185 335,195 335,205 315,205 305,195 285,195"/>
 <text x="280" y="185" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">rx_ready</text>
+<text x="170" y="300" dominant-baseline="hanging" text-anchor="middle" font-size="30" style="fill:black;stroke:black;stroke-width:0">handshake_combiner</text>
 </g>
 </svg>

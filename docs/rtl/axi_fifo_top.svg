@@ -14,5 +14,6 @@
 <text x="330" y="235" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">req_o</text>
 <polygon points="335,295 355,295 365,285 385,285 385,295 385,305 365,305 355,295 335,295"/>
 <text x="330" y="285" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">resp_i</text>
+<text x="195" y="350" dominant-baseline="hanging" text-anchor="middle" font-size="30" style="fill:black;stroke:black;stroke-width:0">axi_fifo</text>
 </g>
 </svg>
