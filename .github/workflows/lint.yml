@@ -11,7 +11,7 @@ jobs:
       contents: read
       pull-requests: write
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/upload-artifact@v3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Run Verible action
