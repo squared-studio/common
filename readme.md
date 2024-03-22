@@ -13,14 +13,8 @@ This section describes the purpose of individual folders in this repository
 
 - **tb** : Contains all the TestBench (TB). The TBs are to be in same directory stucture as the top RTL under testing. In addition, each TB has to be inside a separate directory matching the name with the top module. For example, we are creating a TB for `fifo` located at `rtl/buffers/fifo/fifo.sv`. The TB's name should be the RTL name followed with `_tb`. Therefore, the TB's name in this case is `fifo_tb`. Similar to the RTL's location, the TB should also be located at `tb/buffers/fifo/fifo_tb/fifo_tb.sv`. Upon running simulation, if `vivado_*_extra_command_line_options` files don't exist, they will be created there.
 
-## Simulation
-In order to run simulation, the TB must be placed inside a sub-directory in the `tb` folder.\
-For example, we want to simulate `fifo_tb.sv` located at `tb/buffers/fifo/fifo_tb/fifo_tb.sv`.\
-Therefore, we only need to run the following command:
-```
-make simulate TOP=fifo_tb
-```
-
+## How-to
+To know how to use different commands on this repo, type `make help` or just `make` at the repo root and further details with be printed on the terminal.
 ## RTL
 [addr_decoder ](./docs/rtl/addr_decoder.md)<br>
 [axi4l_gpio ](./docs/rtl/axi4l_gpio.md)<br>

@@ -433,7 +433,7 @@ create_rtl:
 
 .PHONY: update_doc_list
 update_doc_list:
-	@$(foreach file, $(DES_LIB), $(MAKE) gen_doc FILE=$(file);)
+	@$(foreach file, $(DES_LIB), $(if $(shell echo $(file) | sed "s/.*__no_upload__.*//g"), $(MAKE) gen_doc FILE=$(file), echo "");)
 	@cat readme_base.md > readme.md
 	@echo "" >> readme.md
 	@echo "## RTL" >> readme.md
