@@ -144,7 +144,7 @@ find_rtl:
 .PHONY: list_modules
 list_modules: clean
 	@$(eval RTL_FILE := $(shell find rtl -name "$(RTL).sv"))
-	@xvlog -i $(INC_DIR) -sv $(RTL_FILE) -L RTL=$(DES_LIB)
+	@xvlog -i $(INC_DIR) -sv -L RTL=$(DES_LIB)
 	@xelab $(RTL) -s top
 	@cat xelab.log | grep -E "work" > ___list
 	@sed -i "s/.*work\.//gi" ___list;
@@ -225,8 +225,7 @@ vivado:
 		-d SIMULATION \
 		--define CONFIG=\"$(CONFIG)\" \
 		-i $(INC_DIR) \
-		-sv $(TOP_DIR)/$(TOP).sv \
-		-L UVM \
+		-sv -L UVM \
 		-L TBF=$(TBF_LIB) \
 		-L RTL=$(DES_LIB) \
 		-L INTF=$(INTF_LIB)
@@ -240,7 +239,7 @@ vivado:
 .PHONY: rtl_init_sim
 rtl_init_sim: clean
 	@echo "$(RTL)" > ___RTL
-	@xvlog -d SIMULATION -i $(INC_DIR) -sv -L RTL=$(DES_LIB)
+	@xvlog -d SIMULATION -i $(INC_DIR) -sv -L RTL=$(DES_LIB) 
 	@xelab $(RTL) -s top
 	@xsim top -runall
 
