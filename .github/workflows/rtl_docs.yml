@@ -23,6 +23,7 @@ jobs:
         git config --global user.name 'foez-ahmed'
         git config --global user.email 'foez.official@gmail.com'
         git add ./docs
+        git restore readme.md 
         git commit -m "Adding Docs after CI"
         git push
       env:
