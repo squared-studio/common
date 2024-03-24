@@ -438,11 +438,7 @@ create_rtl:
 ####################################################################################################
 
 .PHONY: update_doc_list
-update_doc_list:
-	@rm -rf docs/rtl/*.md
-	@rm -rf docs/rtl/*_top.svg
-	@git submodule update --init ./submodules/documenter
-	@$(foreach file, $(DES_LIB), $(if $(shell echo $(file) | sed "s/.*__no_upload__.*//g"), $(MAKE) gen_doc FILE=$(file), echo "");)
+update_doc_list: create_all_docs
 	@cat readme_base.md > readme.md
 	@echo "" >> readme.md
 	@echo "## RTL" >> readme.md
@@ -451,6 +447,16 @@ update_doc_list:
 	@echo "## INCLUDE" >> readme.md
 	@$(foreach file, $(shell find ./docs/include -name "*.md"), $(MAKE) get_inc_doc_header FILE=$(file);)
 	@echo "" >> readme.md
+
+.PHONY: clear_all_docs
+clear_all_docs:
+	@rm -rf docs/rtl/*.md
+	@rm -rf docs/rtl/*_top.svg
+	@git submodule update --init ./submodules/documenter
+
+.PHONY: create_all_docs
+create_all_docs: clear_all_docs
+	@$(foreach file, $(DES_LIB), $(if $(shell echo $(file) | sed "s/.*__no_upload__.*//g"), $(MAKE) gen_doc FILE=$(file), echo "");)
 
 .PHONY: get_rtl_doc_header
 get_rtl_doc_header:

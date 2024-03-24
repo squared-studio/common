@@ -1,6 +1,10 @@
 name: rtl_docs
 
-on: [push]
+on:
+  push:
+    branches:
+      - '*'
+      - '!main'
 
 jobs:
   build:
@@ -23,8 +27,6 @@ jobs:
         git config --global user.name 'foez-ahmed'
         git config --global user.email 'foez.official@gmail.com'
         git add ./docs
-        git add ./readme.md 
+        git restore ./readme.md 
         git commit -m "Adding Docs after CI" || echo "Sounds good..!"
         git push
-      env:
-        GITHUB_TOKEN: ${{ secrets.CI_TOKEN }}
