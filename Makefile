@@ -441,6 +441,7 @@ create_rtl:
 update_doc_list:
 	@rm -rf docs/rtl/*.md
 	@rm -rf docs/rtl/*_top.svg
+	@git submodule update --init ./submodules/documenter
 	@$(foreach file, $(DES_LIB), $(if $(shell echo $(file) | sed "s/.*__no_upload__.*//g"), $(MAKE) gen_doc FILE=$(file), echo "");)
 	@cat readme_base.md > readme.md
 	@echo "" >> readme.md
@@ -461,7 +462,6 @@ get_inc_doc_header:
 	@$(eval HEADER := $(shell echo $(FILE) | sed "s/\.\/docs\/include\///g" | sed "s/\.md$$//g"))
 	@echo "[$(HEADER)]($(FILE))<br>" >> readme.md
 
-#	@git submodule update --init ./submodules/documenter
 .PHONY: gen_doc
 gen_doc:
 	@echo "Creating document for $(FILE)"

@@ -1,0 +1,25 @@
+<svg height="740" width="740" xmlns="http://www.w3.org/2000/svg">
+<rect width="100%" height="100%" x="0" y="0" style="fill:white;stroke:white;stroke-width:0"/>
+<g style="fill:white;stroke:black;stroke-width:1">
+<rect width="625" height="625" x="60" y="60"/>
+<polygon points="10,95 10,85 30,85 40,95 60,95 40,95 30,105 10,105 10,95"/>
+<text x="65" y="85" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">clk_i</text>
+<polygon points="10,145 10,135 30,135 40,145 60,145 40,145 30,155 10,155 10,145"/>
+<text x="65" y="135" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">arst_ni</text>
+<polygon points="10,245 10,235 30,235 40,245 60,245 40,245 30,255 10,255 10,245"/>
+<text x="65" y="235" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">load_i</text>
+<polygon points="10,295 10,285 30,285 40,295 60,295 40,295 30,305 10,305 10,295"/>
+<text x="65" y="285" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">en_i</text>
+<polygon points="10,345 10,335 30,335 40,345 60,345 40,345 30,355 10,355 10,345"/>
+<text x="65" y="335" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">l_shift_i</text>
+<polygon points="10,445 10,435 30,435 40,445 60,445 40,445 30,455 10,455 10,445"/>
+<text x="65" y="435" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">s_i</text>
+<polygon points="10,495 20,485 40,485 40,495 60,495 40,495 40,505 20,505 10,495"/>
+<text x="65" y="485" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">s_o</text>
+<polygon points="10,595 10,585 30,585 40,595 60,595 40,595 30,605 10,605 10,595"/>
+<text x="65" y="585" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">p_i</text>
+<polygon points="10,645 20,635 40,635 40,645 60,645 40,645 40,655 20,655 10,645"/>
+<text x="65" y="635" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">p_o</text>
+<text x="370" y="700" dominant-baseline="hanging" text-anchor="middle" font-size="30" style="fill:black;stroke:black;stroke-width:0">shift_register</text>
+</g>
+</svg>

@@ -1,0 +1,11 @@
+<svg height="390" width="390" xmlns="http://www.w3.org/2000/svg">
+<rect width="100%" height="100%" x="0" y="0" style="fill:white;stroke:white;stroke-width:0"/>
+<g style="fill:white;stroke:black;stroke-width:1">
+<rect width="275" height="275" x="60" y="60"/>
+<polygon points="10,195 10,185 30,185 40,195 60,195 40,195 30,205 10,205 10,195"/>
+<text x="65" y="185" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">data_in_i</text>
+<polygon points="335,195 355,195 355,185 375,185 385,195 375,205 355,205 355,195 335,195"/>
+<text x="330" y="185" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">data_out_o</text>
+<text x="195" y="350" dominant-baseline="hanging" text-anchor="middle" font-size="30" style="fill:black;stroke:black;stroke-width:0">gray_to_bin</text>
+</g>
+</svg>

@@ -1,0 +1,19 @@
+<svg height="440" width="440" xmlns="http://www.w3.org/2000/svg">
+<rect width="100%" height="100%" x="0" y="0" style="fill:white;stroke:white;stroke-width:0"/>
+<g style="fill:white;stroke:black;stroke-width:1">
+<rect width="325" height="325" x="60" y="60"/>
+<polygon points="10,95 10,85 30,85 40,95 60,95 40,95 30,105 10,105 10,95"/>
+<text x="65" y="85" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">clk_i</text>
+<polygon points="10,145 10,135 30,135 40,145 60,145 40,145 30,155 10,155 10,145"/>
+<text x="65" y="135" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">arst_ni</text>
+<polygon points="10,245 10,235 30,235 40,245 60,245 40,245 30,255 10,255 10,245"/>
+<text x="65" y="235" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">allow_req_i</text>
+<polygon points="10,345 10,335 30,335 40,345 60,345 40,345 30,355 10,355 10,345"/>
+<text x="65" y="335" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">req_i</text>
+<polygon points="385,295 405,295 405,285 425,285 435,295 425,305 405,305 405,295 385,295"/>
+<text x="380" y="285" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">gnt_addr_o</text>
+<polygon points="385,345 405,345 405,335 425,335 435,345 425,355 405,355 405,345 385,345"/>
+<text x="380" y="335" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">gnt_addr_valid_o</text>
+<text x="220" y="400" dominant-baseline="hanging" text-anchor="middle" font-size="30" style="fill:black;stroke:black;stroke-width:0">round_robin_arbiter</text>
+</g>
+</svg>
