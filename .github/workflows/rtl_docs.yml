@@ -1,0 +1,30 @@
+name: rtl_docs
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install Python
+      run: sudo apt-get install make python3 python3-pip
+
+    - name: Run CI
+      run: |
+        git submodule update --init submodules/documenter
+        make update_doc_list
+
+    - name: Push files
+      run: |
+        git config --global user.name 'foez-ahmed'
+        git config --global user.email 'foez.official@gmail.com'
+        git add ./docs
+        git add readme.md
+        git commit -m "Adding Docs after CI"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.CI_TOKEN }}
