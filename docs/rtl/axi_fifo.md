@@ -45,13 +45,13 @@ active low reset signal `arst_ni`.
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|
 |-|-|-|-|-|
-|axi_req_t|type||default_param_pkg::axi4l_req_t| type of the AXI request. The default type is `axi4l_req_t` from the `default_param_pkg`|
-|axi_resp_t|type||default_param_pkg::axi4l_resp_t| type of the AXI response. The default type is `axi4l_resp_t` from the `default_param_pkg`|
-|AW_FIFO_DEPTH|int||4| depth of the Address Write (AW) FIFO. The default value is 4|
-|W_FIFO_DEPTH|int||4| depth of the Address Write (AW) FIFO. The default value is 4|
-|B_FIFO_DEPTH|int||4| depth of the Write Response (B) FIFO. The default value is 4|
-|AR_FIFO_DEPTH|int||4| depth of the Address Read (AR) FIFO. The default value is 4|
-|R_FIFO_DEPTH|int||4| depth of the Address Read (AR) FIFO. The default value is 4|
+|axi_req_t|type||default_param_pkg::axi4l_req_t| type of the AXI request|
+|axi_resp_t|type||default_param_pkg::axi4l_resp_t| type of the AXI response|
+|AW_FIFO_DEPTH|int||4| depth of the Address Write (AW) FIFO|
+|W_FIFO_DEPTH|int||4| depth of the Address Write (AW) FIFO|
+|B_FIFO_DEPTH|int||4| depth of the Write Response (B) FIFO|
+|AR_FIFO_DEPTH|int||4| depth of the Address Read (AR) FIFO|
+|R_FIFO_DEPTH|int||4| depth of the Address Read (AR) FIFO|
 
 ## Ports
 |Name|Direction|Type|Dimension|Description|

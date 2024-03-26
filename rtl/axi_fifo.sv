@@ -34,26 +34,22 @@ active low reset signal `arst_ni`.
 
 Author : Foez Ahmed (foez.official@gmail.com)
 */
-
-
 `include "default_param_pkg.sv"
 
 module axi_fifo #(
-    // type of the AXI request. The default type is `axi4l_req_t` from the
-    // `default_param_pkg`
+    // type of the AXI request
     parameter type axi_req_t    = default_param_pkg::axi4l_req_t,
-    // type of the AXI response. The default type is `axi4l_resp_t` from the
-    // `default_param_pkg`
+    // type of the AXI response
     parameter type axi_resp_t   = default_param_pkg::axi4l_resp_t,
-    // depth of the Address Write (AW) FIFO. The default value is 4
+    // depth of the Address Write (AW) FIFO
     parameter int AW_FIFO_DEPTH = 4,
-    // depth of the Write (W) FIFO. The default value is 4
+    // depth of the Write (W) FIFO
     parameter int W_FIFO_DEPTH  = 4,
-    // depth of the Write Response (B) FIFO. The default value is 4
+    // depth of the Write Response (B) FIFO
     parameter int B_FIFO_DEPTH  = 4,
-    // depth of the Address Read (AR) FIFO. The default value is 4
+    // depth of the Address Read (AR) FIFO
     parameter int AR_FIFO_DEPTH = 4,
-    // depth of the Read (R) FIFO. The default value is 4
+    // depth of the Read (R) FIFO
     parameter int R_FIFO_DEPTH  = 4
 ) (
     // clock input
@@ -73,7 +69,7 @@ module axi_fifo #(
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-RTLS{{{
+  //-RTLS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   fifo #(
@@ -150,7 +146,4 @@ module axi_fifo #(
       .elem_out_ready_i(req_i.r_ready),
       .el_cnt_o()
   );
-
-  //}}}
-
 endmodule

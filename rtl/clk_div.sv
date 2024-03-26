@@ -1,12 +1,7 @@
-// Description
-// ### Author : Foez Ahmed (foez.official@gmail.com)
-
-//`include "addr_map.svh"
-//`include "axi4l_assign.svh"
-//`include "axi4l_typedef.svh"
-//`include "axi4_assign.svh"
-//`include "axi4_typedef.svh"
-//`include "default_param_pkg.sv"
+/*
+Write a markdown documentation for this systemverilog module:
+Author : Foez Ahmed (foez.official@gmail.com)
+*/
 
 module clk_div #(
     parameter int DIV_WIDTH = 3
@@ -20,7 +15,7 @@ module clk_div #(
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-SIGNALS{{{
+  //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   logic no_div;
@@ -31,11 +26,8 @@ module clk_div #(
   logic [DIV_WIDTH-2:0] low_count;
   logic clk_state_internal;
   logic clk_dff;
-
-  //}}}
-
   //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-ASSIGNMENTS{{{
+  //-ASSIGNMENTS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   assign no_div = ~(|high_count);
@@ -45,11 +37,8 @@ module clk_div #(
   assign low_count = div_i[DIV_WIDTH-1:1] + div_i[0];
 
   assign clk_o = no_div ? clk_i : (div_i[0] ? (clk_state_internal | clk_dff) : clk_state_internal);
-
-  //}}}
-
   //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-SEQUENTIAL{{{
+  //-SEQUENTIALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   always_ff @(posedge clk_i or negedge arst_ni) begin
@@ -82,8 +71,5 @@ module clk_div #(
       clk_dff <= clk_state_internal;
     end
   end
-
-
-  //}}}
 
 endmodule

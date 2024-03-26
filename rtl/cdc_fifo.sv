@@ -1,5 +1,7 @@
-// Clock Domain Crossing FIFO
-// ### Author : Foez Ahmed (foez.official@gmail.com)
+/*
+Write a markdown documentation for this systemverilog module:
+Author : Foez Ahmed (foez.official@gmail.com)
+*/
 
 module cdc_fifo #(
     parameter int ELEM_WIDTH = 8,  // Element width

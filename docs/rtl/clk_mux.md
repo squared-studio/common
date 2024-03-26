@@ -6,7 +6,8 @@
 <img src="./clk_mux_top.svg">
 
 ## Description
- Glitch free clocking mux
+
+Write a markdown documentation for this systemverilog module:
 
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|

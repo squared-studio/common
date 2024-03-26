@@ -1,21 +1,43 @@
-// Simple FIFO
-// ### Author : Foez Ahmed (foez.official@gmail.com)
+/*
+The `fifo` module is a First-In-First-Out (FIFO) memory buffer with configurable parameters.
+
+The FIFO operates based on the handshake signals `elem_in_valid_i`, `elem_in_ready_o`,
+`elem_out_valid_o` & `elem_out_ready_i`. When the FIFO is not full, it is ready to accept an input
+element. When the FIFO is not empty, it is ready to output an element. The FIFO can operate in
+either pipelined mode or pass-through mode, depending on the `PIPELINED` parameter.
+
+The FIFO uses registers to store the write and read pointers. It also uses a memory block to store
+the elements. The size of the memory block is determined by the `FIFO_SIZE` parameter.
+
+Author : Foez Ahmed (foez.official@gmail.com)
+*/
 
 module fifo #(
-    parameter bit PIPELINED  = 1,  // Width of each element
-    parameter int ELEM_WIDTH = 8,  // Width of each element
-    parameter int FIFO_SIZE  = 4   // Number of elements that can be stored in the FIFO
+    //A bit that determines whether the FIFO is pipelined
+    parameter bit PIPELINED  = 1,
+    //The width of each element in the FIFO
+    parameter int ELEM_WIDTH = 8,
+    //The number of elements that can be stored in the FIFO
+    parameter int FIFO_SIZE  = 4
 ) (
-    input logic clk_i,   // Input clock
-    input logic arst_ni, // Asynchronous reset
+    // The input clock signal
+    input logic clk_i,
+    // The asynchronous reset signal
+    input logic arst_ni,
 
-    input  logic [ELEM_WIDTH-1:0] elem_in_i,        // Input element
-    input  logic                  elem_in_valid_i,  // Input valid
-    output logic                  elem_in_ready_o,  // Input ready
+    // The input element. It is a logic vector with a width of `ELEM_WIDTH`
+    input  logic [ELEM_WIDTH-1:0] elem_in_i,
+    // The input valid signal. It indicates whether the input element is valid
+    input  logic                  elem_in_valid_i,
+    // The input ready signal. It indicates whether the FIFO is ready to accept an input element
+    output logic                  elem_in_ready_o,
 
-    output logic [ELEM_WIDTH-1:0] elem_out_o,        // Output element
-    output logic                  elem_out_valid_o,  // Output valid
-    input  logic                  elem_out_ready_i   // Output ready
+    // The output element. It is a logic vector with a width of `ELEM_WIDTH`
+    output logic [ELEM_WIDTH-1:0] elem_out_o,
+    // The output valid signal. It indicates whether the output element is valid
+    output logic                  elem_out_valid_o,
+    // The output ready signal. It indicates whether the FIFO is ready to output an element
+    input  logic                  elem_out_ready_i
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

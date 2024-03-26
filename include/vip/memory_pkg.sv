@@ -2,30 +2,25 @@ package memory_pkg;
 
   `include "vip/memory_ops.svh"
 
-  class byte_memory;  // {{{
-
+  class byte_memory;
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    //-SIGNALS{{{
+    //-SIGNALS
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
     bit [7:0] mem[longint];
 
-    //}}}
-
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    //-METHODS{{{
+    //-METHODS
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
-    function automatic load_image(input string file);  //{{{
+    function automatic load_image(input string file);
       `LOAD_HEX(file, mem)
-    endfunction  //}}}
+    endfunction
 
-    function automatic save_image(input string file);  //{{{
+    function automatic save_image(input string file);
       `SAVE_HEX(file, mem)
-    endfunction  //}}}
+    endfunction
 
-    //}}}
-
-  endclass  //}}}
+  endclass
 
 endpackage

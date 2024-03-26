@@ -1,20 +1,36 @@
-// A simple up down counter that counts up to MAX_COUNT
-// ### Author : Md. Mohiuddin Reyad (mreyad30207@gmail.com)
+/*
+The `counter` module is a configurable counter that can count up, down, or both based on the parameters set.
+
+The counter's functionality is determined by the `UP_COUNT` and `DOWN_COUNT` parameters:
+
+- If both `UP_COUNT` and `DOWN_COUNT` are enabled (`g_up_down`), the counter will increment if `up_i` is high and decrement if `down_i` is high. If the counter reaches `MAX_COUNT` while incrementing, it will wrap around to 0. Similarly, if it reaches 0 while decrementing, it will wrap around to `MAX_COUNT`.
+- If only `UP_COUNT` is enabled (`g_up`), the counter will increment if `up_i` is high. It will wrap around to 0 if it reaches `MAX_COUNT`.
+- If only `DOWN_COUNT` is enabled (`g_down`), the counter will decrement if `down_i` is high. It will wrap around to `MAX_COUNT` if it reaches 0.
+- If neither `UP_COUNT` nor `DOWN_COUNT` is enabled (`g_nothing`), the counter will not change and `count_o` will always be 0.
+
+The counter is reset to `RESET_VALUE` whenever `arst_ni` is low. The counter updates on the rising edge of `clk_i`.
+
+  Author : Md. Mohiuddin Reyad (mreyad30207@gmail.com)
+*/
 
 module counter #(
-    parameter int                           MAX_COUNT   = 25,
-    parameter bit [$clog2(MAX_COUNT+1)-1:0] RESET_VALUE = '0,
-    parameter bit                           UP_COUNT    = 1,
-    parameter bit                           DOWN_COUNT  = 1
+    parameter int MAX_COUNT = 25,  // The maximum count value
+    parameter bit [$clog2(MAX_COUNT+1)-1:0] RESET_VALUE = '0,  // The value to reset the counter to
+    parameter bit UP_COUNT = 1,  // If set to 1, the counter will increment
+    parameter bit DOWN_COUNT = 1  // If set to 1, the counter will decrement
 ) (
-    input logic clk_i,
-    input logic arst_ni,
+    input logic clk_i,   // The clock input
+    input logic arst_ni, // The asynchronous reset input
 
-    input logic up_i,
-    input logic down_i,
+    input logic up_i,   // The increment control input
+    input logic down_i, // The decrement control input
 
-    output logic [$clog2(MAX_COUNT+1)-1:0] count_o
+    output logic [$clog2(MAX_COUNT+1)-1:0] count_o  // The current count value
 );
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //-SEQUENTIALS
+  //////////////////////////////////////////////////////////////////////////////////////////////////
 
   if (UP_COUNT && DOWN_COUNT) begin : g_up_down
     always_ff @(posedge clk_i or negedge arst_ni) begin
@@ -51,7 +67,4 @@ module counter #(
   end else begin : g_nothing
     assign count_o = '0;
   end
-
 endmodule
-
-// TODO

@@ -1,13 +1,28 @@
-// General purpose Encoder
-// ### Author : Foez Ahmed (foez.official@gmail.com)
+/*
+The `encoder` module is a priority encoder with a configurable number of output wires.
+
+The encoder operates based on the `d_i` and `addr_or_red` signals. It uses a for loop to generate
+the `addr_or_red` array, which is used to calculate the address output. The address output is the
+bitwise OR of the `addr_or_red` array. The address valid output is the bitwise OR of the wire input.
+
+The encoder uses assignments to calculate the `addr_or_red` array, the address output, and the
+address valid output. The `addr_or_red` array is calculated in a for loop, where each element is the
+bitwise OR of a subset of the wire input. The address output is the bitwise OR of the `addr_or_red`
+array. The address valid output is the bitwise OR of the wire input.
+
+Author : Foez Ahmed (foez.official@gmail.com)
+*/
 
 module encoder #(
-    parameter int NUM_WIRE = 16  // Number of output wires
+    parameter int NUM_WIRE = 16  // The number of output wires
 ) (
-    input logic [NUM_WIRE-1:0] d_i,  // Wire input
+    // The wire input. It is a logic vector with a width of `NUM_WIRE`
+    input logic [NUM_WIRE-1:0] d_i,
 
-    output logic [$clog2(NUM_WIRE)-1:0] addr_o,       // Address output
-    output logic                        addr_valid_o  // Address Valid output
+    // The address output. It is a logic vector with a width of `log2(NUM_WIRE)`
+    output logic [$clog2(NUM_WIRE)-1:0] addr_o,
+    // The address valid output. It indicates whether the address output is valid
+    output logic                        addr_valid_o
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

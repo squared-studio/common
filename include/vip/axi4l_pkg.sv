@@ -5,21 +5,19 @@
 
 package axi4l_pkg;
 
-  class axi4l_seq_item #(  //{{{
+  class axi4l_seq_item #(
       parameter int ADDR_WIDTH = 32,
       parameter int DATA_WIDTH = 64
   );
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    //-LOCALPARAMS{{{
+    //-LOCALPARAMS
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
     localparam int DataBytes = (DATA_WIDTH / 8);
 
-    //}}}
-
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    //-SIGNALS{{{
+    //-SIGNALS
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
     rand bit [           0:0] _type;
@@ -28,22 +26,20 @@ package axi4l_pkg;
     bit      [           7:0] _data [$:127];
     bit      [           0:0] _strb [$:127];
 
-    //}}}
-
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    //-METHODS{{{
+    //-METHODS
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
-    function void post_randomize();  //{{{
+    function void post_randomize();
       _data.delete();
       _strb.delete();
       for (int i = (_addr % DataBytes); i < DataBytes; i++) begin
         _data.push_back($urandom);
         _strb.push_back($urandom);
       end
-    endfunction  //}}}
+    endfunction
 
-    function string to_string();  //{{{
+    function string to_string();
       $sformat(to_string, "AXI4L %s Transaction:", (_type ? "Write" : "Read"));
       $sformat(to_string, "%s\nADDR: 0x%h", to_string, _addr);
       $sformat(to_string, "%s\nPROT: 0x%h", to_string, _prot);
@@ -53,15 +49,13 @@ package axi4l_pkg;
           $sformat(to_string, "%s\n%3d - 0x%h (%0d)", to_string, i, _data[i], _strb[i]);
         end
       end
-    endfunction  //}}}
+    endfunction
 
     // FUNCTION GEN TX TODO
 
-    //}}}
+  endclass
 
-  endclass  //}}}
-
-  class axi4l_resp_item #(  //{{{
+  class axi4l_resp_item #(
       parameter int ADDR_WIDTH = 32,
       parameter int DATA_WIDTH = 64
   ) extends axi4l_seq_item #(
@@ -70,7 +64,7 @@ package axi4l_pkg;
   );
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    //-SIGNALS{{{
+    //-SIGNALS
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
     bit      [1:0] _resp;
@@ -79,13 +73,11 @@ package axi4l_pkg;
     realtime       _resp_clk;
     string         _notes;
 
-    //}}}
-
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    //-METHODS{{{
+    //-METHODS
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
-    function string to_string();  //{{{
+    function string to_string();
       to_string = super.to_string();
       if (!_type) begin
         $sformat(to_string, "%s\nDATA:", to_string);
@@ -103,37 +95,31 @@ package axi4l_pkg;
       $sformat(to_string, "%s\nA%s at: %0t", to_string, (_type ? "W" : "R"), _ax_clk);
       $sformat(to_string, "%s\n%s at: %0t", to_string, (_type ? "W" : "R"), _x_clk);
       if (_type) $sformat(to_string, "%s\nB at: %0t", to_string, _resp_clk);
-    endfunction  //}}}
+    endfunction
 
-    //}}}
+  endclass
 
-  endclass  //}}}
-
-  class axi4l_driver #(  //{{{
+  class axi4l_driver #(
       parameter int ADDR_WIDTH = 32,
       parameter int DATA_WIDTH = 64,
       parameter bit ROLE       = 0
   );
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    //-IMPORTS{{{
+    //-IMPORTS
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
     import memory_pkg::byte_memory;
 
-    //}}}
-
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    //-LOCALPARAMS{{{
+    //-LOCALPARAMS
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
     localparam int DataBytes = (DATA_WIDTH / 8);
     localparam int DataSize = $clog2(DataBytes);
 
-    //}}}
-
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    //-TYPEDEFS{{{
+    //-TYPEDEFS
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
     `AXI4L_T(axi, ADDR_WIDTH, DATA_WIDTH)
@@ -143,10 +129,8 @@ package axi4l_pkg;
         .DATA_WIDTH(DATA_WIDTH)
     ) axi4l_seq_item_t;
 
-    //}}}
-
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    //-VARIABLES{{{
+    //-VARIABLES
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
     int aw_delay_min = 0;
@@ -169,10 +153,8 @@ package axi4l_pkg;
     axi_ar_chan_t  ar_queue[$];
     axi_r_chan_t    r_queue[$];
 
-    //}}}
-
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    //-INTERFACES{{{
+    //-INTERFACES
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
     virtual axi4l_if #(
@@ -180,10 +162,8 @@ package axi4l_pkg;
       .DATA_WIDTH(DATA_WIDTH)
     ) intf;
 
-    //}}}
-
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    //-CLASSES{{{
+    //-CLASSES
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
     mailbox #(axi4l_seq_item_t) mbx;
@@ -191,13 +171,11 @@ package axi4l_pkg;
     byte_memory secure_mem;
     byte_memory non_secure_mem;
 
-    //}}}
-
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    //-METHODS{{{
+    //-METHODS
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
-    function new(  //{{{
+    function new(
         virtual axi4l_if #(
         .ADDR_WIDTH(ADDR_WIDTH),
         .DATA_WIDTH(DATA_WIDTH)
@@ -207,9 +185,9 @@ package axi4l_pkg;
         non_secure_mem = new();
       end
       this.intf = intf;
-    endfunction  //}}}
+    endfunction
 
-    task automatic reset();  //{{{
+    task automatic reset();
       aw_queue.delete();
       w_queue.delete();
       b_queue.delete();
@@ -220,24 +198,24 @@ package axi4l_pkg;
       end else begin
         intf.subordinate_reset();
       end
-    endtask  //}}}
+    endtask
 
-    task automatic stop();  //{{{
+    task automatic stop();
       disable start;
       reset();
-    endtask  //}}}
+    endtask
 
-    task automatic start();  //{{{
+    task automatic start();
       reset();
-      if (ROLE) begin  // is manager{{{
+      if (ROLE) begin  // is manager
         while (mbx == null) begin
           intf.clk_edge(0);
         end
         fork
-          forever begin  // generate beats{{{
+          forever begin  // generate beats
             axi4l_seq_item_t item;
             mbx.get(item);
-            if (item._type) begin  // generate write beats{{{
+            if (item._type) begin  // generate write beats
 
               axi_aw_chan_t aw_beat;
               axi_w_chan_t  w_beat;
@@ -259,8 +237,8 @@ package axi4l_pkg;
 
               b_queue.push_back(b_beat);
 
-            end //}}}
-            else begin // generate read beats{{{
+            end
+            else begin // generate read beats
 
               axi_ar_chan_t ar_beat;
               axi_r_chan_t  r_beat;
@@ -274,25 +252,25 @@ package axi4l_pkg;
 
               r_queue.push_back(r_beat);
 
-            end  //}}}
-          end  //}}}
-          forever begin  // aw_channel drive{{{
+            end
+          end
+          forever begin  // aw_channel drive
             if (aw_queue.size()) begin
               repeat ($urandom_range(aw_delay_min, aw_delay_max)) intf.clk_edge(0);
               intf.send_aw(aw_queue.pop_front());
             end else begin
               intf.clk_edge(0);
             end
-          end  //}}}
-          forever begin  // w_channel drive{{{
+          end
+          forever begin  // w_channel drive
             if (w_queue.size()) begin
               repeat ($urandom_range(w_delay_min, w_delay_max)) intf.clk_edge(0);
               intf.send_w(w_queue.pop_front());
             end else begin
               intf.clk_edge(0);
             end
-          end  //}}}
-          forever begin  // b_channel drive{{{
+          end
+          forever begin  // b_channel drive
             if (b_queue.size()) begin
               axi_b_chan_t b_beat;
               repeat ($urandom_range(b_delay_min, b_delay_max)) intf.clk_edge(0);
@@ -301,16 +279,16 @@ package axi4l_pkg;
             end else begin
               intf.clk_edge(0);
             end
-          end  //}}}
-          forever begin  // ar_channel drive{{{
+          end
+          forever begin  // ar_channel drive
             if (ar_queue.size()) begin
               repeat ($urandom_range(ar_delay_min, ar_delay_max)) intf.clk_edge(0);
               intf.send_ar(ar_queue.pop_front());
             end else begin
               intf.clk_edge(0);
             end
-          end  //}}}
-          forever begin  // r_channel drive{{{
+          end
+          forever begin  // r_channel drive
             if (r_queue.size()) begin
               axi_r_chan_t r_beat;
               repeat ($urandom_range(r_delay_min, r_delay_max)) intf.clk_edge(0);
@@ -319,45 +297,45 @@ package axi4l_pkg;
             end else begin
               intf.clk_edge(0);
             end
-          end  //}}}
+          end
         join_none
-      end  //}}}
-      else begin  // is subordinate{{{
+      end
+      else begin  // is subordinate
         fork
-          forever begin  // aw_channel drive{{{
+          forever begin  // aw_channel drive
             axi_aw_chan_t aw_beat;
             repeat ($urandom_range(aw_delay_min, aw_delay_max)) intf.clk_edge(0);
             intf.recv_aw(aw_beat);
             aw_queue.push_back(aw_beat);
-          end  //}}}
-          forever begin  // w_channel drive{{{
+          end
+          forever begin  // w_channel drive
             axi_w_chan_t w_beat;
             repeat ($urandom_range(w_delay_min, w_delay_max)) intf.clk_edge(0);
             intf.recv_w(w_beat);
             w_queue.push_back(w_beat);
-          end  //}}}
-          forever begin  // b_channel drive{{{
+          end
+          forever begin  // b_channel drive
             @(b_queue.size());
             if (b_queue.size()) begin
               repeat ($urandom_range(b_delay_min, b_delay_max)) intf.clk_edge(0);
               intf.send_b(b_queue.pop_front());
             end
-          end  //}}}
-          forever begin  // ar_channel drive{{{
+          end
+          forever begin  // ar_channel drive
             axi_ar_chan_t ar_beat;
             repeat ($urandom_range(ar_delay_min, ar_delay_max)) intf.clk_edge(0);
             intf.recv_ar(ar_beat);
             ar_queue.push_back(ar_beat);
-          end  //}}}
-          forever begin  // r_channel drive{{{
+          end
+          forever begin  // r_channel drive
             @(r_queue.size());
             if (r_queue.size()) begin
               repeat ($urandom_range(r_delay_min, r_delay_max)) intf.clk_edge(0);
               intf.send_r(r_queue.pop_front());
             end
-          end  //}}}
-          forever begin  // generate beats{{{
-            if (ar_queue.size()) begin  // read{{{
+          end
+          forever begin  // generate beats
+            if (ar_queue.size()) begin  // read
               axi_ar_chan_t ar_beat;
               axi_r_chan_t  r_beat;
 
@@ -387,8 +365,8 @@ package axi4l_pkg;
               end
 
               r_queue.push_back(r_beat);
-            end  //}}}
-            if (aw_queue.size() && w_queue.size()) begin  // write{{{
+            end
+            if (aw_queue.size() && w_queue.size()) begin  // write
               axi_aw_chan_t aw_beat;
               axi_w_chan_t  w_beat;
               axi_b_chan_t  b_beat;
@@ -422,33 +400,29 @@ package axi4l_pkg;
               end
 
               b_queue.push_back(b_beat);
-            end  //}}}
+            end
             intf.clk_edge(0);
-          end  //}}}
+          end
         join_none
-      end  //}}}
-    endtask  //}}}
+      end
+    endtask
 
-    //}}}
+  endclass
 
-  endclass  //}}}
-
-  class axi4l_monitor #(  //{{{
+  class axi4l_monitor #(
       parameter int ADDR_WIDTH = 32,
       parameter int DATA_WIDTH = 64
   );
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    //-LOCALPARAMS{{{
+    //-LOCALPARAMS
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
     localparam int DataBytes = (DATA_WIDTH / 8);
     localparam int DataSize = $clog2(DataBytes);
 
-    //}}}
-
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    //-TYPEDEFS{{{
+    //-TYPEDEFS
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
     `AXI4L_T(axi, ADDR_WIDTH, DATA_WIDTH)
@@ -458,18 +432,14 @@ package axi4l_pkg;
         .DATA_WIDTH(DATA_WIDTH)
     ) axi4l_resp_item_t;
 
-    //}}}
-
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    //-SIGNALS{{{
+    //-SIGNALS
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
     mailbox #(axi4l_resp_item_t) mbx;
 
-    //}}}
-
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    //-VARIABLES{{{
+    //-VARIABLES
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
     axi_aw_chan_t  aw_queue[$];
@@ -484,10 +454,8 @@ package axi4l_pkg;
     realtime ar_time[$];
     realtime  r_time[$];
 
-    //}}}
-
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    //-INTERFACES{{{
+    //-INTERFACES
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
     virtual axi4l_if #(
@@ -495,21 +463,19 @@ package axi4l_pkg;
       .DATA_WIDTH(DATA_WIDTH)
     ) intf;
 
-    //}}}
-
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    //-METHODS{{{
+    //-METHODS
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
-    function new(  //{{{
+    function new(
         virtual axi4l_if #(
         .ADDR_WIDTH(ADDR_WIDTH),
         .DATA_WIDTH(DATA_WIDTH)
         ) _intf);
       intf = _intf;
-    endfunction  //}}}
+    endfunction
 
-    task automatic wait_cooldown(input int n = 10);  //{{{
+    task automatic wait_cooldown(input int n = 10);
       int k;
       k = 0;
       while (k < n) begin
@@ -521,9 +487,9 @@ package axi4l_pkg;
         if (r_queue.size()) k = 0;
         intf.clk_edge(0);
       end
-    endtask  //}}}
+    endtask
 
-    task automatic reset();  //{{{
+    task automatic reset();
       aw_queue.delete();
       w_queue.delete();
       b_queue.delete();
@@ -535,53 +501,53 @@ package axi4l_pkg;
       ar_time.delete();
       r_time.delete();
       intf.monitor_reset();
-    endtask  //}}}
+    endtask
 
-    task automatic stop();  //{{{
+    task automatic stop();
       disable start;
       reset();
-    endtask  //}}}
+    endtask
 
-    task automatic start();  //{{{
+    task automatic start();
       reset();
       while (mbx == null) begin
         intf.clk_edge(0);
       end
       fork
-        forever begin  // aw_channel record{{{
+        forever begin  // aw_channel record
           axi_aw_chan_t aw_beat;
           intf.look_aw(aw_beat);
           aw_queue.push_back(aw_beat);
           aw_time.push_back($realtime);
-        end  //}}}
-        forever begin  // w_channel record{{{
+        end
+        forever begin  // w_channel record
           axi_w_chan_t w_beat;
           intf.look_w(w_beat);
           w_queue.push_back(w_beat);
           w_time.push_back($realtime);
-        end  //}}}
-        forever begin  // b_channel record{{{
+        end
+        forever begin  // b_channel record
           axi_b_chan_t b_beat;
           intf.look_b(b_beat);
           b_queue.push_back(b_beat);
           b_time.push_back($realtime);
-        end  //}}}
-        forever begin  // ar_channel record{{{
+        end
+        forever begin  // ar_channel record
           axi_ar_chan_t ar_beat;
           intf.look_ar(ar_beat);
           ar_queue.push_back(ar_beat);
           ar_time.push_back($realtime);
-        end  //}}}
-        forever begin  // r_channel record{{{
+        end
+        forever begin  // r_channel record
           axi_r_chan_t r_beat;
           intf.look_r(r_beat);
           r_queue.push_back(r_beat);
           r_time.push_back($realtime);
-        end  //}}}
-        forever begin  // generate response beat{{{
+        end
+        forever begin  // generate response beat
           while ((ar_time.size() && r_time.size()) ||
           (aw_time.size() && w_time.size() && b_time.size())) begin
-            if (ar_time.size() && r_time.size()) begin  //{{{
+            if (ar_time.size() && r_time.size()) begin
               axi4l_resp_item_t item;
               item = new();
               item._type = 0;
@@ -599,8 +565,8 @@ package axi4l_pkg;
               r_queue.delete(0);
               ar_time.delete(0);
               r_time.delete(0);
-            end  //}}}
-            if (aw_time.size() && w_time.size() && b_time.size()) begin  //{{{
+            end
+            if (aw_time.size() && w_time.size() && b_time.size()) begin
               axi4l_resp_item_t item;
               item = new();
               item._type = 1;
@@ -621,15 +587,13 @@ package axi4l_pkg;
               aw_time.delete(0);
               w_time.delete(0);
               b_time.delete(0);
-            end  //}}}
+            end
           end
           intf.clk_edge(0);
-        end  //}}}
+        end
       join_none
-    endtask  //}}}
+    endtask
 
-    //}}}
-
-  endclass  //}}}
+  endclass
 
 endpackage

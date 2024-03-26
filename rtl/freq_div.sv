@@ -1,16 +1,29 @@
-// Frequency Divider
-// ### Author : Foez Ahmed (foez.official@gmail.com)
+/*
+The `freq_div` module is a frequency divider with a configurable divisor.
+
+When the divisor is 1 or 0, the frequency division is bypassed, and the output clock is the same as
+the input clock. Otherwise, the frequency division is performed by counting the clock cycles and
+toggling the output clock when the count reaches the high or low count threshold.
+
+The frequency divider uses sequential logic to implement the frequency division. The sequential
+logic is sensitive to the rising edge of the input clock and the falling edge of the reset signal.
+When the reset signal is not asserted, the counter is incremented at each clock cycle, and the
+output clock is toggled when the count reaches the high or low count threshold.
+
+Author : Foez Ahmed (foez.official@gmail.com)
+*/
 
 module freq_div #(
-    parameter int DIVISOR_SIZE = 9  // divisor register size
+    parameter int DIVISOR_SIZE = 9  // The size of the divisor register
 ) (
-    input logic arst_ni,  // Asynchronous Global Reset
+    input logic arst_ni,  // The asynchronous global reset signal
 
-    input logic [DIVISOR_SIZE-1:0] divisor_i,  // clock divisor
+    // The clock divisor. It is a logic vector with a width of `DIVISOR_SIZE`
+    input logic [DIVISOR_SIZE-1:0] divisor_i,
 
-    input logic clk_i,  // clock in
+    input logic clk_i,  // The input clock signal
 
-    output logic clk_o  // clock out
+    output logic clk_o  // The output clock signal
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,7 +54,7 @@ module freq_div #(
   assign clk_o = bypass ? clk_i : clk;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-SEQUENTIAL
+  //-SEQUENTIALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   always_ff @(posedge clk_i or negedge arst_ni) begin

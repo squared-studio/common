@@ -1,31 +1,41 @@
-// Edge Detector Module Sync
-// ### Author : Foez Ahmed (foez.official@gmail.com)
+/*
+The `edge_detector` module is a configurable edge detector that can detect positive and/or negative
+edges.
+
+The edge detector operates based on the `POSEDGE`, `NEGEDGE`, and `ASYNC` parameters. If `POSEDGE`
+is set, the detector will output a signal when a positive edge is detected. If `NEGEDGE` is set, the
+detector will output a signal when a negative edge is detected. The `ASYNC` parameter determines
+whether to use a dual synchronizer or a single synchronizer for the edge detection process.
+
+The edge detector uses a dual synchronizer when `ASYNC` is set, and a single synchronizer otherwise.
+The synchronizer takes the data input and outputs an intermediate signal, which is then used to
+detect the edges. The final signal after the edge detection process is stored in a flip-flop.
+
+Author : Foez Ahmed (foez.official@gmail.com)
+*/
 
 module edge_detector #(
-    parameter bit POSEDGE = 1,  // detect positive edge
-    parameter bit NEGEDGE = 1,  // detect negative edge
-    parameter bit ASYNC   = 0
+    parameter bit POSEDGE = 1,  // A bit that determines whether to detect positive edges
+    parameter bit NEGEDGE = 1,  // A bit that determines whether to detect negative edges
+    parameter bit ASYNC   = 0   // A bit that determines whether to use asynchronous mode
 ) (
-    input logic arst_ni,  // Asynchronous reset
-    input logic clk_i,    // Global clock
+    input logic arst_ni,  // The asynchronous reset signal
+    input logic clk_i,    // The global clock signal
 
-    input logic d_i,  // Data in
+    input logic d_i,  // The data input signal
 
-    output logic posedge_o,  // posedge detected
-    output logic negedge_o   // negedge detected
+    output logic posedge_o,  // The positive edge detected signal
+    output logic negedge_o   // The negative edge detected signal
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-SIGNALS{{{
+  //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   logic q_intermediate;
   logic q_final;
-
-  //}}}
-
   //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-ASSIGNMENTS{{{
+  //-ASSIGNMENTS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   if (POSEDGE) begin : g_posedge
@@ -39,11 +49,8 @@ module edge_detector #(
   end else begin : g_no_negedge
     assign negedge_o = '0;
   end
-
-  //}}}
-
   //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-RTLS{{{
+  //-RTLS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   if (ASYNC) begin : g_dual_sync
@@ -74,7 +81,4 @@ module edge_detector #(
       .d_i(q_intermediate),
       .q_o(q_final)
   );
-
-  //}}}
-
 endmodule

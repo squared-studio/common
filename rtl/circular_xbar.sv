@@ -1,5 +1,7 @@
-// A xbar with circular rotating output
-// ### Author : Foez Ahmed (foez.official@gmail.com)
+/*
+Write a markdown documentation for this systemverilog module:
+Author : Foez Ahmed (foez.official@gmail.com)
+*/
 
 module circular_xbar #(
     parameter int ELEM_WIDTH = 8,  // Width of each crossbar element

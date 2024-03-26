@@ -1,13 +1,29 @@
-// ### Author : Foez Ahmed (foez.official@gmail.com)
+/*
+The `fixed_priority_arbiter` module is a priority arbiter with a fixed priority scheme.
+
+The arbiter operates based on the `allow_req_i` and The priority encoder's address valid signal
+signals. When requests are allowed and the address is valid, the arbiter grants the request with
+the highest priority.
+
+The arbiter uses a priority encoder to determine which request to grant. The priority encoder has
+a fixed priority scheme, with the request at index 0 having the highest priority. The priority
+encoder takes the request signals as input and outputs the grant address and a valid signal.
+
+Author : Foez Ahmed (foez.official@gmail.com)
+*/
 
 module fixed_priority_arbiter #(
-    parameter int NUM_REQ = 4
+    parameter int NUM_REQ = 4  // The number of requests that the arbiter can handle
 ) (
-    input logic               allow_req_i,  // Allow requests
-    input logic [NUM_REQ-1:0] req_i,        // Requests
+    // The signal that allows requests to be made
+    input logic               allow_req_i,
+    // The request signals. It is a logic vector with a width of `NUM_REQ`
+    input logic [NUM_REQ-1:0] req_i,
 
-    output logic [$clog2(NUM_REQ)-1:0] gnt_addr_o,       // Grant Address
-    output logic                       gnt_addr_valid_o  // Grant Valid
+    // The grant address. It is a logic vector with a width of `log2(NUM_REQ)`
+    output logic [$clog2(NUM_REQ)-1:0] gnt_addr_o,
+    // The grant valid signal. It indicates whether the grant address is valid
+    output logic                       gnt_addr_valid_o
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

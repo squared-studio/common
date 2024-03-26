@@ -7,6 +7,7 @@
 
 ## Description
 
+Write a markdown documentation for this systemverilog module:
 The General-Purpose Input/Output (GPIO), allows us to program individual pins as either an input or
 an output. Each pin works off of 4 different register which are:
 - 1. rdata: read-only register for reading actual value on the pin.

@@ -10,7 +10,7 @@ Author : Foez Ahmed (foez.official@gmail.com)
 */
 
 module dff #(
-  //The value that the flip-flop resets to when `arst_ni` is low. The default value is '0'
+  //The value that the flip-flop resets to when `arst_ni` is low
   parameter bit RESET_VALUE = '0
 ) (
   // This is the asynchronous reset input. When this input is low, the flip-flop resets to

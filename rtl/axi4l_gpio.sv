@@ -1,4 +1,8 @@
 /*
+Write a markdown documentation for this systemverilog module:
+Author : Foez Ahmed (foez.official@gmail.com)
+*/
+/*
 The General-Purpose Input/Output (GPIO), allows us to program individual pins as either an input or
 an output. Each pin works off of 4 different register which are:
 - 1. rdata: read-only register for reading actual value on the pin.
@@ -45,7 +49,8 @@ module axi4l_gpio #(
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-LOCALPARAMS GENERATED{{{
+  //-LOCALPARAMS GENERATED
+
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   localparam int AddrWidth = $bits(req_i.aw.addr);
@@ -62,11 +67,8 @@ module axi4l_gpio #(
   localparam int PullBase = (2 ** BlockSize) / DataBytes * 3;
   localparam int NumRows = (2 ** BlockSize) / DataBytes * 4;
   localparam int RowPerType = (2 ** BlockSize) / DataBytes * 1;
-
-  //}}}
-
   //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-SIGNALS{{{
+  //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   axi4l_req_t                                      req;
@@ -77,11 +79,8 @@ module axi4l_gpio #(
   wire         [DataBytes-1:0][          0:0]      wr_strb_row;
 
   wire         [  NumRows-1:0][DataBytes-1:0]      wen_demux;
-
-  //}}}
-
   //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-ASSIGNMENTS{{{
+  //-ASSIGNMENTS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   assign resp.b.resp = (req.aw.prot[1] != 0) ? 2 :
@@ -89,11 +88,8 @@ module axi4l_gpio #(
   assign resp.r.resp = (req.ar.prot[1] != 0) ? 2 : 0;
 
   assign wr_strb_row = (resp.b.resp == 0) ? req.w.strb : '0;
-
-  //}}}
-
   //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-RTLS{{{
+  //-RTLS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   axi_fifo #(
@@ -187,11 +183,9 @@ module axi4l_gpio #(
       .i_i(mem),
       .o_o(resp.r.data)
   );
-
-  //}}}
-
   //////////////////////////////////////////////////////////////////////////////////////////////////
-  //-INITIAL CHECKS{{{
+  //-INITIAL CHECKS
+
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
 `ifdef SIMULATION
@@ -205,7 +199,4 @@ module axi4l_gpio #(
     $display("RowPerType : %0d", DataBytes * RowPerType);
   end
 `endif  // SIMULATION
-
-  //}}}
-
 endmodule

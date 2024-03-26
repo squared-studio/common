@@ -6,12 +6,19 @@
 <img src="./decoder_top.svg">
 
 ## Description
- General purpose decoder module
+
+The `decoder` module is a parameterized SystemVerilog module that decodes an input address to an
+output data line. The number of output lines is determined by the parameter `NUM_WIRE`.
+
+The module operates by inverting the address input and storing it in `a_i_n`. It then performs a
+bitwise AND operation on the inverted and non-inverted address inputs based on the current index.
+The result is stored in `output_and_red`. If the address input is valid (`a_valid_i` is high), the
+corresponding output line is enabled.
 
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|
 |-|-|-|-|-|
-|NUM_WIRE|int||4|Number of output wires|
+|NUM_WIRE|int||4|This parameter determines the number of output wires|
 
 ## Ports
 |Name|Direction|Type|Dimension|Description|

@@ -17,7 +17,7 @@ The flip-flop samples the `d_i` input and updates the `q_o` output at the rising
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|
 |-|-|-|-|-|
-|RESET_VALUE|bit||'0| The value that the flip-flop resets to when `arst_ni` is low. The default value is '0'|
+|RESET_VALUE|bit||'0| The value that the flip-flop resets to when `arst_ni` is low|
 
 ## Ports
 |Name|Direction|Type|Dimension|Description|

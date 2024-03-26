@@ -6,20 +6,31 @@
 <img src="./edge_detector_top.svg">
 
 ## Description
- Edge Detector Module Sync
+
+The `edge_detector` module is a configurable edge detector that can detect positive and/or negative
+edges.
+
+The edge detector operates based on the `POSEDGE`, `NEGEDGE`, and `ASYNC` parameters. If `POSEDGE`
+is set, the detector will output a signal when a positive edge is detected. If `NEGEDGE` is set, the
+detector will output a signal when a negative edge is detected. The `ASYNC` parameter determines
+whether to use a dual synchronizer or a single synchronizer for the edge detection process.
+
+The edge detector uses a dual synchronizer when `ASYNC` is set, and a single synchronizer otherwise.
+The synchronizer takes the data input and outputs an intermediate signal, which is then used to
+detect the edges. The final signal after the edge detection process is stored in a flip-flop.
 
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|
 |-|-|-|-|-|
-|POSEDGE|bit||1|detect positive edge|
-|NEGEDGE|bit||1|detect negative edge|
-|ASYNC|bit||0| detect positive edge detect negative edge|
+|POSEDGE|bit||1|A bit that determines whether to detect positive edges|
+|NEGEDGE|bit||1|A bit that determines whether to detect negative edges|
+|ASYNC|bit||0|A bit that determines whether to use asynchronous mode|
 
 ## Ports
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
-|arst_ni|input|logic||Asynchronous reset|
-|clk_i|input|logic||Global clock|
-|d_i|input|logic||Data in|
-|posedge_o|output|logic||posedge detected|
-|negedge_o|output|logic||negedge detected|
+|arst_ni|input|logic||The asynchronous reset signal|
+|clk_i|input|logic||The global clock signal|
+|d_i|input|logic||The data input signal|
+|posedge_o|output|logic||The positive edge detected signal|
+|negedge_o|output|logic||The negative edge detected signal|
