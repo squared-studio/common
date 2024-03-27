@@ -70,7 +70,8 @@ module xbar_tb;
       end
     end
 
-    result_print(!error, "CrossBar verification");
+    result_print(error, "CrossBar verification");
+    // result_print(!error, "CrossBar verification");
 
     $finish;
 
