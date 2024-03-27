@@ -24,7 +24,7 @@ jobs:
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v4.3.1
       with:
-        path: ___CI_REPORT errors.txt
+        path: ___CI_REPORT
 
     - name: Fail if Simulation Contains Fails
       shell: bash
