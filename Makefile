@@ -276,6 +276,7 @@ ci_print:
 	@echo " "
 	@echo -e "\033[1;32mCONTINUOUS INTEGRATION SUCCESSFULLY COMPLETE\033[0m";
 	@cat ___CI_REPORT
+	@grep -r "FAIL" ./___CI_REPORT | tee ___CI_ERROR
 
 ####################################################################################################
 # Lint (Verilator)

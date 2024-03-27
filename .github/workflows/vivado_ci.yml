@@ -19,20 +19,16 @@ jobs:
       run:
         make CI
 
-    - name: Error Log
-      shell: bash
-      run:
-        grep -r "FAIL" ./___CI_REPORT | tee errors.txt
-
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v4.3.1
       with:
+        name: CI_REPORT-${{ env.VERSION }}
         path: ___CI_REPORT
 
     - name: Fail if Simulation Contains Fails
       shell: bash
       run:
-        if [[ -s errors.txt ]]; then
+        if [[ -s ___CI_ERROR ]]; then
           echo "Simulation Contains Fails"
           exit 1
         fi
