@@ -9,7 +9,7 @@ on:
 jobs:
   build:
 
-    runs-on: [vivado, self-hosted, make]
+    runs-on: [make, vivado]
 
     steps:
     - uses: actions/checkout@v3
