@@ -14,10 +14,15 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: configure
+    - name: Simulate
       shell: bash
       run:
         make CI
+
+    - name: Error Log
+      shell: bash
+      run:
+        grep -r "FAIL" ./___CI_REPORT > errors.txt;
 
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v4.3.1
@@ -27,10 +32,6 @@ jobs:
     - name: Fail if Simulation Contains Fails
       shell: bash
       run:
-        grep -r "FAIL" ./___CI_REPORT > errors.txt;
-        echo "-----------------------ERRORS-----------------------";
-        cat errors.txt;
-        echo "-----------------------ERRORS-----------------------";
         if [[ -s errors.txt ]]; then
           echo "Simulation Contains Fails"
           exit 1
