@@ -19,6 +19,7 @@ jobs:
       run: |
         make CI
         grep -r "FAIL" ./___CI_REPORT > errors.txt
+        cat errors.txt
 
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v4.3.1
