@@ -27,10 +27,10 @@ jobs:
     - name: Fail if Simulation Contains Fails
       shell: bash
       run:
-        grep -r "FAIL" ./___CI_REPORT > errors.txt
-        echo "-----------------------ERRORS-----------------------"
-        cat errors.txt
-        echo "-----------------------ERRORS-----------------------"
+        grep -r "FAIL" ./___CI_REPORT > errors.txt;
+        echo "-----------------------ERRORS-----------------------";
+        cat errors.txt;
+        echo "-----------------------ERRORS-----------------------";
         if [[ -s errors.txt ]]; then
           echo "Simulation Contains Fails"
           exit 1
