@@ -29,7 +29,6 @@ jobs:
       shell: bash
       run:
         if [[ -s ___CI_ERROR ]]; then
-          echo "Simulation Contains Fails"
           exit 1
         fi
 
