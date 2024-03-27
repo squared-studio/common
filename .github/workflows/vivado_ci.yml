@@ -9,7 +9,7 @@ on:
 jobs:
   CI:
 
-    runs-on: FOEZ_PC # [make, vivado]
+    runs-on: [make, vivado]
 
     steps:
     - uses: actions/checkout@v4
