@@ -16,12 +16,8 @@ jobs:
 
     - name: configure
       shell: bash
-      run: |
+      run:
         make CI
-        grep -r "FAIL" ./___CI_REPORT > errors.txt
-        echo "-----------------------ERRORS-----------------------"
-        cat errors.txt
-        echo "-----------------------ERRORS-----------------------"
 
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v4.3.1
@@ -30,7 +26,11 @@ jobs:
 
     - name: Fail if Simulation Contains Fails
       shell: bash
-      run: |
+      run:
+        grep -r "FAIL" ./___CI_REPORT > errors.txt
+        echo "-----------------------ERRORS-----------------------"
+        cat errors.txt
+        echo "-----------------------ERRORS-----------------------"
         if [[ -s errors.txt ]]; then
           echo "Simulation Contains Fails"
           exit 1

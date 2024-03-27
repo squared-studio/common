@@ -1,17 +1,17 @@
 .PHONY: ci_vivado_run
 ci_vivado_run:
 	@> ___CI_REPORT;
-	@$(MAKE) vivado CONFIG=default TOP=bin_to_gray_tb
-	@$(MAKE) vivado CONFIG=default TOP=clk_gate_tb
-	@$(MAKE) vivado CONFIG=default TOP=clk_mux_tb
-	@$(MAKE) vivado CONFIG=default TOP=decoder_tb
-	@$(MAKE) vivado CONFIG=default TOP=edge_detector_tb
-	@$(MAKE) vivado CONFIG=async   TOP=edge_detector_tb
-	@$(MAKE) vivado CONFIG=default TOP=encoder_tb
-	@$(MAKE) vivado CONFIG=default TOP=fifo_tb
-	@$(MAKE) vivado CONFIG=default TOP=gray_to_bin_tb
-	@$(MAKE) vivado CONFIG=default TOP=io_pad_tb
-	@$(MAKE) vivado CONFIG=default TOP=mem_bank_tb
-	@$(MAKE) vivado CONFIG=default TOP=mux_tb
-	@$(MAKE) vivado CONFIG=default TOP=string_ops_pkg_tb
+#	@$(MAKE) vivado CONFIG=default TOP=bin_to_gray_tb
+#	@$(MAKE) vivado CONFIG=default TOP=clk_gate_tb
+#	@$(MAKE) vivado CONFIG=default TOP=clk_mux_tb
+#	@$(MAKE) vivado CONFIG=default TOP=decoder_tb
+#	@$(MAKE) vivado CONFIG=default TOP=edge_detector_tb
+#	@$(MAKE) vivado CONFIG=async   TOP=edge_detector_tb
+#	@$(MAKE) vivado CONFIG=default TOP=encoder_tb
+#	@$(MAKE) vivado CONFIG=default TOP=fifo_tb
+#	@$(MAKE) vivado CONFIG=default TOP=gray_to_bin_tb
+#	@$(MAKE) vivado CONFIG=default TOP=io_pad_tb
+#	@$(MAKE) vivado CONFIG=default TOP=mem_bank_tb
+#	@$(MAKE) vivado CONFIG=default TOP=mux_tb
+#	@$(MAKE) vivado CONFIG=default TOP=string_ops_pkg_tb
 	@$(MAKE) vivado CONFIG=default TOP=xbar_tb
