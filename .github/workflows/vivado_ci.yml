@@ -28,8 +28,4 @@ jobs:
     - name: Fail if Simulation Contains Fails
       shell: bash
       run:
-        if [[ -s ___CI_ERROR ]]; then
-          exit 1
-        fi
-
-      
+        bash ___CI_ERROR
