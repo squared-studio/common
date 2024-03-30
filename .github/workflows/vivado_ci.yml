@@ -16,7 +16,7 @@ jobs:
 
     - name: Simulate
       shell: bash
-      run:
+      run: |
         make CI
 
     - name: Upload a Build Artifact
@@ -27,5 +27,5 @@ jobs:
 
     - name: Fail if Simulation Contains Fails
       shell: bash
-      run:
+      run: |
         bash ___CI_ERROR
