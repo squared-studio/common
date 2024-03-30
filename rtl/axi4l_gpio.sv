@@ -1,23 +1,18 @@
 /*
-Write a markdown documentation for this systemverilog module:
-Author : Foez Ahmed (foez.official@gmail.com)
-*/
-/*
-The General-Purpose Input/Output (GPIO), allows us to program individual pins as either an input or
-an output. Each pin works off of 4 different register which are:
-- 1. rdata: read-only register for reading actual value on the pin.
-- 2. wdata: read-write register for output or pull of the pin.
-- 3. wen: strongly drive the pin with wdata
-- 4. pull: weakly drive the pin with wdata
+The `axi4l_gpio` module is a General-Purpose Input/Output (GPIO) module that allows individual pins
+to be programmed as either an input or an output. Each pin operates off of 4 different registers:
 
-The `port_io` is a byte array (i.e. each port is byte addressable).
+1. `rdata`: A read-only register for reading the actual value on the pin.
+2. `wdata`: A read-write register for output or pull of the pin.
+3. `wen`: Used to strongly drive the pin with `wdata`.
+4. `pull`: Used to weakly drive the pin with `wdata`.
 
-The number of bytes in the port is defined by parameter `PORT_SIZE`
-(i.e. the port will have `2^PORT_SIZE`).
+The `port_io` is a byte array, meaning each port is byte addressable. The number of bytes in the
+port is defined by the parameter `PORT_SIZE`, so the port will have `2^PORT_SIZE` bytes.
 
-The Base address of each type of register is define as following:
+The base address of each type of register is defined as follows:
 
-```
+```verilog
 BlockSize = ((AXI_DATA_WIDTH/8) > (2**PORT_SIZE)) ?
                 (AXI_DATA_WIDTH/8) :
                 (2**PORT_SIZE) ;
@@ -27,25 +22,32 @@ WdataBase = BlockSize * 1;
 WenBase   = BlockSize * 2;
 PullBase  = BlockSize * 3;
 ```
+The module uses an AXI FIFO to handle the AXI4L requests and responses. It also uses a demultiplexer
+(`demux`) to handle the write strobe rows (`wr_strb_row`). For each row in the `RowPerType`, it uses
+a register to handle the `wdata`, `wen`, and `pull` values. Finally, it uses an IO pad for each wire
+in the byte in the `RowPerType` and a multiplexer (`mux`) to handle the response data.
 Author : Foez Ahmed (foez.official@gmail.com)
 */
 
 `include "default_param_pkg.sv"
 
 module axi4l_gpio #(
+    // The type of AXI4L request
     parameter  type axi4l_req_t  = default_param_pkg::axi4l_req_t,
+    // The type of AXI4L response
     parameter  type axi4l_resp_t = default_param_pkg::axi4l_resp_t,
+    // The size of the port in bytes
     parameter  int  PORT_SIZE    = 5,
     localparam int  PortBytes    = (2 ** PORT_SIZE)
 ) (
-    input logic clk_i,
-    input logic arst_ni,
+    input logic clk_i,   // The input clock signal
+    input logic arst_ni, // The active-low reset signal
 
-    input axi4l_req_t req_i,
+    input axi4l_req_t req_i,  // The AXI4L request input
 
-    output axi4l_resp_t resp_o,
+    output axi4l_resp_t resp_o,  // The AXI4L response output
 
-    inout wire [PortBytes-1:0][7:0] port_io
+    inout wire [PortBytes-1:0][7:0] port_io  // The inout port array
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -67,6 +69,7 @@ module axi4l_gpio #(
   localparam int PullBase = (2 ** BlockSize) / DataBytes * 3;
   localparam int NumRows = (2 ** BlockSize) / DataBytes * 4;
   localparam int RowPerType = (2 ** BlockSize) / DataBytes * 1;
+
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -79,6 +82,7 @@ module axi4l_gpio #(
   wire         [DataBytes-1:0][          0:0]      wr_strb_row;
 
   wire         [  NumRows-1:0][DataBytes-1:0]      wen_demux;
+
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-ASSIGNMENTS
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -88,6 +92,7 @@ module axi4l_gpio #(
   assign resp.r.resp = (req.ar.prot[1] != 0) ? 2 : 0;
 
   assign wr_strb_row = (resp.b.resp == 0) ? req.w.strb : '0;
+
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-RTLS
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -183,9 +188,9 @@ module axi4l_gpio #(
       .i_i(mem),
       .o_o(resp.r.data)
   );
+
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-INITIAL CHECKS
-
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
 `ifdef SIMULATION
@@ -199,4 +204,5 @@ module axi4l_gpio #(
     $display("RowPerType : %0d", DataBytes * RowPerType);
   end
 `endif  // SIMULATION
+
 endmodule

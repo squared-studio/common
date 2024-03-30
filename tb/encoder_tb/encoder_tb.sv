@@ -103,4 +103,5 @@ module encoder_tb;
     $finish;
 
   end
+
 endmodule

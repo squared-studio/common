@@ -32,6 +32,7 @@ module dual_synchronizer #(
 
   assign dff0_clk_in = FIRST_FF_EDGE_POSEDGED ? clk_i : ~clk_i;
   assign dff1_clk_in = LAST_FF_EDGE_POSEDGED ? clk_i : ~clk_i;
+
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-SEQUENTIALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,4 +54,5 @@ module dual_synchronizer #(
       if (en_intermediate) q_o <= q_intermediate;
     end
   end
+
 endmodule

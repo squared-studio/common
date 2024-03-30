@@ -67,4 +67,5 @@ module counter #(
   end else begin : g_nothing
     assign count_o = '0;
   end
+
 endmodule

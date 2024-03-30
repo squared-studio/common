@@ -68,4 +68,5 @@ module gray_to_bin_tb;
     result_print(!fail, $sformatf("data conversion %0d/%0d", pass, pass + fail));
     $finish;  // Terminate the simulation
   end
+
 endmodule
