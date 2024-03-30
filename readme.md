@@ -40,7 +40,6 @@ To know how to use different commands on this repo, type `make help` or just `ma
 [encoder ](./docs/rtl/encoder.md)<br>
 [fifo ](./docs/rtl/fifo.md)<br>
 [fixed_priority_arbiter ](./docs/rtl/fixed_priority_arbiter.md)<br>
-[freq_div ](./docs/rtl/freq_div.md)<br>
 [gray_to_bin ](./docs/rtl/gray_to_bin.md)<br>
 [handshake_combiner ](./docs/rtl/handshake_combiner.md)<br>
 [handshake_counter ](./docs/rtl/handshake_counter.md)<br>

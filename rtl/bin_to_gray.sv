@@ -1,13 +1,22 @@
 /*
-Write a markdown documentation for this systemverilog module:
+The `bin_to_gray` module is a binary to gray code converter. It takes a binary input (`data_in_i`)
+and converts it to gray code (`data_out_o`).
+The module uses a for loop to generate the gray code from the binary input. For each bit from the
+least significant bit (LSB) to the second most significant bit (MSB-1), the gray code bit is the XOR
+of the current binary bit and the next binary bit. The most significant bit (MSB) of the gray code
+is the same as the MSB of the binary input.
 Author : Foez Ahmed (foez.official@gmail.com)
 */
-module bin_to_gray #(
-    parameter int DATA_WIDTH = 4  // Data Width
-) (
-    input logic [DATA_WIDTH-1:0] data_in_i,  // binary code in
 
-    output logic [DATA_WIDTH-1:0] data_out_o  // gray code out
+module bin_to_gray #(
+    // // The width of the data. This is the number of bits in the binary and gray code
+    parameter int DATA_WIDTH = 4
+) (
+    // Binary code input. This is a `DATA_WIDTH`-bit binary number that is to be converted to gray code
+    input logic [DATA_WIDTH-1:0] data_in_i,
+
+    // Gray code output. This is the `DATA_WIDTH`-bit gray code equivalent of the binary input
+    output logic [DATA_WIDTH-1:0] data_out_o
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

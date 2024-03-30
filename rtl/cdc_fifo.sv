@@ -1,23 +1,40 @@
 /*
-Write a markdown documentation for this systemverilog module:
+The `cdc_fifo` module is a clock domain crossing (CDC) FIFO. It takes an input element (`elem_in_i`)
+under one clock domain (`elem_in_clk_i`) and outputs the element (`elem_out_o`) under another clock
+domain (`elem_out_clk_i`).
+The module uses a FIFO to transfer data across clock domains. The FIFO is written to under the input
+clock domain and read from under the output clock domain. The write and read pointers are passed
+across clock domains using gray code to prevent metastability issues. The FIFO is ready to accept
+input when the write pointer does not equal the read pointer. The output is valid when the write
+pointer equals the read pointer.
 Author : Foez Ahmed (foez.official@gmail.com)
 */
 
 module cdc_fifo #(
-    parameter int ELEM_WIDTH = 8,  // Element width
-    parameter int FIFO_SIZE  = 2   // Element width
+    parameter int ELEM_WIDTH = 8,  // The width of the elements in the FIFO
+    parameter int FIFO_SIZE  = 2   // The size of the FIFO to the power of 2
 ) (
-    input logic arst_ni,  // Asynchronous reset
+    // Asynchronous active low reset input
+    input logic arst_ni,
 
-    input  logic                  elem_in_clk_i,    // Input clock
-    input  logic [ELEM_WIDTH-1:0] elem_in_i,        // Input element
-    input  logic                  elem_in_valid_i,  // Input valid
-    output logic                  elem_in_ready_o,  // Input ready
+    // Input element. This is a `ELEM_WIDTH`-bit data that is to be written into the FIFO
+    input  logic [ELEM_WIDTH-1:0] elem_in_i,
+    // Input clock
+    input  logic                  elem_in_clk_i,
+    // Input valid signal. When high, indicates that the input element is valid and can be written
+    // into the FIFO
+    input  logic                  elem_in_valid_i,
+    // Input ready signal. When high, indicates that the FIFO is ready to accept the input element
+    output logic                  elem_in_ready_o,
 
-    input  logic                  elem_out_clk_i,    // Output clock
-    output logic [ELEM_WIDTH-1:0] elem_out_o,        // Output element
-    output logic                  elem_out_valid_o,  // Output valid
-    input  logic                  elem_out_ready_i   // Output ready
+    // Output element. This is a `ELEM_WIDTH`-bit data that is read from the FIFO
+    output logic [ELEM_WIDTH-1:0] elem_out_o,
+    // Output clock
+    input  logic                  elem_out_clk_i,
+    // Output valid signal. When high, indicates that the output element is valid and can be read
+    output logic                  elem_out_valid_o,
+    // Output ready signal. When high, indicates that the output element can be read from the FIFO
+    input  logic                  elem_out_ready_i
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,74 +1,82 @@
 /*
-Write a markdown documentation for this systemverilog module:
+The `clk_div` module is a frequency divider with a configurable divisor.
+
+When the divisor is 1 or 0, the frequency division is bypassed, and the output clock is the same as
+the input clock. Otherwise, the frequency division is performed by counting the clock cycles and
+toggling the output clock when the count reaches the high or low count threshold.
+
+The clock frequency divider uses sequential logic to implement the frequency division. The sequential
+logic is sensitive to the rising edge of the input clock and the falling edge of the reset signal.
+When the reset signal is not asserted, the counter is incremented at each clock cycle, and the
+output clock is toggled when the count reaches the high or low count threshold.
+
 Author : Foez Ahmed (foez.official@gmail.com)
 */
 
 module clk_div #(
-    parameter int DIV_WIDTH = 3
+    parameter int DIVISOR_SIZE = 9  // The size of the divisor register
 ) (
-    input logic arst_ni,
-    input logic clk_i,
+    input logic arst_ni,  // The asynchronous global reset signal
 
-    input logic [DIV_WIDTH-1:0] div_i,
+    // The clock divisor. It is a logic vector with a width of `DIVISOR_SIZE`
+    input logic [DIVISOR_SIZE-1:0] divisor_i,
 
-    output logic clk_o
+    input logic clk_i,  // The input clock signal
+
+    output logic clk_o  // The output clock signal
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  logic no_div;
-  logic clk_inv;
+  logic bypass;  // bypass when divisor is 1 or 0
+  logic clk;  // output clock if not bypassed
 
-  logic [DIV_WIDTH-2:0] clk_count;
-  logic [DIV_WIDTH-2:0] high_count;
-  logic [DIV_WIDTH-2:0] low_count;
-  logic clk_state_internal;
-  logic clk_dff;
+  logic [DIVISOR_SIZE-1:0] count;  // counter for frequency division
+  logic [DIVISOR_SIZE-1:0] count_p1;  // counter value+1
+
+  logic [DIVISOR_SIZE-1:0] hct;  // high count threshold
+  logic [DIVISOR_SIZE-1:0] lct;  // low count threshold
+
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-ASSIGNMENTS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  assign no_div = ~(|high_count);
-  assign clk_inv = ~clk_i;
+  assign bypass = (divisor_i < 2);
+  assign count_p1 = count + 1;
 
-  assign high_count = div_i[DIV_WIDTH-1:1];
-  assign low_count = div_i[DIV_WIDTH-1:1] + div_i[0];
+  // round down division by 2
+  assign hct = divisor_i[DIVISOR_SIZE-1:1];
+  // increase the lct for odd divisor
+  assign lct = divisor_i[DIVISOR_SIZE-1:1] + divisor_i[0];
 
-  assign clk_o = no_div ? clk_i : (div_i[0] ? (clk_state_internal | clk_dff) : clk_state_internal);
+  assign clk_o = bypass ? clk_i : clk;
+
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-SEQUENTIALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   always_ff @(posedge clk_i or negedge arst_ni) begin
     if (~arst_ni) begin
-      clk_state_internal <= '0;
-      clk_count <= '0;
+      clk   <= '0;
+      count <= '1;
     end else begin
-      if (clk_state_internal) begin
-        if (clk_count == (high_count - 1)) begin
-          clk_count <= '0;
-          clk_state_internal <= '0;
+      if (clk == 0) begin
+        if (count_p1 == lct) begin
+          count <= '0;
+          clk   <= '1;
         end else begin
-          clk_count <= clk_count + 1;
+          count <= count_p1;
         end
       end else begin
-        if (clk_count == (low_count - 1)) begin
-          clk_count <= '0;
-          clk_state_internal <= '1;
+        if (count_p1 == hct) begin
+          count <= '0;
+          clk   <= '0;
         end else begin
-          clk_count <= clk_count + 1;
+          count <= count_p1;
         end
       end
-    end
-  end
-
-  always_ff @(posedge clk_inv or negedge arst_ni) begin
-    if (~arst_ni) begin
-      clk_dff <= '0;
-    end else begin
-      clk_dff <= clk_state_internal;
     end
   end
 
