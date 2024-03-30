@@ -85,7 +85,7 @@ module axi_fifo #(
       .elem_out_valid_o(req_o.aw_valid),
       .elem_out_ready_i(resp_i.aw_ready),
       .el_cnt_o()
-  );
+  ); 
 
   fifo #(
       .ELEM_WIDTH($bits(req_i.w)),
