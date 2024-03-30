@@ -7,22 +7,20 @@
 
 ## Description
 
-Write a markdown documentation for this systemverilog module:
-The General-Purpose Input/Output (GPIO), allows us to program individual pins as either an input or
-an output. Each pin works off of 4 different register which are:
-- 1. rdata: read-only register for reading actual value on the pin.
-- 2. wdata: read-write register for output or pull of the pin.
-- 3. wen: strongly drive the pin with wdata
-- 4. pull: weakly drive the pin with wdata
+The `axi4l_gpio` module is a General-Purpose Input/Output (GPIO) module that allows individual pins
+to be programmed as either an input or an output. Each pin operates off of 4 different registers:
 
-The `port_io` is a byte array (i.e. each port is byte addressable).
+1. `rdata`: A read-only register for reading the actual value on the pin.
+2. `wdata`: A read-write register for output or pull of the pin.
+3. `wen`: Used to strongly drive the pin with `wdata`.
+4. `pull`: Used to weakly drive the pin with `wdata`.
 
-The number of bytes in the port is defined by parameter `PORT_SIZE`
-(i.e. the port will have `2^PORT_SIZE`).
+The `port_io` is a byte array, meaning each port is byte addressable. The number of bytes in the
+port is defined by the parameter `PORT_SIZE`, so the port will have `2^PORT_SIZE` bytes.
 
-The Base address of each type of register is define as following:
+The base address of each type of register is defined as follows:
 
-```
+```verilog
 BlockSize = ((AXI_DATA_WIDTH/8) > (2**PORT_SIZE)) ?
                 (AXI_DATA_WIDTH/8) :
                 (2**PORT_SIZE) ;
@@ -32,21 +30,25 @@ WdataBase = BlockSize * 1;
 WenBase   = BlockSize * 2;
 PullBase  = BlockSize * 3;
 ```
+The module uses an AXI FIFO to handle the AXI4L requests and responses. It also uses a demultiplexer
+(`demux`) to handle the write strobe rows (`wr_strb_row`). For each row in the `RowPerType`, it uses
+a register to handle the `wdata`, `wen`, and `pull` values. Finally, it uses an IO pad for each wire
+in the byte in the `RowPerType` and a multiplexer (`mux`) to handle the response data.
 
 <img src="./axi4l_gpio_des.svg">
 
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|
 |-|-|-|-|-|
-|axi4l_req_t|type||default_param_pkg::axi4l_req_t||
-|axi4l_resp_t|type||default_param_pkg::axi4l_resp_t||
-|PORT_SIZE|int||5||
+|axi4l_req_t|type||default_param_pkg::axi4l_req_t| The type of AXI4L request|
+|axi4l_resp_t|type||default_param_pkg::axi4l_resp_t| The type of AXI4L response|
+|PORT_SIZE|int||5| The size of the port in bytes|
 
 ## Ports
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
-|clk_i|input|logic|||
-|arst_ni|input|logic|||
-|req_i|input|axi4l_req_t|||
-|resp_o|output|axi4l_resp_t|||
-|port_io|inout|wire [PortBytes-1:0][7:0]|||
+|clk_i|input|logic||The input clock signal|
+|arst_ni|input|logic||The active-low reset signal|
+|req_i|input|axi4l_req_t||The AXI4L request input|
+|resp_o|output|axi4l_resp_t||The AXI4L response output|
+|port_io|inout|wire [PortBytes-1:0][7:0]||The inout port array|
