@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  Vivado CI:
+  Vivado_CI:
 
     runs-on: [make, vivado]
 

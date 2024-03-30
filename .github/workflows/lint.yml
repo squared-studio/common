@@ -4,7 +4,7 @@ on:
     branches: []
 
 jobs:
-  Verible Verilog Lint:
+  Verible_Verilog_Lint:
     runs-on: ubuntu-latest
     permissions:
       checks: write
@@ -25,7 +25,7 @@ jobs:
           name: verible-linter
           path: verible-linter
 
-      - name: Fail if Simulation Contains Fails
+      - name: Fail if lint issue
         shell: bash
         run: |
           cat verible-linter

@@ -5,7 +5,7 @@ on:
     branches-ignore: [ "main" ]
 
 jobs:
-  Vivado CI diff:
+  Vivado_CI_diff:
 
     runs-on: [make, vivado]
 
