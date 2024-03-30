@@ -1,10 +1,10 @@
-name: verible-verilog-lint
+name: Verible Verilog Lint
 on:
   push:
     branches: []
 
 jobs:
-  lint:
+  Verible Verilog Lint:
     runs-on: ubuntu-latest
     permissions:
       checks: write
@@ -18,3 +18,15 @@ jobs:
         uses: chipsalliance/verible-linter-action@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: verible-linter
+          path: verible-linter
+
+      - name: Fail if Simulation Contains Fails
+        shell: bash
+        run: |
+          cat verible-linter
+          [[ -s verible-linter ]] && exit 1 || exit 0

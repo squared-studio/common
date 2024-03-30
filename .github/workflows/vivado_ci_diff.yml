@@ -5,7 +5,7 @@ on:
     branches-ignore: [ "main" ]
 
 jobs:
-  CI:
+  Vivado CI diff:
 
     runs-on: [make, vivado]
 
@@ -35,4 +35,4 @@ jobs:
     - name: Fail if Simulation Contains Fails
       shell: bash
       run: |
-        bash ___CI_ERROR
+        [[ -s ___CI_ERROR ]] && exit 1 || exit 0
