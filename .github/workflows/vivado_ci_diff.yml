@@ -1,0 +1,39 @@
+name: Vivado CI diff
+
+on:
+  push:
+    branches-ignore: [ "main" ]
+    branches: [ "*" ]
+
+jobs:
+  CI:
+
+    runs-on: [make, vivado]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Get difference
+      shell: bash
+      run:
+        echo ".PHONY: ci_vivado_run" > ___diff
+        echo "ci_vivado_run:" >> ___diff
+        echo "	@> ___CI_REPORT;" >> ___diff
+        git diff main ci_run | grep -E "^\+.*\(MAKE\) vivado" | sed "s/^+//g" >> ___diff
+        mv ___diff ci_run
+
+    - name: Simulate
+      shell: bash
+      run:
+        make CI
+
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v4.3.1
+      with:
+        name: CI_REPORT
+        path: ___CI_REPORT
+
+    - name: Fail if Simulation Contains Fails
+      shell: bash
+      run:
+        bash ___CI_ERROR
