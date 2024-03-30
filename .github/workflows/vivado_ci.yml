@@ -19,12 +19,6 @@ jobs:
       run: |
         make CI
 
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v4.3.1
-      with:
-        name: CI_REPORT-${{ env.VERSION }}
-        path: ___CI_REPORT
-
     - name: Fail if Simulation Contains Fails
       shell: bash
       run: |
