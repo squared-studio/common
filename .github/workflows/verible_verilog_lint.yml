@@ -30,5 +30,5 @@ jobs:
         shell: bash
         run: |
           cd lint_report
-          ls -R
-          [[ -s lint_report ]] && exit 1 || exit 0
+          cat verible-verilog-lint.log
+          [[ -s verible-verilog-lint.log ]] && exit 1 || exit 0
