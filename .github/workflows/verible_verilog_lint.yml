@@ -29,5 +29,6 @@ jobs:
       - name: Fail if lint issue
         shell: bash
         run: |
-          cat lint_report
+          cd lint_report
+          ls -R
           [[ -s lint_report ]] && exit 1 || exit 0
