@@ -1,5 +1,3 @@
-name: Vivado CI
-
 on:
   push:
     branches: [ "main" ]
