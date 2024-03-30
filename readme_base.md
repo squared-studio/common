@@ -12,7 +12,7 @@ This repository is organized into several directories, each serving a specific p
 
 - **rtl**: All design source files reside here. These could include modules, packages, and other SystemVerilog files that make up the design.
 
-- **submodules**: This directory contains all submodules. Submodules are typically separate projects that are included in the main project as a Git submodule. Please note that submodule files are not automatically compiled. They must be manually added in compile order within the `config/*/xvlog` for each Testbench (TB). This file is auto-generated next to the TB top file.
+- **sub**: This directory contains all submodules. Submodules are typically separate projects that are included in the main project as a Git submodule. Please note that submodule files are not automatically compiled. They must be manually added in compile order within the `config/*/xvlog` for each Testbench (TB). This file is auto-generated next to the TB top file.
 
 - **tb**: This is where all the Testbenches (TBs) are stored. Each TB should be in a separate directory that matches the name of the Device Under Test (DUT) module, ending with `_tb`. The Testbenches are used to verify the functionality of the design under different scenarios.
 

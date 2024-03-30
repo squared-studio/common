@@ -19,7 +19,7 @@ jobs:
 
     - name: Run CI
       run: |
-        git submodule update --init submodules/documenter
+        git submodule update --init sub/documenter
         make update_doc_list
 
     - name: Push files

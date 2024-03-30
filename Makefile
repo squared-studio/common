@@ -453,7 +453,7 @@ update_doc_list: create_all_docs
 clear_all_docs:
 	@rm -rf docs/rtl/*.md
 	@rm -rf docs/rtl/*_top.svg
-	@git submodule update --init ./submodules/documenter
+	@git submodule update --init ./sub/documenter
 
 .PHONY: create_all_docs
 create_all_docs: clear_all_docs
@@ -472,4 +472,4 @@ get_inc_doc_header:
 .PHONY: gen_doc
 gen_doc:
 	@echo "Creating document for $(FILE)"
-	@$(PYTHON) ./submodules/documenter/sv_documenter.py $(FILE) ./docs/rtl
+	@$(PYTHON) ./sub/documenter/sv_documenter.py $(FILE) ./docs/rtl

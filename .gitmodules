@@ -1,0 +1,6 @@
+[submodule "sub/common_cells"]
+	path = sub/common_cells
+	url = https://github.com/pulp-platform/common_cells.git
+[submodule "sub/documenter"]
+	path = sub/documenter
+	url = https://github.com/squared-studio/documenter.git
