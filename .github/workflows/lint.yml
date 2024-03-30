@@ -1,3 +1,5 @@
+name: Verible_Verilog_Lint
+
 on:
   push:
     branches: []
