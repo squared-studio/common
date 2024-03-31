@@ -1,5 +1,7 @@
-// Description
-// ### Author : Foez Ahmed (foez.official@gmail.com)
+/*
+Write a markdown documentation for this systemverilog module:
+Author : Foez Ahmed (foez.official@gmail.com)
+*/
 
 module handshake_combiner #(
     parameter int NUM_TX = 2,

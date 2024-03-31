@@ -1,5 +1,7 @@
-// Register file for integer
-// ### Author : Md. Mohiuddin Reyad (mreyad30207@gmail.com)
+/*
+Write a markdown documentation for this systemverilog module:
+Author : Md. Mohiuddin Reyad (mreyad30207@gmail.com)
+*/
 
 module rv_int_reg_file #(
     parameter int XLEN = 32

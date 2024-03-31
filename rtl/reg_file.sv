@@ -1,5 +1,7 @@
-// combined register file for integer, vector and float
-// ### Author : Md. Mohiuddin Reyad (mreyad30207@gmail.com)
+/*
+Write a markdown documentation for this systemverilog module:
+Author : Md. Mohiuddin Reyad (mreyad30207@gmail.com)
+*/
 
 module reg_file #(
     parameter int NUM_RS = 3,     // number of source register

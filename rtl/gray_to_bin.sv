@@ -1,7 +1,5 @@
 /*
-A Gray to Binary code converter is a logical circuit that is used to convert gray code
-into its equivalent Binary code
-[more info](https://www.geeksforgeeks.org/code-converters-binary-to-from-gray-code/)
+Write a markdown documentation for this systemverilog module:
 Author : Foez Ahmed (foez.official@gmail.com)
 */
 

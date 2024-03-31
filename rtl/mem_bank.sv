@@ -1,7 +1,7 @@
-// Memory bank with byte size storage. **All requests must be aligned**
-// ### Author : Foez Ahmed (foez.official@gmail.com)
-
-//`define SIMULATION
+/*
+Write a markdown documentation for this systemverilog module:
+Author : Foez Ahmed (foez.official@gmail.com)
+*/
 
 module mem_bank #(
     parameter  int ADDR_WIDTH = 8,               // Memory bank address width

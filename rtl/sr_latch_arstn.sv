@@ -1,5 +1,7 @@
-// SR latch with arst_ni
-// ### Author : Foez Ahmed (foez.official@gmail.com)
+/*
+Write a markdown documentation for this systemverilog module:
+Author : Foez Ahmed (foez.official@gmail.com)
+*/
 
 module sr_latch_arstn (
     input logic arst_ni,  // asynchronous reset

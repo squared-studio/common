@@ -1,7 +1,6 @@
 // Description here
 // ### Author : name (email)
 
-//`include "vip/string_ops_pkg.sv"
 
 module pll_model_tb;
 

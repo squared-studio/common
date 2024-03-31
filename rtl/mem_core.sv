@@ -1,5 +1,7 @@
-// A simple memory building block.
-// ### Author : Foez Ahmed (foez.official@gmail.com)
+/*
+Write a markdown documentation for this systemverilog module:
+Author : Foez Ahmed (foez.official@gmail.com)
+*/
 
 module mem_core #(
     parameter  int ELEM_WIDTH = 8,                 // Width of each memory data element

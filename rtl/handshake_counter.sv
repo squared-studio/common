@@ -1,5 +1,7 @@
-// ### Author : Foez Ahmed (foez.official@gmail.com)
-//                  handshakes
+/*
+Write a markdown documentation for this systemverilog module:
+Author : Foez Ahmed (foez.official@gmail.com)
+*/
 
 module handshake_counter #(
     parameter int DEPTH = 4

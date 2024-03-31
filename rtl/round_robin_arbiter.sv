@@ -1,4 +1,7 @@
-// ### Author : Foez Ahmed (foez.official@gmail.com)
+/*
+Write a markdown documentation for this systemverilog module:
+Author : Foez Ahmed (foez.official@gmail.com)
+*/
 
 module round_robin_arbiter #(
     parameter int NUM_REQ = 4

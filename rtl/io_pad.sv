@@ -1,5 +1,7 @@
-// IO pad for GPIO and similar pins
-// ### Author : Foez Ahmed (foez.official@gmail.com)
+/*
+Write a markdown documentation for this systemverilog module:
+Author : Foez Ahmed (foez.official@gmail.com)
+*/
 
 module io_pad #(
     //-PARAMETERS

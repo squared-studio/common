@@ -1,5 +1,7 @@
-// A PLL is a control system that generates an output signal whose phase is related to the phase of an input signal
-// ### Author : Foez Ahmed (foez.official@gmail.com)
+/*
+Write a markdown documentation for this systemverilog module:
+Author : Foez Ahmed (foez.official@gmail.com)
+*/
 
 module pll_model (
     input logic bypass_i,  // bypass the reference frequency to fout_o

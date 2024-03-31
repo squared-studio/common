@@ -1,5 +1,7 @@
-// General Purpose Latch
-// ### Author : Foez Ahmed (foez.official@gmail.com)
+/*
+Write a markdown documentation for this systemverilog module:
+Author : Foez Ahmed (foez.official@gmail.com)
+*/
 
 module latch #(
     parameter int DATA_WIDTH = 8  // Data Width

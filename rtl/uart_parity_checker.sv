@@ -1,12 +1,7 @@
-// Description
-// ### Author : Foez Ahmed (foez.official@gmail.com)
-
-//`include "addr_map.svh"
-//`include "axi4l_assign.svh"
-//`include "axi4l_typedef.svh"
-//`include "axi4_assign.svh"
-//`include "axi4_typedef.svh"
-//`include "default_param_pkg.sv"
+/*
+Write a markdown documentation for this systemverilog module:
+Author : Foez Ahmed (foez.official@gmail.com)
+*/
 
 module uart_parity_checker #(
     //-PARAMETERS
