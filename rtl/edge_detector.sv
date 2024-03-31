@@ -55,10 +55,10 @@ module edge_detector #(
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   if (ASYNC) begin : g_dual_sync
-    dual_synchronizer #(
+    dual_flop_synchronizer #(
         .FIRST_FF_EDGE_POSEDGED(1),
         .LAST_FF_EDGE_POSEDGED (1)
-    ) u_dual_synchronizer (
+    ) u_dual_flop_synchronizer (
         .arst_ni(arst_ni),
         .clk_i(clk_i),
         .en_i(1),

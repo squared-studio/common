@@ -35,7 +35,7 @@ To know how to use different commands on this repo, type `make help` or just `ma
 [decoder ](./docs/rtl/decoder.md)<br>
 [demux ](./docs/rtl/demux.md)<br>
 [dff ](./docs/rtl/dff.md)<br>
-[dual_synchronizer ](./docs/rtl/dual_synchronizer.md)<br>
+[dual_flop_synchronizer ](./docs/rtl/dual_flop_synchronizer.md)<br>
 [edge_detector ](./docs/rtl/edge_detector.md)<br>
 [encoder ](./docs/rtl/encoder.md)<br>
 [fifo ](./docs/rtl/fifo.md)<br>

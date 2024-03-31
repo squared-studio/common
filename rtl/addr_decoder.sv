@@ -1,32 +1,44 @@
 /*
-Write a markdown documentation for this systemverilog module:
+The `addr_decoder` module is a parameterized SystemVerilog module that decodes an input address to
+select a slave device. The module uses a priority encoder and a multiplexer to select the
+appropriate slave based on the input address.
 Author : Foez Ahmed (foez.official@gmail.com)
 */
 
 `include "default_param_pkg.sv"
 
 module addr_decoder #(
-    parameter int ADDR_WIDTH = default_param_pkg::ADDR_DECODER_ADDR_WIDTH,  // address width
-    parameter int NUM_SLV = default_param_pkg::ADDR_DECODER_NUM_SLV,  // num slave
-    parameter int NUM_RULES = default_param_pkg::ADDR_DECODER_NUM_RULES,  // num address map rules
-    parameter type addr_map_t = default_param_pkg::addr_decoder_addr_map_t,  // address map type
-    parameter addr_map_t ADDR_MAP[NUM_RULES] = default_param_pkg::ADDR_MAP  // address map
+    // The width of the address input
+    parameter int ADDR_WIDTH = default_param_pkg::ADDR_DECODER_ADDR_WIDTH,
+    // The number of slave devices
+    parameter int NUM_SLV = default_param_pkg::ADDR_DECODER_NUM_SLV,
+    // The number of address map rules
+    parameter int NUM_RULES = default_param_pkg::ADDR_DECODER_NUM_RULES,
+    // The type of the address map
+    parameter type addr_map_t = default_param_pkg::addr_decoder_addr_map_t,
+    // The address map array
+    parameter addr_map_t ADDR_MAP[NUM_RULES] = default_param_pkg::ADDR_MAP
 ) (
-    input logic [ADDR_WIDTH-1:0] addr_i,  // address input
+    // The input address. It is a logic vector of size `[ADDR_WIDTH-1:0]`
+    input logic [ADDR_WIDTH-1:0] addr_i,
 
-    output logic [$clog2(NUM_SLV)-1:0] slave_index_o,  // slave index output
-    output logic                       addr_found_o    // slave index valid
+    // The output slave index. It is a logic vector of size `[$clog2(NUM_SLV)-1:0]`
+    output logic [$clog2(NUM_SLV)-1:0] slave_index_o,
+    // A logic output that indicates if the address was found in the address map
+    output logic                       addr_found_o
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  logic [NUM_RULES-1:0] addr_rule_select;  // falling in rule
-
-  logic [$clog2(NUM_RULES)-1:0] rule_code;  // prioritized rule
-
-  logic [NUM_RULES-1:0][$clog2(NUM_SLV)-1:0] mux_in;  // address map slave index mux
+  // A logic array of size `[NUM_RULES-1:0]` that indicates if the input address falls within a rule
+  logic [NUM_RULES-1:0] addr_rule_select;
+  // A logic vector of size `[$clog2(NUM_RULES)-1:0]` that holds the prioritized rule code
+  logic [$clog2(NUM_RULES)-1:0] rule_code;
+  // A 2D logic array of size `[NUM_RULES-1:0][$clog2(NUM_SLV)-1:0]` that holds the slave indices
+  // for the multiplexer inputs
+  logic [NUM_RULES-1:0][$clog2(NUM_SLV)-1:0] mux_in;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-ASSIGNMENTS

@@ -9,7 +9,7 @@
 
 The `clk_mux` module is a glitch free clock multiplexer that selects between two input clocks
 (`clk0_i` and `clk1_i`) based on the select input (`sel_i`). The selected clock is output on `clk_o`
-The module uses dual flip-flop back-to-back synchronizers (`dual_synchronizer`) for each input
+The module uses dual flip-flop back-to-back synchronizers (`dual_flop_synchronizer`) for each input
 clock. The synchronizers are used to mitigate metastability issues when switching between the
 clocks. The select input (`sel_i`) determines which clock is selected. The selected clock is then
 output on `clk_o`.

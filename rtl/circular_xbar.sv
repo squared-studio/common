@@ -1,29 +1,39 @@
 /*
-Write a markdown documentation for this systemverilog module:
+The `circular_xbar` module is a parameterized SystemVerilog module that implements a circular
+crossbar switch. The module uses a multiplexer to select the appropriate output based on the
+rotation base select.
 Author : Foez Ahmed (foez.official@gmail.com)
 */
 
 module circular_xbar #(
-    parameter int ELEM_WIDTH = 8,  // Width of each crossbar element
-    parameter int NUM_ELEM   = 6   // Number of elements in the crossbar
+    parameter int ELEM_WIDTH = 8,  // The width of each crossbar element
+    parameter int NUM_ELEM   = 6   // The number of elements in the crossbar
 ) (
-    input logic [$clog2(NUM_ELEM)-1:0] s_i,  // rotation base select
+    // The rotation base select. It is a logic vector of size `[$clog2(NUM_ELEM)-1:0]`
+    input logic [$clog2(NUM_ELEM)-1:0] s_i,
 
-    input logic [NUM_ELEM-1:0][ELEM_WIDTH-1:0] i_i,  // Array of input bus
+    // The array of input buses. It is a 2D logic array of size `[NUM_ELEM-1:0][ELEM_WIDTH-1:0]`
+    input logic [NUM_ELEM-1:0][ELEM_WIDTH-1:0] i_i,
 
-    output logic [NUM_ELEM-1:0][ELEM_WIDTH-1:0] o_o  // Array of output bus
+    // The array of output buses. It is a 2D logic array of size `[NUM_ELEM-1:0][ELEM_WIDTH-1:0]`
+    output logic [NUM_ELEM-1:0][ELEM_WIDTH-1:0] o_o
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  logic [NUM_ELEM-1:0][$clog2(NUM_ELEM)-1:0] selects;  // Internal select with offset handling
+  // A 2D logic array of size `[NUM_ELEM-1:0][$clog2(NUM_ELEM)-1:0]` that holds the internal select
+  // signals with offset handling.
+  logic [NUM_ELEM-1:0][$clog2(NUM_ELEM)-1:0] selects;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-ASSIGNMENTS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
+  // A generator that assigns each element of `selects` based on the rotation base select and the
+  // element index. It handles the overflow case when the sum of the rotation base select and the
+  // element index is greater than or equal to `NUM_ELEM`.
   if ((2 ** ($clog2(NUM_ELEM))) == NUM_ELEM) begin : g_overflow
     for (genvar i = 0; i < NUM_ELEM; i++) begin : g_selects_assign
       assign selects[i] = s_i + i;
@@ -38,6 +48,7 @@ module circular_xbar #(
   //-RTLS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
+  // An instance of the `mux` module that selects the output bus based on the select signal.
   for (genvar i = 0; i < NUM_ELEM; i++) begin : g_mux
     mux #(
         .ELEM_WIDTH(ELEM_WIDTH),

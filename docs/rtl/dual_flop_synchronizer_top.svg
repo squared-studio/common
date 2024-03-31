@@ -12,6 +12,6 @@
 <text x="65" y="335" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">d_i</text>
 <polygon points="385,345 405,345 405,335 425,335 435,345 425,355 405,355 405,345 385,345"/>
 <text x="380" y="335" dominant-baseline="hanging" text-anchor="end" font-size="20" style="fill:black;stroke:black;stroke-width:0">q_o</text>
-<text x="220" y="400" dominant-baseline="hanging" text-anchor="middle" font-size="30" style="fill:black;stroke:black;stroke-width:0">dual_synchronizer</text>
+<text x="220" y="400" dominant-baseline="hanging" text-anchor="middle" font-size="30" style="fill:black;stroke:black;stroke-width:0">dual_flop_synchronizer</text>
 </g>
 </svg>

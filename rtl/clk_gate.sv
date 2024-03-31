@@ -40,10 +40,10 @@ module clk_gate #(
   assign clk_o = clk_i & sampled_en_i;
 
   if (USE_DUAL_SYNC) begin : g_dual_sync
-    dual_synchronizer #(
+    dual_flop_synchronizer #(
         .FIRST_FF_EDGE_POSEDGED(1),
         .LAST_FF_EDGE_POSEDGED (0)
-    ) u_dual_synchronizer (
+    ) u_dual_flop_synchronizer (
         .clk_i  (clk_i),
         .arst_ni(arst_ni),
         .en_i   ('1),
