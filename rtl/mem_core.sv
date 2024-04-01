@@ -6,17 +6,17 @@ Author : Foez Ahmed (foez.official@gmail.com)
 */
 
 module mem_core #(
-    parameter  int ELEM_WIDTH = 8,                 // The width of each memory data element
-    parameter  int ADDR_WIDTH = 8,                 // The width of the address bus
-    localparam int Depth      = (2 ** ADDR_WIDTH)  // The depth of the memory
+    parameter  int ELEM_WIDTH = 8,                 // width of each memory data element
+    parameter  int ADDR_WIDTH = 8,                 // width of the address bus
+    localparam int Depth      = (2 ** ADDR_WIDTH)  // depth of the memory
 ) (
-    input logic clk_i,  // The global clock signal
+    input logic clk_i,  // global clock signal
 
-    input logic                  we_i,    // The write enable signal
-    input logic [ADDR_WIDTH-1:0] addr_i,  // The address bus input
-    input logic [ELEM_WIDTH-1:0] wdata_i, // The write data
+    input logic                  we_i,    // write enable signal
+    input logic [ADDR_WIDTH-1:0] addr_i,  // address bus input
+    input logic [ELEM_WIDTH-1:0] wdata_i, // write data
 
-    output logic [ELEM_WIDTH-1:0] rdata_o  // The read data
+    output logic [ELEM_WIDTH-1:0] rdata_o  // read data
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

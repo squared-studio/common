@@ -1,22 +1,24 @@
 /*
-Write a markdown documentation for this systemverilog module:
+The `pipeline` module is a parameterized SystemVerilog module that implements a pipeline. The module
+uses a `pipeline_core` instance to process the input data and then passes the output to the next
+stage of the pipeline.
 Author : Foez Ahmed (foez.official@gmail.com)
 */
 
 module pipeline #(
-    parameter int ELEM_WIDTH = 8,
-    parameter int NUM_STAGES = 1
+    parameter int ELEM_WIDTH = 8,  // width of each pipeline element
+    parameter int NUM_STAGES = 1   // number of stages in the pipeline
 ) (
-    input logic clk_i,
-    input logic arst_ni,
+    input logic clk_i,   // global clock signal
+    input logic arst_ni, // asynchronous active low reset signal
 
-    input  logic [ELEM_WIDTH-1:0] elem_in_i,
-    input  logic                  elem_in_valid_i,
-    output logic                  elem_in_ready_o,
+    input  logic [ELEM_WIDTH-1:0] elem_in_i,        // input element
+    input  logic                  elem_in_valid_i,  // input element valid signal
+    output logic                  elem_in_ready_o,  // input element ready signal
 
-    output logic [ELEM_WIDTH-1:0] elem_out_o,
-    output logic                  elem_out_valid_o,
-    input  logic                  elem_out_ready_i
+    output logic [ELEM_WIDTH-1:0] elem_out_o,        // output element
+    output logic                  elem_out_valid_o,  // output element valid signal
+    input  logic                  elem_out_ready_i   // output element ready signal
 );
 
   if (NUM_STAGES == 0) begin : g_NumStages_0

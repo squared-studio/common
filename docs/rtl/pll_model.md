@@ -7,7 +7,8 @@
 
 ## Description
 
-Write a markdown documentation for this systemverilog module:
+The `pll_model` module is a model of a Phase-Locked Loop (PLL). It takes in a reference frequency
+and outputs a frequency that is locked to the reference frequency.
 
 <img src="./pll_model_des.svg">
 

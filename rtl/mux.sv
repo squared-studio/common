@@ -5,8 +5,8 @@ Author : Foez Ahmed (foez.official@gmail.com)
 */
 
 module mux #(
-    parameter int ELEM_WIDTH = 8,  // The width of each multiplexer input element
-    parameter int NUM_ELEM   = 6   // The number of elements in the multiplexer
+    parameter int ELEM_WIDTH = 8,  // width of each multiplexer input element
+    parameter int NUM_ELEM   = 6   // number of elements in the multiplexer
 ) (
     input logic [$clog2(NUM_ELEM)-1:0] s_i,  // select
 

@@ -14,8 +14,8 @@ multiplexer.
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|
 |-|-|-|-|-|
-|ELEM_WIDTH|int||8|The width of each multiplexer input element|
-|NUM_ELEM|int||6|The number of elements in the multiplexer|
+|ELEM_WIDTH|int||8|width of each multiplexer input element|
+|NUM_ELEM|int||6|number of elements in the multiplexer|
 
 ## Ports
 |Name|Direction|Type|Dimension|Description|

@@ -7,7 +7,7 @@
 
 ## Description
 
-The `dff` module is a D flip-flop with asynchronous reset
+The `dff` module is a D flip-flop with asynchronous active low reset
 digital circuit design, commonly used for data storage and transfer.
 
 The flip-flop samples the `d_i` input and updates the `q_o` output at the rising edge of the clock
@@ -22,7 +22,7 @@ The flip-flop samples the `d_i` input and updates the `q_o` output at the rising
 ## Ports
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
-|arst_ni|input|logic|| This is the asynchronous reset input. When this input is low, the flip-flop resets to `RESET_VALUE`|
+|arst_ni|input|logic|| This is the asynchronous active low reset input. When this input is low, the flip-flop resets to `RESET_VALUE`|
 |clk_i|input|logic|| This is the clock input. The flip-flop samples the `d_i` input at the rising edge of this clock|
 |en_i|input|logic|| This is the enable input. When this input is high, the flip-flop samples the `d_i` input at the next clock rising edge|
 |d_i|input|logic|| This is the data input. The value of this input is transferred to the output `q_o` at the rising edge of the clock `clk_i` if `en_i` is high|

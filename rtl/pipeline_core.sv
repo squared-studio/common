@@ -1,28 +1,30 @@
 /*
-Write a markdown documentation for this systemverilog module:
+The `pipeline_core` module is a parameterized SystemVerilog module that implements a pipeline core.
+The module uses a flip-flop to control the state of the pipeline based on the input and output
+handshakes.
 Author : Foez Ahmed (foez.official@gmail.com)
 */
 
 module pipeline_core #(
-    parameter int ELEM_WIDTH = 8
+    parameter int ELEM_WIDTH = 8  // width of each pipeline element
 ) (
-    input logic clk_i,
-    input logic arst_ni,
+    input logic clk_i,   // global clock signal
+    input logic arst_ni, // asynchronous active low reset signal
 
-    input  logic [ELEM_WIDTH-1:0] elem_in_i,
-    input  logic                  elem_in_valid_i,
-    output logic                  elem_in_ready_o,
+    input  logic [ELEM_WIDTH-1:0] elem_in_i,        // input element
+    input  logic                  elem_in_valid_i,  // input element valid signal
+    output logic                  elem_in_ready_o,  // input element ready signal
 
-    output logic [ELEM_WIDTH-1:0] elem_out_o,
-    output logic                  elem_out_valid_o,
-    input  logic                  elem_out_ready_i
+    output logic [ELEM_WIDTH-1:0] elem_out_o,        // output element
+    output logic                  elem_out_valid_o,  // output element valid signal
+    input  logic                  elem_out_ready_i   // output element ready signal
 );
 
-  logic                  is_full;
-  logic [ELEM_WIDTH-1:0] mem;
+  logic                  is_full;  // indicates whether the pipeline is full
+  logic [ELEM_WIDTH-1:0] mem;  // holds the pipeline memory
 
-  logic                  input_handshake;
-  logic                  output_handshake;
+  logic                  input_handshake;  // indicates a successful input handshake
+  logic                  output_handshake;  // indicates a successful output handshake
 
   assign elem_in_ready_o  = (is_full) ? elem_out_ready_i : '1;
   assign elem_out_o       = mem;

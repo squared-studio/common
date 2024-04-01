@@ -29,7 +29,7 @@ module clk_gate #(
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  // The sampled enable signal. This is either the output of the dual synchronizer or the latch,
+  // sampled enable signal. This is either the output of the dual synchronizer or the latch,
   // depending on the value of `USE_DUAL_SYNC`.
   logic sampled_en_i;
 

@@ -9,7 +9,7 @@ Author : Foez Ahmed (foez.official@gmail.com)
 */
 
 module bin_to_gray #(
-    // // The width of the data. This is the number of bits in the binary and gray code
+    // width of the data. This is the number of bits in the binary and gray code
     parameter int DATA_WIDTH = 4
 ) (
     // Binary code input. This is a `DATA_WIDTH`-bit binary number that is to be converted to gray code

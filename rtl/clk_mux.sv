@@ -10,7 +10,7 @@ Author : Foez Ahmed (foez.official@gmail.com)
 
 module clk_mux #(
 ) (
-    input logic arst_ni,  // Asynchronous reset input. Active low
+    input logic arst_ni,  // asynchronous active low reset input. Active low
 
     // Select input. When high, `clk1_i` is selected. When low, `clk0_i` is selected
     input logic sel_i,

@@ -6,17 +6,17 @@ Author : Foez Ahmed (foez.official@gmail.com)
 */
 
 module handshake_combiner #(
-    parameter int NUM_TX = 2,  // The number of transmitter handshakes
-    parameter int NUM_RX = 2   // The number of receiver handshakes
+    parameter int NUM_TX = 2,  // number of transmitter handshakes
+    parameter int NUM_RX = 2   // number of receiver handshakes
 ) (
-    // The transmitter valid signals
+    // transmitter valid signals
     input  logic [NUM_TX-1:0] tx_valid,
-    // The transmitter ready signals
+    // transmitter ready signals
     output logic [NUM_TX-1:0] tx_ready,
 
-    // The receiver valid signals
+    // receiver valid signals
     output logic [NUM_RX-1:0] rx_valid,
-    // The receiver ready signals
+    // receiver ready signals
     input  logic [NUM_RX-1:0] rx_ready
 );
 

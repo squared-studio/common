@@ -21,8 +21,8 @@ pointer equals the read pointer.
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|
 |-|-|-|-|-|
-|ELEM_WIDTH|int||8|The width of the elements in the FIFO|
-|FIFO_SIZE|int||2|The size of the FIFO to the power of 2|
+|ELEM_WIDTH|int||8|width of the elements in the FIFO|
+|FIFO_SIZE|int||2|size of the FIFO to the power of 2|
 
 ## Ports
 |Name|Direction|Type|Dimension|Description|

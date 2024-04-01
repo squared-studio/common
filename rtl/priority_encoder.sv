@@ -1,5 +1,8 @@
-// A simple priority encoder
-// ### Author : Foez Ahmed (foez.official@gmail.com)
+/*
+The `priority_encoder` module is a simple priority encoder with a configurable number of output
+wires and priority direction.
+Author: Foez Ahmed (foez.official@gmail.com)
+*/
 
 module priority_encoder #(
     parameter int NUM_WIRE            = 4,  // Number of output wires

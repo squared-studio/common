@@ -19,7 +19,7 @@ is the same as the MSB of the binary input.
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|
 |-|-|-|-|-|
-|DATA_WIDTH|int||4| // The width of the data. This is the number of bits in the binary and gray code|
+|DATA_WIDTH|int||4| width of the data. This is the number of bits in the binary and gray code|
 
 ## Ports
 |Name|Direction|Type|Dimension|Description|

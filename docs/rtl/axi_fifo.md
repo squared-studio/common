@@ -57,7 +57,7 @@ active low reset signal `arst_ni`.
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
 |clk_i|input|logic|| clock input|
-|arst_ni|input|logic|| asynchronous reset input|
+|arst_ni|input|logic|| asynchronous active low reset input|
 |req_i|input|axi_req_t|| AXI request input|
 |resp_o|output|axi_resp_t|| AXI response output|
 |req_o|output|axi_req_t|| AXI request output|

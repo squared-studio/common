@@ -7,13 +7,13 @@ Author : Foez Ahmed (foez.official@gmail.com)
 module io_pad #(
     //-PARAMETERS
 ) (
-    input wire pull_i,   // The pull-down control signal
-    input wire wdata_i,  // The write data signal
-    input wire wen_i,    // The write enable signal
+    input wire pull_i,   // pull-down control signal
+    input wire wdata_i,  // write data signal
+    input wire wen_i,    // write enable signal
 
-    output wire rdata_o,  // The read data signal
+    output wire rdata_o,  // read data signal
 
-    inout wire pin_io  // The I/O pad pin
+    inout wire pin_io  // I/O pad pin
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

@@ -40,15 +40,15 @@ in the byte in the `RowPerType` and a multiplexer (`mux`) to handle the response
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|
 |-|-|-|-|-|
-|axi4l_req_t|type||default_param_pkg::axi4l_req_t| The type of AXI4L request|
-|axi4l_resp_t|type||default_param_pkg::axi4l_resp_t| The type of AXI4L response|
-|PORT_SIZE|int||5| The size of the port in bytes|
+|axi4l_req_t|type||default_param_pkg::axi4l_req_t| type of AXI4L request|
+|axi4l_resp_t|type||default_param_pkg::axi4l_resp_t| type of AXI4L response|
+|PORT_SIZE|int||5| size of the port in bytes|
 
 ## Ports
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
-|clk_i|input|logic||The input clock signal|
-|arst_ni|input|logic||The active-low reset signal|
-|req_i|input|axi4l_req_t||The AXI4L request input|
-|resp_o|output|axi4l_resp_t||The AXI4L response output|
-|port_io|inout|wire [PortBytes-1:0][7:0]||The inout port array|
+|clk_i|input|logic||input clock signal|
+|arst_ni|input|logic||asynchronous active low reset signal|
+|req_i|input|axi4l_req_t||AXI4L request input|
+|resp_o|output|axi4l_resp_t||AXI4L response output|
+|port_io|inout|wire [PortBytes-1:0][7:0]||inout port array|

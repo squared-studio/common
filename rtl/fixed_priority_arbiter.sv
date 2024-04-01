@@ -13,16 +13,16 @@ Author : Foez Ahmed (foez.official@gmail.com)
 */
 
 module fixed_priority_arbiter #(
-    parameter int NUM_REQ = 4  // The number of requests that the arbiter can handle
+    parameter int NUM_REQ = 4  // number of requests that the arbiter can handle
 ) (
-    // The signal that allows requests to be made
+    // signal that allows requests to be made
     input logic               allow_req_i,
-    // The request signals
+    // request signals
     input logic [NUM_REQ-1:0] req_i,
 
-    // The grant address
+    // grant address
     output logic [$clog2(NUM_REQ)-1:0] gnt_addr_o,
-    // The grant valid signal. It indicates whether the grant address is valid
+    // grant valid signal. It indicates whether the grant address is valid
     output logic                       gnt_addr_valid_o
 );
 

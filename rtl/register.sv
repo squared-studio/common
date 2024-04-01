@@ -1,19 +1,19 @@
 /*
-Write a markdown documentation for this systemverilog module:
-Author : Foez Ahmed (foez.official@gmail.com)
+The `register` module is a simple register with configurable element width and reset value.
+Author: Foez Ahmed (foez.official@gmail.com)
 */
 
 module register #(
-    parameter int                  ELEM_WIDTH  = 32,
-    parameter bit [ELEM_WIDTH-1:0] RESET_VALUE = '0
+    parameter int                  ELEM_WIDTH  = 32,  // width of each element
+    parameter bit [ELEM_WIDTH-1:0] RESET_VALUE = '0   // reset value for each element
 ) (
-    input logic clk_i,
-    input logic arst_ni,
+    input logic clk_i,   // clock input
+    input logic arst_ni, // asynchronous active low reset input
 
-    input logic en_i,
-    input logic [ELEM_WIDTH-1:0] d_i,
+    input logic en_i,  // enable input
+    input logic [ELEM_WIDTH-1:0] d_i,  // data input
 
-    output logic [ELEM_WIDTH-1:0] q_o
+    output logic [ELEM_WIDTH-1:0] q_o  // output
 );
 
   always_ff @(posedge clk_i or negedge arst_ni) begin
@@ -25,5 +25,3 @@ module register #(
   end
 
 endmodule
-
-// TODO

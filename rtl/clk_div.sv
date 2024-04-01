@@ -14,16 +14,16 @@ Author : Foez Ahmed (foez.official@gmail.com)
 */
 
 module clk_div #(
-    parameter int DIVISOR_SIZE = 9  // The size of the divisor register
+    parameter int DIVISOR_SIZE = 9  // size of the divisor register
 ) (
-    input logic arst_ni,  // The asynchronous global reset signal
+    input logic arst_ni,  // asynchronous global reset signal
 
-    // The clock divisor
+    // clock divisor
     input logic [DIVISOR_SIZE-1:0] divisor_i,
 
-    input logic clk_i,  // The input clock signal
+    input logic clk_i,  // input clock signal
 
-    output logic clk_o  // The output clock signal
+    output logic clk_o  // output clock signal
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

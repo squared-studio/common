@@ -18,9 +18,9 @@ the inputs.
 ## Ports
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
-|clk_i|input|logic||The global clock signal|
-|arst_ni|input|logic||The asynchronous reset signal|
-|j_i|input|logic||The J input to the JK flip-flop|
-|k_i|input|logic||The global clock signal|
-|q_o|output|logic||The Q output of the JK flip-flop|
-|q_no|output|logic||The negated Q output of the JK flip-flop|
+|clk_i|input|logic||global clock signal|
+|arst_ni|input|logic||asynchronous active low reset signal|
+|j_i|input|logic||J input to the JK flip-flop|
+|k_i|input|logic||global clock signal|
+|q_o|output|logic||Q output of the JK flip-flop|
+|q_no|output|logic||negated Q output of the JK flip-flop|

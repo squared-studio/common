@@ -21,12 +21,12 @@ output clock is toggled when the count reaches the high or low count threshold.
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|
 |-|-|-|-|-|
-|DIVISOR_SIZE|int||9|The size of the divisor register|
+|DIVISOR_SIZE|int||9|size of the divisor register|
 
 ## Ports
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
-|arst_ni|input|logic||The asynchronous global reset signal|
-|divisor_i|input|logic [DIVISOR_SIZE-1:0]|| The clock divisor|
-|clk_i|input|logic||The input clock signal|
-|clk_o|output|logic||The output clock signal|
+|arst_ni|input|logic||asynchronous global reset signal|
+|divisor_i|input|logic [DIVISOR_SIZE-1:0]|| clock divisor|
+|clk_i|input|logic||input clock signal|
+|clk_o|output|logic||output clock signal|

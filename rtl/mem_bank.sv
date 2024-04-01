@@ -6,17 +6,17 @@ Author : Foez Ahmed (foez.official@gmail.com)
 */
 
 module mem_bank #(
-    // The width of the memory bank address
+    // width of the memory bank address
     parameter  int ADDR_WIDTH = 8,
-    // The base-2 logarithm of the number of bytes in the data bus
+    // base-2 logarithm of the number of bytes in the data bus
     parameter  int DATA_SIZE  = 2,
-    // The number of bytes in the data bus
+    // number of bytes in the data bus
     localparam int DataBytes  = 2 ** DATA_SIZE,
-    // The number of bits in the data bus
+    // number of bits in the data bus
     localparam int DataBits   = 8 * DATA_SIZE
 ) (
     input logic clk_i,  //The global clock signal
-    input logic cs_i,   //The asynchronous reset signal
+    input logic cs_i,   //The asynchronous active low reset signal
 
     input logic [        ADDR_WIDTH-1:0] addr_i,   //The aligned byte address
     input logic [(8*(2**DATA_SIZE))-1:0] wdata_i,  //The aligned write data

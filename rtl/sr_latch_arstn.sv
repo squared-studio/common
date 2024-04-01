@@ -1,16 +1,16 @@
 /*
-Write a markdown documentation for this systemverilog module:
-Author : Foez Ahmed (foez.official@gmail.com)
+The `sr_latch_arstn` module is an SR latch with asynchronous active low reset.
+Author: Foez Ahmed (foez.official@gmail.com)
 */
 
 module sr_latch_arstn (
-    input logic arst_ni,  // asynchronous reset
+    input logic arst_ni,  // asynchronous active low reset input
 
-    input logic s_i,  // set
-    input logic r_i,  // reset
+    input logic s_i,  // set input
+    input logic r_i,  // reset input
 
-    output logic q_o,  // q
-    output logic q_no  // ~q
+    output logic q_o,  // Q output
+    output logic q_no  // inverted Q output
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

@@ -7,7 +7,8 @@
 
 ## Description
 
-Write a markdown documentation for this systemverilog module:
+The `reg_file` module is a register file with a configurable number of source registers, register
+width, and an option to hardcode zero to the first register.
 
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|
@@ -21,7 +22,7 @@ Write a markdown documentation for this systemverilog module:
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
 |clk_i|input|logic||Global clock|
-|arst_ni|input|logic||Asynchronous reset|
+|arst_ni|input|logic||asynchronous active low reset|
 |rd_addr_i|input|logic [$clog2(NUM_REG)-1:0]||destination register address|
 |rd_data_i|input|logic [ REG_WIDTH-1:0]||read data|
 |rd_en_i|input|logic||read enable|

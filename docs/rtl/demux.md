@@ -24,6 +24,6 @@ the address input, a constant '1' as the address valid input, and outputs the va
 ## Ports
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
-|s_i|input|logic [$clog2(NUM_ELEM)-1:0]|| The select input|
-|i_i|input|logic [ELEM_WIDTH-1:0]|| The data input|
-|o_o|output|logic [NUM_ELEM-1:0][ELEM_WIDTH-1:0]|| The output array|
+|s_i|input|logic [$clog2(NUM_ELEM)-1:0]|| select input|
+|i_i|input|logic [ELEM_WIDTH-1:0]|| data input|
+|o_o|output|logic [NUM_ELEM-1:0][ELEM_WIDTH-1:0]|| output array|

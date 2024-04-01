@@ -54,7 +54,7 @@ module axi_fifo #(
 ) (
     // clock input
     input logic clk_i,
-    // asynchronous reset input
+    // asynchronous active low reset input
     input logic arst_ni,
 
     // AXI request input

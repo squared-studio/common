@@ -11,8 +11,8 @@ Author : Foez Ahmed (foez.official@gmail.com)
 */
 
 module cdc_fifo #(
-    parameter int ELEM_WIDTH = 8,  // The width of the elements in the FIFO
-    parameter int FIFO_SIZE  = 2   // The size of the FIFO to the power of 2
+    parameter int ELEM_WIDTH = 8,  // width of the elements in the FIFO
+    parameter int FIFO_SIZE  = 2   // size of the FIFO to the power of 2
 ) (
     // Asynchronous active low reset input
     input logic arst_ni,

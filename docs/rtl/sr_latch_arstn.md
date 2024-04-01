@@ -7,7 +7,7 @@
 
 ## Description
 
-Write a markdown documentation for this systemverilog module:
+The `sr_latch_arstn` module is an SR latch with asynchronous active low reset.
 
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|
@@ -16,8 +16,8 @@ Write a markdown documentation for this systemverilog module:
 ## Ports
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
-|arst_ni|input|logic||asynchronous reset|
-|s_i|input|logic||set|
-|r_i|input|logic||reset|
-|q_o|output|logic||q|
-|q_no|output|logic||~q|
+|arst_ni|input|logic||asynchronous active low reset input|
+|s_i|input|logic||set input|
+|r_i|input|logic||reset input|
+|q_o|output|logic||Q output|
+|q_no|output|logic||inverted Q output|

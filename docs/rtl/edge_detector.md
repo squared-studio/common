@@ -29,8 +29,8 @@ detect the edges. The final signal after the edge detection process is stored in
 ## Ports
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
-|arst_ni|input|logic||The asynchronous reset signal|
-|clk_i|input|logic||The global clock signal|
-|d_i|input|logic||The data input signal|
-|posedge_o|output|logic||The positive edge detected signal|
-|negedge_o|output|logic||The negative edge detected signal|
+|arst_ni|input|logic||asynchronous active low reset signal|
+|clk_i|input|logic||global clock signal|
+|d_i|input|logic||data input signal|
+|posedge_o|output|logic||positive edge detected signal|
+|negedge_o|output|logic||negative edge detected signal|

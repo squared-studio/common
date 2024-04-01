@@ -21,11 +21,11 @@ array. The address valid output is the bitwise OR of the wire input.
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|
 |-|-|-|-|-|
-|NUM_WIRE|int||16|The number of output wires|
+|NUM_WIRE|int||16|number of output wires|
 
 ## Ports
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
-|d_i|input|logic [NUM_WIRE-1:0]|| The wire input|
-|addr_o|output|logic [$clog2(NUM_WIRE)-1:0]|| The address output|
-|addr_valid_o|output|logic|| The address valid output. It indicates whether the address output is valid|
+|d_i|input|logic [NUM_WIRE-1:0]|| wire input|
+|addr_o|output|logic [$clog2(NUM_WIRE)-1:0]|| address output|
+|addr_valid_o|output|logic|| address valid output. It indicates whether the address output is valid|

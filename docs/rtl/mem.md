@@ -21,7 +21,7 @@ memory.
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
 |clk_i|input|logic||Global clock|
-|arst_ni|input|logic||Asynchronous reset|
+|arst_ni|input|logic||asynchronous active low reset|
 |we_i|input|logic||Write enable|
 |waddr_i|input|logic [$clog2(DEPTH)-1:0]||Write address|
 |wdata_i|input|logic [ ELEM_WIDTH-1:0]||write data|

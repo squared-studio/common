@@ -6,17 +6,17 @@ Author : Foez Ahmed (foez.official@gmail.com)
 */
 
 module jk_ff (
-    input logic clk_i,   // The global clock signal
-    input logic arst_ni, // The asynchronous reset signal
+    input logic clk_i,   // global clock signal
+    input logic arst_ni, // asynchronous active low reset signal
 
-    input logic j_i,  // The J input to the JK flip-flop
-    input logic k_i,  // The K input to the JK flip-flop
+    input logic j_i,  // J input to the JK flip-flop
+    input logic k_i,  // K input to the JK flip-flop
 
-    output logic q_o,  // The Q output of the JK flip-flop
-    output logic q_no  // The negated Q output of the JK flip-flop
+    output logic q_o,  // Q output of the JK flip-flop
+    output logic q_no  // negated Q output of the JK flip-flop
 );
 
-  // the inverse of `q_o`.
+  // inverse of `q_o`.
   assign q_no = ~q_o;
 
   // This block updates `q_o` at the positive edge of `clk_i` or the negative edge of `arst_ni`. If

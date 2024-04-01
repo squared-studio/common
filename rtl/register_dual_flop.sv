@@ -1,28 +1,33 @@
 /*
-Write a markdown documentation for this systemverilog module:
-Author : Foez Ahmed (foez.official@gmail.com)
+The `register_dual_flop` module is a dual flip-flop register with configurable element width, reset
+value, and clock edge polarity for both flip-flops.
+Author: Foez Ahmed (foez.official@gmail.com)
 */
 
 module register_dual_flop #(
+    // width of each element
     parameter int                  ELEM_WIDTH             = 32,
+    // reset value for each element
     parameter bit [ELEM_WIDTH-1:0] RESET_VALUE            = '0,
+    // A bit to set the clock edge polarity of the first flip-flop
     parameter bit                  FIRST_FF_EDGE_POSEDGED = 1,
+    // A bit to set the clock edge polarity of the last flip-flop
     parameter bit                  LAST_FF_EDGE_POSEDGED  = 0
 ) (
-    input logic clk_i,
-    input logic arst_ni,
+    input logic clk_i,   // clock input
+    input logic arst_ni, // asynchronous active low reset input
 
-    input logic en_i,
-    input logic [ELEM_WIDTH-1:0] d_i,
+    input logic en_i,  // enable input
+    input logic [ELEM_WIDTH-1:0] d_i,  // data input
 
-    output logic [ELEM_WIDTH-1:0] q_o
+    output logic [ELEM_WIDTH-1:0] q_o  // data output
 );
 
-  logic [ELEM_WIDTH-1:0] q_intermediate;
-  logic en_intermediate;
+  logic [ELEM_WIDTH-1:0] q_intermediate;  // An intermediate logic array
+  logic en_intermediate;  // An intermediate enable signal
 
-  logic first_clk_in;
-  logic last_clk_in;
+  logic first_clk_in;  // clock input for the first flip-flop
+  logic last_clk_in;  // clock input for the last flip-flop
 
   assign first_clk_in = FIRST_FF_EDGE_POSEDGED ? clk_i : ~clk_i;
   assign last_clk_in  = LAST_FF_EDGE_POSEDGED ? clk_i : ~clk_i;
@@ -46,5 +51,3 @@ module register_dual_flop #(
   end
 
 endmodule
-
-// TODO

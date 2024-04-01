@@ -21,7 +21,7 @@ output on `clk_o`.
 ## Ports
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
-|arst_ni|input|logic||Asynchronous reset input. Active low|
+|arst_ni|input|logic||asynchronous active low reset input. Active low|
 |sel_i|input|logic|| Select input. When high, `clk1_i` is selected. When low, `clk0_i` is selected|
 |clk0_i|input|logic||Clock 0 input|
 |clk1_i|input|logic||Clock 1 input|

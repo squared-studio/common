@@ -19,13 +19,13 @@ module edge_detector #(
     parameter bit NEGEDGE = 1,  // A bit that determines whether to detect negative edges
     parameter bit ASYNC   = 0   // A bit that determines whether to use asynchronous mode
 ) (
-    input logic arst_ni,  // The asynchronous reset signal
-    input logic clk_i,    // The global clock signal
+    input logic arst_ni,  // asynchronous active low reset signal
+    input logic clk_i,    // global clock signal
 
-    input logic d_i,  // The data input signal
+    input logic d_i,  // data input signal
 
-    output logic posedge_o,  // The positive edge detected signal
-    output logic negedge_o   // The negative edge detected signal
+    output logic posedge_o,  // positive edge detected signal
+    output logic negedge_o   // negative edge detected signal
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

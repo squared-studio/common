@@ -1,6 +1,6 @@
 /*
-Write a markdown documentation for this systemverilog module:
-Author : Foez Ahmed (foez.official@gmail.com)
+The `xbar` module is a crossbar with configurable element width and number of elements.
+Author: Foez Ahmed (foez.official@gmail.com)
 */
 
 module xbar #(

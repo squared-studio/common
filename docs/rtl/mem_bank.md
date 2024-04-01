@@ -14,14 +14,14 @@ enable signal.
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|
 |-|-|-|-|-|
-|ADDR_WIDTH|int||8| The width of the memory bank address|
-|DATA_SIZE|int||2| The base-2 logarithm of the number of bytes in the data bus|
+|ADDR_WIDTH|int||8| width of the memory bank address|
+|DATA_SIZE|int||2| base-2 logarithm of the number of bytes in the data bus|
 
 ## Ports
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
 |clk_i|input|logic||The global clock signal|
-|cs_i|input|logic||The asynchronous reset signal|
+|cs_i|input|logic||The asynchronous active low reset signal|
 |addr_i|input|logic [ ADDR_WIDTH-1:0]||The aligned byte address|
 |wdata_i|input|logic [(8*(2**DATA_SIZE))-1:0]||The aligned write data|
 |wstrb_i|input|logic [ (2**DATA_SIZE)-1:0]||The aligned write strobe|

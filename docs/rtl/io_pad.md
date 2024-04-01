@@ -19,8 +19,8 @@ pull-down buffer, a data drive buffer, and a read data buffer to control the I/O
 ## Ports
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
-|pull_i|input|wire||The pull-down control signal|
-|wdata_i|input|wire||The write data signal|
-|wen_i|input|wire||The write enable signal|
-|rdata_o|output|wire||The read data signal|
-|pin_io|inout|wire||The I/O pad pin|
+|pull_i|input|wire||pull-down control signal|
+|wdata_i|input|wire||write data signal|
+|wen_i|input|wire||write enable signal|
+|rdata_o|output|wire||read data signal|
+|pin_io|inout|wire||I/O pad pin|

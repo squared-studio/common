@@ -5,26 +5,26 @@ Author : Foez Ahmed (foez.official@gmail.com)
 */
 
 module handshake_counter #(
-    parameter int DEPTH = 4  // The depth of the counter
+    parameter int DEPTH = 4  // depth of the counter
 ) (
-    input logic clk_i,   // The global clock signal
-    input logic arst_ni, // The asynchronous reset signal
+    input logic clk_i,   // global clock signal
+    input logic arst_ni, // asynchronous active low reset signal
 
-    input  logic in_valid_i,  // The input valid signal
-    output logic in_ready_o,  // The input ready signal
+    input  logic in_valid_i,  // input valid signal
+    output logic in_ready_o,  // input ready signal
 
-    output logic out_valid_o,  // The output valid signal
-    input  logic out_ready_i,  // The output ready signal
+    output logic out_valid_o,  // output valid signal
+    input  logic out_ready_i,  // output ready signal
 
-    output logic [$clog2(DEPTH+1)-1:0] cnt_o  // The counter output
+    output logic [$clog2(DEPTH+1)-1:0] cnt_o  // counter output
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  logic in_hs;  // The input handshake signal
-  logic out_hs;  // The output handshake signal
+  logic in_hs;  // input handshake signal
+  logic out_hs;  // output handshake signal
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-ASSIGNMENTS

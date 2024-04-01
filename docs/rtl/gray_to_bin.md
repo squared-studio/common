@@ -15,10 +15,10 @@ a binary code output. The module uses a loop and an XOR operation to perform the
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|
 |-|-|-|-|-|
-|DATA_WIDTH|int||4|The width of the data|
+|DATA_WIDTH|int||4|width of the data|
 
 ## Ports
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
-|data_in_i|input|logic [DATA_WIDTH-1:0]|| The Gray code input|
-|data_out_o|output|logic [DATA_WIDTH-1:0]|| The binary code output|
+|data_in_i|input|logic [DATA_WIDTH-1:0]|| Gray code input|
+|data_out_o|output|logic [DATA_WIDTH-1:0]|| binary code output|

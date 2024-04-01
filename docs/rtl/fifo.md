@@ -29,11 +29,11 @@ the elements. The size of the memory block is determined by the `FIFO_SIZE` para
 ## Ports
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
-|clk_i|input|logic|| The input clock signal|
-|arst_ni|input|logic|| The asynchronous reset signal|
-|elem_in_i|input|logic [ELEM_WIDTH-1:0]|| The input element|
-|elem_in_valid_i|input|logic|| The input valid signal. It indicates whether the input element is valid|
-|elem_in_ready_o|output|logic|| The input ready signal. It indicates whether the FIFO is ready to accept an input element|
-|elem_out_o|output|logic [ELEM_WIDTH-1:0]|| The output element|
-|elem_out_valid_o|output|logic|| The output valid signal. It indicates whether the output element is valid|
-|elem_out_ready_i|input|logic|| The output ready signal. It indicates whether the FIFO is ready to output an element|
+|clk_i|input|logic|| input clock signal|
+|arst_ni|input|logic|| asynchronous active low reset signal|
+|elem_in_i|input|logic [ELEM_WIDTH-1:0]|| input element|
+|elem_in_valid_i|input|logic|| input valid signal. It indicates whether the input element is valid|
+|elem_in_ready_o|output|logic|| input ready signal. It indicates whether the FIFO is ready to accept an input element|
+|elem_out_o|output|logic [ELEM_WIDTH-1:0]|| output element|
+|elem_out_valid_o|output|logic|| output valid signal. It indicates whether the output element is valid|
+|elem_out_ready_i|input|logic|| output ready signal. It indicates whether the FIFO is ready to output an element|

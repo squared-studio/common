@@ -7,7 +7,7 @@
 
 ## Description
 
-Write a markdown documentation for this systemverilog module:
+The `xbar` module is a crossbar with configurable element width and number of elements.
 
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|

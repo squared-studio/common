@@ -5,14 +5,14 @@ Author : Foez Ahmed (foez.official@gmail.com)
 */
 
 module latch #(
-    parameter int DATA_WIDTH = 8  // The width of the data
+    parameter int DATA_WIDTH = 8  // width of the data
 ) (
-    input logic arst_ni,  // The asynchronous reset signal
-    input logic en_i,     // The latch enable signal
+    input logic arst_ni,  // asynchronous active low reset signal
+    input logic en_i,     // latch enable signal
 
-    input logic [DATA_WIDTH-1:0] d_i,  // The latch data input
+    input logic [DATA_WIDTH-1:0] d_i,  // latch data input
 
-    output logic [DATA_WIDTH-1:0] q_o  // The latch data output
+    output logic [DATA_WIDTH-1:0] q_o  // latch data output
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

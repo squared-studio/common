@@ -20,8 +20,8 @@ output.
 ## Ports
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
-|arst_ni|input|logic||The asynchronous reset signal|
-|clk_i|input|logic||The global clock signal|
-|en_i|input|logic||The enable signal|
-|d_i|input|logic||The data input signal|
-|q_o|output|logic||The output signal|
+|arst_ni|input|logic||asynchronous active low reset signal|
+|clk_i|input|logic||global clock signal|
+|en_i|input|logic||enable signal|
+|d_i|input|logic||data input signal|
+|q_o|output|logic||output signal|

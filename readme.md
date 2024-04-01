@@ -60,9 +60,6 @@ To know how to use different commands on this repo, type `make help` or just `ma
 [register_dual_flop ](./docs/rtl/register_dual_flop.md)<br>
 [reg_file ](./docs/rtl/reg_file.md)<br>
 [round_robin_arbiter ](./docs/rtl/round_robin_arbiter.md)<br>
-[rv_float_reg_file ](./docs/rtl/rv_float_reg_file.md)<br>
-[rv_int_reg_file ](./docs/rtl/rv_int_reg_file.md)<br>
-[rv_vec_reg_file ](./docs/rtl/rv_vec_reg_file.md)<br>
 [shift_register ](./docs/rtl/shift_register.md)<br>
 [sr_latch_arstn ](./docs/rtl/sr_latch_arstn.md)<br>
 [uart_parity_checker ](./docs/rtl/uart_parity_checker.md)<br>

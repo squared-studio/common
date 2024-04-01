@@ -14,18 +14,18 @@ The counter is reset to `RESET_VALUE` whenever `arst_ni` is low. The counter upd
 */
 
 module counter #(
-    parameter int MAX_COUNT = 25,  // The maximum count value
-    parameter bit [$clog2(MAX_COUNT+1)-1:0] RESET_VALUE = '0,  // The value to reset the counter to
+    parameter int MAX_COUNT = 25,  // maximum count value
+    parameter bit [$clog2(MAX_COUNT+1)-1:0] RESET_VALUE = '0,  // value to reset the counter to
     parameter bit UP_COUNT = 1,  // If set to 1, the counter will increment
     parameter bit DOWN_COUNT = 1  // If set to 1, the counter will decrement
 ) (
-    input logic clk_i,   // The clock input
-    input logic arst_ni, // The asynchronous reset input
+    input logic clk_i,   // clock input
+    input logic arst_ni, // asynchronous active low reset input
 
-    input logic up_i,   // The increment control input
-    input logic down_i, // The decrement control input
+    input logic up_i,   // increment control input
+    input logic down_i, // decrement control input
 
-    output logic [$clog2(MAX_COUNT+1)-1:0] count_o  // The current count value
+    output logic [$clog2(MAX_COUNT+1)-1:0] count_o  // current count value
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

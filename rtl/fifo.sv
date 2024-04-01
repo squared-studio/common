@@ -20,23 +20,23 @@ module fifo #(
     //The number of elements that can be stored in the FIFO
     parameter int FIFO_SIZE  = 4
 ) (
-    // The input clock signal
+    // input clock signal
     input logic clk_i,
-    // The asynchronous reset signal
+    // asynchronous active low reset signal
     input logic arst_ni,
 
-    // The input element
+    // input element
     input  logic [ELEM_WIDTH-1:0] elem_in_i,
-    // The input valid signal. It indicates whether the input element is valid
+    // input valid signal. It indicates whether the input element is valid
     input  logic                  elem_in_valid_i,
-    // The input ready signal. It indicates whether the FIFO is ready to accept an input element
+    // input ready signal. It indicates whether the FIFO is ready to accept an input element
     output logic                  elem_in_ready_o,
 
-    // The output element
+    // output element
     output logic [ELEM_WIDTH-1:0] elem_out_o,
-    // The output valid signal. It indicates whether the output element is valid
+    // output valid signal. It indicates whether the output element is valid
     output logic                  elem_out_valid_o,
-    // The output ready signal. It indicates whether the FIFO is ready to output an element
+    // output ready signal. It indicates whether the FIFO is ready to output an element
     input  logic                  elem_out_ready_i
 );
 

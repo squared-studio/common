@@ -5,12 +5,12 @@ Author : Foez Ahmed (foez.official@gmail.com)
 */
 
 module gray_to_bin #(
-    parameter int DATA_WIDTH = 4  // The width of the data
+    parameter int DATA_WIDTH = 4  // width of the data
 ) (
-    // The Gray code input
+    // Gray code input
     input logic [DATA_WIDTH-1:0] data_in_i,
 
-    // The binary code output
+    // binary code output
     output logic [DATA_WIDTH-1:0] data_out_o
 );
 
@@ -19,12 +19,12 @@ module gray_to_bin #(
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   // For each bit from `0` to `DATA_WIDTH - 2`, the corresponding bit in `data_out_o` is assigned
-  // the XOR of the next bit in `data_out_o` and the current bit in `data_in_i`.
+  // XOR of the next bit in `data_out_o` and the current bit in `data_in_i`.
   for (genvar i = 0; i < (DATA_WIDTH - 1); i++) begin : g_lsb
     assign data_out_o[i] = data_out_o[1+i] ^ data_in_i[i];
   end
 
-  // The most significant bit in `data_out_o` is assigned the most significant bit in `data_in_i`
+  // most significant bit in `data_out_o` is assigned the most significant bit in `data_in_i`
   assign data_out_o[DATA_WIDTH-1] = data_in_i[DATA_WIDTH-1];
 
 endmodule

@@ -1,13 +1,13 @@
 /*
-Write a markdown documentation for this systemverilog module:
-Author : Foez Ahmed (foez.official@gmail.com)
+The `round_robin_arbiter` module is a round-robin arbiter with a configurable number of requests.
+Author: Foez Ahmed (foez.official@gmail.com)
 */
 
 module round_robin_arbiter #(
-    parameter int NUM_REQ = 4
+    parameter int NUM_REQ = 4 // number of requests
 ) (
     input logic clk_i,   // Global clock
-    input logic arst_ni, // Asynchronous resent
+    input logic arst_ni, // Asynchronous reset
 
     input logic               allow_req_i,  // Allow requests
     input logic [NUM_REQ-1:0] req_i,        // Requests

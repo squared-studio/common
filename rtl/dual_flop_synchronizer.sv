@@ -11,24 +11,24 @@ module dual_flop_synchronizer #(
     // A bit that determines whether the last flip-flop runs on positive edges
     parameter bit LAST_FF_EDGE_POSEDGED  = 0
 ) (
-    input logic arst_ni,  // The asynchronous reset signal
-    input logic clk_i,    // The global clock signal
+    input logic arst_ni,  // asynchronous active low reset signal
+    input logic clk_i,    // global clock signal
 
-    input logic en_i,  // The enable signal
+    input logic en_i,  // enable signal
 
-    input logic d_i,  // The data input signal
+    input logic d_i,  // data input signal
 
-    output logic q_o  // The output signal
+    output logic q_o  // output signal
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  logic dff0_clk_in;  // The clock input for the first flip-flop
-  logic dff1_clk_in;  // The clock input for the second flip-flop
-  logic en_intermediate;  // The intermediate enable signal
-  logic q_intermediate;  // The intermediate output signal
+  logic dff0_clk_in;  // clock input for the first flip-flop
+  logic dff1_clk_in;  // clock input for the second flip-flop
+  logic en_intermediate;  // intermediate enable signal
+  logic q_intermediate;  // intermediate output signal
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-ASSIGNMENTS
@@ -41,7 +41,7 @@ module dual_flop_synchronizer #(
   //-SEQUENTIALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  // The first sequential block updates `en_intermediate` and `q_intermediate` at the positive edge
+  // first sequential block updates `en_intermediate` and `q_intermediate` at the positive edge
   // of `dff0_clk_in` or the negative edge of `arst_ni`.
   always @(posedge dff0_clk_in or negedge arst_ni) begin
     if (~arst_ni) begin
@@ -53,7 +53,7 @@ module dual_flop_synchronizer #(
     end
   end
 
-  // The second sequential block updates `q_o` at the positive edge of `dff1_clk_in` or the negative
+  // second sequential block updates `q_o` at the positive edge of `dff1_clk_in` or the negative
   // edge of `arst_ni`.
   always @(posedge dff1_clk_in or negedge arst_ni) begin
     if (~arst_ni) begin

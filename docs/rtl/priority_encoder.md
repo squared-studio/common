@@ -6,7 +6,9 @@
 <img src="./priority_encoder_top.svg">
 
 ## Description
- A simple priority encoder
+
+The `priority_encoder` module is a simple priority encoder with a configurable number of output
+wires and priority direction.
 
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|

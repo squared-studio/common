@@ -1,6 +1,7 @@
 /*
-Write a markdown documentation for this systemverilog module:
-Author : Md. Mohiuddin Reyad (mreyad30207@gmail.com)
+The `reg_file` module is a register file with a configurable number of source registers, register
+width, and an option to hardcode zero to the first register.
+Author: Md. Mohiuddin Reyad (mreyad30207@gmail.com)
 */
 
 module reg_file #(
@@ -10,7 +11,7 @@ module reg_file #(
     parameter int REG_WIDTH = 32  // width of each register
 ) (
     input logic clk_i,   // Global clock
-    input logic arst_ni, // Asynchronous reset
+    input logic arst_ni, // asynchronous active low reset
 
     input logic [$clog2(NUM_REG)-1:0] rd_addr_i,  // destination register address
     input logic [      REG_WIDTH-1:0] rd_data_i,  // read data

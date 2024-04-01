@@ -6,16 +6,16 @@ Author : Foez Ahmed (foez.official@gmail.com)
 */
 
 module circular_xbar #(
-    parameter int ELEM_WIDTH = 8,  // The width of each crossbar element
-    parameter int NUM_ELEM   = 6   // The number of elements in the crossbar
+    parameter int ELEM_WIDTH = 8,  // width of each crossbar element
+    parameter int NUM_ELEM   = 6   // number of elements in the crossbar
 ) (
-    // The rotation base select
+    // rotation base select
     input logic [$clog2(NUM_ELEM)-1:0] s_i,
 
-    // The array of input buses
+    // array of input buses
     input logic [NUM_ELEM-1:0][ELEM_WIDTH-1:0] i_i,
 
-    // The array of output buses
+    // array of output buses
     output logic [NUM_ELEM-1:0][ELEM_WIDTH-1:0] o_o
 );
 
@@ -23,7 +23,7 @@ module circular_xbar #(
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  // A 2D logic array of size `[NUM_ELEM-1:0][$clog2(NUM_ELEM)-1:0]` that holds the internal select
+  // A 2D logic array that holds the internal select
   // signals with offset handling.
   logic [NUM_ELEM-1:0][$clog2(NUM_ELEM)-1:0] selects;
 

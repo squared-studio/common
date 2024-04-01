@@ -32,22 +32,22 @@ Author : Foez Ahmed (foez.official@gmail.com)
 `include "default_param_pkg.sv"
 
 module axi4l_gpio #(
-    // The type of AXI4L request
+    // type of AXI4L request
     parameter  type axi4l_req_t  = default_param_pkg::axi4l_req_t,
-    // The type of AXI4L response
+    // type of AXI4L response
     parameter  type axi4l_resp_t = default_param_pkg::axi4l_resp_t,
-    // The size of the port in bytes
+    // size of the port in bytes
     parameter  int  PORT_SIZE    = 5,
     localparam int  PortBytes    = (2 ** PORT_SIZE)
 ) (
-    input logic clk_i,   // The input clock signal
-    input logic arst_ni, // The active-low reset signal
+    input logic clk_i,   // input clock signal
+    input logic arst_ni, // asynchronous active low reset signal
 
-    input axi4l_req_t req_i,  // The AXI4L request input
+    input axi4l_req_t req_i,  // AXI4L request input
 
-    output axi4l_resp_t resp_o,  // The AXI4L response output
+    output axi4l_resp_t resp_o,  // AXI4L response output
 
-    inout wire [PortBytes-1:0][7:0] port_io  // The inout port array
+    inout wire [PortBytes-1:0][7:0] port_io  // inout port array
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

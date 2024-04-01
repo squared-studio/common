@@ -10,7 +10,7 @@ module mem #(
     parameter int DEPTH      = 7   // Memory depth
 ) (
     input logic clk_i,   // Global clock
-    input logic arst_ni, // Asynchronous reset
+    input logic arst_ni, // asynchronous active low reset
 
     input logic                     we_i,     // Write enable
     input logic [$clog2(DEPTH)-1:0] waddr_i,  // Write address

@@ -21,16 +21,16 @@ The counter is reset to `RESET_VALUE` whenever `arst_ni` is low. The counter upd
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|
 |-|-|-|-|-|
-|MAX_COUNT|int||25|The maximum count value|
-|RESET_VALUE|bit [$clog2(MAX_COUNT+1)-1:0]||'0|The value to reset the counter to|
+|MAX_COUNT|int||25|maximum count value|
+|RESET_VALUE|bit [$clog2(MAX_COUNT+1)-1:0]||'0|value to reset the counter to|
 |UP_COUNT|bit||1|If set to 1, the counter will increment|
 |DOWN_COUNT|bit||1|If set to 1, the counter will decrement|
 
 ## Ports
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
-|clk_i|input|logic||The clock input|
-|arst_ni|input|logic||The asynchronous reset input|
-|up_i|input|logic||The increment control input|
-|down_i|input|logic||The decrement control input|
-|count_o|output|logic [$clog2(MAX_COUNT+1)-1:0]||The current count value|
+|clk_i|input|logic||clock input|
+|arst_ni|input|logic||asynchronous active low reset input|
+|up_i|input|logic||increment control input|
+|down_i|input|logic||decrement control input|
+|count_o|output|logic [$clog2(MAX_COUNT+1)-1:0]||current count value|
