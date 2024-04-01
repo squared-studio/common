@@ -7,13 +7,15 @@
 
 ## Description
 
-Write a markdown documentation for this systemverilog module:
+The `mux_primitive` module is a parameterized SystemVerilog module that implements a multiplexer.
+The module uses a loop to generate multiple assignments and buffers to control the output of the
+multiplexer.
 
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|
 |-|-|-|-|-|
-|ELEM_WIDTH|int||8|Width of each mux input element|
-|NUM_ELEM|int||6|Number of elements in the mux|
+|ELEM_WIDTH|int||8|The width of each multiplexer input element|
+|NUM_ELEM|int||6|The number of elements in the multiplexer|
 
 ## Ports
 |Name|Direction|Type|Dimension|Description|

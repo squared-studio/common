@@ -1,20 +1,22 @@
 /*
-Write a markdown documentation for this systemverilog module:
+The `mem_core` module is a parameterized SystemVerilog module that implements a memory core. The
+module uses a flip-flop to write data into the memory at the positive edge of the clock signal
+the write enable signal is high.
 Author : Foez Ahmed (foez.official@gmail.com)
 */
 
 module mem_core #(
-    parameter  int ELEM_WIDTH = 8,                 // Width of each memory data element
-    parameter  int ADDR_WIDTH = 8,                 // Width of the address bus
-    localparam int Depth      = (2 ** ADDR_WIDTH)  // Depth of the memory
+    parameter  int ELEM_WIDTH = 8,                 // The width of each memory data element
+    parameter  int ADDR_WIDTH = 8,                 // The width of the address bus
+    localparam int Depth      = (2 ** ADDR_WIDTH)  // The depth of the memory
 ) (
-    input logic clk_i,  // Global clock
+    input logic clk_i,  // The global clock signal
 
-    input logic                  we_i,    // Write enable
-    input logic [ADDR_WIDTH-1:0] addr_i,  // Address bus input
-    input logic [ELEM_WIDTH-1:0] wdata_i, // Write data
+    input logic                  we_i,    // The write enable signal
+    input logic [ADDR_WIDTH-1:0] addr_i,  // The address bus input
+    input logic [ELEM_WIDTH-1:0] wdata_i, // The write data
 
-    output logic [ELEM_WIDTH-1:0] rdata_o  // Read data
+    output logic [ELEM_WIDTH-1:0] rdata_o  // The read data
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

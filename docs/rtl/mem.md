@@ -7,7 +7,9 @@
 
 ## Description
 
-Write a markdown documentation for this systemverilog module:
+The `mem` module is a parameterized SystemVerilog module that implements a memory. The module uses a
+demultiplexer (`demux`), a register array (`register_dut`), and a multiplexer (`mux`) to control the
+memory.
 
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|

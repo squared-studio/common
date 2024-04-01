@@ -1,26 +1,30 @@
 /*
-Write a markdown documentation for this systemverilog module:
+The `io_pad` module is a SystemVerilog module that implements an I/O pad. The module uses a
+pull-down buffer, a data drive buffer, and a read data buffer to control the I/O pad.
 Author : Foez Ahmed (foez.official@gmail.com)
 */
 
 module io_pad #(
     //-PARAMETERS
 ) (
-    input wire pull_i,
-    input wire wdata_i,
-    input wire wen_i,
+    input wire pull_i,   // The pull-down control signal
+    input wire wdata_i,  // The write data signal
+    input wire wen_i,    // The write enable signal
 
-    output wire rdata_o,
+    output wire rdata_o,  // The read data signal
 
-    inout wire pin_io
+    inout wire pin_io  // The I/O pad pin
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-ASSIGNMENTS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
+  // This buffer pulls down `pin_io` when `pull_i` is `1` and `wdata_i` is `0`
   bufif1 (pull1, pull0) pull_down (pin_io, wdata_i, pull_i);
+  // This buffer drives `pin_io` with `wdata_i` when `wen_i` is `1`
   bufif1 (strong1, strong0) wdata_drive (pin_io, wdata_i, wen_i);
+  // This buffer drives `rdata_o` with `pin_io`
   buf (strong1, strong0) read_data (rdata_o, pin_io);
 
 endmodule

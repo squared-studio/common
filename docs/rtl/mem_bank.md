@@ -7,20 +7,22 @@
 
 ## Description
 
-Write a markdown documentation for this systemverilog module:
+The `mem_bank` module is a parameterized SystemVerilog module that implements a memory bank. The
+module uses a loop to generate multiple instances of the `mem_core` module, each with its own write
+enable signal.
 
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|
 |-|-|-|-|-|
-|ADDR_WIDTH|int||8|Memory bank address width|
-|DATA_SIZE|int||2|log2(bytes_in_databus)|
+|ADDR_WIDTH|int||8| The width of the memory bank address|
+|DATA_SIZE|int||2| The base-2 logarithm of the number of bytes in the data bus|
 
 ## Ports
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
-|clk_i|input|logic||Global clock|
-|cs_i|input|logic||Asynchronous reset|
-|addr_i|input|logic [ ADDR_WIDTH-1:0]||Aligned byte address|
-|wdata_i|input|logic [(8*(2**DATA_SIZE))-1:0]||Aligned write data|
-|wstrb_i|input|logic [ (2**DATA_SIZE)-1:0]||Aligned write strobe|
-|rdata_o|output|logic [(8*(2**DATA_SIZE))-1:0]||Aligned read data|
+|clk_i|input|logic||The global clock signal|
+|cs_i|input|logic||The asynchronous reset signal|
+|addr_i|input|logic [ ADDR_WIDTH-1:0]||The aligned byte address|
+|wdata_i|input|logic [(8*(2**DATA_SIZE))-1:0]||The aligned write data|
+|wstrb_i|input|logic [ (2**DATA_SIZE)-1:0]||The aligned write strobe|
+|rdata_o|output|logic [(8*(2**DATA_SIZE))-1:0]||The aligned read data|
