@@ -1,7 +1,4 @@
 # SystemVerilog IP Design & Verification
-Absolutely, here's a more detailed explanation of your directory structure:
-
-Sure, here's a more polished version of your text:
 
 ## Repository Structure
 The repository is structured into several directories, each with a distinct role:
