@@ -6,7 +6,8 @@
 <img src="./mux_primitive_top.svg">
 
 ## Description
- Premitive MUX
+
+Write a markdown documentation for this systemverilog module:
 
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|

@@ -6,7 +6,8 @@
 <img src="./mem_bank_top.svg">
 
 ## Description
- Memory bank with byte size storage. **All requests must be aligned**
+
+Write a markdown documentation for this systemverilog module:
 
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|

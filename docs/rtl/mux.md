@@ -6,7 +6,8 @@
 <img src="./mux_top.svg">
 
 ## Description
- General purpose MUX
+
+Write a markdown documentation for this systemverilog module:
 
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|

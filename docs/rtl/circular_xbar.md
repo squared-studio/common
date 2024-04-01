@@ -20,6 +20,6 @@ rotation base select.
 ## Ports
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
-|s_i|input|logic [$clog2(NUM_ELEM)-1:0]|| The rotation base select. It is a logic vector of size `[$clog2(NUM_ELEM)-1:0]`|
-|i_i|input|logic [NUM_ELEM-1:0][ELEM_WIDTH-1:0]|| The array of input buses. It is a 2D logic array of size `[NUM_ELEM-1:0][ELEM_WIDTH-1:0]`|
-|o_o|output|logic [NUM_ELEM-1:0][ELEM_WIDTH-1:0]|| The array of output buses. It is a 2D logic array of size `[NUM_ELEM-1:0][ELEM_WIDTH-1:0]`|
+|s_i|input|logic [$clog2(NUM_ELEM)-1:0]|| The rotation base select|
+|i_i|input|logic [NUM_ELEM-1:0][ELEM_WIDTH-1:0]|| The array of input buses|
+|o_o|output|logic [NUM_ELEM-1:0][ELEM_WIDTH-1:0]|| The array of output buses|

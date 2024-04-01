@@ -6,7 +6,8 @@
 <img src="./mem_core_top.svg">
 
 ## Description
- A simple memory building block.
+
+Write a markdown documentation for this systemverilog module:
 
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|

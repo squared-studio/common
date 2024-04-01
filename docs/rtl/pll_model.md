@@ -6,7 +6,8 @@
 <img src="./pll_model_top.svg">
 
 ## Description
- A PLL is a control system that generates an output signal whose phase is related to the phase of an input signal
+
+Write a markdown documentation for this systemverilog module:
 
 <img src="./pll_model_des.svg">
 

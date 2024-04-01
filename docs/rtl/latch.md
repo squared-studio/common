@@ -6,7 +6,8 @@
 <img src="./latch_top.svg">
 
 ## Description
- General Purpose Latch
+
+Write a markdown documentation for this systemverilog module:
 
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|

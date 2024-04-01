@@ -16,10 +16,10 @@ Author : Foez Ahmed (foez.official@gmail.com)
 module encoder #(
     parameter int NUM_WIRE = 16  // The number of output wires
 ) (
-    // The wire input. It is a logic vector with a width of `NUM_WIRE`
+    // The wire input
     input logic [NUM_WIRE-1:0] d_i,
 
-    // The address output. It is a logic vector with a width of `log2(NUM_WIRE)`
+    // The address output
     output logic [$clog2(NUM_WIRE)-1:0] addr_o,
     // The address valid output. It indicates whether the address output is valid
     output logic                        addr_valid_o

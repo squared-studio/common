@@ -13,12 +13,12 @@ Author : Foez Ahmed (foez.official@gmail.com)
 module decoder #(
     parameter int NUM_WIRE = 4  // This parameter determines the number of output wires
 ) (
-    // This is the address input. It is a logic vector with a width of `log2(NUM_WIRE)`
+    // This is the address input
     input logic [$clog2(NUM_WIRE)-1:0] a_i,       // Address input
     // This is a single bit input signal that indicates whether the address input is valid
     input logic                        a_valid_i, // Address Valid input
 
-    // This is the data output. It is a logic vector with a width of `NUM_WIRE`
+    // This is the data output
     output logic [NUM_WIRE-1:0] d_o  // data output
 );
 

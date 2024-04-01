@@ -6,7 +6,8 @@
 <img src="./reg_file_top.svg">
 
 ## Description
- combined register file for integer, vector and float
+
+Write a markdown documentation for this systemverilog module:
 
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|

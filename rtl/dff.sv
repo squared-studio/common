@@ -1,5 +1,5 @@
 /*
-The `dff` module is a D flip-flop with asynchronous reset. It is a fundamental building block in
+The `dff` module is a D flip-flop with asynchronous reset
 digital circuit design, commonly used for data storage and transfer.
 
 The flip-flop samples the `d_i` input and updates the `q_o` output at the rising edge of the clock

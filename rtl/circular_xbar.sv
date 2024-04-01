@@ -9,13 +9,13 @@ module circular_xbar #(
     parameter int ELEM_WIDTH = 8,  // The width of each crossbar element
     parameter int NUM_ELEM   = 6   // The number of elements in the crossbar
 ) (
-    // The rotation base select. It is a logic vector of size `[$clog2(NUM_ELEM)-1:0]`
+    // The rotation base select
     input logic [$clog2(NUM_ELEM)-1:0] s_i,
 
-    // The array of input buses. It is a 2D logic array of size `[NUM_ELEM-1:0][ELEM_WIDTH-1:0]`
+    // The array of input buses
     input logic [NUM_ELEM-1:0][ELEM_WIDTH-1:0] i_i,
 
-    // The array of output buses. It is a 2D logic array of size `[NUM_ELEM-1:0][ELEM_WIDTH-1:0]`
+    // The array of output buses
     output logic [NUM_ELEM-1:0][ELEM_WIDTH-1:0] o_o
 );
 

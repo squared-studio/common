@@ -19,10 +19,10 @@ module addr_decoder #(
     // The address map array
     parameter addr_map_t ADDR_MAP[NUM_RULES] = default_param_pkg::ADDR_MAP
 ) (
-    // The input address. It is a logic vector of size `[ADDR_WIDTH-1:0]`
+    // The input address
     input logic [ADDR_WIDTH-1:0] addr_i,
 
-    // The output slave index. It is a logic vector of size `[$clog2(NUM_SLV)-1:0]`
+    // The output slave index
     output logic [$clog2(NUM_SLV)-1:0] slave_index_o,
     // A logic output that indicates if the address was found in the address map
     output logic                       addr_found_o

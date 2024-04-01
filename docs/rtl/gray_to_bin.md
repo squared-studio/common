@@ -7,19 +7,18 @@
 
 ## Description
 
-A Gray to Binary code converter is a logical circuit that is used to convert gray code
-into its equivalent Binary code
-[more info](https://www.geeksforgeeks.org/code-converters-binary-to-from-gray-code/)
+The `gray_to_bin` module is a parameterized SystemVerilog module that converts a Gray code input to
+a binary code output. The module uses a loop and an XOR operation to perform the conversion.
 
 <img src="./gray_to_bin_des.svg">
 
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|
 |-|-|-|-|-|
-|DATA_WIDTH|int||4|Data Width|
+|DATA_WIDTH|int||4|The width of the data|
 
 ## Ports
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
-|data_in_i|input|logic [DATA_WIDTH-1:0]||gray code in|
-|data_out_o|output|logic [DATA_WIDTH-1:0]||binary code out|
+|data_in_i|input|logic [DATA_WIDTH-1:0]|| The Gray code input|
+|data_out_o|output|logic [DATA_WIDTH-1:0]|| The binary code output|

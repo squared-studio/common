@@ -27,6 +27,6 @@ output clock is toggled when the count reaches the high or low count threshold.
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
 |arst_ni|input|logic||The asynchronous global reset signal|
-|divisor_i|input|logic [DIVISOR_SIZE-1:0]|| The clock divisor. It is a logic vector with a width of `DIVISOR_SIZE`|
+|divisor_i|input|logic [DIVISOR_SIZE-1:0]|| The clock divisor|
 |clk_i|input|logic||The input clock signal|
 |clk_o|output|logic||The output clock signal|

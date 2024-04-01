@@ -17,10 +17,10 @@ module fixed_priority_arbiter #(
 ) (
     // The signal that allows requests to be made
     input logic               allow_req_i,
-    // The request signals. It is a logic vector with a width of `NUM_REQ`
+    // The request signals
     input logic [NUM_REQ-1:0] req_i,
 
-    // The grant address. It is a logic vector with a width of `log2(NUM_REQ)`
+    // The grant address
     output logic [$clog2(NUM_REQ)-1:0] gnt_addr_o,
     // The grant valid signal. It indicates whether the grant address is valid
     output logic                       gnt_addr_valid_o

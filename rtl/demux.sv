@@ -14,12 +14,12 @@ module demux #(
     parameter int NUM_ELEM   = 6,  //The number of elements
     parameter int ELEM_WIDTH = 8   //The width of each element
 ) (
-    // The select input. It is a logic vector with a width of `log2(NUM_ELEM)`
+    // The select input
     input logic [$clog2(NUM_ELEM)-1:0] s_i,
-    // The data input. It is a logic vector with a width of `ELEM_WIDTH`
+    // The data input
     input logic [ELEM_WIDTH-1:0] i_i,
 
-    // The output array. It is a 2D logic array with a size of `NUM_ELEM` by `ELEM_WIDTH`
+    // The output array
     output logic [NUM_ELEM-1:0][ELEM_WIDTH-1:0] o_o
 );
 
@@ -27,7 +27,7 @@ module demux #(
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  // The valid output signals. It is a logic vector with a width of `NUM_ELEM`
+  // The valid output signals
   logic [NUM_ELEM-1:0] valid_out;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////

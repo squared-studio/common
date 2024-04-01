@@ -18,7 +18,7 @@ module clk_div #(
 ) (
     input logic arst_ni,  // The asynchronous global reset signal
 
-    // The clock divisor. It is a logic vector with a width of `DIVISOR_SIZE`
+    // The clock divisor
     input logic [DIVISOR_SIZE-1:0] divisor_i,
 
     input logic clk_i,  // The input clock signal

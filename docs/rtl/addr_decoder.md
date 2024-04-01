@@ -23,6 +23,6 @@ appropriate slave based on the input address.
 ## Ports
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
-|addr_i|input|logic [ADDR_WIDTH-1:0]|| The input address. It is a logic vector of size `[ADDR_WIDTH-1:0]`|
-|slave_index_o|output|logic [$clog2(NUM_SLV)-1:0]|| The output slave index. It is a logic vector of size `[$clog2(NUM_SLV)-1:0]`|
+|addr_i|input|logic [ADDR_WIDTH-1:0]|| The input address|
+|slave_index_o|output|logic [$clog2(NUM_SLV)-1:0]|| The output slave index|
 |addr_found_o|output|logic|| A logic output that indicates if the address was found in the address map|

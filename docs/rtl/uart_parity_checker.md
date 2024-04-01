@@ -6,7 +6,8 @@
 <img src="./uart_parity_checker_top.svg">
 
 ## Description
- Description
+
+Write a markdown documentation for this systemverilog module:
 
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|

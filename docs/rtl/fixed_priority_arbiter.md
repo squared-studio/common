@@ -27,5 +27,5 @@ encoder takes the request signals as input and outputs the grant address and a v
 |-|-|-|-|-|
 |allow_req_i|input|logic|| The signal that allows requests to be made|
 |req_i|input|logic [NUM_REQ-1:0]|| The signal that allows requests to be made|
-|gnt_addr_o|output|logic [$clog2(NUM_REQ)-1:0]|| The grant address. It is a logic vector with a width of `log2(NUM_REQ)`|
+|gnt_addr_o|output|logic [$clog2(NUM_REQ)-1:0]|| The grant address|
 |gnt_addr_valid_o|output|logic|| The grant valid signal. It indicates whether the grant address is valid|

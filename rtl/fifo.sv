@@ -25,14 +25,14 @@ module fifo #(
     // The asynchronous reset signal
     input logic arst_ni,
 
-    // The input element. It is a logic vector with a width of `ELEM_WIDTH`
+    // The input element
     input  logic [ELEM_WIDTH-1:0] elem_in_i,
     // The input valid signal. It indicates whether the input element is valid
     input  logic                  elem_in_valid_i,
     // The input ready signal. It indicates whether the FIFO is ready to accept an input element
     output logic                  elem_in_ready_o,
 
-    // The output element. It is a logic vector with a width of `ELEM_WIDTH`
+    // The output element
     output logic [ELEM_WIDTH-1:0] elem_out_o,
     // The output valid signal. It indicates whether the output element is valid
     output logic                  elem_out_valid_o,
