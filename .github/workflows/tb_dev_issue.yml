@@ -14,21 +14,22 @@ jobs:
       - name: Create issues
         run: |
           for file in rtl/*.sv; do
-            title=$(basename "$file" | sed "s/\.sv/_tb/g")
+            folder=$(basename "${file}" | sed "s/\.sv/_tb/g")
+            title=$(echo "auto ${folder}")
             body=$(echo "Testbench Needed")
-            echo "Checking if issue '$title' exists"
-            issue_exists=$(gh issue list --search "$title" --json number -q '.[0].number')
-            if [ ! -d "tb/$title" ]; then
-              if [ -z "$issue_exists" ]; then
-                echo "Creating issue '$title'"
-                gh issue create --title "$title" --body "$body" --label "TB DEV"
+            echo "Checking if issue '${title}' exists"
+            issue_exists=$(gh issue list --search "${title}" --json number -q '.[0].number')
+            if [ ! -d "tb/${folder}" ]; then
+              if [ -z "${issue_exists}" ]; then
+                echo "Creating issue '${title}'"
+                gh issue create --title "${title}" --body "${body}"
               else
-                echo "Issue '$title' already exists"
+                echo "Issue '${title}' already exists"
               fi
             else
-              if [ ! -z "$issue_exists" ]; then
-                echo "Auto-closing '$title'"
-                gh issue close $issue_exists --comment "Auto-closing issue"
+              if [ ! -z "${issue_exists}" ]; then
+                echo "Auto-closing '${title}'"
+                gh issue close ${issue_exists} --comment "Auto-closing issue"
               fi
             fi            
           done
