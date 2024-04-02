@@ -1,0 +1,27 @@
+name: rtl_docs_check
+
+on:
+  push:
+    branches:
+      - '*'
+      - '!main'
+
+jobs:
+  build:
+    runs-on: [make, python]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Check docs
+      run: |
+        git submodule update --init sub/documenter
+        make update_doc_list
+        git diff > ___DIFF
+
+    - name: Fail if different
+      shell: bash
+      run: |
+        cat ___DIFF
+        [[ -s ___DIFF ]] && exit 1 || exit 0
