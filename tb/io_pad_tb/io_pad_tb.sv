@@ -57,15 +57,22 @@ module io_pad_tb;
   //-PROCEDURALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  initial begin  // main initial
+  // Main test sequence
+  initial begin
 
+    // Start the clock
     start_clk_i();
 
+    // Fork-join to run multiple threads in parallel
     fork
+
+      // Wait for two clock cycles before starting the checks
       repeat (2) @(posedge clk_i);
+
       begin
         fork
 
+          // Check the read data signal in every clock cycle
           forever begin
             @(posedge clk_i);
             if (pin_io === 'z) begin
@@ -75,6 +82,7 @@ module io_pad_tb;
             end
           end
 
+          // Check the IO pin signal in every clock cycle
           forever begin
             @(posedge clk_i);
             if (wen_i) begin
@@ -92,8 +100,10 @@ module io_pad_tb;
 
         join
       end
+
     join_none
 
+    // Generate random inputs for 1001 clock cycles
     repeat (1001) begin
       @(posedge clk_i);
       pull_i  <= $urandom;
@@ -103,9 +113,11 @@ module io_pad_tb;
       pin_drv <= $urandom;
     end
 
+    // Print the results
     result_print(!pin_io_err, "pin_io OK");
     result_print(!rdata_o_err, "rdata_o OK");
 
+    // Finish the simulation
     $finish;
 
   end

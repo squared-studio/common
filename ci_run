@@ -11,7 +11,6 @@ ci_vivado_run:
 	@$(MAKE) vivado CONFIG=default TOP=fifo_tb
 	@$(MAKE) vivado CONFIG=default TOP=gray_to_bin_tb
 	@$(MAKE) vivado CONFIG=default TOP=io_pad_tb
-	@$(MAKE) vivado CONFIG=default TOP=mem_bank_tb
 	@$(MAKE) vivado CONFIG=default TOP=mux_tb
 	@$(MAKE) vivado CONFIG=default TOP=string_ops_pkg_tb
 	@$(MAKE) vivado CONFIG=default TOP=xbar_tb

@@ -44,23 +44,14 @@ module mux_tb #(
 
   // randomly input data for mux will be generated
   task static random_input(output int pass, output int fail);
+  
     for (int i = 0; i < NUM_ELEM; i++) begin
       inputs_i[i] = $urandom_range(0, 2 ** ELEM_WIDTH);
-`ifdef DEBUG
-
-      $display("inputs_i[%0d] =%0d", i, inputs_i[i]);
-`endif  //DEBUG
-
     end
 
     foreach (inputs_i[i]) begin
       sel_i = $urandom_range(0, (NUM_ELEM - 1));
       #2;
-`ifdef DEBUG
-
-      $display("sel_i = %0d,output_o = %0d", sel_i, output_o);
-`endif  //DEBUG
-
       if (inputs_i[sel_i] != output_o) fail++;
       else pass++;
     end
