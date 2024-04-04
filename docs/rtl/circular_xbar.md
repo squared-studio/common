@@ -8,8 +8,8 @@
 ## Description
 
 The `circular_xbar` module is a parameterized SystemVerilog module that implements a circular
-crossbar switch. The module uses a multiplexer to select the appropriate output based on the
-rotation base select.
+crossbar switch. The module uses a xbar to select the appropriate output based on the rotation base
+select.
 
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|
