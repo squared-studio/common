@@ -44,7 +44,7 @@ module mux_tb #(
 
   // randomly input data for mux will be generated
   task static random_input(output int pass, output int fail);
-  
+
     for (int i = 0; i < NUM_ELEM; i++) begin
       inputs_i[i] = $urandom_range(0, 2 ** ELEM_WIDTH);
     end
