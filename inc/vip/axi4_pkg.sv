@@ -1,5 +1,8 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com))
 
+`ifndef AXI4_PKG_SV
+`define AXI4_PKG_SV
+
 package axi4_pkg;
 
   `include "axi4_typedef.svh"
@@ -35,12 +38,10 @@ package axi4_pkg;
 
     constraint burst_c {
       BURST inside {FIXED, INCR, WRAP};
-      if (BURST == FIXED) {
-        LEN < 16;
-      }
+      if (BURST == FIXED) {LEN < 16;}
       if (BURST == INCR) {
         ((2 ** SIZE) * (1 + LEN)) <= (2 ** 12);
-        (((2 ** SIZE) * (1 + LEN)) - (ADDR % (2**SIZE))) < (2**12);
+        (((2 ** SIZE) * (1 + LEN)) - (ADDR % (2 ** SIZE))) < (2 ** 12);
       }
       if (BURST == WRAP) {
         (ADDR % (2 ** SIZE)) == 0;
@@ -141,3 +142,5 @@ package axi4_pkg;
   endclass
 
 endpackage
+
+`endif

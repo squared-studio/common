@@ -11,7 +11,7 @@ TOP_DIR     = $(shell find $(realpath ./tb/) -wholename "*$(TOP)/$(TOP).sv" | se
 TBF_LIB     = $(shell find $(TOP_DIR) -name "*.v" -o -name "*.sv")
 DES_LIB     = $(shell find $(realpath ./rtl/) -name "*.v" -o -name "*.sv")
 INTF_LIB    = $(shell find $(realpath ./intf/) -name "*.sv")
-INC_DIR     = $(realpath ./include)
+INC_DIR     = $(realpath ./inc)
 RTL_FILE    = $(shell find $(realpath ./rtl/) -name "$(RTL).sv")
 CONFIG      = default
 CONFIG_PATH = $(TOP_DIR)/config/$(CONFIG)
@@ -121,7 +121,7 @@ help:
 
 .PHONY: gen_check_list
 gen_check_list:
-	@$(eval CHECK_LIST := $(shell find include -name "*.v" -o -name "*.vh" -o -name "*.sv" -o -name "*.svh"))
+	@$(eval CHECK_LIST := $(shell find inc -name "*.v" -o -name "*.vh" -o -name "*.sv" -o -name "*.svh"))
 	@$(eval CHECK_LIST += $(shell find rtl -name "*.v" -o -name "*.vh" -o -name "*.sv" -o -name "*.svh"))
 	@$(eval CHECK_LIST += $(shell find intf -name "*.v" -o -name "*.vh" -o -name "*.sv" -o -name "*.svh"))
 	@$(eval CHECK_LIST += $(shell find tb -name "*.v" -o -name "*.vh" -o -name "*.sv" -o -name "*.svh"))
@@ -446,7 +446,7 @@ update_doc_list: create_all_docs
 	@$(foreach file, $(shell find ./docs/rtl -name "*.md"), $(MAKE) get_rtl_doc_header FILE=$(file);)
 	@echo "" >> readme.md
 	@echo "## INCLUDE" >> readme.md
-	@$(foreach file, $(shell find ./docs/include -name "*.md"), $(MAKE) get_inc_doc_header FILE=$(file);)
+	@$(foreach file, $(shell find ./docs/inc -name "*.md"), $(MAKE) get_inc_doc_header FILE=$(file);)
 	@echo "" >> readme.md
 
 .PHONY: clear_all_docs
@@ -466,7 +466,7 @@ get_rtl_doc_header:
 
 .PHONY: get_inc_doc_header
 get_inc_doc_header:
-	@$(eval HEADER := $(shell echo $(FILE) | sed "s/\.\/docs\/include\///g" | sed "s/\.md$$//g"))
+	@$(eval HEADER := $(shell echo $(FILE) | sed "s/\.\/docs\/inc\///g" | sed "s/\.md$$//g"))
 	@echo "[$(HEADER)]($(FILE))<br>" >> readme.md
 
 .PHONY: gen_doc

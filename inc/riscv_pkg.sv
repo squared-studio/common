@@ -1,3 +1,7 @@
+
+`ifndef RISCV_PKG_SV
+`define RISCV_PKG_SV
+
 package riscv_pkg;
 
   localparam int NumReg = 32;
@@ -7,6 +11,8 @@ package riscv_pkg;
     INVALID,
     ADD,
     ADDI,
+    ADDIW,
+    ADDW,
     AND,
     ANDI,
     AUIPC,
@@ -23,25 +29,35 @@ package riscv_pkg;
     JALR,
     LB,
     LBU,
+    LD,
     LH,
     LHU,
     LUI,
     LW,
+    LWU,
     OR,
     ORI,
     SB,
+    SD,
     SH,
     SLL,
     SLLI,
+    SLLIW,
+    SLLW,
     SLT,
     SLTI,
     SLTIU,
     SLTU,
     SRA,
     SRAI,
+    SRAIW,
+    SRAW,
     SRL,
     SRLI,
+    SRLIW,
+    SRLW,
     SUB,
+    SUBW,
     SW,
     XOR,
     XORI
@@ -60,3 +76,5 @@ package riscv_pkg;
   } decoded_instr_t;
 
 endpackage
+
+`endif

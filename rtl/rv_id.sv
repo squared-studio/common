@@ -10,6 +10,8 @@ Author : Foez Ahmed (foez.official@gmail.com)
 //`include "axi4_typedef.svh"
 //`include "default_param_pkg.sv"
 
+`include "riscv_pkg.sv"
+
 module rv_id
   import riscv_pkg::*;
 #(

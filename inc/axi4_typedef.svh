@@ -1,6 +1,9 @@
 // TYPE DEFINIATION FOR AXI4 LITE CHANNELS AND REQUEST-RESPONSE STRUCTURE
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
+`ifndef AXI4_TYPEDEF_SVH
+`define AXI4_TYPEDEF_SVH
+
 `define AXI4_R_USER_T(__NM__, __UDTAW__, __URSPW__)                                                \
   typedef struct packed {                                                                          \
     logic [``__UDTAW__``-1:0] data ;                                                               \
@@ -88,3 +91,5 @@
   `AXI4_REQ_T(``__NM__``_req_t, ``__NM__``_aw_chan_t, ``__NM__``_w_chan_t, ``__NM__``_ar_chan_t)   \
   `AXI4_RESP_T(``__NM__``_resp_t, ``__NM__``_b_chan_t, ``__NM__``_r_chan_t)                        \
 
+
+`endif

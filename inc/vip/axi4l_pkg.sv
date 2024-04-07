@@ -1,5 +1,8 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com))
 
+`ifndef AXI4L_PKG_SV
+`define AXI4L_PKG_SV
+
 `include "axi4l_typedef.svh"
 `include "vip/memory_pkg.sv"
 
@@ -597,3 +600,5 @@ package axi4l_pkg;
   endclass
 
 endpackage
+
+`endif

@@ -1,5 +1,7 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
+`ifndef BUS_DVR_MON_SVH
+`define BUS_DVR_MON_SVH
 
 `define HANDSHAKE_SEND_RECV_LOOK(__NAME__, __TYPE__, __clk__, __CHAN__, __VALID__, __READY__)      \
   /*--------------------------------------------------------------------------------------------*/ \
@@ -83,3 +85,5 @@
   endtask                                                                                          \
   /*--------------------------------------------------------------------------------------------*/ \
 
+
+`endif

@@ -1,5 +1,8 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com))
 
+`ifndef AXI4L_PKG_MACROS_SVH
+`define AXI4L_PKG_MACROS_SVH
+
 `include "axi4l_assign.svh"
 
 `define IMPORT_AXI4L_PKG_CLASSES                                                                   \
@@ -56,3 +59,5 @@
   end                                                                                              \
   /*---------------------------------------------------------------------------------------------*/\
 
+
+`endif

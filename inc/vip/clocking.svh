@@ -1,5 +1,8 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com))
 
+`ifndef CLOCKING_SVH
+`define CLOCKING_SVH
+
 // Checks for Pulse width less than specified
 `define CLK_GLITCH_MON(__ARST_N__, __CLK__, __TIME_PERIOD_HIGH__, __TIME_PERIOD_LOW__)             \
   bit ``__CLK__``_``__TIME_PERIOD_HIGH__``_``__TIME_PERIOD_LOW__``_fail = 0;                       \
@@ -99,3 +102,5 @@
       `"``__DEST_CLK__`` ``__EN__`` gating`");                                                     \
   end                                                                                              \
 
+
+`endif

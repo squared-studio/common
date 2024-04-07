@@ -1,5 +1,8 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com)
 
+`ifndef TB_ESS_SV
+`define TB_ESS_SV
+
 `ifndef CONGIF
   `define CONFIG "default"
 `endif  // CONGIF
@@ -39,3 +42,5 @@ function automatic void result_print(bit PASS, string msg);
   $sformat(msg, "%s \033[1;33m[%s]\033[0m", msg, top_module_name);
   $display(msg);
 endfunction
+
+`endif

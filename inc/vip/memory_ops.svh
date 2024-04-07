@@ -1,5 +1,8 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com))
 
+`ifndef MEMORY_OPS_SVH
+`define MEMORY_OPS_SVH
+
 `define LOAD_HEX(__FILE_PATH__, __MEM__)                                                           \
   begin                                                                                            \
     int file_descriptor;                                                                           \
@@ -91,3 +94,5 @@
     $fclose(file_descriptor);                                                                      \
   end                                                                                              \
 
+
+`endif

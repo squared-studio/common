@@ -5,7 +5,7 @@ The repository is structured into several directories, each with a distinct role
 
 - **docs**: Contains all the documentation files.
 
-- **include**: Houses include files, which are incorporated into other SystemVerilog files using the ``` `include``` directive. These files, which may or may not be part of the RTL, are further categorized into folders based on their protocol or use case. **Note that this does not include certain include files located in the Testbench directory.**
+- **inc**: Houses include files, which are incorporated into other SystemVerilog files using the ``` `include``` directive. These files, which may or may not be part of the RTL, are further categorized into folders based on their protocol or use case. **Note that this does not include certain include files located in the Testbench directory.**
 
 - **intf**: Stores SystemVerilog interfaces, which are recommended solely for verification purposes and not for RTL design. We favor structured IOs for requests and responses to facilitate connections, as opposed to using interfaces.
 
@@ -55,13 +55,14 @@ To know how to use different commands on this repo, type `make help` or just `ma
 [register_dual_flop ](./docs/rtl/register_dual_flop.md)<br>
 [reg_file ](./docs/rtl/reg_file.md)<br>
 [round_robin_arbiter ](./docs/rtl/round_robin_arbiter.md)<br>
+[rv_id ](./docs/rtl/rv_id.md)<br>
 [shift_register ](./docs/rtl/shift_register.md)<br>
 [sr_latch_arstn ](./docs/rtl/sr_latch_arstn.md)<br>
 [uart_parity_checker ](./docs/rtl/uart_parity_checker.md)<br>
 [xbar ](./docs/rtl/xbar.md)<br>
 
 ## INCLUDE
-[axi4l_typedef.svh](./docs/include/axi4l_typedef.svh.md)<br>
-[axi4_typedef.svh](./docs/include/axi4_typedef.svh.md)<br>
-[vip/axi4l_pkg.sv](./docs/include/vip/axi4l_pkg.sv.md)<br>
+[axi4l_typedef.svh](./docs/inc/axi4l_typedef.svh.md)<br>
+[axi4_typedef.svh](./docs/inc/axi4_typedef.svh.md)<br>
+[vip/axi4l_pkg.sv](./docs/inc/vip/axi4l_pkg.sv.md)<br>
 

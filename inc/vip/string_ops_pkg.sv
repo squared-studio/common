@@ -1,5 +1,8 @@
 // ### Author : Foez Ahmed (foez.official@gmail.com))
 
+`ifndef STRING_OPS_SV
+`define STRING_OPS_SV
+
 package string_ops_pkg;
 
   // Returns the decimal value after the provided keyword=
@@ -84,3 +87,5 @@ package string_ops_pkg;
   endfunction
 
 endpackage
+
+`endif

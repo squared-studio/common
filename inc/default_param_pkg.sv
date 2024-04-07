@@ -1,3 +1,7 @@
+
+`ifndef DEFAULT_PARAM_PKG_SV
+`define DEFAULT_PARAM_PKG_SV
+
 package default_param_pkg;
 
   `include "addr_map.svh"
@@ -23,3 +27,5 @@ package default_param_pkg;
   `AXI4L_T(axi4l, AXI4L_ADDR_WIDTH, AXI4L_DATA_WIDTH)
 
 endpackage
+
+`endif

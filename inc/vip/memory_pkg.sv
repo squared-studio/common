@@ -1,3 +1,6 @@
+`ifndef MEMORY_PKG_SV
+`define MEMORY_PKG_SV
+
 package memory_pkg;
 
   `include "vip/memory_ops.svh"
@@ -24,3 +27,5 @@ package memory_pkg;
   endclass
 
 endpackage
+
+`endif
