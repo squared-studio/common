@@ -176,7 +176,7 @@ flist: locate_files
 schematic: locate_files
 	@echo "$(RTL)" > ___RTL
 	@echo "create_project top" > top.tcl
-	@echo "set_property include_dirs ./include [current_fileset]" >> top.tcl
+	@echo "set_property include_dirs ./inc [current_fileset]" >> top.tcl
 	@$(foreach word, $(shell cat ___flist), echo "add_files $(word)" >> top.tcl;)
 	@echo "set_property top $(RTL) [current_fileset]" >> top.tcl
 	@echo "start_gui" >> top.tcl
