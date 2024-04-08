@@ -3,13 +3,6 @@ Write a markdown documentation for this systemverilog module:
 Author : Foez Ahmed (foez.official@gmail.com)
 */
 
-//`include "addr_map.svh"
-//`include "axi4l_assign.svh"
-//`include "axi4l_typedef.svh"
-//`include "axi4_assign.svh"
-//`include "axi4_typedef.svh"
-//`include "default_param_pkg.sv"
-
 `include "riscv_pkg.sv"
 
 module rv_id
@@ -97,7 +90,6 @@ module rv_id
           end
         endcase
       end
-
 
     endcase
   end

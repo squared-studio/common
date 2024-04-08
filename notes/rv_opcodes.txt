@@ -1,3 +1,4 @@
+# LOAD
 [ ] 0x03 RV32I LB -------- rd = mem[rs1+imm[11:0]]; // SIGNED
 [ ] 0x03 RV32I LBU ------- rd = mem[rs1+imm[11:0]]; // UNSIGNED
 [ ] 0x03 RV32I LH -------- rd = mem[rs1+imm[11:0]]; // SIGNED
@@ -6,12 +7,15 @@
 [ ] 0x03 RV64I LWU ------- rd = mem[rs1+imm[11:0]]; // UNSIGNED
 [ ] 0x03 RV64I LD -------- rd = mem[rs1+imm[11:0]]; // SIGNED
 
+# LOAD_FP
 [ ] 0x07 RV32D FLD
 [ ] 0x07 RV32F FLW
 [ ] 0x07 RV32Q FLQ
 
+# MISC_MEM
 [ ] 0x0F RV32I FENCE
 
+# OP_IMM
 [ ] 0x13 RV32I ADDI ------ rd = rs1 + imm[11:0];
 [ ] 0x13 RV32I ANDI ------ rd = rs1 + imm[11:0];
 [ ] 0x13 RV32I ORI ------- rd = rs1 + imm[11:0];
@@ -25,22 +29,27 @@
 [ ] 0x13 RV64I SRAI ------ 
 [ ] 0x13 RV64I SRLI ------ 
 
+# AUIPC
 [ ] 0x17 RV32I AUIPC
 
+# OP_IMM_32
 [ ] 0x1B RV64I ADDIW
 [ ] 0x1B RV64I SLLIW
 [ ] 0x1B RV64I SRAIW
 [ ] 0x1B RV64I SRLIW
 
+# STORE
 [ ] 0x23 RV32I SB -------- mem[rs1 + imm[11:0]][07:0] = rs2[07:0];
 [ ] 0x23 RV32I SH -------- mem[rs1 + imm[11:0]][15:0] = rs2[15:0];
 [ ] 0x23 RV32I SW -------- mem[rs1 + imm[11:0]][31:0] = rs2[31:0];
 [ ] 0x23 RV64I SD -------- mem[rs1 + imm[11:0]][63:0] = rs2[63:0];
 
+# STORE_FP
 [ ] 0x27 RV32D FSD
 [ ] 0x27 RV32F FSW
 [ ] 0x27 RV32Q FSQ
 
+# AMO
 [ ] 0x2F RV32A AMOADD_W
 [ ] 0x2F RV32A AMOAND_W
 [ ] 0x2F RV32A AMOMAX_W
@@ -64,6 +73,7 @@
 [ ] 0x2F RV64A LR_D
 [ ] 0x2F RV64A SC_D
 
+# OP
 [ ] 0x33 RV32I ADD
 [ ] 0x33 RV32I AND
 [ ] 0x33 RV32I OR
@@ -83,8 +93,10 @@
 [ ] 0x33 RV32M REM
 [ ] 0x33 RV32M REMU
 
+# LUI
 [ ] 0x37 RV32I LUI
 
+# OP_32
 [ ] 0x3B RV64I ADDW
 [ ] 0x3B RV64I SLLW
 [ ] 0x3B RV64I SRAW
@@ -96,22 +108,27 @@
 [ ] 0x3B RV64M REMUW
 [ ] 0x3B RV64M REMW
 
+# MADD
 [ ] 0x43 RV32D FMADD_D
 [ ] 0x43 RV32F FMADD_S
 [ ] 0x43 RV32Q FMADD_Q
 
+# MSUB
 [ ] 0x47 RV32D FMSUB_D
 [ ] 0x47 RV32F FMSUB_S
 [ ] 0x47 RV32Q FMSUB_Q
 
+# NMSUB
 [ ] 0x4B RV32D FNMSUB_D
 [ ] 0x4B RV32F FNMSUB_S
 [ ] 0x4B RV32Q FNMSUB_Q
 
+# NMADD
 [ ] 0x4F RV32D FNMADD_D
 [ ] 0x4F RV32F FNMADD_S
 [ ] 0x4F RV32Q FNMADD_Q
 
+# OP_FP
 [ ] 0x53 RV32D FADD_D
 [ ] 0x53 RV32D FCLASS_D
 [ ] 0x53 RV32D FCVT_D_S
@@ -189,6 +206,7 @@
 [ ] 0x53 RV64Q FCVT_Q_L
 [ ] 0x53 RV64Q FCVT_Q_LU
 
+# BRANCH
 [ ] 0x63 RV32I BEQ
 [ ] 0x63 RV32I BGE
 [ ] 0x63 RV32I BGEU
@@ -196,9 +214,12 @@
 [ ] 0x63 RV32I BLTU
 [ ] 0x63 RV32I BNE
 
+# JALR
 [ ] 0x67 RV32I JALR
 
+# JAL
 [ ] 0x6F RV32I JAL
 
+# SYSTEM
 [ ] 0x73 RV32I EBREAK
 [ ] 0x73 RV32I ECALL
