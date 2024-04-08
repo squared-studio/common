@@ -3,9 +3,9 @@
 <g style="fill:white;stroke:black;stroke-width:1">
 <rect width="225" height="225" x="60" y="60"/>
 <polygon points="10,145 10,135 30,135 40,145 60,145 40,145 30,155 10,155 10,145"/>
-<text x="65" y="135" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">instr_i</text>
+<text x="65" y="135" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">inst_i</text>
 <polygon points="10,195 20,185 40,185 40,195 60,195 40,195 40,205 20,205 10,195"/>
-<text x="65" y="185" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">decode_o</text>
+<text x="65" y="185" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">inst_o</text>
 <text x="170" y="300" dominant-baseline="hanging" text-anchor="middle" font-size="30" style="fill:black;stroke:black;stroke-width:0">rv_id</text>
 </g>
 </svg>
