@@ -413,7 +413,7 @@ create_tb:
 		(	\
 			mkdir -p ./tb/$(TOP) && cat tb_model.sv	\
 			  | sed "s/^module tb_model;$$/module $(TOP);/g" \
-			  | sed "s/.*### Author :.*/\/\/ ### Author : $(GIT_UNAME) ($(GIT_UMAIL))/g" \
+			  | sed "s/.*Author :.*/\/\/ ### Author : $(GIT_UNAME) ($(GIT_UMAIL))/g" \
 				> ./tb/$(TOP)/$(TOP).sv \
 		)
 	@code ./tb/$(TOP)/$(TOP).sv
@@ -429,7 +429,7 @@ create_rtl:
 		(	\
 			cat rtl_model.sv	\
 			  | sed "s/^module rtl_model #($$/module $(RTL) #(/g" \
-			  | sed "s/.*### Author :.*/\/\/ ### Author : $(GIT_UNAME) ($(GIT_UMAIL))/g" \
+			  | sed "s/.*Author :.*/\/\/ ### Author : $(GIT_UNAME) ($(GIT_UMAIL))/g" \
 				> ./rtl/$(RTL).sv \
 		)
 	@code ./rtl/$(RTL).sv

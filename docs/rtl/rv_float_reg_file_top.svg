@@ -1,0 +1,37 @@
+<svg height="1090" width="1090" xmlns="http://www.w3.org/2000/svg">
+<rect width="100%" height="100%" x="0" y="0" style="fill:white;stroke:white;stroke-width:0"/>
+<g style="fill:white;stroke:black;stroke-width:1">
+<rect width="975" height="975" x="60" y="60"/>
+<polygon points="10,95 10,85 30,85 40,95 60,95 40,95 30,105 10,105 10,95"/>
+<text x="65" y="85" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">clk_i</text>
+<polygon points="10,145 10,135 30,135 40,145 60,145 40,145 30,155 10,155 10,145"/>
+<text x="65" y="135" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">arst_ni</text>
+<polygon points="10,245 10,235 30,235 40,245 60,245 40,245 30,255 10,255 10,245"/>
+<text x="65" y="235" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">rs1_addr_i</text>
+<polygon points="10,295 10,285 30,285 40,295 60,295 40,295 30,305 10,305 10,295"/>
+<text x="65" y="285" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">rs1_fmt_i</text>
+<polygon points="10,345 20,335 40,335 40,345 60,345 40,345 40,355 20,355 10,345"/>
+<text x="65" y="335" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">rs1_data_o</text>
+<polygon points="10,445 10,435 30,435 40,445 60,445 40,445 30,455 10,455 10,445"/>
+<text x="65" y="435" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">rs2_addr_i</text>
+<polygon points="10,495 10,485 30,485 40,495 60,495 40,495 30,505 10,505 10,495"/>
+<text x="65" y="485" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">rs2_fmt_i</text>
+<polygon points="10,545 20,535 40,535 40,545 60,545 40,545 40,555 20,555 10,545"/>
+<text x="65" y="535" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">rs2_data_o</text>
+<polygon points="10,645 10,635 30,635 40,645 60,645 40,645 30,655 10,655 10,645"/>
+<text x="65" y="635" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">rs3_addr_i</text>
+<polygon points="10,695 10,685 30,685 40,695 60,695 40,695 30,705 10,705 10,695"/>
+<text x="65" y="685" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">rs3_fmt_i</text>
+<polygon points="10,745 20,735 40,735 40,745 60,745 40,745 40,755 20,755 10,745"/>
+<text x="65" y="735" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">rs3_data_o</text>
+<polygon points="10,845 10,835 30,835 40,845 60,845 40,845 30,855 10,855 10,845"/>
+<text x="65" y="835" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">rd_addr_i</text>
+<polygon points="10,895 10,885 30,885 40,895 60,895 40,895 30,905 10,905 10,895"/>
+<text x="65" y="885" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">rd_fmt_i</text>
+<polygon points="10,945 10,935 30,935 40,945 60,945 40,945 30,955 10,955 10,945"/>
+<text x="65" y="935" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">rd_data_i</text>
+<polygon points="10,995 10,985 30,985 40,995 60,995 40,995 30,1005 10,1005 10,995"/>
+<text x="65" y="985" dominant-baseline="hanging" text-anchor="start" font-size="20" style="fill:black;stroke:black;stroke-width:0">rd_en_i</text>
+<text x="545" y="1050" dominant-baseline="hanging" text-anchor="middle" font-size="30" style="fill:black;stroke:black;stroke-width:0">rv_float_reg_file</text>
+</g>
+</svg>
