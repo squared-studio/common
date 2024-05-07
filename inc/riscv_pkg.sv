@@ -232,6 +232,30 @@ package riscv_pkg;
     logic [11:0] csr;
   } decoded_inst_t;
 
+  typedef struct packed {
+    logic sign;
+    logic [4:0] exponent;
+    logic [9:0] mantissa;
+  } float16_t;
+
+  typedef struct packed {
+    logic sign;
+    logic [7:0] exponent;
+    logic [22:0] mantissa;
+  } float32_t;
+
+  typedef struct packed {
+    logic sign;
+    logic [10:0] exponent;
+    logic [51:0] mantissa;
+  } float64_t;
+
+  typedef struct packed {
+    logic sign;
+    logic [14:0] exponent;
+    logic [111:0] mantissa;
+  } float128_t;
+
 endpackage
 
 `endif

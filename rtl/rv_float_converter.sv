@@ -12,7 +12,12 @@ Write a markdown documentation for this systemverilog module:
 0100000
 */
 
-module rv_float_converter #(
+module rv_float_converter
+// import riscv_pkg::float16_t;
+// import riscv_pkg::float32_t;
+// import riscv_pkg::float64_t;
+// import riscv_pkg::float128_t;
+#(
     parameter  bit UP_CONV     = 1,
     parameter  bit DOWN_CONV   = 0,
     parameter  bit DOUBLE      = 1,
@@ -57,17 +62,21 @@ module rv_float_converter #(
   //-SIGNALS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  logic [127:0] masked_data_i;  // masked version of the input data
-  logic         is_non_zero;  // signifies whether data_i is zero
-  logic         is_nan_infinite;  // signifies whether data_i is NaN or infinite
-  logic [127:0] up_data;  // data after up conversion
-  logic [127:0] down_data;  // data after down conversion
+  logic [          127:0] masked_data_i;  // masked version of the input data
+  logic                   is_non_zero;  // signifies whether data_i is zero
+  logic                   is_nan_infinite;  // signifies whether data_i is NaN or infinite
+  logic [MaxRegWidth-1:0] up_data;  // data after up conversion
+  logic [MaxRegWidth-1:0] round_data;  // data after rounding
+  logic [MaxRegWidth-1:0] down_data;  // data after down conversion
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-ASSIGNMENTS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
+  ////////////////////////////////////////////////
   // Generate masked data
+  ////////////////////////////////////////////////
+
   always_comb begin
     masked_data_i = '0;
     case (ip_fmt_i)
@@ -78,7 +87,10 @@ module rv_float_converter #(
     endcase
   end
 
+  ////////////////////////////////////////////////
   // is zero?
+  ////////////////////////////////////////////////
+
   always_comb begin
     is_non_zero = 0;
     for (int i = 0; i < 15; i++) is_non_zero |= masked_data_i[i];
@@ -93,7 +105,10 @@ module rv_float_converter #(
     end
   end
 
+  ////////////////////////////////////////////////
   // is infinite/nan?
+  ////////////////////////////////////////////////
+
   always_comb begin
     is_nan_infinite = '0;
     case (ip_fmt_i)
@@ -124,18 +139,18 @@ module rv_float_converter #(
   // UP_CONV
   ////////////////////////////////////////////////
 
-  `define UP_CONV(__SRC__, __SRC_BIAS__, __DST_BIAS__, __SRC_MANTS__, __DST_MANTS__)               \
-    begin                                                                                          \
-      float``__SRC__``_t src;                                                                      \
-      src = masked_data_i;                                                                         \
-      dst.sign = src.sign;                                                                         \
-      if (is_nan_infinite) dst.exponent = '1;                                                      \
-      else dst.exponent = src.exponent + ``__DST_BIAS__`` - ``__SRC_BIAS__``;                      \
-      dst.mantissa = '0;                                                                           \
-      for (int i = 0; i < ``__SRC_MANTS__``; i++) begin                                            \
-        dst.mantissa[i+ ``__DST_MANTS__`` - ``__SRC_MANTS__`` ] = src.mantissa[i];                 \
-      end                                                                                          \
-    end                                                                                            \
+  `define UP_CONV(__SRC__, __SRC_BIAS__, __DST_BIAS__, __SRC_MANTS__, __DST_MANTS__) \
+    begin                                                                            \
+      float``__SRC__``_t src;                                                        \
+      src = masked_data_i;                                                           \
+      dst.sign = src.sign;                                                           \
+      if (is_nan_infinite) dst.exponent = '1;                                        \
+      else dst.exponent = src.exponent + ``__DST_BIAS__`` - ``__SRC_BIAS__``;        \
+      dst.mantissa = '0;                                                             \
+      for (int i = 0; i < ``__SRC_MANTS__``; i++) begin                              \
+        dst.mantissa[i+ ``__DST_MANTS__`` - ``__SRC_MANTS__`` ] = src.mantissa[i];   \
+      end                                                                            \
+    end                                                                              \
 
 
   if (UP_CONV) begin : g_up_conv
@@ -177,13 +192,19 @@ module rv_float_converter #(
   end
 
   ////////////////////////////////////////////////
+  // ROUND
+  ////////////////////////////////////////////////
+
+  assign round_data = up_data;
+
+  ////////////////////////////////////////////////
   // DOWN_CONV
   ////////////////////////////////////////////////
 
   if (DOWN_CONV) begin : g_down_conv
 
   end else begin : g_no_down_conv
-    assign down_data = up_data;
+    assign down_data = round_data;
   end
 
   ////////////////////////////////////////////////
