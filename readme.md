@@ -55,7 +55,6 @@ To know how to use different commands on this repo, type `make help` or just `ma
 [register_dual_flop ](./docs/rtl/register_dual_flop.md)<br>
 [reg_file ](./docs/rtl/reg_file.md)<br>
 [round_robin_arbiter ](./docs/rtl/round_robin_arbiter.md)<br>
-[rv_float_converter ](./docs/rtl/rv_float_converter.md)<br>
 [rv_float_reg_file ](./docs/rtl/rv_float_reg_file.md)<br>
 [rv_id ](./docs/rtl/rv_id.md)<br>
 [shift_register ](./docs/rtl/shift_register.md)<br>
