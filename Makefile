@@ -451,6 +451,8 @@ update_doc_list: create_all_docs
 
 .PHONY: clear_all_docs
 clear_all_docs:
+	@mkdir -p docs/rtl
+	@mkdir -p docs/inc
 	@rm -rf docs/rtl/*.md
 	@rm -rf docs/rtl/*_top.svg
 	@git submodule update --init ./sub/documenter
