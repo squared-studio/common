@@ -77,7 +77,7 @@ help:
 	@echo -e "\033[1;38mmake create_tb TOP=<tb_top>\033[0m"
 	@echo -e ""
 	@echo -e "\033[3;30mTo create or open a rtl, type:\033[0m"
-	@echo -e "\033[1;38mmake create_rtl RTL=<tb_top>\033[0m"
+	@echo -e "\033[1;38mmake create_rtl RTL=<rtl>\033[0m"
 	@echo -e ""
 	@echo -e "\033[3;30mTo run a test with vivado, type:\033[0m"
 	@echo -e "\033[1;38mmake simulate TOP=<tb_top>\033[0m"
