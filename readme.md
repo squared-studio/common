@@ -57,6 +57,7 @@ To know how to use different commands on this repo, type `make help` or just `ma
 [round_robin_arbiter ](./docs/rtl/round_robin_arbiter.md)<br>
 [rv_float_reg_file ](./docs/rtl/rv_float_reg_file.md)<br>
 [rv_id ](./docs/rtl/rv_id.md)<br>
+[shifter ](./docs/rtl/shifter.md)<br>
 [shift_register ](./docs/rtl/shift_register.md)<br>
 [sr_latch_arstn ](./docs/rtl/sr_latch_arstn.md)<br>
 [uart_parity_checker ](./docs/rtl/uart_parity_checker.md)<br>
