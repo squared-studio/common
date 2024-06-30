@@ -19,7 +19,7 @@ and produces the shifted output data.
 ## Ports
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
-|data_i|input|logic [DATA_WIDTH-1:0]||Input data to be shifted|
-|shift_i|input|logic [SHIFT_WIDTH-1:0]||Control signal for shifting|
-|right_shift_i|input|logic [SHIFT_WIDTH-1:0]||Control signal for right shifting|
+|shift_i|input|logic [SHIFT_WIDTH-1:0]||Defines the amount of shift|
+|right_shift_i|input|logic||Defines whether to right shift|
+|data_i|input|logic [ DATA_WIDTH-1:0]||Input data to be shifted|
 |data_o|output|logic [DATA_WIDTH-1:0]||Output data after shifting|

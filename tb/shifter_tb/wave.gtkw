@@ -1,0 +1,25 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Sun Jun 30 04:26:17 2024
+[*]
+[dumpfile] "C:\Users\foeza\Documents\SystemVerilog\tb\shifter_tb\dump.vcd"
+[dumpfile_mtime] "Sun Jun 30 04:25:56 2024"
+[dumpfile_size] 6624
+[savefile] "C:\Users\foeza\Documents\SystemVerilog\tb\shifter_tb\wave.gtkw"
+[timestart] 0
+[size] 1920 1009
+[pos] -1 -1
+*-12.960380 13190 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 197
+[signals_width] 212
+[sst_expanded] 1
+[sst_vpaned_height] 297
+@28
+shifter_tb.clk_i
+shifter_tb.shift_i[2:0]
+shifter_tb.right_shift_i
+@29
+shifter_tb.data_i[15:0]
+shifter_tb.data_o[15:0]
+[pattern_trace] 1
+[pattern_trace] 0

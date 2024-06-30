@@ -8,9 +8,9 @@ module shifter #(
     parameter int DATA_WIDTH  = 4,  // Specifies the width of the input and output data
     parameter int SHIFT_WIDTH = 3   // Determines the number of shift stages
 ) (
-    input logic [DATA_WIDTH-1:0] data_i,  // Input data to be shifted
-    input logic [SHIFT_WIDTH-1:0] shift_i,  // Control signal for shifting
-    input logic [SHIFT_WIDTH-1:0] right_shift_i,  // Control signal for right shifting
+    input logic [SHIFT_WIDTH-1:0] shift_i,        // Defines the amount of shift
+    input logic                   right_shift_i,  // Defines whether to right shift
+    input logic [ DATA_WIDTH-1:0] data_i,         // Input data to be shifted
 
     output logic [DATA_WIDTH-1:0] data_o  // Output data after shifting
 );
@@ -22,7 +22,7 @@ module shifter #(
   // An array of registers representing intermediate shift stages
   logic [DATA_WIDTH-1:0] stage[SHIFT_WIDTH];
 
-  // Holds the data after initial left/right inversion
+  // Holds the data for initial left/right inversion
   logic [DATA_WIDTH-1:0] lr_init;
 
   // Holds the data after final left/right inversion
@@ -39,11 +39,11 @@ module shifter #(
                                        : stage[SHIFT_WIDTH-1][i];
   end
 
-  assign stage[0] = shift_i[0] ? lr_init : '0;
-  for (genvar i = 0; i < SHIFT_WIDTH; i++) begin : g_shift_mux
-    assign stage[i] = shift_i[i] ? {stage[i-1], {i{1'b0}}} : stage[i-1];
+  assign stage[0] = shift_i[0] ? {lr_init, 1'b0}: lr_init;
+  for (genvar i = 1; i < SHIFT_WIDTH; i++) begin : g_shift_mux
+    assign stage[i] = shift_i[i] ? {stage[i-1], {(2**i){1'b0}}} : stage[i-1];
   end
 
-  assign data_o = stage[SHIFT_WIDTH-1];
+  assign data_o = lr_final;
 
 endmodule
