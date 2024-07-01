@@ -45,7 +45,7 @@ To know how to use different commands on this repo, type `make help` or just `ma
 [latch ](./docs/rtl/latch.md)<br>
 [mem ](./docs/rtl/mem.md)<br>
 [mux ](./docs/rtl/mux.md)<br>
-[mux_primitive ](./docs/rtl/mux_primitive.md)<br>
+[mux_tristate ](./docs/rtl/mux_tristate.md)<br>
 [pipeline ](./docs/rtl/pipeline.md)<br>
 [pipeline_branch ](./docs/rtl/pipeline_branch.md)<br>
 [pipeline_core ](./docs/rtl/pipeline_core.md)<br>

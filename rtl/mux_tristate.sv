@@ -1,11 +1,11 @@
 /*
-The `mux_primitive` module is a parameterized SystemVerilog module that implements a multiplexer.
+The `mux_tristate` module is a parameterized SystemVerilog module that implements a multiplexer.
 The module uses a loop to generate multiple assignments and buffers to control the output of the
 multiplexer.
 Author : Foez Ahmed (foez.official@gmail.com)
 */
 
-module mux_primitive #(
+module mux_tristate #(
     parameter int ELEM_WIDTH = 8,  // width of each multiplexer input element
     parameter int NUM_ELEM   = 6   // number of elements in the multiplexer
 ) (

@@ -1,13 +1,13 @@
-# mux_primitive (module)
+# mux_tristate (module)
 
 ### Author : Foez Ahmed (foez.official@gmail.com)
 
 ## TOP IO
-<img src="./mux_primitive_top.svg">
+<img src="./mux_tristate_top.svg">
 
 ## Description
 
-The `mux_primitive` module is a parameterized SystemVerilog module that implements a multiplexer.
+The `mux_tristate` module is a parameterized SystemVerilog module that implements a multiplexer.
 The module uses a loop to generate multiple assignments and buffers to control the output of the
 multiplexer.
 
