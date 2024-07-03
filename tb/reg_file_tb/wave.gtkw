@@ -1,0 +1,74 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Wed Jul 03 08:22:21 2024
+[*]
+[dumpfile] "C:\Users\foeza\Documents\SystemVerilog\tb\reg_file_tb\dump.vcd"
+[dumpfile_mtime] "Wed Jul 03 08:20:26 2024"
+[dumpfile_size] 8341
+[savefile] "C:\Users\foeza\Documents\SystemVerilog\tb\reg_file_tb\wave.gtkw"
+[timestart] 288490
+[size] 1920 1009
+[pos] -1 -1
+*-13.768738 333150 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] reg_file_tb.
+[treeopen] reg_file_tb.u_reg_file.
+[treeopen] reg_file_tb.u_reg_file.g_mux_array[0].
+[treeopen] reg_file_tb.u_reg_file.g_reg_array[1].
+[treeopen] reg_file_tb.u_reg_file.g_reg_array[2].
+[treeopen] reg_file_tb.u_reg_file.g_reg_array[3].
+[sst_width] 246
+[signals_width] 150
+[sst_expanded] 1
+[sst_vpaned_height] 297
+@28
+reg_file_tb.clk_i
+reg_file_tb.arst_ni
+reg_file_tb.rd_en_i
+@22
+reg_file_tb.rd_data_i[31:0]
+@200
+-
+@28
+reg_file_tb.u_reg_file.g_reg_array[1].register_dut.arst_ni
+reg_file_tb.u_reg_file.g_reg_array[1].register_dut.clk_i
+@22
+reg_file_tb.u_reg_file.g_reg_array[1].register_dut.d_i[31:0]
+@28
+[color] 3
+reg_file_tb.u_reg_file.g_reg_array[1].register_dut.en_i
+@22
+reg_file_tb.u_reg_file.g_reg_array[1].register_dut.q_o[63:32]
+@200
+-
+@28
+reg_file_tb.u_reg_file.g_reg_array[2].register_dut.arst_ni
+reg_file_tb.u_reg_file.g_reg_array[2].register_dut.clk_i
+@22
+reg_file_tb.u_reg_file.g_reg_array[2].register_dut.d_i[31:0]
+@28
+[color] 3
+reg_file_tb.u_reg_file.g_reg_array[2].register_dut.en_i
+@22
+reg_file_tb.u_reg_file.g_reg_array[2].register_dut.q_o[95:64]
+@200
+-
+@28
+reg_file_tb.u_reg_file.g_reg_array[3].register_dut.arst_ni
+reg_file_tb.u_reg_file.g_reg_array[3].register_dut.clk_i
+@22
+reg_file_tb.u_reg_file.g_reg_array[3].register_dut.d_i[31:0]
+@28
+[color] 3
+reg_file_tb.u_reg_file.g_reg_array[3].register_dut.en_i
+@22
+reg_file_tb.u_reg_file.g_reg_array[3].register_dut.q_o[127:96]
+@200
+-
+@22
+reg_file_tb.u_reg_file.g_mux_array[0].u_mux_rs.i_i[511:0]
+@23
+reg_file_tb.u_reg_file.g_mux_array[0].u_mux_rs.s_i[3:0]
+@22
+reg_file_tb.u_reg_file.g_mux_array[0].u_mux_rs.o_o[31:0]
+[pattern_trace] 1
+[pattern_trace] 0
