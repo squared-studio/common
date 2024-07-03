@@ -36,7 +36,7 @@ module demux #(
 
   for (genvar i = 0; i < NUM_ELEM; i++) begin : g_elem
     for (genvar j = 0; j < ELEM_WIDTH; j++) begin : g_bits
-      assign o_o[i][j] = i_i[j] & valid_out[i];
+      always_comb o_o[i][j] = i_i[j] & valid_out[i];
     end
   end
   //////////////////////////////////////////////////////////////////////////////////////////////////

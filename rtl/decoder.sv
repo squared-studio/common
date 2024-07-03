@@ -35,7 +35,7 @@ module decoder #(
   //-ASSIGNMENTS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  assign a_i_n = ~a_i;
+  always_comb a_i_n = ~a_i;
 
   always_comb begin
     for (bit [$clog2(NUM_WIRE):0] i = 0; i < NUM_WIRE; i++) begin
@@ -47,7 +47,7 @@ module decoder #(
   end
 
   for (genvar i = 0; i < NUM_WIRE; i++) begin : g_output_and_red
-    assign d_o[i] = &output_and_red[i];
+    always_comb d_o[i] = &output_and_red[i];
   end
 
 endmodule

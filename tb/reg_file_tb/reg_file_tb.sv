@@ -17,9 +17,9 @@ module reg_file_tb;
   //-LOCALPARAMS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  localparam int NumRs = 1;
+  localparam int NumRs = 3;
   localparam bit ZeroReg = 1;
-  localparam int NumReg = 16;
+  localparam int NumReg = 32;
   localparam int RegWidth = 32;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -86,7 +86,6 @@ module reg_file_tb;
         rd_addr_i <= $urandom & 'h1f;
         for (int i = 0; i < NumRs; i++) begin
           rs_addr_i[i] <= $urandom & 'h1f;
-          rs_data_o[i] <= $urandom;
         end
         @(posedge clk_i);
       end
