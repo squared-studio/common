@@ -100,9 +100,9 @@ module reg_file_tb;
       forever begin
         rd_en_i   <= $urandom;
         rd_data_i <= $urandom;
-        rd_addr_i <= $urandom & 'h3;
+        rd_addr_i <= $urandom & 'h1f;
         for (int i = 0; i < NumRs; i++) begin
-          rs_addr_i[i] <= $urandom & 'h3;
+          rs_addr_i[i] <= $urandom & 'h1f;
           rs_data_o[i] <= $urandom;
         end
         @(posedge clk_i);
@@ -149,7 +149,7 @@ module reg_file_tb;
     // Data flow checking
     start_rand_dvr();
     start_checking();
-    repeat (10) @(posedge clk_i);
+    repeat (1000) @(posedge clk_i);
     result_print(!fail, $sformatf("frontdoor data flow %0d/%0d", pass, pass + fail));
 
     $finish;
