@@ -220,6 +220,8 @@ simulate: clean
 .PHONY: vivado
 vivado:
 	@$(MAKE) config_touch
+	@touch $(TOP_DIR)/script.sh
+	@cd $(TOP_DIR); ./script.sh
 	@cd $(TOP_DIR); xvlog \
 		-f $(CONFIG_PATH)/xvlog \
 		-d SIMULATION \
