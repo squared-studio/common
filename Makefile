@@ -477,3 +477,4 @@ get_inc_doc_header:
 gen_doc:
 	@echo "Creating document for $(FILE)"
 	@$(PYTHON) ./sub/documenter/sv_documenter.py $(FILE) ./docs/rtl
+
