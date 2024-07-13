@@ -72,7 +72,7 @@ module tb_model;
     #100ns;
     arst_ni <= 0;
     #100ns;
-    arst_ni <= 1; 
+    arst_ni <= 1;
     #100ns;
   endtask
 
