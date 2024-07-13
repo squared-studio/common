@@ -3,7 +3,7 @@ name: rtl_docs_check
 on: [push]
 
 jobs:
-  build:
+  rtl_docs_check:
     runs-on: [make, python]
 
     steps:

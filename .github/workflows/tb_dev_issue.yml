@@ -5,7 +5,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  create_issues:
+  tb_dev_issue:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
