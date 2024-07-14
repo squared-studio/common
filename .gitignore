@@ -18,3 +18,4 @@ top.tcl
 top.xpr
 vivado_pid*.str
 xsim.dir
+base_readme.md

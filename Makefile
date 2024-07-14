@@ -501,6 +501,9 @@ lint:
 # REPOSITORY MAINTAINANCE
 ####################################################################################################
 
+.gitmodules:
+	@touch ./.gitmodules
+
 ci_run:
 	@echo ".PHONY: ci_vivado_run" > ci_run
 	@echo "ci_vivado_run:" >> ci_run
@@ -518,9 +521,8 @@ submodule_add_update:
 add_ignore:
 	@$(if $(filter $(EX),$(shell cat ./.gitignore)), : , echo "$(EX)" >> ./.gitignore)
 
-.PHONY: repo_update
-repo_update: ci_run
-	@touch ./.gitmodules
+.PHONY: repo_update 
+repo_update: .gitmodules ci_run
 	@$(MAKE) submodule_add_update URL=https://github.com/foez-ahmed/sv-genesis.git
 	@$(MAKE) submodule_add_update URL=https://github.com/squared-studio/documenter.git
 	@cp ./sub/sv-genesis/Makefile ./Makefile
@@ -556,8 +558,14 @@ repo_update: ci_run
 	@$(MAKE) add_ignore EX=top.xpr
 	@$(MAKE) add_ignore EX=vivado_pid*.str
 	@$(MAKE) add_ignore EX=xsim.dir
+	@$(MAKE) add_ignore EX=base_readme.md
 	@cp ./sub/sv-genesis/LICENSE ./
 	@cp ./sub/sv-genesis/rtl_model.sv ./
 	@cp ./sub/sv-genesis/tb_model.sv ./
+	@git add .
+	@git add -f ./inc/__no_upload__/readme.md
+	@git add -f ./intf/__no_upload__/readme.md
+	@git add -f ./rtl/__no_upload__/readme.md
+	@git add -f ./tb/__no_upload__/readme.md
 	@cp ./sub/sv-genesis/base_readme.md ./
-	@git add . -f
+	@code base_readme.md
