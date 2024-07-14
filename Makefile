@@ -509,6 +509,18 @@ ci_run:
 	@echo "ci_vivado_run:" >> ci_run
 	@echo "	@> ___CI_REPORT;" >> ci_run
 
+rtl_model.sv:
+	@cp ./sub/sv-genesis/rtl_model.sv ./
+
+tb_model.sv:
+	@cp ./sub/sv-genesis/tb_model.sv ./
+
+LICENSE:
+	@cp ./sub/sv-genesis/LICENSE ./
+
+readme_base.md:
+	@cp ./sub/sv-genesis/readme_base.md ./
+
 .PHONY: submodule_add_update
 submodule_add_update:
 	@mkdir -p sub
@@ -522,7 +534,7 @@ add_ignore:
 	@$(if $(filter $(EX),$(shell cat ./.gitignore)), : , echo "$(EX)" >> ./.gitignore)
 
 .PHONY: repo_update 
-repo_update: .gitmodules ci_run
+repo_update: .gitmodules ci_run rtl_model.sv tb_model.sv LICENSE readme_base.md
 	@$(MAKE) submodule_add_update URL=https://github.com/foez-ahmed/sv-genesis.git
 	@$(MAKE) submodule_add_update URL=https://github.com/squared-studio/documenter.git
 	@cp ./sub/sv-genesis/Makefile ./Makefile
@@ -534,10 +546,10 @@ repo_update: .gitmodules ci_run
 	@mkdir -p ./inc/__no_upload__
 	@mkdir -p ./inc/vip/
 	@cp ./sub/sv-genesis/tb_ess.sv ./inc/vip/
-	@cp ./sub/sv-genesis/no_upoload_readme.md ./inc/__no_upload__/readme.md
-	@cp ./sub/sv-genesis/no_upoload_readme.md ./intf/__no_upload__/readme.md
-	@cp ./sub/sv-genesis/no_upoload_readme.md ./rtl/__no_upload__/readme.md
-	@cp ./sub/sv-genesis/no_upoload_readme.md ./tb/__no_upload__/readme.md
+	@echo "# WARNING FILES THIS FOLDER IS NOT UPLOADED" > ./inc/__no_upload__/readme.md
+	@echo "# WARNING FILES THIS FOLDER IS NOT UPLOADED" > ./intf/__no_upload__/readme.md
+	@echo "# WARNING FILES THIS FOLDER IS NOT UPLOADED" > ./rtl/__no_upload__/readme.md
+	@echo "# WARNING FILES THIS FOLDER IS NOT UPLOADED" > ./tb/__no_upload__/readme.md
 	@$(MAKE) add_ignore EX=___*
 	@$(MAKE) add_ignore EX=__no_upload__
 	@$(MAKE) add_ignore EX=.Xil/
@@ -559,13 +571,8 @@ repo_update: .gitmodules ci_run
 	@$(MAKE) add_ignore EX=vivado_pid*.str
 	@$(MAKE) add_ignore EX=xsim.dir
 	@$(MAKE) add_ignore EX=base_readme.md
-	@cp ./sub/sv-genesis/LICENSE ./
-	@cp ./sub/sv-genesis/rtl_model.sv ./
-	@cp ./sub/sv-genesis/tb_model.sv ./
 	@git add .
 	@git add -f ./inc/__no_upload__/readme.md
 	@git add -f ./intf/__no_upload__/readme.md
 	@git add -f ./rtl/__no_upload__/readme.md
 	@git add -f ./tb/__no_upload__/readme.md
-	@cp ./sub/sv-genesis/base_readme.md ./
-	@code base_readme.md
