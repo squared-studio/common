@@ -496,3 +496,20 @@ lint:
 	@$(eval list := $(shell find -name "*.v" -o -name "*.sv"))
 	@$(foreach file, $(list), verible-verilog-lint.exe $(file) >> ___LINT_ERROR 2>&1;)
 	@cat ___LINT_ERROR
+
+####################################################################################################
+# REPOSITORY MAINTAINANCE
+####################################################################################################
+
+.PHONY: submodule_add_update
+submodule_add_update:
+	@mkdir -p sub
+	@cd sub; git submodule add $(URL) > /dev/null 2>&1 | : ;
+	@$(eval REPO_NAME = $(shell echo $(URL) | sed "s/.*\///g" | sed "s/\..*//g"))
+	@git submodule update --init -- ./sub/$(REPO_NAME) > /dev/null 2>&1
+	@cd ./sub/$(REPO_NAME); git checkout main > /dev/null 2>&1; git pull > /dev/null 2>&1
+
+.PHONY: repo_update
+repo_update:
+	@$(MAKE) submodule_add_update URL=https://github.com/foez-ahmed/sv-genesis.git
+	@$(MAKE) submodule_add_update URL=https://github.com/squared-studio/documenter.git

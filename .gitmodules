@@ -4,3 +4,6 @@
 [submodule "sub/documenter"]
 	path = sub/documenter
 	url = https://github.com/squared-studio/documenter.git
+[submodule "sub/sv-genesis"]
+	path = sub/sv-genesis
+	url = https://github.com/foez-ahmed/sv-genesis.git
