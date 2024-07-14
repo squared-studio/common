@@ -520,6 +520,7 @@ add_ignore:
 
 .PHONY: repo_update
 repo_update: ci_run
+	@touch ./.gitmodules
 	@$(MAKE) submodule_add_update URL=https://github.com/foez-ahmed/sv-genesis.git
 	@$(MAKE) submodule_add_update URL=https://github.com/squared-studio/documenter.git
 	@cp ./sub/sv-genesis/Makefile ./Makefile
