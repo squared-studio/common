@@ -529,14 +529,17 @@ submodule_add_update:
 	@git submodule update --init -- ./sub/$(REPO_NAME) > /dev/null 2>&1
 	@cd ./sub/$(REPO_NAME); git checkout main > /dev/null 2>&1; git pull > /dev/null 2>&1
 
+.PHONY:base_repo_init
+base_repo_init:
+	@$(MAKE) submodule_add_update URL=https://github.com/foez-ahmed/sv-genesis.git
+	@$(MAKE) submodule_add_update URL=https://github.com/squared-studio/documenter.git
+
 .PHONY: add_ignore
 add_ignore:
 	@$(if $(filter $(EX),$(shell cat ./.gitignore)), : , echo "$(EX)" >> ./.gitignore)
 
 .PHONY: repo_update 
-repo_update: .gitmodules ci_run rtl_model.sv tb_model.sv LICENSE readme_base.md
-	@$(MAKE) submodule_add_update URL=https://github.com/foez-ahmed/sv-genesis.git
-	@$(MAKE) submodule_add_update URL=https://github.com/squared-studio/documenter.git
+repo_update: .gitmodules ci_run base_repo_init rtl_model.sv tb_model.sv LICENSE readme_base.md
 	@cp ./sub/sv-genesis/Makefile ./Makefile
 	@mkdir -p ./.github/workflows
 	@cp -r ./sub/sv-genesis/*.yml ./.github/workflows/
