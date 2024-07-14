@@ -570,7 +570,6 @@ repo_update: .gitmodules ci_run rtl_model.sv tb_model.sv LICENSE readme_base.md
 	@$(MAKE) add_ignore EX=top.xpr
 	@$(MAKE) add_ignore EX=vivado_pid*.str
 	@$(MAKE) add_ignore EX=xsim.dir
-	@$(MAKE) add_ignore EX=base_readme.md
 	@git add .
 	@git add -f ./inc/__no_upload__/readme.md
 	@git add -f ./intf/__no_upload__/readme.md
