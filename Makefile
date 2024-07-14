@@ -501,6 +501,11 @@ lint:
 # REPOSITORY MAINTAINANCE
 ####################################################################################################
 
+ci_run:
+	@echo ".PHONY: ci_vivado_run" > ci_run
+	@echo "ci_vivado_run:" >> ci_run
+	@echo "	@> ___CI_REPORT;" >> ci_run
+
 .PHONY: submodule_add_update
 submodule_add_update:
 	@mkdir -p sub
@@ -509,8 +514,12 @@ submodule_add_update:
 	@git submodule update --init -- ./sub/$(REPO_NAME) > /dev/null 2>&1
 	@cd ./sub/$(REPO_NAME); git checkout main > /dev/null 2>&1; git pull > /dev/null 2>&1
 
+.PHONY: add_ignore
+add_ignore:
+	@$(if $(filter $(EX),$(shell cat ./.gitignore)), : , echo "$(EX)" >> ./.gitignore)
+
 .PHONY: repo_update
-repo_update:
+repo_update: ci_run
 	@$(MAKE) submodule_add_update URL=https://github.com/foez-ahmed/sv-genesis.git
 	@$(MAKE) submodule_add_update URL=https://github.com/squared-studio/documenter.git
 	@cp ./sub/sv-genesis/Makefile ./Makefile
@@ -526,4 +535,28 @@ repo_update:
 	@cp ./sub/sv-genesis/no_upoload_readme.md ./intf/__no_upload__/readme.md
 	@cp ./sub/sv-genesis/no_upoload_readme.md ./rtl/__no_upload__/readme.md
 	@cp ./sub/sv-genesis/no_upoload_readme.md ./tb/__no_upload__/readme.md
+	@$(MAKE) add_ignore EX=___*
+	@$(MAKE) add_ignore EX=__no_upload__
+	@$(MAKE) add_ignore EX=.Xil/
+	@$(MAKE) add_ignore EX=*.jou
+	@$(MAKE) add_ignore EX=*.log
+	@$(MAKE) add_ignore EX=*.out
+	@$(MAKE) add_ignore EX=*.pb
+	@$(MAKE) add_ignore EX=*.swp
+	@$(MAKE) add_ignore EX=*.vcd
+	@$(MAKE) add_ignore EX=*.vvp
+	@$(MAKE) add_ignore EX=*.wdb
+	@$(MAKE) add_ignore EX=top.cache
+	@$(MAKE) add_ignore EX=top.hw
+	@$(MAKE) add_ignore EX=top.ip_user_files
+	@$(MAKE) add_ignore EX=top.runs
+	@$(MAKE) add_ignore EX=top.sim
+	@$(MAKE) add_ignore EX=top.tcl
+	@$(MAKE) add_ignore EX=top.xpr
+	@$(MAKE) add_ignore EX=vivado_pid*.str
+	@$(MAKE) add_ignore EX=xsim.dir
+	@cp ./sub/sv-genesis/LICENSE ./
+	@cp ./sub/sv-genesis/rtl_model.sv ./
+	@cp ./sub/sv-genesis/tb_model.sv ./
+	@cp ./sub/sv-genesis/base_readme.md ./
 	@git add . -f
