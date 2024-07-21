@@ -2,7 +2,7 @@
 `ifndef DEFAULT_PARAM_PKG_SV
 `define DEFAULT_PARAM_PKG_SV
 
-package default_param_pkg;
+package common_default_param_pkg;
 
   `include "addr_map.svh"
   parameter int ADDR_DECODER_NUM_SLV = 4;

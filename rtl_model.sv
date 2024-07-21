@@ -8,7 +8,7 @@ Author : name (email)
 //`include "axi4l_typedef.svh"
 //`include "axi4_assign.svh"
 //`include "axi4_typedef.svh"
-//`include "default_param_pkg.sv"
+//`include "common_default_param_pkg.sv"
 
 module rtl_model #(
     //-PARAMETERS

@@ -5,19 +5,19 @@ appropriate slave based on the input address.
 Author : Foez Ahmed (foez.official@gmail.com)
 */
 
-`include "default_param_pkg.sv"
+`include "common_default_param_pkg.sv"
 
 module addr_decoder #(
     // width of the address input
-    parameter int ADDR_WIDTH = default_param_pkg::ADDR_DECODER_ADDR_WIDTH,
+    parameter int ADDR_WIDTH = common_default_param_pkg::ADDR_DECODER_ADDR_WIDTH,
     // number of slave devices
-    parameter int NUM_SLV = default_param_pkg::ADDR_DECODER_NUM_SLV,
+    parameter int NUM_SLV = common_default_param_pkg::ADDR_DECODER_NUM_SLV,
     // number of address map rules
-    parameter int NUM_RULES = default_param_pkg::ADDR_DECODER_NUM_RULES,
+    parameter int NUM_RULES = common_default_param_pkg::ADDR_DECODER_NUM_RULES,
     // type of the address map
-    parameter type addr_map_t = default_param_pkg::addr_decoder_addr_map_t,
+    parameter type addr_map_t = common_default_param_pkg::addr_decoder_addr_map_t,
     // address map array
-    parameter addr_map_t ADDR_MAP[NUM_RULES] = default_param_pkg::ADDR_MAP
+    parameter addr_map_t ADDR_MAP[NUM_RULES] = common_default_param_pkg::ADDR_MAP
 ) (
     // input address
     input logic [ADDR_WIDTH-1:0] addr_i,

@@ -34,13 +34,13 @@ active low reset signal `arst_ni`.
 
 Author : Foez Ahmed (foez.official@gmail.com)
 */
-`include "default_param_pkg.sv"
+`include "common_default_param_pkg.sv"
 
 module axi_fifo #(
     // type of the AXI request
-    parameter type axi_req_t    = default_param_pkg::axi4l_req_t,
+    parameter type axi_req_t    = common_default_param_pkg::axi4l_req_t,
     // type of the AXI response
-    parameter type axi_resp_t   = default_param_pkg::axi4l_resp_t,
+    parameter type axi_resp_t   = common_default_param_pkg::axi4l_resp_t,
     // depth of the Address Write (AW) FIFO
     parameter int AW_FIFO_DEPTH = 4,
     // depth of the Write (W) FIFO

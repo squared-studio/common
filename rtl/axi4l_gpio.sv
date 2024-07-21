@@ -29,13 +29,13 @@ in the byte in the `RowPerType` and a multiplexer (`mux`) to handle the response
 Author : Foez Ahmed (foez.official@gmail.com)
 */
 
-`include "default_param_pkg.sv"
+`include "common_default_param_pkg.sv"
 
 module axi4l_gpio #(
     // type of AXI4L request
-    parameter  type axi4l_req_t  = default_param_pkg::axi4l_req_t,
+    parameter  type axi4l_req_t  = common_default_param_pkg::axi4l_req_t,
     // type of AXI4L response
-    parameter  type axi4l_resp_t = default_param_pkg::axi4l_resp_t,
+    parameter  type axi4l_resp_t = common_default_param_pkg::axi4l_resp_t,
     // size of the port in bytes
     parameter  int  PORT_SIZE    = 5,
     localparam int  PortBytes    = (2 ** PORT_SIZE)

@@ -40,8 +40,8 @@ in the byte in the `RowPerType` and a multiplexer (`mux`) to handle the response
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|
 |-|-|-|-|-|
-|axi4l_req_t|type||default_param_pkg::axi4l_req_t| type of AXI4L request|
-|axi4l_resp_t|type||default_param_pkg::axi4l_resp_t| type of AXI4L response|
+|axi4l_req_t|type||common_default_param_pkg::axi4l_req_t| type of AXI4L request|
+|axi4l_resp_t|type||common_default_param_pkg::axi4l_resp_t| type of AXI4L response|
 |PORT_SIZE|int||5| size of the port in bytes|
 
 ## Ports

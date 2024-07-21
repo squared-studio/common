@@ -8,7 +8,7 @@ Description
 //`include "axi4_typedef.svh"
 //`include "axi4l_assign.svh"
 //`include "axi4l_typedef.svh"
-//`include "default_param_pkg.sv"
+//`include "common_default_param_pkg.sv"
 //`include "vip/axi4_pkg.sv"
 //`include "vip/axi4l_pkg.sv"
 //`include "vip/bus_dvr_mon.svh"

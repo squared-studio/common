@@ -45,8 +45,8 @@ active low reset signal `arst_ni`.
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|
 |-|-|-|-|-|
-|axi_req_t|type||default_param_pkg::axi4l_req_t| type of the AXI request|
-|axi_resp_t|type||default_param_pkg::axi4l_resp_t| type of the AXI response|
+|axi_req_t|type||common_default_param_pkg::axi4l_req_t| type of the AXI request|
+|axi_resp_t|type||common_default_param_pkg::axi4l_resp_t| type of the AXI response|
 |AW_FIFO_DEPTH|int||4| depth of the Address Write (AW) FIFO|
 |W_FIFO_DEPTH|int||4| depth of the Address Write (AW) FIFO|
 |B_FIFO_DEPTH|int||4| depth of the Write Response (B) FIFO|
