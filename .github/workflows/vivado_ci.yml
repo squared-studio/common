@@ -17,6 +17,7 @@ jobs:
     - name: Simulate
       shell: bash
       run: |
+        git submodule update --init --recursive
         make CI
 
     - name: Fail if Simulation Contains Fails

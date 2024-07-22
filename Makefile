@@ -7,45 +7,45 @@
 ROOT        = $(shell pwd)
 TOP         = $(shell cat ___TOP)
 RTL         = $(shell cat ___RTL)
-TOP_DIR     = $(shell find $(realpath ./tb/) -wholename "*$(TOP)/$(TOP).sv" | sed "s/\/$(TOP).sv//g")
+TOP_DIR     = $(shell find $(shell realpath ./tb/) -wholename "*$(TOP)/$(TOP).sv" | sed "s/\/$(TOP).sv//g")
 TB_LIB      = $(shell find $(TOP_DIR) -name "*.sv")
-DES_LIB     = $(shell find $(realpath ./rtl/) -name "*.sv")
-DES_LIB    += $(shell find $(realpath ./sub/) -wholename "*/rtl/*.sv" -type f)
-INTF_LIB    = $(shell find $(realpath ./intf/) -name "*.sv")
-INTF_LIB   += $(shell find $(realpath ./sub/) -wholename "*/intf/*.sv" -type f)
-INC_DIR     = $(shell find $(realpath ./) -path "*/inc" | sed "s/^/-i /g" | sed "s/.*\/docs\/.*//g")
-RTL_FILE    = $(shell find $(realpath ./rtl/) -name "$(RTL).sv")
+DES_LIB     = $(shell find $(shell realpath ./rtl/) -name "*.sv")
+DES_LIB    += $(shell find $(shell realpath ./sub/) -wholename "*/rtl/*.sv" -type f)
+INTF_LIB    = $(shell find $(shell realpath ./intf/) -name "*.sv")
+INTF_LIB   += $(shell find $(shell realpath ./sub/) -wholename "*/intf/*.sv" -type f)
+INC_DIR     = $(shell find $(shell realpath ./) -path "*/inc" | sed "s/^/-i /g" | sed "s/.*\/docs\/.*//g")
+RTL_FILE    = $(shell find $(shell realpath ./rtl/) -name "$(RTL).sv")
 CONFIG      = default
 CONFIG_PATH = $(TOP_DIR)/config/$(CONFIG)
 
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "___CI_REPORT_TEMP")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "___flist")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "___LINT_ERROR")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "___list")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "___module_header")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "___module_inst")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "___module_param")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "___module_port")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "___module_raw_inst")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "___module_raw_param")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "___module_raw_port")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "___temp")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "___TO_COPY")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name ".Xil")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.jou")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.log")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.out")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.pb")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.vcd")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.wdb")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "top.cache")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "top.hw")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "top.ip_user_files")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "top.runs")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "top.sim")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "top.tcl")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "top.xpr")
-CLEAN_TARGETS += $(shell find $(realpath ./) -name "xsim.dir")
+CLEAN_TARGETS += $(shell find $(shell realpath ./) -name "___CI_REPORT_TEMP")
+CLEAN_TARGETS += $(shell find $(shell realpath ./) -name "___flist")
+CLEAN_TARGETS += $(shell find $(shell realpath ./) -name "___LINT_ERROR")
+CLEAN_TARGETS += $(shell find $(shell realpath ./) -name "___list")
+CLEAN_TARGETS += $(shell find $(shell realpath ./) -name "___module_header")
+CLEAN_TARGETS += $(shell find $(shell realpath ./) -name "___module_inst")
+CLEAN_TARGETS += $(shell find $(shell realpath ./) -name "___module_param")
+CLEAN_TARGETS += $(shell find $(shell realpath ./) -name "___module_port")
+CLEAN_TARGETS += $(shell find $(shell realpath ./) -name "___module_raw_inst")
+CLEAN_TARGETS += $(shell find $(shell realpath ./) -name "___module_raw_param")
+CLEAN_TARGETS += $(shell find $(shell realpath ./) -name "___module_raw_port")
+CLEAN_TARGETS += $(shell find $(shell realpath ./) -name "___temp")
+CLEAN_TARGETS += $(shell find $(shell realpath ./) -name "___TO_COPY")
+CLEAN_TARGETS += $(shell find $(shell realpath ./) -name ".Xil")
+CLEAN_TARGETS += $(shell find $(shell realpath ./) -name "*.jou")
+CLEAN_TARGETS += $(shell find $(shell realpath ./) -name "*.log")
+CLEAN_TARGETS += $(shell find $(shell realpath ./) -name "*.out")
+CLEAN_TARGETS += $(shell find $(shell realpath ./) -name "*.pb")
+CLEAN_TARGETS += $(shell find $(shell realpath ./) -name "*.vcd")
+CLEAN_TARGETS += $(shell find $(shell realpath ./) -name "*.wdb")
+CLEAN_TARGETS += $(shell find $(shell realpath ./) -name "top.cache")
+CLEAN_TARGETS += $(shell find $(shell realpath ./) -name "top.hw")
+CLEAN_TARGETS += $(shell find $(shell realpath ./) -name "top.ip_user_files")
+CLEAN_TARGETS += $(shell find $(shell realpath ./) -name "top.runs")
+CLEAN_TARGETS += $(shell find $(shell realpath ./) -name "top.sim")
+CLEAN_TARGETS += $(shell find $(shell realpath ./) -name "top.tcl")
+CLEAN_TARGETS += $(shell find $(shell realpath ./) -name "top.xpr")
+CLEAN_TARGETS += $(shell find $(shell realpath ./) -name "xsim.dir")
 
 OS = $(shell uname)
 ifeq ($(OS),Linux)
@@ -112,9 +112,6 @@ help:
 	@echo -e "\033[3;30mTo run a test with iverilog, type:\033[0m"
 	@echo -e "\033[1;38mmake iverilog TOP=<tb_top>\033[0m"
 	@echo -e ""
-	@echo -e "\033[3;30mTo generate a list of all Verilog/SystemVerilog files, type:\033[0m"
-	@echo -e "\033[1;38mmake gen_check_list\033[0m"
-	@echo -e ""
 	@echo -e "\033[3;30mTo generate flist of an RTL, type:\033[0m"
 	@echo -e "\033[1;38mmake flist RTL=<rtl>\033[0m"
 	@echo -e ""
@@ -122,19 +119,22 @@ help:
 	@echo -e "\033[1;38mmake update_doc_list\033[0m"
 	@echo -e ""
 
-.PHONY: gen_check_list
-gen_check_list:
-	@$(eval CHECK_LIST := $(shell find inc -name "*.v" -o -name "*.vh" -o -name "*.sv" -o -name "*.svh"))
-	@$(eval CHECK_LIST += $(shell find rtl -name "*.v" -o -name "*.vh" -o -name "*.sv" -o -name "*.svh"))
-	@$(eval CHECK_LIST += $(shell find intf -name "*.v" -o -name "*.vh" -o -name "*.sv" -o -name "*.svh"))
-	@$(eval CHECK_LIST += $(shell find tb -name "*.v" -o -name "*.vh" -o -name "*.sv" -o -name "*.svh"))
-	@($(foreach word, $(CHECK_LIST), echo "[](./$(word))";)) | $(CLIP)
-	@echo -e "\033[2;35mList copied to clipboard\033[0m"
-
 .PHONY: clean
 clean:
 	@- echo -e "$(CLEAN_TARGETS)" | sed "s/  //g" | sed "s/ /\nremoving /g"
 	@rm -rf $(CLEAN_TARGETS)
+
+.PHONY: duplicate_check
+duplicate_check:
+	@$(if $(filter $(EX), $(shell cat ./___duplicate_list)), \
+	echo -e "\033[1;31m$(EX) has multiple copies\033[0m" \
+	&& echo -e "\033[1;31m$(EX) has multiple copies\033[0m" >> ___CI_ERROR, \
+	echo "$(EX)" >> ./___duplicate_list)
+
+.PHONY: find_duplicates
+find_duplicates:
+	@>___duplicate_list
+	@$(foreach file, $(DES_LIB), $(MAKE) duplicate_check EX=$(shell basename $(file));)
 
 ####################################################################################################
 # FLIST (Vivado)
@@ -257,7 +257,7 @@ rtl_init_sim: clean
 ####################################################################################################
 
 .PHONY: CI
-CI: clean ci_vivado_run ci_vivado_collect ci_print
+CI: clean ci_vivado_run ci_vivado_collect ci_print find_duplicates
 
 include ci_run
 
@@ -452,7 +452,7 @@ clear_all_docs:
 
 .PHONY: create_all_docs
 create_all_docs: clear_all_docs
-	@$(foreach file, $(shell find $(realpath ./rtl/) -type f -wholename "*/rtl/*.sv"), \
+	@$(foreach file, $(shell find $(shell realpath ./rtl/) -type f -wholename "*/rtl/*.sv"), \
 		$(if $(shell echo $(file) | sed "s/.*__no_upload__.*//g"), $(MAKE) gen_doc FILE=$(file), echo "");)
 
 .PHONY: get_rtl_doc_header
