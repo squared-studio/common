@@ -8,10 +8,12 @@ ROOT        = $(shell pwd)
 TOP         = $(shell cat ___TOP)
 RTL         = $(shell cat ___RTL)
 TOP_DIR     = $(shell find $(realpath ./tb/) -wholename "*$(TOP)/$(TOP).sv" | sed "s/\/$(TOP).sv//g")
-TBF_LIB     = $(shell find $(TOP_DIR) -name "*.v" -o -name "*.sv")
-DES_LIB     = $(shell find $(realpath ./rtl/) -name "*.v" -o -name "*.sv")
+TB_LIB      = $(shell find $(TOP_DIR) -name "*.sv")
+DES_LIB     = $(shell find $(realpath ./rtl/) -name "*.sv")
+DES_LIB    += $(shell find $(realpath ./sub/) -wholename "*/rtl/*.sv" -type f)
 INTF_LIB    = $(shell find $(realpath ./intf/) -name "*.sv")
-INC_DIR     = $(realpath ./inc)
+INTF_LIB   += $(shell find $(realpath ./sub/) -wholename "*/intf/*.sv" -type f)
+INC_DIR     = $(shell find $(realpath ./) -path "*/inc" | sed "s/^/-i /g" | sed "s/.*\/docs\/.*//g")
 RTL_FILE    = $(shell find $(realpath ./rtl/) -name "$(RTL).sv")
 CONFIG      = default
 CONFIG_PATH = $(TOP_DIR)/config/$(CONFIG)
@@ -140,14 +142,14 @@ clean:
 
 define compile_rtl
 $(eval SUB_LIB := $(shell echo "$(wordlist 1, 25,$(COMPILE_LIB))"))
-xvlog -i $(INC_DIR) -sv $(SUB_LIB)
+xvlog $(INC_DIR) -sv $(SUB_LIB)
 $(eval COMPILE_LIB := $(wordlist 26, $(words $(COMPILE_LIB)), $(COMPILE_LIB)))
 $(if $(COMPILE_LIB), $(call compile_rtl))
 endef
 
 .PHONY: find_rtl
 find_rtl:
-	@find $(realpath ./rtl/) -iname "*$(RTL)*.sv"
+	@$(foreach file, ${DES_LIB}, $(if $(findstring ${RTL}, ${file}), echo "$(file)",:);)
 
 .PHONY: list_modules
 list_modules: clean
@@ -228,7 +230,7 @@ simulate: clean
 
 define compile_tb
 $(eval SUB_LIB := $(shell echo "$(wordlist 1, 25,$(COMPILE_LIB))"))
-cd $(TOP_DIR); xvlog -f $(CONFIG_PATH)/xvlog -d SIMULATION --define CONFIG=\"$(CONFIG)\" -i $(INC_DIR) -sv $(SUB_LIB)
+cd $(TOP_DIR); xvlog -f $(CONFIG_PATH)/xvlog -d SIMULATION --define CONFIG=\"$(CONFIG)\" $(INC_DIR) -sv $(SUB_LIB)
 $(eval COMPILE_LIB := $(wordlist 26, $(words $(COMPILE_LIB)), $(COMPILE_LIB)))
 $(if $(COMPILE_LIB), $(call compile_tb))
 endef
@@ -238,7 +240,7 @@ vivado:
 	@$(MAKE) config_touch
 	@touch $(TOP_DIR)/script.sh
 	@cd $(TOP_DIR); ./script.sh
-	@$(eval COMPILE_LIB := $(INTF_LIB) $(DES_LIB) $(TBF_LIB))
+	@$(eval COMPILE_LIB := $(INTF_LIB) $(DES_LIB) $(TB_LIB))
 	@$(call compile_tb)
 	@cd $(TOP_DIR); xelab -f $(CONFIG_PATH)/xelab $(TOP) -s top
 	@cd $(TOP_DIR); xsim top -f $(CONFIG_PATH)/xsim -runall
@@ -246,7 +248,7 @@ vivado:
 .PHONY: rtl_init_sim
 rtl_init_sim: clean
 	@echo "$(RTL)" > ___RTL
-	@xvlog -d SIMULATION -i $(INC_DIR) -sv -L RTL=$(DES_LIB) 
+	@xvlog -d SIMULATION $(INC_DIR) -sv -L RTL=$(DES_LIB) 
 	@xelab $(RTL) -s top
 	@xsim top -runall
 
@@ -287,25 +289,6 @@ ci_print:
 	@echo -e "\033[1;32mCONTINUOUS INTEGRATION SUCCESSFULLY COMPLETE\033[0m";
 	@cat ___CI_REPORT
 	@grep -r "FAIL" ./___CI_REPORT | tee ___CI_ERROR
-
-####################################################################################################
-# Lint (Verilator)
-####################################################################################################
-
-.PHONY: verilator_lint
-verilator_lint:
-	@($(foreach word, $(DES_LIB), \
-		verilator --lint-only $(DES_LIB) --top-module $(shell basename -s .sv $(word));))
-
-####################################################################################################
-# Simulate (iverilog)
-####################################################################################################
-
-.PHONY: iverilog
-iverilog: clean
-	@echo "$(TOP)" > ___TOP
-	@cd $(TOP_DIR); iverilog -I $(INC_DIR) -g2012 -o $(TOP).out -s $(TOP) -l $(DES_LIB) $(TBF_LIB)
-	@cd $(TOP_DIR); vvp $(TOP).out
 
 ####################################################################################################
 # Waveform (GTKWave)
