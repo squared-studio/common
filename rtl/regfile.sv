@@ -1,10 +1,10 @@
 /*
-The `reg_file` module is a register file with a configurable number of source registers, register
+The `regfile` module is a register file with a configurable number of source registers, register
 width, and an option to hardcode zero to the first register.
 Author: Md. Mohiuddin Reyad (mreyad30207@gmail.com)
 */
 
-module reg_file #(
+module regfile #(
     parameter int NUM_RS = 3,     // number of source register
     parameter bit ZERO_REG = 1,   // hardcoded zero(0) to first register
     parameter int NUM_REG = 32,   // number of registers

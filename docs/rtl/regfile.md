@@ -1,13 +1,13 @@
-# reg_file (module)
+# regfile (module)
 
 ### Author : Md. Mohiuddin Reyad (mreyad30207@gmail.com)
 
 ## TOP IO
-<img src="./reg_file_top.svg">
+<img src="./regfile_top.svg">
 
 ## Description
 
-The `reg_file` module is a register file with a configurable number of source registers, register
+The `regfile` module is a register file with a configurable number of source registers, register
 width, and an option to hardcode zero to the first register.
 
 ## Parameters

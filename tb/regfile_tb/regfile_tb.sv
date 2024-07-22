@@ -2,7 +2,7 @@
 Author : Foez Ahmed (foez.official@gmail.com)
 */
 
-module reg_file_tb;
+module regfile_tb;
 
   `define ENABLE_DUMPFILE
 
@@ -49,12 +49,12 @@ module reg_file_tb;
   //-RTLS
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  reg_file #(
+  regfile #(
       .NUM_RS   (NumRs   ),
       .ZERO_REG (ZeroReg ),
       .NUM_REG  (NumReg  ),
       .REG_WIDTH(RegWidth)
-  ) u_reg_file (
+  ) u_regfile (
       .clk_i,
       .arst_ni,
       .rd_addr_i,

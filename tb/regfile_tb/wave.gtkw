@@ -1,0 +1,74 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Wed Jul 03 08:22:21 2024
+[*]
+[dumpfile] "C:\Users\foeza\Documents\SystemVerilog\tb\regfile_tb\dump.vcd"
+[dumpfile_mtime] "Wed Jul 03 08:20:26 2024"
+[dumpfile_size] 8341
+[savefile] "C:\Users\foeza\Documents\SystemVerilog\tb\regfile_tb\wave.gtkw"
+[timestart] 288490
+[size] 1920 1009
+[pos] -1 -1
+*-13.768738 333150 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] regfile_tb.
+[treeopen] regfile_tb.u_regfile.
+[treeopen] regfile_tb.u_regfile.g_mux_array[0].
+[treeopen] regfile_tb.u_regfile.g_reg_array[1].
+[treeopen] regfile_tb.u_regfile.g_reg_array[2].
+[treeopen] regfile_tb.u_regfile.g_reg_array[3].
+[sst_width] 246
+[signals_width] 150
+[sst_expanded] 1
+[sst_vpaned_height] 297
+@28
+regfile_tb.clk_i
+regfile_tb.arst_ni
+regfile_tb.rd_en_i
+@22
+regfile_tb.rd_data_i[31:0]
+@200
+-
+@28
+regfile_tb.u_regfile.g_reg_array[1].register_dut.arst_ni
+regfile_tb.u_regfile.g_reg_array[1].register_dut.clk_i
+@22
+regfile_tb.u_regfile.g_reg_array[1].register_dut.d_i[31:0]
+@28
+[color] 3
+regfile_tb.u_regfile.g_reg_array[1].register_dut.en_i
+@22
+regfile_tb.u_regfile.g_reg_array[1].register_dut.q_o[63:32]
+@200
+-
+@28
+regfile_tb.u_regfile.g_reg_array[2].register_dut.arst_ni
+regfile_tb.u_regfile.g_reg_array[2].register_dut.clk_i
+@22
+regfile_tb.u_regfile.g_reg_array[2].register_dut.d_i[31:0]
+@28
+[color] 3
+regfile_tb.u_regfile.g_reg_array[2].register_dut.en_i
+@22
+regfile_tb.u_regfile.g_reg_array[2].register_dut.q_o[95:64]
+@200
+-
+@28
+regfile_tb.u_regfile.g_reg_array[3].register_dut.arst_ni
+regfile_tb.u_regfile.g_reg_array[3].register_dut.clk_i
+@22
+regfile_tb.u_regfile.g_reg_array[3].register_dut.d_i[31:0]
+@28
+[color] 3
+regfile_tb.u_regfile.g_reg_array[3].register_dut.en_i
+@22
+regfile_tb.u_regfile.g_reg_array[3].register_dut.q_o[127:96]
+@200
+-
+@22
+regfile_tb.u_regfile.g_mux_array[0].u_mux_rs.i_i[511:0]
+@23
+regfile_tb.u_regfile.g_mux_array[0].u_mux_rs.s_i[3:0]
+@22
+regfile_tb.u_regfile.g_mux_array[0].u_mux_rs.o_o[31:0]
+[pattern_trace] 1
+[pattern_trace] 0

@@ -51,12 +51,10 @@ To know how to use different commands on this repo, type `make help` or just `ma
 [pipeline_core ](./docs/rtl/pipeline_core.md)<br>
 [pll_model ](./docs/rtl/pll_model.md)<br>
 [priority_encoder ](./docs/rtl/priority_encoder.md)<br>
+[regfile ](./docs/rtl/regfile.md)<br>
 [register ](./docs/rtl/register.md)<br>
 [register_dual_flop ](./docs/rtl/register_dual_flop.md)<br>
-[reg_file ](./docs/rtl/reg_file.md)<br>
 [round_robin_arbiter ](./docs/rtl/round_robin_arbiter.md)<br>
-[rv_float_reg_file ](./docs/rtl/rv_float_reg_file.md)<br>
-[rv_id ](./docs/rtl/rv_id.md)<br>
 [shifter ](./docs/rtl/shifter.md)<br>
 [shift_register ](./docs/rtl/shift_register.md)<br>
 [sr_latch_arstn ](./docs/rtl/sr_latch_arstn.md)<br>
