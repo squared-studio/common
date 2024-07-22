@@ -452,7 +452,8 @@ clear_all_docs:
 
 .PHONY: create_all_docs
 create_all_docs: clear_all_docs
-	@$(foreach file, $(DES_LIB), $(if $(shell echo $(file) | sed "s/.*__no_upload__.*//g"), $(MAKE) gen_doc FILE=$(file), echo "");)
+	@$(foreach file, $(shell find $(realpath ./rtl/) -type f -wholename "*/rtl/*.sv"), \
+		$(if $(shell echo $(file) | sed "s/.*__no_upload__.*//g"), $(MAKE) gen_doc FILE=$(file), echo "");)
 
 .PHONY: get_rtl_doc_header
 get_rtl_doc_header:
