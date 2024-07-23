@@ -243,7 +243,7 @@ vivado:
 	@$(eval COMPILE_LIB := $(INTF_LIB) $(DES_LIB) $(TB_LIB))
 	@$(call compile_tb)
 	@cd $(TOP_DIR); xelab -f $(CONFIG_PATH)/xelab $(TOP) -s top
-	@cd $(TOP_DIR); xsim top -f $(CONFIG_PATH)/xsim -runall
+	@cd $(TOP_DIR); xsim top -f $(CONFIG_PATH)/xsim -runall -log xsim_$(CONFIG).log
 
 .PHONY: rtl_init_sim
 rtl_init_sim: clean
