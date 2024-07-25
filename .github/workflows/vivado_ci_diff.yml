@@ -24,7 +24,7 @@ jobs:
     - name: Simulate
       shell: bash
       run: |
-        git submodule update --init --recursive
+        git submodule update --init --recursive --depth 1
         make CI
 
     - name: Fail if Simulation Contains Fails
