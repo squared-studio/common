@@ -523,7 +523,7 @@ submodule_add_update:
 
 .PHONY:base_repo_init
 base_repo_init:
-	@$(MAKE) submodule_add_update URL=https://github.com/foez-ahmed/sv-genesis.git
+	@$(MAKE) submodule_add_update URL=https://github.com/squared-studio/sv-genesis.git
 	@$(MAKE) submodule_add_update URL=https://github.com/squared-studio/documenter.git
 
 .PHONY: add_ignore
