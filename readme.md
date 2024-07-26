@@ -56,7 +56,6 @@ To know how to use different commands on this repo, type `make help` or just `ma
 [shifter ](./docs/rtl/shifter.md)<br>
 [shift_register ](./docs/rtl/shift_register.md)<br>
 [sr_latch_arstn ](./docs/rtl/sr_latch_arstn.md)<br>
-[uart_parity_checker ](./docs/rtl/uart_parity_checker.md)<br>
 [xbar ](./docs/rtl/xbar.md)<br>
 
 ## INCLUDE
