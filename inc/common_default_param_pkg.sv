@@ -1,6 +1,6 @@
 
-`ifndef DEFAULT_PARAM_PKG_SV
-`define DEFAULT_PARAM_PKG_SV
+`ifndef COMMON_DEFAULT_PARAM_PKG_SV
+`define COMMON_DEFAULT_PARAM_PKG_SV
 
 package common_default_param_pkg;
 
@@ -20,11 +20,6 @@ package common_default_param_pkg;
       '{slave_index: 'h0, lower_bound: 'h0000_7000, upper_bound: 'h0000_8000},
       '{slave_index: 'h0, lower_bound: 'h0000_8000, upper_bound: 'h0000_9000}
   };
-
-  `include "axi4l_typedef.svh"
-  parameter int AXI4L_ADDR_WIDTH = 32;
-  parameter int AXI4L_DATA_WIDTH = 64;
-  `AXI4L_T(axi4l, AXI4L_ADDR_WIDTH, AXI4L_DATA_WIDTH)
 
 endpackage
 

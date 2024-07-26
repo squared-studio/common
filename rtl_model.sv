@@ -3,13 +3,6 @@ Write a markdown documentation for this systemverilog module:
 Author : name (email)
 */
 
-//`include "addr_map.svh"
-//`include "axi4l_assign.svh"
-//`include "axi4l_typedef.svh"
-//`include "axi4_assign.svh"
-//`include "axi4_typedef.svh"
-//`include "common_default_param_pkg.sv"
-
 module rtl_model #(
     //-PARAMETERS
     //-LOCALPARAMS

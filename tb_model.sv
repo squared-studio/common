@@ -3,19 +3,6 @@ Description
 ### Author : name (email)
 */
 
-//`include "addr_map.svh"
-//`include "axi4_assign.svh"
-//`include "axi4_typedef.svh"
-//`include "axi4l_assign.svh"
-//`include "axi4l_typedef.svh"
-//`include "common_default_param_pkg.sv"
-//`include "vip/axi4_pkg.sv"
-//`include "vip/axi4l_pkg.sv"
-//`include "vip/bus_dvr_mon.svh"
-//`include "vip/clocking.svh"
-//`include "vip/memory_ops.svh"
-//`include "vip/string_ops_pkg.sv"
-
 module tb_model;
 
   //`define ENABLE_DUMPFILE

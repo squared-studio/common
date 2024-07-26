@@ -20,8 +20,6 @@ To know how to use different commands on this repo, type `make help` or just `ma
 
 ## RTL
 [addr_decoder ](./docs/rtl/addr_decoder.md)<br>
-[axi4l_gpio ](./docs/rtl/axi4l_gpio.md)<br>
-[axi_fifo ](./docs/rtl/axi_fifo.md)<br>
 [bin_to_gray ](./docs/rtl/bin_to_gray.md)<br>
 [cdc_fifo ](./docs/rtl/cdc_fifo.md)<br>
 [circular_xbar ](./docs/rtl/circular_xbar.md)<br>
@@ -62,7 +60,4 @@ To know how to use different commands on this repo, type `make help` or just `ma
 [xbar ](./docs/rtl/xbar.md)<br>
 
 ## INCLUDE
-[axi4l_typedef.svh](./docs/inc/axi4l_typedef.svh.md)<br>
-[axi4_typedef.svh](./docs/inc/axi4_typedef.svh.md)<br>
-[vip/axi4l_pkg.sv](./docs/inc/vip/axi4l_pkg.sv.md)<br>
 
