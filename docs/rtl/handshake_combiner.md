@@ -9,7 +9,8 @@
 
 The `handshake_combiner` module is a parameterized SystemVerilog module that combines handshake
 signals from multiple source(s) & destination(s). The module uses two `always_comb` blocks to
-generate the `tx_ready` and `rx_valid` signals based on the `tx_valid` and `rx_ready` inputs.
+generate the `tx_ready_o` and `rx_valid_o` signals based on the `tx_valid_i` and `rx_ready_i`
+inputs.
 
 ## Parameters
 |Name|Type|Dimension|Default Value|Description|
@@ -20,7 +21,7 @@ generate the `tx_ready` and `rx_valid` signals based on the `tx_valid` and `rx_r
 ## Ports
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
-|tx_valid|input|logic [NUM_TX-1:0]|| transmitter valid signals|
-|tx_ready|output|logic [NUM_TX-1:0]|| transmitter ready signals|
-|rx_valid|output|logic [NUM_RX-1:0]|| receiver valid signals|
-|rx_ready|input|logic [NUM_RX-1:0]|| receiver ready signals|
+|tx_valid_i|input|logic [NUM_TX-1:0]|| transmitter valid signals|
+|tx_ready_o|output|logic [NUM_TX-1:0]|| transmitter ready signals|
+|rx_valid_o|output|logic [NUM_RX-1:0]|| receiver valid signals|
+|rx_ready_i|input|logic [NUM_RX-1:0]|| receiver ready signals|
