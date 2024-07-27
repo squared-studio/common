@@ -1,16 +1,14 @@
 /*
-The `pipeline` module is a parameterized SystemVerilog module that implements a pipeline. The module
-uses a `pipeline_core` instance to process the input data and then passes the output to the next
-stage of the pipeline.
+Write a markdown documentation for this systemverilog module:
 Author : Foez Ahmed (foez.official@gmail.com)
 */
 
 module pipeline #(
-    parameter int ELEM_WIDTH = 8,  // width of each pipeline element
-    parameter int NUM_STAGES = 1   // number of stages in the pipeline
+    parameter int ELEM_WIDTH = 8  // width of each pipeline element
 ) (
-    input logic clk_i,   // global clock signal
-    input logic arst_ni, // asynchronous active low reset signal
+    input logic arst_ni,  // asynchronous active low reset signal
+    input logic clk_i,    // global clock signal
+    input logic rst_i,    // synchronous reset signal
 
     input  logic [ELEM_WIDTH-1:0] elem_in_i,        // input element
     input  logic                  elem_in_valid_i,  // input element valid signal
@@ -21,72 +19,51 @@ module pipeline #(
     input  logic                  elem_out_ready_i   // output element ready signal
 );
 
-  if (NUM_STAGES == 0) begin : g_NumStages_0
-    assign elem_out_o       = elem_in_i;
-    assign elem_out_valid_o = elem_in_valid_i;
-    assign elem_in_ready_o  = elem_out_ready_i;
-  end else if (NUM_STAGES == 1) begin : g_NumStages_1
-    pipeline_core #(
-        .ELEM_WIDTH(ELEM_WIDTH)
-    ) u_pipeline_core (
-        .clk_i           (clk_i),
-        .arst_ni         (arst_ni),
-        .elem_in_i       (elem_in_i),
-        .elem_in_valid_i (elem_in_valid_i),
-        .elem_in_ready_o (elem_in_ready_o),
-        .elem_out_o      (elem_out_o),
-        .elem_out_valid_o(elem_out_valid_o),
-        .elem_out_ready_i(elem_out_ready_i)
-    );
-  end else begin : g_NumStages_1p
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //-SIGNALS
+  //////////////////////////////////////////////////////////////////////////////////////////////////
 
-    logic [ELEM_WIDTH-1:0] elem_ [NUM_STAGES-1];
-    logic                  valid_[NUM_STAGES-1];
-    logic                  ready_[NUM_STAGES-1];
+  logic                  is_full;  // indicates whether the pipeline is full
+  logic [ELEM_WIDTH-1:0] mem;  // holds the pipeline memory
 
-    pipeline_core #(
-        .ELEM_WIDTH(ELEM_WIDTH)
-    ) u_pipeline_core_first (
-        .clk_i           (clk_i),
-        .arst_ni         (arst_ni),
-        .elem_in_i       (elem_in_i),
-        .elem_in_valid_i (elem_in_valid_i),
-        .elem_in_ready_o (elem_in_ready_o),
-        .elem_out_o      (elem_[0]),
-        .elem_out_valid_o(valid_[0]),
-        .elem_out_ready_i(ready_[0])
-    );
+  logic                  input_handshake;  // indicates a successful input handshake
+  logic                  output_handshake;  // indicates a successful output handshake
 
-    for (genvar i = 0; i < (NUM_STAGES - 2); i++) begin : g_pipeline_core_1p
-      pipeline_core #(
-          .ELEM_WIDTH(ELEM_WIDTH)
-      ) u_pipeline_core_middle (
-          .clk_i           (clk_i),
-          .arst_ni         (arst_ni),
-          .elem_in_i       (elem_[i]),
-          .elem_in_valid_i (valid_[i]),
-          .elem_in_ready_o (ready_[i]),
-          .elem_out_o      (elem_[i+1]),
-          .elem_out_valid_o(valid_[i+1]),
-          .elem_out_ready_i(ready_[i+1])
-      );
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //-ASSIGNMENTS
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+
+  assign elem_in_ready_o  = arst_ni & ~rst_i & ((is_full) ? elem_out_ready_i : '1);
+  assign elem_out_o       = mem;
+  assign elem_out_valid_o = is_full;
+
+  assign input_handshake  = elem_in_valid_i & elem_in_ready_o;
+  assign output_handshake = elem_out_valid_o & elem_out_ready_i;
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //-SEQUENTIALS
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+
+  always_ff @(posedge clk_i) begin
+    if (input_handshake) begin
+      mem <= elem_in_i;
     end
+  end
 
-    pipeline_core #(
-        .ELEM_WIDTH(ELEM_WIDTH)
-    ) u_pipeline_core_last (
-        .clk_i           (clk_i),
-        .arst_ni         (arst_ni),
-        .elem_in_i       (elem_[NUM_STAGES-2]),
-        .elem_in_valid_i (valid_[NUM_STAGES-2]),
-        .elem_in_ready_o (ready_[NUM_STAGES-2]),
-        .elem_out_o      (elem_out_o),
-        .elem_out_valid_o(elem_out_valid_o),
-        .elem_out_ready_i(elem_out_ready_i)
-    );
-
+  always_ff @(posedge clk_i or negedge arst_ni) begin : main_block
+    if (~arst_ni) begin
+      is_full <= '0;
+    end else begin
+      if (rst_i) begin
+        casex ({
+          rst_i, input_handshake, output_handshake
+        })
+          3'b1xx, 3'b001: is_full <= '0;
+          3'b010, 3'b011: is_full <= '1;
+          default:        is_full <= is_full;
+        endcase
+      end
+    end
   end
 
 endmodule
-
-// TODO

@@ -77,7 +77,7 @@ module fifo #(
   assign empty = msb_eq & nmsb_eq;
   assign full = !msb_eq & nmsb_eq;
 
-  assign elem_in_ready_o = full ? elem_out_ready_i : '1;
+  assign elem_in_ready_o = arst_ni & (full ? elem_out_ready_i : '1);
 
   if (PIPELINED) begin : g_pipelined
     assign elem_out_valid_o = ~empty;

@@ -120,8 +120,6 @@ module fifo_tb;
 
     apply_reset();
 
-    $display("---------------------- %0d %0d", elem_in_ready_o, prev_elem_in_ready);
-
     result_print(elem_in_ready_o & ~prev_elem_in_ready, "sync reset");
 
     arst_ni <= '0;

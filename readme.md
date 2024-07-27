@@ -45,8 +45,6 @@ To know how to use different commands on this repo, type `make help` or just `ma
 [mux ](./docs/rtl/mux.md)<br>
 [mux_tristate ](./docs/rtl/mux_tristate.md)<br>
 [pipeline ](./docs/rtl/pipeline.md)<br>
-[pipeline_branch ](./docs/rtl/pipeline_branch.md)<br>
-[pipeline_core ](./docs/rtl/pipeline_core.md)<br>
 [pll_model ](./docs/rtl/pll_model.md)<br>
 [priority_encoder ](./docs/rtl/priority_encoder.md)<br>
 [regfile ](./docs/rtl/regfile.md)<br>

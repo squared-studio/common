@@ -73,13 +73,13 @@ module cdc_fifo #(
   assign rd_addr_p1 = rd_addr + 1;
 
   if (FIFO_SIZE > 0) begin : g_elem_in_ready_o
-    assign elem_in_ready_o = !(
+    assign elem_in_ready_o = arst_ni & !(
                                 (wr_addr[FIFO_SIZE] != rd_addr_[FIFO_SIZE])
                                 &&
                                 (wr_addr[FIFO_SIZE-1:0] == rd_addr_[FIFO_SIZE-1:0])
                               );
   end else begin : g_elem_in_ready_o
-    assign elem_in_ready_o = (wr_addr_ == rd_addr);
+    assign elem_in_ready_o = arst_ni & (wr_addr_ == rd_addr);
   end
 
   assign elem_out_valid_o = (wr_addr_ != rd_addr);
