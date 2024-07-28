@@ -13,7 +13,7 @@ jobs:
 
       - name: Create issues
         run: |
-          gh issue list --label "AUTO" | sed "s/\t.*//g" > ___list
+          gh issue list --label "AUTO" --label "TB DEV" | sed "s/\t.*//g" > ___list
           while read line; do
             title=$(gh issue list --search "${line}" | sed "s/^.*OPEN\t//g" | sed "s/\t.*//g")
             rtl_file=$(echo "${title}" | sed "s/_tb//g")
@@ -33,7 +33,7 @@ jobs:
             if [ ! -d "tb/${folder}" ]; then
               if [ -z "${issue_exists}" ]; then
                 echo "Creating issue '${title}'"
-                gh issue create --title "${title}" --body "${body}" --label "AUTO"
+                gh issue create --title "${title}" --body "${body}" --label "AUTO" --label "TB DEV"
               else
                 echo "Issue '${title}' already exists"
               fi
