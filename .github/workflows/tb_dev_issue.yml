@@ -22,7 +22,7 @@ jobs:
             if [ ! -d "tb/${folder}" ]; then
               if [ -z "${issue_exists}" ]; then
                 echo "Creating issue '${title}'"
-                gh issue create --title "${title}" --body "${body}"
+                gh issue create --title "${title}" --body "${body}" --label "auto"
               else
                 echo "Issue '${title}' already exists"
               fi
