@@ -52,7 +52,6 @@ To know how to use different commands on this repo, type `make help` or just `ma
 [register_dual_flop ](./docs/rtl/register_dual_flop.md)<br>
 [round_robin_arbiter ](./docs/rtl/round_robin_arbiter.md)<br>
 [shifter ](./docs/rtl/shifter.md)<br>
-[shift_register ](./docs/rtl/shift_register.md)<br>
 [sr_latch_arstn ](./docs/rtl/sr_latch_arstn.md)<br>
 [xbar ](./docs/rtl/xbar.md)<br>
 
