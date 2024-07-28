@@ -13,6 +13,17 @@ jobs:
 
       - name: Create issues
         run: |
+          gh issue list --label "AUTO" | sed "s/\t.*//g" > ___list
+          while read line; do
+            title=$(gh issue list --search "${line}" | sed "s/^.*OPEN\t//g" | sed "s/\t.*//g")
+            rtl_file=$(echo "${title}" | sed "s/_tb//g")
+            echo "${rtl_file}"
+            if [ ! -f "rtl/${rtl_file}.sv" ]; then
+              echo "File ${rtl_file} does not exists."
+              gh issue close ${line} --comment "RTL no longer exist"
+            fi
+          done < ___list
+          rm -rf ___list
           for file in rtl/*.sv; do
             folder=$(basename "${file}" | sed "s/\.sv/_tb/g")
             title=$(echo "${folder}")
