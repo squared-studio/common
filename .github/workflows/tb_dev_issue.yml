@@ -15,7 +15,7 @@ jobs:
         run: |
           for file in rtl/*.sv; do
             folder=$(basename "${file}" | sed "s/\.sv/_tb/g")
-            title=$(echo "auto ${folder}")
+            title=$(echo "${folder}")
             body=$(echo "Testbench Needed")
             echo "Checking if issue '${title}' exists"
             issue_exists=$(gh issue list --search "${title}" --json number -q '.[0].number')

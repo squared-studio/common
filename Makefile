@@ -533,6 +533,7 @@ add_ignore:
 .PHONY: repo_update 
 repo_update: .gitmodules ci_run base_repo_init rtl_model.sv tb_model.sv LICENSE readme_base.md
 	@cp ./sub/sv-genesis/Makefile ./Makefile
+	@gh label clone https://github.com/squared-studio/common.git
 	@mkdir -p ./.github/workflows
 	@cp -r ./sub/sv-genesis/*.yml ./.github/workflows/
 	@mkdir -p ./tb/__no_upload__
