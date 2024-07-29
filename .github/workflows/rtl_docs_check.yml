@@ -12,7 +12,7 @@ jobs:
 
     - name: Check docs
       run: |
-        git submodule update --init sub/documenter
+        git submodule update --init --recursive --depth 1
         make update_doc_list
         git diff > ___DIFF
 
