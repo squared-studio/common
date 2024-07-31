@@ -74,8 +74,7 @@ endif
 ####################################################################################################
 
 .PHONY: help
-help:
-	@echo -e ""
+help: ss_print
 	@echo -e "\033[3;30mTo create or open a testbench, type:\033[0m"
 	@echo -e "\033[1;38mmake tb TOP=<tb_top>\033[0m"
 	@echo -e ""
@@ -120,8 +119,8 @@ help:
 	@echo -e ""
 
 .PHONY: clean
-clean:
-	@- echo -e "$(CLEAN_TARGETS)" | sed "s/  //g" | sed "s/ /\nremoving /g"
+clean: ss_print
+	@$(foreach ct, $(CLEAN_TARGETS), echo -e "\033[0;33mremoving: \033[0m$(ct)";)
 	@rm -rf $(CLEAN_TARGETS)
 
 .PHONY: duplicate_check
@@ -135,6 +134,16 @@ duplicate_check:
 find_duplicates:
 	@>___duplicate_list
 	@$(foreach file, $(DES_LIB), $(MAKE) duplicate_check EX=$(shell basename $(file));)
+
+.PHONY: ss_print
+ss_print:
+	@echo -e "\033[1;37m                                    _         _             _ _       \033[0m"
+	@echo -e "\033[1;37m ___  __ _ _   _  __ _ _ __ ___  __| |    ___| |_ _   _  __| (_) ___  \033[0m"
+	@echo -e "\033[1;37m/ __|/ _\` | | | |/ _\` | '__/ _ \/ _\` |___/ __| __| | | |/ _\` | |/ _ \ \033[0m"
+	@echo -e "\033[1;36m\__ \ (_| | |_| | (_| | | |  __/ (_| |___\__ \ |_| |_| | (_| | | (_) |\033[0m"
+	@echo -e "\033[1;36m|___/\__, |\__,_|\__,_|_|  \___|\__,_|   |___/\__|\__,_|\__,_|_|\___/ \033[0m"
+	@echo -e "\033[1;36m        |_|                                                           \033[0m\n"
+
 
 ####################################################################################################
 # FLIST (Vivado)
@@ -266,6 +275,7 @@ rtl_init_sim: clean
 
 .PHONY: CI
 CI: clean ci_vivado_run ci_vivado_collect ci_print find_duplicates
+	@$(MAKE) ss_print
 
 include ci_run
 
@@ -531,7 +541,7 @@ add_ignore:
 	@$(if $(filter $(EX),$(shell cat ./.gitignore)), : , echo "$(EX)" >> ./.gitignore)
 
 .PHONY: repo_update 
-repo_update: .gitmodules ci_run base_repo_init rtl_model.sv tb_model.sv LICENSE readme_base.md
+repo_update: ss_print .gitmodules ci_run base_repo_init rtl_model.sv tb_model.sv LICENSE readme_base.md
 	@cp ./sub/sv-genesis/Makefile ./Makefile
 	@gh label clone https://github.com/squared-studio/sv-genesis.git
 	@mkdir -p ./.github/workflows

@@ -105,13 +105,13 @@ module regfile_tb;
             fail++;
             $write("\033[1;31m");
           end
-          $display("PORT%0d REG%0d GOT_DATA:0x%h EXP_DATA:0x%h [%0t]\033[0m", i, rs_addr_i[i],
-                   rs_data_o[i], ref_mem[rs_addr_i[i]], $realtime);
+          // $display("PORT%0d REG%0d GOT_DATA:0x%h EXP_DATA:0x%h [%0t]\033[0m", i, rs_addr_i[i],
+          //          rs_data_o[i], ref_mem[rs_addr_i[i]], $realtime);
         end
         if (rd_en_i && (rd_addr_i != '0)) begin
           ref_mem[rd_addr_i] = rd_data_i;
-          $display("\033[1;36mWRITE REG%0d DATA:0x%h [%0t]\033[0m", rd_addr_i, rd_data_i,
-                   $realtime);
+          // $display("\033[1;36mWRITE REG%0d DATA:0x%h [%0t]\033[0m", rd_addr_i, rd_data_i,
+          //          $realtime);
         end
       end
     join_none
