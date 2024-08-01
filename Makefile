@@ -120,7 +120,7 @@ help: ss_print
 
 .PHONY: clean
 clean: ss_print
-	@$(foreach ct, $(CLEAN_TARGETS), echo -e "\033[0;33mremoving: \033[0m$(ct)";)
+	@$(foreach ct, $(CLEAN_TARGETS),- echo -e "\033[0;33mremoving: \033[0m$(ct)";)
 	@rm -rf $(CLEAN_TARGETS)
 
 .PHONY: duplicate_check
