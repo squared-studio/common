@@ -18,7 +18,7 @@ jobs:
         echo ".PHONY: ci_vivado_run" > ___diff
         echo "ci_vivado_run:" >> ___diff
         echo "	@> ___CI_REPORT;" >> ___diff
-        git diff main ci_run | grep -E "^\+.*\(MAKE\) vivado" | sed "s/^+//g" >> ___diff
+        git diff main -- ci_run | grep -E "^\+.*\(MAKE\) vivado" | sed "s/^+//g" >> ___diff
         mv ___diff ci_run
 
     - name: Simulate
