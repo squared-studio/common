@@ -110,7 +110,7 @@ module fifo_tb;
 
     elem_in_valid_i  <= '1;
     elem_out_ready_i <= '0;
-    for (int i = 0; i < (2**FifoSize); i++) begin
+    for (int i = 0; i < (2 ** FifoSize); i++) begin
       @(posedge clk_i);
       prev_elem_in_ready = elem_in_ready_o;
     end
@@ -128,7 +128,7 @@ module fifo_tb;
     @(posedge clk_i);
 
     elem_in_valid_i <= '1;
-    for (int i = 0; i < (2**FifoSize); i++) begin
+    for (int i = 0; i < (2 ** FifoSize); i++) begin
       prev_elem_in_ready = elem_in_ready_o;
       @(posedge clk_i);
     end
@@ -139,7 +139,7 @@ module fifo_tb;
     result_print(~elem_in_ready_o & prev_elem_in_ready, "elem_in_ready_o LOW at exact full");
 
     elem_out_ready_i <= '1;
-    for (int i = 0; i < (2**FifoSize); i++) begin
+    for (int i = 0; i < (2 ** FifoSize); i++) begin
       prev_elem_out_valid = elem_out_valid_o;
       @(posedge clk_i);
     end
