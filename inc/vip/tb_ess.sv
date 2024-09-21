@@ -3,20 +3,16 @@
 `ifndef TB_ESS_SV
 `define TB_ESS_SV
 
-`ifndef CONGIF
-  `define CONFIG "default"
-`endif  // CONGIF
-
-`define CREATE_CLK(__CLK__, __HIGH__, __LOW__)                                                     \
-  bit ``__CLK__`` = '0;                                                                            \
-  task static start_``__CLK__``();                                                                 \
-    fork                                                                                           \
-      forever begin                                                                                \
-        ``__CLK__`` <= 1; #``__HIGH__``;                                                           \
-        ``__CLK__`` <= 0; #``__LOW__``;                                                            \
-      end                                                                                          \
-    join_none                                                                                      \
-  endtask                                                                                          \
+`define CREATE_CLK(__CLK__, __HIGH__, __LOW__)                                                    \
+  logic ``__CLK__`` = '0;                                                                         \
+  task static start_``__CLK__``();                                                                \
+    fork                                                                                          \
+      forever begin                                                                               \
+        ``__CLK__`` <= 1; #``__HIGH__``;                                                          \
+        ``__CLK__`` <= 0; #``__LOW__``;                                                           \
+      end                                                                                         \
+    join_none                                                                                     \
+  endtask                                                                                         \
 
 string top_module_name = $sformatf("%m %s", `CONFIG);
 
