@@ -550,8 +550,8 @@ repo_update: ss_print .gitmodules ci_run base_repo_init rtl_model.sv tb_model.sv
 	@mkdir -p ./rtl/__no_upload__
 	@mkdir -p ./intf/__no_upload__
 	@mkdir -p ./inc/__no_upload__
-	@mkdir -p ./inc/vip/
-	@cp ./sub/sv-genesis/tb_ess.sv ./inc/vip/
+	@mkdir -p ./inc/vip/__no_upload__
+	@echo "# WARNING FILES THIS FOLDER IS NOT UPLOADED" > ./inc/vip/__no_upload__/readme.md
 	@echo "# WARNING FILES THIS FOLDER IS NOT UPLOADED" > ./inc/__no_upload__/readme.md
 	@echo "# WARNING FILES THIS FOLDER IS NOT UPLOADED" > ./intf/__no_upload__/readme.md
 	@echo "# WARNING FILES THIS FOLDER IS NOT UPLOADED" > ./rtl/__no_upload__/readme.md
@@ -577,6 +577,7 @@ repo_update: ss_print .gitmodules ci_run base_repo_init rtl_model.sv tb_model.sv
 	@$(MAKE) add_ignore EX=vivado_pid*.str
 	@$(MAKE) add_ignore EX=xsim.dir
 	@git add .
+	@git add -f ./inc/vip/__no_upload__/readme.md
 	@git add -f ./inc/__no_upload__/readme.md
 	@git add -f ./intf/__no_upload__/readme.md
 	@git add -f ./rtl/__no_upload__/readme.md
