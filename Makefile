@@ -56,12 +56,19 @@ else
 	PYTHON = python
 endif
 
+MAKE = make -s
+
 GIT_UNAME = $(shell git config user.name)
 GIT_UMAIL = $(shell git config user.email)
+GIT_REPO = $(shell git config --get remote.origin.url)
 
 CI_LIST  = $(shell cat CI_LIST)
 
-MAKE = make --no-print-directory
+ifeq ($(GIT_REPO),https://github.com/squared-studio/common.git)
+  SUBMODULE_ADD_COMMON = :
+else
+	SUBMODULE_ADD_COMMON = $(MAKE) submodule_add_update URL=https://github.com/squared-studio/documenter.git
+endif
 
 ifeq ($(CFG),$(CONFIG)) 
 	COLOR = \033[1;33m
@@ -535,6 +542,7 @@ submodule_add_update:
 base_repo_init:
 	@$(MAKE) submodule_add_update URL=https://github.com/squared-studio/sv-genesis.git
 	@$(MAKE) submodule_add_update URL=https://github.com/squared-studio/documenter.git
+	@$(SUBMODULE_ADD_COMMON)
 
 .PHONY: add_ignore
 add_ignore:
