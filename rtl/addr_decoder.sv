@@ -10,8 +10,8 @@ Author : Foez Ahmed (foez.official@gmail.com)
 module addr_decoder #(
     // width of the address input
     parameter int ADDR_WIDTH = common_default_param_pkg::ADDR_DECODER_ADDR_WIDTH,
-    // number of slave devices
-    parameter int NUM_SLV = common_default_param_pkg::ADDR_DECODER_NUM_SLV,
+    // width of the slave index
+    parameter int SLV_INDEX_WIDTH = common_default_param_pkg::ADDR_DECODER_SLV_INDEX_WIDTH,
     // number of address map rules
     parameter int NUM_RULES = common_default_param_pkg::ADDR_DECODER_NUM_RULES,
     // type of the address map
@@ -23,7 +23,7 @@ module addr_decoder #(
     input logic [ADDR_WIDTH-1:0] addr_i,
 
     // output slave index
-    output logic [$clog2(NUM_SLV)-1:0] slave_index_o,
+    output logic [SLV_INDEX_WIDTH-1:0] slave_index_o,
     // A logic output that indicates if the address was found in the address map
     output logic                       addr_found_o
 );
@@ -38,7 +38,7 @@ module addr_decoder #(
   logic [$clog2(NUM_RULES)-1:0] rule_code;
   // A 2D logic array that holds the slave indices
   // for the multiplexer inputs
-  logic [NUM_RULES-1:0][$clog2(NUM_SLV)-1:0] mux_in;
+  logic [NUM_RULES-1:0][SLV_INDEX_WIDTH-1:0] mux_in;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-ASSIGNMENTS
@@ -67,7 +67,7 @@ module addr_decoder #(
   );
 
   mux #(
-      .ELEM_WIDTH($clog2(NUM_SLV)),
+      .ELEM_WIDTH(SLV_INDEX_WIDTH),
       .NUM_ELEM  (NUM_RULES)
   ) mux_dut (
       .sel_i(rule_code),
