@@ -65,7 +65,7 @@ module edge_detector_tb;
     #100ns;
   endtask
 
-  task static rand_reset(realtime unit_time = 1ns, int unsigned min = 500, int unsigned max = 5000);
+  task static rand_reset(realtime unit_time = 1ns, int min = 500, int max = 5000);
     fork
       forever begin
         #(unit_time * $urandom_range(min, max));
@@ -74,7 +74,7 @@ module edge_detector_tb;
     join_none
   endtask
 
-  task static rand_d(realtime unit_time = 1ns, int unsigned min = 100, int unsigned max = 1000);
+  task static rand_d(realtime unit_time = 1ns, int min = 100, int max = 1000);
     fork
       forever begin
         #(unit_time * $urandom_range(min, max));

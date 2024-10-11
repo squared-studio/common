@@ -14,8 +14,7 @@ jobs:
     - name: Lint
       shell: bash
       run: |
-        echo "WARNING: LINTING IS DISABLED"
-        # make lint
+        make lint
 
     - name: Fail if Lint Issue
       shell: bash

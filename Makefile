@@ -271,10 +271,18 @@ vivado:
 	@cd $(TOP_DIR); xelab -f $(CONFIG_PATH)/xelab $(TOP) -s top
 	@cd $(TOP_DIR); xsim top -f $(CONFIG_PATH)/xsim -runall -log xsim_$(CONFIG).log
 
+define compile_rtl
+$(eval SUB_LIB := $(shell echo "$(wordlist 1, 25,$(COMPILE_LIB))"))
+xvlog -d SIMULATION $(INC_DIR) -sv $(SUB_LIB)
+$(eval COMPILE_LIB := $(wordlist 26, $(words $(COMPILE_LIB)), $(COMPILE_LIB)))
+$(if $(COMPILE_LIB), $(call compile_rtl))
+endef
+
 .PHONY: rtl_init_sim
 rtl_init_sim: clean
 	@echo "$(RTL)" > ___RTL
-	@xvlog -d SIMULATION $(INC_DIR) -sv -L RTL=$(DES_LIB) 
+	@$(eval COMPILE_LIB := $(INTF_LIB) $(DES_LIB))
+	@$(call compile_rtl)
 	@xelab $(RTL) -s top
 	@xsim top -runall
 
@@ -501,12 +509,33 @@ gen_doc:
 # LINTING
 ####################################################################################################
 
+define compile_lint
+$(eval SUB_LIB := $(shell echo "$(wordlist 1, 25,$(COMPILE_LIB))"))
+xvlog -d SIMULATION $(INC_DIR) -sv $(SUB_LIB) >> ___temp
+$(eval COMPILE_LIB := $(wordlist 26, $(words $(COMPILE_LIB)), $(COMPILE_LIB)))
+$(if $(COMPILE_LIB), $(call compile_lint))
+endef
+
 .PHONY: lint
-lint:
-	@rm -rf ___LINT_ERROR
+lint: clean xvlog_compile xvlog_collect verible_lint
+	@clear
+	@make -s ss_print
+	@cat ___LINT_ERROR
+
+.PHONY: xvlog_compile
+xvlog_compile:
+	@$(eval COMPILE_LIB := $(INTF_LIB) $(DES_LIB))
+	@$(call compile_lint)
+	
+.PHONY: xvlog_collect
+xvlog_collect:
+	@
+	@$$(cat ___temp | grep -E "WARNING:" > ___LINT_ERROR) || $$(touch ___LINT_ERROR)
+	
+.PHONY: verible_lint
+verible_lint:
 	@$(eval list := $(shell find -name "*.v" -o -name "*.sv"))
 	@$(foreach file, $(list), verible-verilog-lint.exe $(file) >> ___LINT_ERROR 2>&1;)
-	@cat ___LINT_ERROR
 
 ####################################################################################################
 # REPOSITORY MAINTAINANCE
