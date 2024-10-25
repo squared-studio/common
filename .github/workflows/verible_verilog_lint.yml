@@ -14,6 +14,7 @@ jobs:
     - name: Lint
       shell: bash
       run: |
+        git submodule update --init --recursive --depth 1
         make lint
 
     - name: Fail if Lint Issue
