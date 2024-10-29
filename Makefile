@@ -69,7 +69,7 @@ CI_LIST  = $(shell cat CI_LIST)
 ifeq ($(GIT_REPO),https://github.com/squared-studio/common.git)
   SUBMODULE_ADD_COMMON = :
 else
-	SUBMODULE_ADD_COMMON = $(MAKE) submodule_add_update URL=https://github.com/squared-studio/documenter.git
+	SUBMODULE_ADD_COMMON = $(MAKE) submodule_add_update URL=https://github.com/squared-studio/common.git
 endif
 
 ifeq ($(CFG),$(CONFIG)) 
