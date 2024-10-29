@@ -15,7 +15,7 @@ appropriate slave based on the input address.
 |Name|Type|Dimension|Default Value|Description|
 |-|-|-|-|-|
 |ADDR_WIDTH|int||common_default_param_pkg::ADDR_DECODER_ADDR_WIDTH| width of the address input|
-|NUM_SLV|int||common_default_param_pkg::ADDR_DECODER_NUM_SLV| number of slave devices|
+|SLV_INDEX_WIDTH|int||common_default_param_pkg::ADDR_DECODER_SLV_INDEX_WIDTH| width of the slave index|
 |NUM_RULES|int||common_default_param_pkg::ADDR_DECODER_NUM_RULES| number of address map rules|
 |addr_map_t|type||common_default_param_pkg::addr_decoder_addr_map_t| type of the address map|
 |ADDR_MAP|addr_map_t|[NUM_RULES]|common_default_param_pkg::ADDR_MAP| address map array|
@@ -24,5 +24,5 @@ appropriate slave based on the input address.
 |Name|Direction|Type|Dimension|Description|
 |-|-|-|-|-|
 |addr_i|input|logic [ADDR_WIDTH-1:0]|| input address|
-|slave_index_o|output|logic [$clog2(NUM_SLV)-1:0]|| output slave index|
+|slave_index_o|output|logic [SLV_INDEX_WIDTH-1:0]|| output slave index|
 |addr_found_o|output|logic|| A logic output that indicates if the address was found in the address map|
