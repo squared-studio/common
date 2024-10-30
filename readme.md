@@ -23,9 +23,6 @@ To know how to use different commands on this repo, type `make help` or just `ma
 [bin_to_gray ](./docs/rtl/bin_to_gray.md)<br>
 [cdc_fifo ](./docs/rtl/cdc_fifo.md)<br>
 [circular_xbar ](./docs/rtl/circular_xbar.md)<br>
-[clk_div ](./docs/rtl/clk_div.md)<br>
-[clk_gate ](./docs/rtl/clk_gate.md)<br>
-[clk_mux ](./docs/rtl/clk_mux.md)<br>
 [counter ](./docs/rtl/counter.md)<br>
 [decoder ](./docs/rtl/decoder.md)<br>
 [demux ](./docs/rtl/demux.md)<br>
@@ -45,7 +42,6 @@ To know how to use different commands on this repo, type `make help` or just `ma
 [mux ](./docs/rtl/mux.md)<br>
 [mux_tristate ](./docs/rtl/mux_tristate.md)<br>
 [pipeline ](./docs/rtl/pipeline.md)<br>
-[pll_model ](./docs/rtl/pll_model.md)<br>
 [priority_encoder ](./docs/rtl/priority_encoder.md)<br>
 [regfile ](./docs/rtl/regfile.md)<br>
 [register ](./docs/rtl/register.md)<br>
