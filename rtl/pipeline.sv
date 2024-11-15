@@ -24,8 +24,6 @@ module pipeline #(
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   logic                  is_full;  // indicates whether the pipeline is full
-  logic [ELEM_WIDTH-1:0] mem;  // holds the pipeline memory
-
   logic                  input_handshake;  // indicates a successful input handshake
   logic                  output_handshake;  // indicates a successful output handshake
 
@@ -34,8 +32,7 @@ module pipeline #(
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   assign elem_in_ready_o  = arst_ni & ~rst_i & ((is_full) ? elem_out_ready_i : '1);
-  assign elem_out_o       = mem;
-  assign elem_out_valid_o = is_full;
+  assign elem_out_valid_o = arst_ni & ~rst_i & is_full;
 
   assign input_handshake  = elem_in_valid_i & elem_in_ready_o;
   assign output_handshake = elem_out_valid_o & elem_out_ready_i;
@@ -46,7 +43,7 @@ module pipeline #(
 
   always_ff @(posedge clk_i) begin
     if (input_handshake) begin
-      mem <= elem_in_i;
+      elem_out_o <= elem_in_i;
     end
   end
 
