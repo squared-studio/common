@@ -51,15 +51,13 @@ module pipeline #(
     if (~arst_ni) begin
       is_full <= '0;
     end else begin
-      if (rst_i) begin
-        casex ({
-          rst_i, input_handshake, output_handshake
-        })
-          3'b1xx, 3'b001: is_full <= '0;
-          3'b010, 3'b011: is_full <= '1;
-          default:        is_full <= is_full;
-        endcase
-      end
+      casex ({
+        rst_i, input_handshake, output_handshake
+      })
+        3'b1xx, 3'b001: is_full <= '0;
+        3'b010, 3'b011: is_full <= '1;
+        default:        is_full <= is_full;
+      endcase
     end
   end
 
