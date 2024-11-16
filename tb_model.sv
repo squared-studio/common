@@ -1,6 +1,6 @@
 /*
 Description
-### Author : name (email)
+Author : name (email)
 */
 
 module tb_model;
