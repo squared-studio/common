@@ -78,6 +78,11 @@ else
 	COLOR = \033[1;37m
 endif
 
+LINE_1 := This file is part of squared-studio:$(shell basename `git rev-parse --show-toplevel`)
+LINE_2 := Copyright (c) $(shell date +%Y) squared-studio
+LINE_3 := Licensed under the MIT License
+LINE_4 := See LICENSE file in the project root for full license information
+
 ####################################################################################################
 # General
 ####################################################################################################
@@ -153,6 +158,23 @@ ss_print:
 	@echo -e "\033[1;36m|___/\__, |\__,_|\__,_|_|  \___|\__,_|   |___/\__|\__,_|\__,_|_|\___/ \033[0m"
 	@echo -e "\033[1;36m        |_|                                                2023-$(shell date +%Y)\033[0m\n"
 
+.PHONY: copyright_check
+copyright_check:
+	@rm -rf ___temp
+	@$(eval LIST := $(shell find -name "*.svh" | sed "s/\/.*sub\/.*//g"))
+	@$(foreach file, $(LIST), $(call copyright_check_file,$(file));)
+	@$(eval LIST := $(shell find -name "*.sv" | sed "s/\/.*sub\/.*//g"))
+	@$(foreach file, $(LIST), $(call copyright_check_file,$(file));)
+	@touch ___temp
+	@cat ___temp
+
+define copyright_check_file
+	(grep -ir "author" $(1) > /dev/null) || (echo "$(1) >> \"Author : Name (email)\"" >> ___temp)
+	(grep -r "$(LINE_1)" $(1) > /dev/null) || (echo "$(1) >> \"$(LINE_1)\"" >> ___temp)
+	(grep -r "$(LINE_2)" $(1) > /dev/null) || (echo "$(1) >> \"$(LINE_2)\"" >> ___temp)
+	(grep -r "$(LINE_3)" $(1) > /dev/null) || (echo "$(1) >> \"$(LINE_3)\"" >> ___temp)
+	(grep -r "$(LINE_4)" $(1) > /dev/null) || (echo "$(1) >> \"$(LINE_4)\"" >> ___temp)
+endef
 
 ####################################################################################################
 # FLIST (Vivado)
