@@ -526,6 +526,10 @@ get_inc_doc_header:
 gen_doc:
 	@echo "Creating document for $(FILE)"
 	@$(PYTHON) ./sub/documenter/sv_documenter.py $(FILE) ./docs/rtl
+	@sed -i "s/.*${LINE_1}.*/<br>**${LINE_1}**/g" ./docs/rtl/$(shell basename $(FILE) | sed "s/\.sv/\.md/g")
+	@sed -i "s/.*${LINE_2}.*/<br>**${LINE_2}**/g" ./docs/rtl/$(shell basename $(FILE) | sed "s/\.sv/\.md/g")
+	@sed -i "s/.*${LINE_3}.*/<br>**${LINE_3}**/g" ./docs/rtl/$(shell basename $(FILE) | sed "s/\.sv/\.md/g")
+	@sed -i "s/.*${LINE_4}.*/<br>**${LINE_4}**/g" ./docs/rtl/$(shell basename $(FILE) | sed "s/\.sv/\.md/g")
 
 ####################################################################################################
 # LINTING
