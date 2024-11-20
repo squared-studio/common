@@ -8,6 +8,10 @@ across clock domains using gray code to prevent metastability issues. The FIFO i
 input when the write pointer does not equal the read pointer. The output is valid when the write
 pointer equals the read pointer.
 Author : Foez Ahmed (foez.official@gmail.com)
+<br>This file is part of squared-studio:common
+<br>Copyright (c) 2024 squared-studio
+<br>Licensed under the MIT License
+<br>See LICENSE file in the project root for full license information
 */
 
 module cdc_fifo #(

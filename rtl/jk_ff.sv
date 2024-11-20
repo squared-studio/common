@@ -3,6 +3,10 @@ The `jk_ff` module is a SystemVerilog module that implements a JK flip-flop. The
 flip-flop to store the state of the JK flip-flop and a case statement to update the state based on
 the inputs.
 Author : Foez Ahmed (foez.official@gmail.com)
+<br>This file is part of squared-studio:common
+<br>Copyright (c) 2024 squared-studio
+<br>Licensed under the MIT License
+<br>See LICENSE file in the project root for full license information
 */
 
 module jk_ff (

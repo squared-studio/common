@@ -2,6 +2,10 @@
 The `register_dual_flop` module is a dual flip-flop register with configurable element width, reset
 value, and clock edge polarity for both flip-flops.
 Author: Foez Ahmed (foez.official@gmail.com)
+<br>This file is part of squared-studio:common
+<br>Copyright (c) 2024 squared-studio
+<br>Licensed under the MIT License
+<br>See LICENSE file in the project root for full license information
 */
 
 module register_dual_flop #(

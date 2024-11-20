@@ -4,6 +4,10 @@ signals from multiple source(s) & destination(s). The module uses two `always_co
 generate the `tx_ready_o` and `rx_valid_o` signals based on the `tx_valid_i` and `rx_ready_i`
 inputs.
 Author : Foez Ahmed (foez.official@gmail.com)
+<br>This file is part of squared-studio:common
+<br>Copyright (c) 2024 squared-studio
+<br>Licensed under the MIT License
+<br>See LICENSE file in the project root for full license information
 */
 
 module handshake_combiner #(

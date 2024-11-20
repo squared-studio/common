@@ -1,5 +1,11 @@
-// Testbench for encoder
-// ### Author : Md. Mohiuddin Reyad (mreyad30207@gmail.com)
+/*
+Testbench for encoder
+### Author : Md. Mohiuddin Reyad (mreyad30207@gmail.com)
+<br>This file is part of squared-studio:common
+<br>Copyright (c) 2024 squared-studio
+<br>Licensed under the MIT License
+<br>See LICENSE file in the project root for full license information
+*/
 
 module encoder_tb;
 

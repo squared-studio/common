@@ -10,6 +10,10 @@ The FIFO uses registers to store the write and read pointers. It also uses a mem
 the elements. The size of the memory block is determined by the `FIFO_SIZE` parameter.
 
 Author : Foez Ahmed (foez.official@gmail.com)
+<br>This file is part of squared-studio:common
+<br>Copyright (c) 2024 squared-studio
+<br>Licensed under the MIT License
+<br>See LICENSE file in the project root for full license information
 */
 
 module fifo #(

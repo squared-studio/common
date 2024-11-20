@@ -2,6 +2,10 @@
 The `regfile` module is a register file with a configurable number of source registers, register
 width, and an option to hardcode zero to the first register.
 Author: Md. Mohiuddin Reyad (mreyad30207@gmail.com)
+<br>This file is part of squared-studio:common
+<br>Copyright (c) 2024 squared-studio
+<br>Licensed under the MIT License
+<br>See LICENSE file in the project root for full license information
 */
 
 module regfile #(

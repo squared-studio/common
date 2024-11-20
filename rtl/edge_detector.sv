@@ -12,6 +12,10 @@ The synchronizer takes the data input and outputs an intermediate signal, which 
 detect the edges. The final signal after the edge detection process is stored in a flip-flop.
 
 Author : Foez Ahmed (foez.official@gmail.com)
+<br>This file is part of squared-studio:common
+<br>Copyright (c) 2024 squared-studio
+<br>Licensed under the MIT License
+<br>See LICENSE file in the project root for full license information
 */
 
 module edge_detector #(

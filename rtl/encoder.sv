@@ -11,6 +11,10 @@ bitwise OR of a subset of the wire input. The address output is the bitwise OR o
 array. The address valid output is the bitwise OR of the wire input.
 
 Author : Foez Ahmed (foez.official@gmail.com)
+<br>This file is part of squared-studio:common
+<br>Copyright (c) 2024 squared-studio
+<br>Licensed under the MIT License
+<br>See LICENSE file in the project root for full license information
 */
 
 module encoder #(

@@ -7,6 +7,10 @@ The flip-flop samples the `d_i` input and updates the `q_o` output at the rising
 `RESET_VALUE` regardless of the clock or enable inputs.
 
 Author : Foez Ahmed (foez.official@gmail.com)
+<br>This file is part of squared-studio:common
+<br>Copyright (c) 2024 squared-studio
+<br>Licensed under the MIT License
+<br>See LICENSE file in the project root for full license information
 */
 
 module dff #(

@@ -8,6 +8,10 @@ The demux uses a decoder to generate the valid output signals. The decoder takes
 the address input, a constant '1' as the address valid input, and outputs the valid output signals.
 
 Author : Foez Ahmed (foez.official@gmail.com)
+<br>This file is part of squared-studio:common
+<br>Copyright (c) 2024 squared-studio
+<br>Licensed under the MIT License
+<br>See LICENSE file in the project root for full license information
 */
 
 module demux #(

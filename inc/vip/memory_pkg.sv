@@ -1,3 +1,11 @@
+/*
+Author : Foez Ahmed (foez.official@gmail.com)
+This file is part of squared-studio:common
+Copyright (c) 2024 squared-studio
+Licensed under the MIT License
+See LICENSE file in the project root for full license information
+*/
+
 `ifndef MEMORY_PKG_SV
 `define MEMORY_PKG_SV
 

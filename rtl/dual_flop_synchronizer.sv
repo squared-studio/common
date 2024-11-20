@@ -3,6 +3,10 @@ The `dual_flop_synchronizer` module is a parameterized SystemVerilog module that
 flip-flop synchronizer. The module uses two flip-flops to synchronize the input data signal to the
 output.
 Author : Foez Ahmed (foez.official@gmail.com)
+<br>This file is part of squared-studio:common
+<br>Copyright (c) 2024 squared-studio
+<br>Licensed under the MIT License
+<br>See LICENSE file in the project root for full license information
 */
 
 module dual_flop_synchronizer #(

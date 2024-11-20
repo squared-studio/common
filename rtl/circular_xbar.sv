@@ -3,6 +3,10 @@ The `circular_xbar` module is a parameterized SystemVerilog module that implemen
 crossbar switch. The module uses a xbar to select the appropriate output based on the rotation base
 select.
 Author : Foez Ahmed (foez.official@gmail.com)
+<br>This file is part of squared-studio:common
+<br>Copyright (c) 2024 squared-studio
+<br>Licensed under the MIT License
+<br>See LICENSE file in the project root for full license information
 */
 
 module circular_xbar #(
