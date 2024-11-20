@@ -1,0 +1,23 @@
+name: copyright_check
+
+on:
+  push:
+    branches: []
+
+jobs:
+  copyright_check:
+    runs-on: [make]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Lint
+      shell: bash
+      run: |
+        git submodule deinit -f .
+        make copyright_check
+
+    - name: Fail if Copyright Issue
+      shell: bash
+      run: |
+        [[ -s ___temp ]] && exit 1 || exit 0
