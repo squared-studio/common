@@ -32,6 +32,7 @@ CLEAN_TARGETS += $(shell find $(realpath ./) -name "___module_raw_inst")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "___module_raw_param")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "___module_raw_port")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "___temp")
+CLEAN_TARGETS += $(shell find $(realpath ./) -name "___TIMING_REPORTS")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "___TO_COPY")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name ".Xil")
 CLEAN_TARGETS += $(shell find $(realpath ./) -name "*.jou")
@@ -243,6 +244,30 @@ schematic: locate_files
 	@echo "synth_design -rtl -rtl_skip_mlo -name rtl_1" >> top.tcl
 	@vivado -mode tcl -source top.tcl
 	@$(MAKE) clean
+
+####################################################################################################
+# STA (Vivado)
+####################################################################################################
+
+.PHONY: static_timing_analysis
+static_timing_analysis: clean locate_files
+	@echo "$(RTL)" > ___RTL
+	@mkdir -p ___TIMING_REPORTS
+	@echo "create_clock -name clk_i -period 10.000 [get_ports clk_i]" > ___TIMING_REPORTS/clk_i.xdc
+	@echo "create_project top" > top.tcl
+	@echo "set_property include_dirs ./inc [current_fileset]" >> top.tcl
+	@echo "add_files top/clk_i.xdc" >> top.tcl
+	@$(foreach word, $(shell cat ___flist), echo "add_files $(word)" >> top.tcl;)
+	@echo "set_property top $(RTL) [current_fileset]" >> top.tcl
+	@echo "synth_design -top $(RTL) -part xc7z020clg400-1" >> top.tcl
+	@echo "report_methodology -file ___TIMING_REPORTS/methodology_report.rpt" >> top.tcl
+	@echo "report_timing_summary -file ___TIMING_REPORTS/timing_summary.rpt" >> top.tcl
+	@echo "report_timing -delay_type max -path_type full -max_paths 100 -file ___TIMING_REPORTS/detailed_timing_max.rpt" >> top.tcl
+	@echo "report_timing -delay_type min -path_type full -max_paths 100 -file ___TIMING_REPORTS/detailed_timing_min.rpt" >> top.tcl
+	@echo "report_clock_interaction -file ___TIMING_REPORTS/clock_interaction.rpt" >> top.tcl
+	@echo "report_timing -delay_type max -slack_lesser_than 0 -max_paths 100 -file ___TIMING_REPORTS/failing_paths.rpt" >> top.tcl
+	@echo "exit" >> top.tcl
+	@vivado -mode batch -source top.tcl
 
 ####################################################################################################
 # Simulate (Vivado)
@@ -499,8 +524,8 @@ update_doc_list: create_all_docs
 	@$(foreach file, $(shell find ./docs/inc -name "*.md"), $(MAKE) get_inc_doc_header FILE=$(file);)
 	@echo "" >> readme.md
 
-.PHONY: clear_all_docs
-clear_all_docs:
+.PHONY: clean_all_docs
+clean_all_docs:
 	@mkdir -p docs/rtl
 	@mkdir -p docs/inc
 	@rm -rf docs/rtl/*.md
@@ -508,7 +533,7 @@ clear_all_docs:
 	@git submodule update --init --depth 1 -- ./sub/documenter
 
 .PHONY: create_all_docs
-create_all_docs: clear_all_docs
+create_all_docs: clean_all_docs
 	@$(foreach file, $(shell find $(realpath ./rtl/) -type f -wholename "*/rtl/*.sv"), \
 		$(if $(shell echo $(file) | sed "s/.*__no_upload__.*//g"), $(MAKE) gen_doc FILE=$(file), echo "");)
 
