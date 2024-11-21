@@ -256,7 +256,7 @@ static_timing_analysis: clean locate_files
 	@echo "create_clock -name clk_i -period 10.000 [get_ports clk_i]" > ___TIMING_REPORTS/clk_i.xdc
 	@echo "create_project top" > top.tcl
 	@echo "set_property include_dirs ./inc [current_fileset]" >> top.tcl
-	@echo "add_files top/clk_i.xdc" >> top.tcl
+	@echo "add_files ___TIMING_REPORTS/clk_i.xdc" >> top.tcl
 	@$(foreach word, $(shell cat ___flist), echo "add_files $(word)" >> top.tcl;)
 	@echo "set_property top $(RTL) [current_fileset]" >> top.tcl
 	@echo "synth_design -top $(RTL) -part xc7z020clg400-1" >> top.tcl
