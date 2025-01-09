@@ -2,7 +2,7 @@
 Description
 Author : name (email)
 <br>This file is part of squared-studio:common
-<br>Copyright (c) 2024 squared-studio
+<br>Copyright (c) 2025 squared-studio
 <br>Licensed under the MIT License
 <br>See LICENSE file in the project root for full license information
 */

@@ -12,7 +12,7 @@ The counter is reset to `RESET_VALUE` whenever `arst_ni` is low. The counter upd
 
 Author : Md. Mohiuddin Reyad (mreyad30207@gmail.com)
 <br>This file is part of squared-studio:common
-<br>Copyright (c) 2024 squared-studio
+<br>Copyright (c) 2025 squared-studio
 <br>Licensed under the MIT License
 <br>See LICENSE file in the project root for full license information
 */

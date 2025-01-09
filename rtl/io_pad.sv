@@ -3,7 +3,7 @@ The `io_pad` module is a SystemVerilog module that implements an I/O pad. The mo
 pull-down buffer, a data drive buffer, and a read data buffer to control the I/O pad.
 Author : Foez Ahmed (foez.official@gmail.com)
 <br>This file is part of squared-studio:common
-<br>Copyright (c) 2024 squared-studio
+<br>Copyright (c) 2025 squared-studio
 <br>Licensed under the MIT License
 <br>See LICENSE file in the project root for full license information
 */

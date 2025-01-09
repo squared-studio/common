@@ -1,7 +1,7 @@
 // Description here
 // ### Author : name (email)
 // This file is part of squared-studio:common
-// Copyright (c) 2024 squared-studio
+// Copyright (c) 2025 squared-studio
 // Licensed under the MIT License
 // See LICENSE file in the project root for full license information
 
