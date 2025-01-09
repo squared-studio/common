@@ -39,8 +39,11 @@ jobs:
               fi
             else
               if [ ! -z "${issue_exists}" ]; then
-                echo "Auto-closing '${title}'"
-                gh issue close ${issue_exists} --comment "Auto-closing issue"
+                issue_labels=$(gh issue view ${issue_exists} --json labels -q '.labels[].name')
+                if echo "${issue_labels}" | grep -q "AUTO"; then
+                  echo "Auto-closing '${title}'"
+                  gh issue close ${issue_exists} --comment "Auto-closing issue"
+                fi
               fi
             fi            
           done
