@@ -181,13 +181,6 @@ endef
 # FLIST (Vivado)
 ####################################################################################################
 
-define compile_rtl
-$(eval SUB_LIB := $(shell echo "$(wordlist 1, 25,$(COMPILE_LIB))"))
-xvlog $(INC_DIR) -sv $(SUB_LIB)
-$(eval COMPILE_LIB := $(wordlist 26, $(words $(COMPILE_LIB)), $(COMPILE_LIB)))
-$(if $(COMPILE_LIB), $(call compile_rtl))
-endef
-
 .PHONY: find_rtl
 find_rtl:
 	@$(foreach file, ${DES_LIB}, $(if $(findstring ${RTL}, ${file}), echo "$(file)",:);)
@@ -195,8 +188,9 @@ find_rtl:
 .PHONY: list_modules
 list_modules: clean
 	@$(eval RTL_FILE := $(shell find rtl -name "$(RTL).sv"))
-	@$(eval COMPILE_LIB := $(DES_LIB))
-	@$(call compile_rtl)
+	@rm -rf ___list
+	@$(foreach file, ${DES_LIB}, echo "${file}" >> ___list;)
+	@xvlog $(INC_DIR) -sv -f ___list
 	@xelab $(RTL) -s top
 	@cat xelab.log | grep -E "work" > ___list
 	@sed -i "s/.*work\.//gi" ___list;
@@ -301,35 +295,27 @@ simulate: clean
 	@$(MAKE) config_list
 	$(MAKE) vivado TOP=$(TOP) CONFIG=$(CONFIG)
 
-define compile_tb
-$(eval SUB_LIB := $(shell echo "$(wordlist 1, 25,$(COMPILE_LIB))"))
-cd $(TOP_DIR); xvlog -f $(CONFIG_PATH)/xvlog -d SIMULATION --define CONFIG=\"$(CONFIG)\" $(INC_DIR) -sv $(SUB_LIB)
-$(eval COMPILE_LIB := $(wordlist 26, $(words $(COMPILE_LIB)), $(COMPILE_LIB)))
-$(if $(COMPILE_LIB), $(call compile_tb))
-endef
-
 .PHONY: vivado
 vivado:
 	@$(MAKE) config_touch
 	@touch $(TOP_DIR)/script.sh
 	@cd $(TOP_DIR); ./script.sh
-	@$(eval COMPILE_LIB := $(INTF_LIB) $(DES_LIB) $(TB_LIB))
-	@$(call compile_tb)
+	@rm -rf ___list
+	@$(foreach file, ${INTF_LIB}, echo "${file}" >> ___list;)
+	@$(foreach file, ${DES_LIB}, echo "${file}" >> ___list;)
+	@$(foreach file, ${TB_LIB}, echo "${file}" >> ___list;)
+	@mv ___list $(TOP_DIR)/___list
+	@cd $(TOP_DIR); xvlog -f $(CONFIG_PATH)/xvlog -d SIMULATION --define CONFIG=\"$(CONFIG)\" $(INC_DIR) -sv -f ___list
 	@cd $(TOP_DIR); xelab -f $(CONFIG_PATH)/xelab $(TOP) -s top
 	@cd $(TOP_DIR); xsim top -f $(CONFIG_PATH)/xsim -runall -log xsim_$(CONFIG).log
-
-define compile_rtl
-$(eval SUB_LIB := $(shell echo "$(wordlist 1, 25,$(COMPILE_LIB))"))
-xvlog -d SIMULATION $(INC_DIR) -sv $(SUB_LIB)
-$(eval COMPILE_LIB := $(wordlist 26, $(words $(COMPILE_LIB)), $(COMPILE_LIB)))
-$(if $(COMPILE_LIB), $(call compile_rtl))
-endef
 
 .PHONY: rtl_init_sim
 rtl_init_sim: clean
 	@echo "$(RTL)" > ___RTL
-	@$(eval COMPILE_LIB := $(INTF_LIB) $(DES_LIB))
-	@$(call compile_rtl)
+	@rm -rf ___list
+	@$(foreach file, ${INTF_LIB}, echo "${file}" >> ___list;)
+	@$(foreach file, ${DES_LIB}, echo "${file}" >> ___list;)
+	@xvlog $(INC_DIR) -sv -f ___list
 	@xelab $(RTL) -s top
 	@xsim top -runall
 
@@ -560,13 +546,6 @@ gen_doc:
 # LINTING
 ####################################################################################################
 
-define compile_lint
-$(eval SUB_LIB := $(shell echo "$(wordlist 1, 25,$(COMPILE_LIB))"))
-xvlog -d SIMULATION $(INC_DIR) -sv $(SUB_LIB) >> ___temp
-$(eval COMPILE_LIB := $(wordlist 26, $(words $(COMPILE_LIB)), $(COMPILE_LIB)))
-$(if $(COMPILE_LIB), $(call compile_lint))
-endef
-
 .PHONY: lint
 lint: clean xvlog_compile xvlog_collect verible_lint
 	@clear
@@ -575,12 +554,13 @@ lint: clean xvlog_compile xvlog_collect verible_lint
 
 .PHONY: xvlog_compile
 xvlog_compile:
-	@$(eval COMPILE_LIB := $(INTF_LIB) $(DES_LIB))
-	@$(call compile_lint)
+	@rm -rf ___list
+	@$(foreach file, ${INTF_LIB}, echo "${file}" >> ___list;)
+	@$(foreach file, ${DES_LIB}, echo "${file}" >> ___list;)
+	@xvlog -d SIMULATION $(INC_DIR) -sv -f ___list >> ___temp
 	
 .PHONY: xvlog_collect
 xvlog_collect:
-	@
 	@$$(cat ___temp | grep -E "WARNING:" > ___LINT_ERROR) || $$(touch ___LINT_ERROR)
 	
 .PHONY: verible_lint
