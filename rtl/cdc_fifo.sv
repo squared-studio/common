@@ -30,6 +30,8 @@ module cdc_fifo #(
     input  logic                  elem_in_valid_i,
     // Input ready signal. When high, indicates that the FIFO is ready to accept the input element
     output logic                  elem_in_ready_o,
+    // Element Count Input Clock Domain
+    output logic [$clog2(2**FIFO_SIZE)-1:0] elem_in_count_o,
 
     // Output element. This is a `ELEM_WIDTH`-bit data that is read from the FIFO
     output logic [ELEM_WIDTH-1:0] elem_out_o,
@@ -38,7 +40,9 @@ module cdc_fifo #(
     // Output valid signal. When high, indicates that the output element is valid and can be read
     output logic                  elem_out_valid_o,
     // Output ready signal. When high, indicates that the output element can be read from the FIFO
-    input  logic                  elem_out_ready_i
+    input  logic                  elem_out_ready_i,
+    // Element Count Output Clock Domain
+    output logic [$clog2(2**FIFO_SIZE)-1:0] elem_out_count_o
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -87,6 +91,9 @@ module cdc_fifo #(
   end
 
   assign elem_out_valid_o = (wr_addr_ != rd_addr);
+
+  assign elem_in_count_o  = wr_addr[FIFO_SIZE-1:0] - rd_addr_[FIFO_SIZE-1:0];
+  assign elem_out_count_o = wr_addr_[FIFO_SIZE-1:0] - rd_addr[FIFO_SIZE-1:0];
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-RTLS
