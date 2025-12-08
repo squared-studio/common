@@ -70,19 +70,19 @@ module edge_detector #(
         .q_o(q_intermediate)
     );
   end else begin : g_dff
-    dff #() u_single_synchronizer (
+    dff u_single_synchronizer (
         .arst_ni(arst_ni),
         .clk_i(clk_i),
-        .en_i(1),
+        .en_i('1),
         .d_i(d_i),
         .q_o(q_intermediate)
     );
   end
 
-  dff #() u_dff (
+  dff u_dff (
       .arst_ni(arst_ni),
       .clk_i(clk_i),
-      .en_i(1),
+      .en_i('1),
       .d_i(q_intermediate),
       .q_o(q_final)
   );
