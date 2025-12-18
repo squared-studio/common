@@ -50,6 +50,3 @@ To know how to use different commands on this repo, type `make help` or just `ma
 [shifter ](./docs/rtl/shifter.md)<br>
 [sr_latch_arstn ](./docs/rtl/sr_latch_arstn.md)<br>
 [xbar ](./docs/rtl/xbar.md)<br>
-
-## INCLUDE
-
