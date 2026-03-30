@@ -41,7 +41,10 @@ module fifo #(
     // output valid signal. It indicates whether the output element is valid
     output logic                  elem_out_valid_o,
     // output ready signal. It indicates whether the FIFO is ready to output an element
-    input  logic                  elem_out_ready_i
+    input  logic                  elem_out_ready_i,
+
+    // output element count. It indicates the number of elements currently stored in the FIFO
+    output logic                  el_cnt_o
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -90,6 +93,8 @@ module fifo #(
     assign elem_out_valid_o = empty ? elem_in_valid_i : '1;
     assign elem_out_o       = empty ? elem_in_i : elem_out;
   end
+
+  assign el_cnt_o = wr_ptr - rd_ptr;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-RTLS
