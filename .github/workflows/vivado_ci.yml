@@ -15,16 +15,12 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Simulate
-      shell: bash
-      env:
-        MSYS_NO_PATHCONV: 1
+      shell: msys2 {0}
       run: |
         git submodule update --init --recursive --depth 1
         make CI
 
     - name: Fail if Simulation Contains Fails
-      shell: bash
-      env:
-        MSYS_NO_PATHCONV: 1
+      shell: msys2 {0}
       run: |
         [[ -s ___CI_ERROR ]] && exit 1 || exit 0
